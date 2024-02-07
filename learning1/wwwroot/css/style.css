@@ -1,0 +1,11 @@
+.uname{
+    position: relative;
+}
+.uicon{
+    position: absolute;
+    margin-top: -37px;
+    margin-left: 90%;
+    z-index: 999;
+}
+
+

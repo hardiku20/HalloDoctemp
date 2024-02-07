@@ -1,0 +1,197 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concierge</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+</head>
+
+
+
+<body class="bg-light">
+    <section class="">
+
+        <div class="container pb-4">
+            <div class="d-flex justify-content-end m-4">
+                <a asp-controller="Home" asp-action="patientsubmitrequest"
+                   class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                    <img src="/assets/images/chevron-left.svg" alt=""> Back
+                </a>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <form action="" class="form-floating">
+
+
+                        <div class="row">
+                            <h5 class="mt-3 mb-2">Concierge Information</h5>
+                            <div class="mb-3 mt-2 col-6">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput"
+                                           placeholder="Your First Name">
+                                    <label for="floatingInput" class="">Your First Name</label>
+                                </div>
+                            </div>
+                            <div class="mb-3 mt-2 col-6">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput"
+                                           placeholder="Your Last Name">
+                                    <label for="floatingInput" class="">Your Last Name</label>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <div class="form-floating input-info">
+                                    <input type="email" class="form-control" id="floatingInput"
+                                           placeholder="name@example.com">
+                                    <label for="floatingInput">Your Email</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating input-info  w-100">
+                                    <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                           id="phone">
+                                </div>
+                            </div>
+                            <div class=" col-6 mb-3">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput"
+                                           placeholder="Hotel/Property Name">
+                                    <label for="floatingInput" class="">Hotel/Property Name</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <h5 class="mt-3 mb-2">Concierge Location</h5>
+                            <div class="col-sm-6 mt-2 mb-3">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Street">
+                                    <label for="floatingInput">Street</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-2 mb-3">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="City">
+                                    <label for="floatingInput">City</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="State">
+                                    <label for="floatingInput">State</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Zip Code">
+                                    <label for="floatingInput">Zip Code</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <h5 class="mt-3 mb-2">Patient Information</h5>
+                            <div class="form-floating input-info mt-2 mb-3">
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                          style="height: 100px"></textarea>
+                                <label for="floatingTextarea2" class="mx-2">
+                                    Enter brief details of Symptoms
+                                    (Optional)
+                                </label>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="First Name">
+                                    <label for="floatingInput" class="">First Name</label>
+                                </div>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Last Name">
+                                    <label for="floatingInput" class="">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="form-floating input-info col-6 mb-3">
+                                <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                       aria-describedby="basic-addon1">
+                                <label for="floatingInputValue" class="mx-2">Date of birth</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <h3 class="h5 mt-3 mb-2">
+                                Patient Contact Information
+                            </h3>
+                            <div class="col-md mt-2">
+                                <div class="form-floating input-info">
+                                    <input type="email" class="form-control" id="floatingInput"
+                                           placeholder="name@example.com">
+                                    <label for="floatingInput">Email address</label>
+                                </div>
+                            </div>
+                            <div class="col-md mt-2">
+                                <div class="form-floating input-info">
+                                    <input type="email" class="form-control" id="floatingInput"
+                                           placeholder="name@example.com">
+                                    <label for="floatingInput">Email address</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <h5 class="mt-3 mb-2">Patient Location</h5>
+                            <div class="col-sm-6 mt-2 mb-3">
+                                <div class="form-floating input-info">
+                                    <input type="text" class="form-control" id="floatingInput"
+                                           placeholder="Room #/Suite (Optional)">
+                                    <label for="floatingInput">Room #/Suite (Optional)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex mt-3 mb-2">
+                            <div class="ms-auto">
+                                <button type="button" class="btn btn-info text-white">Submit</button>
+                            </div>
+                            <div class="ms-3">
+                                <button type="button" class="btn btn-outline-info">Cancel</button>
+                            </div>
+
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        const phoneInputField = document.querySelector("#phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
+</body>
+
+</html>
