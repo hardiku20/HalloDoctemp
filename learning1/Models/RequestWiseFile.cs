@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -20,17 +19,17 @@ public partial class RequestWiseFile
 
     public short? DocType { get; set; }
 
-    public BitArray? IsFrontSide { get; set; }
+    public bool? IsFrontSide { get; set; }
 
-    public BitArray? IsCompensation { get; set; }
+    public bool? IsCompensation { get; set; }
 
     public string? Ip { get; set; }
 
-    public BitArray? IsFinalize { get; set; }
+    public bool? IsFinalize { get; set; }
 
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
-    public BitArray? IsPatientRecords { get; set; }
+    public bool? IsPatientRecords { get; set; }
 
     public virtual Admin? Admin { get; set; }
 

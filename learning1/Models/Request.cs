@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -10,7 +9,7 @@ public partial class Request
 
     public int RequestTypeId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
     public string? FirstName { get; set; }
 
@@ -28,21 +27,21 @@ public partial class Request
 
     public DateTime CreatedDate { get; set; }
 
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
 
     public string? DeclinedBy { get; set; }
 
-    public BitArray? IsUrgentEmailSent { get; set; }
+    public bool IsUrgentEmailSent { get; set; }
 
     public DateTime? LastWellnessDate { get; set; }
 
-    public BitArray? IsMobile { get; set; }
+    public bool? IsMobile { get; set; }
 
     public short? CallType { get; set; }
 
-    public BitArray? CompletedByPhysician { get; set; }
+    public bool? CompletedByPhysician { get; set; }
 
     public DateTime? LastReservationDate { get; set; }
 
@@ -78,5 +77,5 @@ public partial class Request
 
     public virtual ICollection<RequestWiseFile> RequestWiseFiles { get; set; } = new List<RequestWiseFile>();
 
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; } = null!;
 }

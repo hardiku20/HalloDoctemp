@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -12,7 +11,7 @@ public partial class BlockRequest
 
     public string? Email { get; set; }
 
-    public BitArray? IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
     public string? Reason { get; set; }
 

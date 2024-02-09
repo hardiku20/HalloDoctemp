@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -39,15 +40,13 @@ public partial class Admin
 
     public short? Status { get; set; }
 
-    public bool? IsDeleted { get; set; }
+    public BitArray? IsDeleted { get; set; }
 
     public int? RoleId { get; set; }
 
     public virtual ICollection<AdminRegion> AdminRegions { get; set; } = new List<AdminRegion>();
 
     public virtual AspNetUser AspNetUser { get; set; } = null!;
-
-    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
 
     public virtual AspNetUser? ModifiedByNavigation { get; set; }
 

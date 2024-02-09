@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -26,7 +25,7 @@ public partial class Smslog
 
     public DateTime? SentDate { get; set; }
 
-    public BitArray? IsSmssent { get; set; }
+    public bool? IsSmssent { get; set; }
 
     public int SentTries { get; set; }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -24,7 +23,7 @@ public partial class Business
 
     public string? FaxNumber { get; set; }
 
-    public BitArray? IsRegistered { get; set; }
+    public bool? IsRegistered { get; set; }
 
     public string? CreatedBy { get; set; }
 
@@ -36,7 +35,7 @@ public partial class Business
 
     public short? Status { get; set; }
 
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public string? Ip { get; set; }
 

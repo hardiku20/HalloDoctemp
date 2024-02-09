@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -12,7 +11,7 @@ public partial class ShiftDetailRegion
 
     public int RegionId { get; set; }
 
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public virtual Region Region { get; set; } = null!;
 

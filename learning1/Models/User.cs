@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -18,7 +17,7 @@ public partial class User
 
     public string? Mobile { get; set; }
 
-    public BitArray? IsMobile { get; set; }
+    public bool? IsMobile { get; set; }
 
     public string? Street { get; set; }
 
@@ -46,17 +45,13 @@ public partial class User
 
     public short? Status { get; set; }
 
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public string? Ip { get; set; }
 
-    public BitArray? IsRequestWithEmail { get; set; }
+    public bool? IsRequestWithEmail { get; set; }
 
     public virtual AspNetUser? AspNetUser { get; set; }
-
-    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
-
-    public virtual AspNetUser? ModifiedByNavigation { get; set; }
 
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }

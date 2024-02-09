@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -20,7 +19,7 @@ public partial class Role
 
     public DateTime? ModifiedDate { get; set; }
 
-    public BitArray IsDeleted { get; set; } = null!;
+    public bool IsDeleted { get; set; }
 
     public string? Ip { get; set; }
 

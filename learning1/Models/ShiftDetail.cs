@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -20,7 +19,7 @@ public partial class ShiftDetail
 
     public short Status { get; set; }
 
-    public BitArray IsDeleted { get; set; } = null!;
+    public bool IsDeleted { get; set; }
 
     public string? ModifiedBy { get; set; }
 
@@ -30,7 +29,7 @@ public partial class ShiftDetail
 
     public string? EventId { get; set; }
 
-    public BitArray? IsSync { get; set; }
+    public bool? IsSync { get; set; }
 
     public virtual AspNetUser? ModifiedByNavigation { get; set; }
 

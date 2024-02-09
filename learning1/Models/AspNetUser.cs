@@ -23,9 +23,9 @@ public partial class AspNetUser
 
     public virtual ICollection<Admin> AdminAspNetUsers { get; set; } = new List<Admin>();
 
-    public virtual ICollection<Admin> AdminCreatedByNavigations { get; set; } = new List<Admin>();
-
     public virtual ICollection<Admin> AdminModifiedByNavigations { get; set; } = new List<Admin>();
+
+    public virtual ICollection<AspNetUserRole> AspNetUserRoles { get; set; } = new List<AspNetUserRole>();
 
     public virtual ICollection<Business> BusinessCreatedByNavigations { get; set; } = new List<Business>();
 
@@ -37,19 +37,9 @@ public partial class AspNetUser
 
     public virtual ICollection<Physician> PhysicianModifiedByNavigations { get; set; } = new List<Physician>();
 
-    public virtual ICollection<RequestNote> RequestNoteCreatedByNavigations { get; set; } = new List<RequestNote>();
-
-    public virtual ICollection<RequestNote> RequestNoteModifiedByNavigations { get; set; } = new List<RequestNote>();
-
     public virtual ICollection<ShiftDetail> ShiftDetails { get; set; } = new List<ShiftDetail>();
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
 
-    public virtual ICollection<User> UserAspNetUsers { get; set; } = new List<User>();
-
-    public virtual ICollection<User> UserCreatedByNavigations { get; set; } = new List<User>();
-
-    public virtual ICollection<User> UserModifiedByNavigations { get; set; } = new List<User>();
-
-    public virtual ICollection<AspNetRole> Roles { get; set; } = new List<AspNetRole>();
+    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

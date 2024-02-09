@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LoginViewModel;                                                                                                                                                                                                                                                        
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -44,12 +46,13 @@
                                 </a>
                             </div>
                             <h1 class="d-flex justify-content-center mb-4 mt-5 ">Login To Your Account</h1>
-                            <form action=" " class="" method="post">
+                            <form method="post">
                                 <div class="form-floating mb-3 mx-auto ">
                                     <input type="text" class="form-control uname" id="floatingInput"
                                            placeholder="Name" asp-for="Email">
                                     <img src="/assets/images/person-circle.svg" alt="" class="uicon">
                                     <label for="floatingInput">Username</label>
+                                    <p class="text-danger fw-bold">@Html.ValidationMessageFor(x=>x.Email)</p>
                                 </div>
                                 <div class="form-floating mb-3 mx-auto">
                                     <input type="password" class="form-control uname" id="floatingPassword"
@@ -58,8 +61,8 @@
                                     <label for="floatingPassword">Password</label>
                                 </div>
                                 <div class="d-grid mb-3 mx-auto ">
-                                    <a asp-controller="Home" asp-action="patientsite" class="btn btn-info py-2 text-white "
-                                       type="button">Login</a>
+                                    <button type="submit" class="btn btn-info py-2 text-white "
+                                       >Login</button>
                                 </div>
                             </form>
                             <a asp-controller="Home" asp-action="patientforgotpass"

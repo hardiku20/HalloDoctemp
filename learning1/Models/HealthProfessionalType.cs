@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -12,9 +11,9 @@ public partial class HealthProfessionalType
 
     public DateTime CreatedDate { get; set; }
 
-    public BitArray? IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public virtual ICollection<HealthProfessional> HealthProfessionals { get; set; } = new List<HealthProfessional>();
 }

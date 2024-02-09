@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -12,7 +11,7 @@ public partial class Shift
 
     public DateOnly StartDate { get; set; }
 
-    public BitArray IsRepeat { get; set; } = null!;
+    public bool IsRepeat { get; set; }
 
     public string? WeekDays { get; set; }
 

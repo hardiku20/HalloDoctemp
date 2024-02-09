@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -36,7 +35,7 @@ public partial class RequestClient
 
     public int? IntDate { get; set; }
 
-    public BitArray? IsMobile { get; set; }
+    public bool? IsMobile { get; set; }
 
     public string? Street { get; set; }
 

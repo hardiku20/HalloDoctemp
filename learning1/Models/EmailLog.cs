@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -8,7 +7,7 @@ public partial class EmailLog
 {
     public decimal EmailLogId { get; set; }
 
-    public string? EmailTemplate { get; set; }
+    public string EmailTemplate { get; set; } = null!;
 
     public string SubjectName { get; set; } = null!;
 
@@ -30,7 +29,7 @@ public partial class EmailLog
 
     public DateTime? SentDate { get; set; }
 
-    public BitArray? IsEmailSent { get; set; }
+    public bool? IsEmailSent { get; set; }
 
     public int? SentTries { get; set; }
 

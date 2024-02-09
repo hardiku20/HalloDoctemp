@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -24,13 +23,13 @@ public partial class Physician
 
     public string? AdminNotes { get; set; }
 
-    public BitArray? IsAgreementDoc { get; set; }
+    public bool? IsAgreementDoc { get; set; }
 
-    public BitArray? IsBackgroundDoc { get; set; }
+    public bool? IsBackgroundDoc { get; set; }
 
-    public BitArray? IsTrainingDoc { get; set; }
+    public bool? IsTrainingDoc { get; set; }
 
-    public BitArray? IsNonDisclosureDoc { get; set; }
+    public bool? IsNonDisclosureDoc { get; set; }
 
     public string? Address1 { get; set; }
 
@@ -44,7 +43,7 @@ public partial class Physician
 
     public string? AltPhone { get; set; }
 
-    public string? CreatedBy { get; set; }
+    public string CreatedBy { get; set; } = null!;
 
     public DateTime CreatedDate { get; set; }
 
@@ -58,27 +57,29 @@ public partial class Physician
 
     public string BusinessWebsite { get; set; } = null!;
 
-    public BitArray? IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public int? RoleId { get; set; }
 
     public string? Npinumber { get; set; }
 
-    public BitArray? IsLicenseDoc { get; set; }
+    public bool? IsLicenseDoc { get; set; }
 
     public string? Signature { get; set; }
 
-    public BitArray? IsCredentialDoc { get; set; }
+    public bool? IsCredentialDoc { get; set; }
 
-    public BitArray? IsTokenGenerate { get; set; }
+    public bool? IsTokenGenerate { get; set; }
 
     public string? SyncEmailAddress { get; set; }
 
     public virtual AspNetUser? AspNetUser { get; set; }
 
-    public virtual AspNetUser? CreatedByNavigation { get; set; }
+    public virtual AspNetUser CreatedByNavigation { get; set; } = null!;
 
     public virtual AspNetUser? ModifiedByNavigation { get; set; }
+
+    public virtual ICollection<PhysicianLocation> PhysicianLocations { get; set; } = new List<PhysicianLocation>();
 
     public virtual ICollection<PhysicianNotification> PhysicianNotifications { get; set; } = new List<PhysicianNotification>();
 

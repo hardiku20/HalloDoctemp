@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<DbHalloDocContext>(options =>
-options.UseNpgsql(builder.Configuration.GetConnectionString("DbHalloDocContext")));
+builder.Services.AddDbContext<DbHallodocContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
 
 var app = builder.Build();
 

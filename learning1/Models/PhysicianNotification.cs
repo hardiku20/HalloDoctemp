@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -10,7 +9,7 @@ public partial class PhysicianNotification
 
     public int PhysicianId { get; set; }
 
-    public BitArray IsNotificationStopped { get; set; } = null!;
+    public bool IsNotificationStopped { get; set; }
 
     public virtual Physician Physician { get; set; } = null!;
 }

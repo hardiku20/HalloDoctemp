@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace learning1.Models;
@@ -24,7 +23,7 @@ public partial class RequestStatusLog
 
     public string? Ip { get; set; }
 
-    public BitArray? TransToAdmin { get; set; }
+    public bool? TransToAdmin { get; set; }
 
     public virtual Admin? Admin { get; set; }
 
