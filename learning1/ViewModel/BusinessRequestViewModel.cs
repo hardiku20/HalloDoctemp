@@ -1,18 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace learning1.ViewModel
+﻿namespace learning1.ViewModel
 {
-    public class ConciergeRequestViewModel
+    public class BusinessRequestViewModel
     {
-        [Required(ErrorMessage = "Required")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)$", ErrorMessage = "Invalid First Name")]
         public string Fname { get; set; }
-
         public string Lname { get; set; }
-
         public string Phone { get; set; }
         public string Emailaddress { get; set; }
-        public string houseName { get; set; }
+        public string Hotel { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string FirstName { get; set; }
@@ -22,6 +16,5 @@ namespace learning1.ViewModel
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
-
     }
 }

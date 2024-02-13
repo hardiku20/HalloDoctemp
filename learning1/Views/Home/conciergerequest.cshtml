@@ -42,22 +42,23 @@
                             <div class="mb-3 mt-2 col-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput"
-                                           placeholder="Your First Name" asp-for="Fname">
-                                    <label for="floatingInput" class="">Your First Name</label>
+                                           placeholder="Your First Name" asp-for="Fname" >
+                                    <label for="floatingInput" class="text-secondary">Your First Name</label>
+                                    <p class="text-danger fw-bold">@Html.ValidationMessageFor(x=>x.Fname)</p>
                                 </div>
                             </div>
                             <div class="mb-3 mt-2 col-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput"
                                            placeholder="Your Last Name" asp-for="Lname">
-                                    <label for="floatingInput" class="">Your Last Name</label>
+                                    <label for="floatingInput" class="text-secondary">Your Last Name</label>
                                 </div>
                             </div>
                             <div class="mb-3 col-6">
                                 <div class="form-floating input-info">
                                     <input type="email" class="form-control" id="floatingInput"
                                            placeholder="name@example.com" asp-for="Emailaddress">
-                                    <label for="floatingInput">Your Email</label>
+                                    <label for="floatingInput" class="text-secondary">Your Email</label>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -70,7 +71,7 @@
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput"
                                            placeholder="Hotel/Property Name" asp-for="houseName">
-                                    <label for="floatingInput" class="">Hotel/Property Name</label>
+                                    <label for="floatingInput" class="text-secondary">Hotel/Property Name</label>
                                 </div>
                             </div>
                         </div>
@@ -80,25 +81,25 @@
                             <div class="col-sm-6 mt-2 mb-3">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="Street" asp-for="Street">
-                                    <label for="floatingInput">Street</label>
+                                    <label for="floatingInput" class="text-secondary">Street</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 mt-2 mb-3">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City">
-                                    <label for="floatingInput">City</label>
+                                    <label for="floatingInput" class="text-secondary">City</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State">
-                                    <label for="floatingInput">State</label>
+                                    <label for="floatingInput" class="text-secondary">State</label>
                                 </div>
                             </div>
                             <div class="col-sm-6 mb-3">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="Zip Code" asp-for="ZipCode">
-                                    <label for="floatingInput">Zip Code</label>
+                                    <label for="floatingInput" class="text-secondary">Zip Code</label>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +111,7 @@
                             <div class="form-floating input-info mt-2 mb-3">
                                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                           style="height: 100px"></textarea>
-                                <label for="floatingTextarea2" class="mx-2">
+                                <label for="floatingTextarea2" class="mx-2 text-secondary">
                                     Enter brief details of Symptoms
                                     (Optional)
                                 </label>
@@ -118,19 +119,19 @@
                             <div class="mb-3 col-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName">
-                                    <label for="floatingInput" class="">First Name</label>
+                                    <label for="floatingInput" class="text-secondary">First Name</label>
                                 </div>
                             </div>
                             <div class="mb-3 col-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName">
-                                    <label for="floatingInput" class="">Last Name</label>
+                                    <label for="floatingInput" class="text-secondary">Last Name</label>
                                 </div>
                             </div>
                             <div class="form-floating input-info col-6 mb-3">
                                 <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
                                        aria-describedby="basic-addon1" asp-for="DateofBirth">
-                                <label for="floatingInputValue" class="mx-2">Date of birth</label>
+                                <label for="floatingInputValue" class="mx-2 text-secondary">Date of birth</label>
                             </div>
                         </div>
 
@@ -142,14 +143,14 @@
                                 <div class="form-floating input-info">
                                     <input type="email" class="form-control" id="floatingInput"
                                            placeholder="name@example.com " asp-for="Email">
-                                    <label for="floatingInput">Email address</label>
+                                    <label for="floatingInput" class="text-secondary">Email address</label>
                                 </div>
                             </div>
                             <div class="col-md mt-2">
                                 <div class="form-floating input-info">
                                     <input type="email" class="form-control" id="floatingInput"
                                            placeholder="name@example.com" asp-for="Email">
-                                    <label for="floatingInput">Email address</label>
+                                    <label for="floatingInput" class="text-secondary">Email address</label>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +161,7 @@
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput"
                                            placeholder="Room #/Suite (Optional)">
-                                    <label for="floatingInput">Room #/Suite (Optional)</label>
+                                    <label for="floatingInput" class="text-secondary">Room #/Suite (Optional)</label>
                                 </div>
                             </div>
                         </div>
