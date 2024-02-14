@@ -14,7 +14,7 @@ namespace learning1.ViewModel
         [Required]
         public string LastName { get; set;}
         [Required]
-        public string DateofBirth { get; set;}
+        public DateTime DateofBirth { get; set;}
         [Required]
         public string Street { get; set;}
         [Required]

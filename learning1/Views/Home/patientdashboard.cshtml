@@ -45,12 +45,14 @@
         </nav>
         <hr>
         <div class="d-flex align-items-center">
-            <div class="mx-5 pb-2">
-                <a href="" class="text-decoration-none text-info">Dashboard</a>
-            </div>
-            <div class="pb-2">
-                <a href=" " class="text-decoration-none text-info ">Profile</a>
-            </div>
+            <ul class="nav nav-underline ms-5">
+                <li class="nav-item">
+                    <a class="nav-link active text-info px-2 fw-medium" aria-current="page" asp-action="patientdashboard" asp-controller="Home">DashBoard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-secondary px-2 fw-medium" asp-action="patientprofile" asp-controller="Home">Profile</a>
+                </li>
+            </ul>
         </div>
     </header>
 

@@ -118,7 +118,7 @@ namespace learning1.Controllers
                 //_context.SaveChanges();
 
 
-                ////User
+                //User
                 //User user = new User
                 //{
                 //    Email = model.Email,
@@ -131,6 +131,10 @@ namespace learning1.Controllers
                 //    State = model.State,
                 //    ZipCode = model.ZipCode,
                 //    CreatedBy = "hardik",
+                //    StrMonth = (model.DateofBirth.Month).ToString(),
+                //    IntDate = (model.DateofBirth.Day),
+                //    IntYear = (model.DateofBirth.Year),
+
                 //    CreatedDate = DateTime.Now,
                 //};
 
@@ -520,11 +524,25 @@ namespace learning1.Controllers
             return View(model);
         }
 
+        public IActionResult patientprofile()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        public IActionResult download_file(string filename)
+        {
+            var net = new System.Net.WebClient();
+            var data = net.DownloadData("Files/PatientDocs/" + filename);
+            var content = new System.IO.MemoryStream(data);
+            var contentType = "APPLICATION/octet-stream";
+            return File(content, contentType, filename);
         }
     }
 }
