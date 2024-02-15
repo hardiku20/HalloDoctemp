@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Agreement</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Cancel Confirmation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="message-text mb-2" class="col-form-label">Test Test,</label>
+                            <div class="form-floating">
+                                <textarea class="form-control"
+                                    placeholder="Please provide a brief explanation for your cancelation"
+                                    id="floatingTextarea2" style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">Please provide a brief explanation for your
+                                    cancelation</label>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- content of the web page -->
+    <section class="">
+        <div class="container-fluid py-5">
+            <div class="container col-6 py-5">
+                <div class="mt-5 mb-5 ">
+                    <p class="text-secondary fs-4">To provide best medical service, we cannot determine the cost right
+                        away. If you agree to our
+                        service, so we will provide care and follow-up until all care is completed. So with this points,
+                        if
+                        you like us to provide care to you click on "Agree" and we'll get started immediately, if you do
+                        not
+                        agree simply click "Cancel".</p>
+                </div>
+                <div class="d-flex justify-content-around">
+                    <button type="button" class="btn btn-lg btn-success">I agree</button>
+                    <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" data-bs-whatever="">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>

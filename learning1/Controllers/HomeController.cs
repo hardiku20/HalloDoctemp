@@ -2,8 +2,10 @@
 using learning1.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Runtime.InteropServices;
 
 namespace learning1.Controllers
@@ -106,42 +108,47 @@ namespace learning1.Controllers
 
             if (ModelState.IsValid)
             {
-                //AspNetUser netUser = new AspNetUser
-                //{
-                //    Id = Guid.NewGuid().ToString(),
-                //    UserName = model.Email,
-                //    Email = model.Email,
-                //    PhoneNumber = model.PhoneNumber,
-                //    CreatedDate = DateTime.Now,
-                //};
-                //_context.AspNetUsers.Add(netUser);
-                //_context.SaveChanges();
+
+                if(model.Password != null && model.Password==model.ConfirmPassword)
+                {
+                    AspNetUser netUser = new AspNetUser
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        UserName = model.Email,
+                        Email = model.Email,
+                        PhoneNumber = model.PhoneNumber,
+                        CreatedDate = DateTime.Now,
+                        PasswordHash = model.Password
+                    };
+                    _context.AspNetUsers.Add(netUser);
+                    _context.SaveChanges();
 
 
-                //User
-                //User user = new User
-                //{
-                //    Email = model.Email,
-                //    AspNetUserId = netUser.Id,
-                //    FirstName = model.FirstName,
-                //    LastName = model.LastName,
-                //    Mobile = model.PhoneNumber,
-                //    Street = model.Street,
-                //    City = model.City,
-                //    State = model.State,
-                //    ZipCode = model.ZipCode,
-                //    CreatedBy = "hardik",
-                //    StrMonth = (model.DateofBirth.Month).ToString(),
-                //    IntDate = (model.DateofBirth.Day),
-                //    IntYear = (model.DateofBirth.Year),
+                    //User
+                    User user = new User
+                    {
+                        Email = model.Email,
+                        AspNetUserId = netUser.Id,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Mobile = model.PhoneNumber,
+                        Street = model.Street,
+                        City = model.City,
+                        State = model.State,
+                        ZipCode = model.ZipCode,
+                        CreatedBy = "hardik",
+                        StrMonth = (model.DateofBirth.Month).ToString(),
+                        IntDate = (model.DateofBirth.Day),
+                        IntYear = (model.DateofBirth.Year),
 
-                //    CreatedDate = DateTime.Now,
-                //};
+                        CreatedDate = DateTime.Now,
+                    };
 
-                //_context.Users.Add(user);
-                //_context.SaveChanges();
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
 
-                //COME Back
+                }
+
 
                 var userId = _context.Users.Where(u => u.Email == model.Email).Select(u => u.UserId).FirstOrDefault();
                 //request
@@ -186,11 +193,12 @@ namespace learning1.Controllers
                 }
 
 
-
+                TempData["viewPassword"] = "false";
                 return RedirectToAction("patientlogin");
             }
             else
             {
+                TempData["viewPassword"] = "true";
                 return View();
             }
         }
@@ -471,15 +479,24 @@ namespace learning1.Controllers
             //int id = (int)TempData["id"];
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
             string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
-            var temp = _context.Requests.Where(x => x.UserId == id)
-                .Select(x => new PatientHistoryViewModel { Status = x.Status, CreatedDate = x.CreatedDate }).ToList();
+            var temp = _context.Requests.Include(x => x.RequestWiseFiles).Where(x => x.UserId == id)
+                .Select(x => new PatientHistoryViewModel
+                {
+                    RequestId = x.RequestId,
+                    CreatedDate = x.CreatedDate,
+                    Status = x.Status,
+                    fileCount = x.RequestWiseFiles.Count
+                });
 
             PatientDashboardViewModel model = new PatientDashboardViewModel()
             {
                 UserName = userName,
-                HistoryViewModel = temp
+                HistoryViewModel = temp.ToList()
             };
+
+            //_httpContextAccessor.HttpContext.Session.SetInt32("id", id);
             return View(model);
+
         }
 
 
@@ -499,16 +516,20 @@ namespace learning1.Controllers
         
 
 
-        public IActionResult viewdocuments()
+        public IActionResult viewdocuments( int requestId)
         {
+            if (requestId == 0)
+            {
+                requestId = (int)_httpContextAccessor.HttpContext.Session.GetInt32("requestId");
+            }
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
             string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
 
 
-            List<int> requestTempId = _context.Requests.Where(x => x.UserId == id).Select(x => x.RequestId).Distinct().ToList();
+            //List<int> requestTempId = _context.Requests.Where(x => x.UserId == id).Select(x => x.RequestId).Distinct().ToList();
 
 
-            var documents = _context.RequestWiseFiles.Where(x => requestTempId.Contains(x.RequestId))
+            var documents = _context.RequestWiseFiles.Where(x => x.RequestId == requestId)
                                            .Select(x => new PatientDocumentsViewModel
                                            {
                                                CreatedDate = x.CreatedDate,
@@ -516,7 +537,7 @@ namespace learning1.Controllers
                                            }).ToList();
             ViewDocumentViewModel model = new ViewDocumentViewModel()
             {
-
+                RequestId = requestId,
                 UserName = userName,
                 DocumentsViewModel = documents
 
@@ -524,9 +545,52 @@ namespace learning1.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult viewDocuments(ViewDocumentViewModel model, int requestId)
+        {
+            if(model.formFile != null)
+            {
+                string fileName = requestId.ToString() + " - " + model.formFile.FileName;
+                string filePath = Path.Combine("Files", "PatientDocs", fileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.formFile.CopyTo(stream);
+                }
+
+                RequestWiseFile files = new RequestWiseFile()
+                {
+                    RequestId = requestId,
+                    FileName = fileName,
+                    CreatedDate = DateTime.Now,
+                };
+                _context.RequestWiseFiles.Add(files);
+                _context.SaveChanges();
+                _httpContextAccessor.HttpContext.Session.SetInt32("requestId", requestId);
+                return RedirectToAction("viewdocuments", requestId);
+
+            }
+            return View(model);
+        }
+
         public IActionResult patientprofile()
         {
-            return View();
+            int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
+            var User = _context.Users.FirstOrDefault(x=>x.UserId == id);
+            PatientProfileViewModel model = new PatientProfileViewModel()
+            {
+                FirstName= User.FirstName
+
+            };
+
+
+            return View(model);
+        }
+
+        public IActionResult reviewagreement()
+        {
+            return View(); 
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -536,6 +600,30 @@ namespace learning1.Controllers
         }
 
 
+        //public IActionResult DownLoadAll()
+        //{
+        //    var zipName = $"TestFiles-{DateTime.Now.ToString("yyyy_MM_dd-HH_mm_ss")}.zip";
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        //required: using System.IO.Compression;
+        //        using (var zip = new ZipArchive(ms, ZipArchiveMode.Create, true))
+        //        {
+        //            //QUery the Products table and get all image content
+        //            _dbcontext.Products.ToList().ForEach(file =>
+        //            {
+        //                var entry = zip.CreateEntry(file.ProImageName);
+        //                using (var fileStream = new MemoryStream(file.ProImageContent))
+        //                using (var entryStream = entry.Open())
+        //                {
+        //                    fileStream.CopyTo(entryStream);
+        //                }
+        //            });
+        //        }
+        //        return File(ms.ToArray(), "application/zip", zipName);
+        //    }
+        //}
+
+
         public IActionResult download_file(string filename)
         {
             var net = new System.Net.WebClient();
@@ -543,6 +631,23 @@ namespace learning1.Controllers
             var content = new System.IO.MemoryStream(data);
             var contentType = "APPLICATION/octet-stream";
             return File(content, contentType, filename);
+        }
+
+
+        public IActionResult PatientCheck(string email)
+        {
+            var existingUser = _context.AspNetUsers.FirstOrDefault(u => u.Email == email);
+            bool isValidEmail;
+            if (existingUser == null)
+            {
+                isValidEmail = false;
+                TempData["viewPassword"] = "true";
+            }
+            else
+            {
+                isValidEmail = true;
+            }
+            return Json(new { isValid = isValidEmail });
         }
     }
 }

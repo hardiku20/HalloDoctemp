@@ -87,7 +87,14 @@
                                 @Html.DisplayFor(modelItem => item.Status)
                             </td>
                             <td>
-                                <a class="btn btn-outline-info" asp-action="viewdocuments" asp-controller="Home">document</a>
+                                @if(@item.fileCount>0)
+                                {
+                                <a class="btn btn-outline-info" asp-action="viewdocuments" asp-controller="Home" asp-route-requestId ="@item.RequestId">Document(@item.fileCount)</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-info" asp-action="viewdocuments" asp-controller="Home" asp-route-requestId="@item.RequestId"> Add Document</a>
+                                }
                             </td>
                         </tr>
                     }

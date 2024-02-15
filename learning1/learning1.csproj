@@ -11,6 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\customValidation.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\customValidation.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.15">
       <PrivateAssets>all</PrivateAssets>
@@ -29,6 +37,10 @@
   <ItemGroup>
     <Folder Include="Files\" />
     <Folder Include="Files\PatientDocs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\customValidation.js" />
   </ItemGroup>
 
 </Project>

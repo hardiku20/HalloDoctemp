@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace learning1.ViewModel
 {
@@ -24,6 +25,10 @@ namespace learning1.ViewModel
         [Required]
         public string ZipCode { get; set;}
 
+        public string? Password { get; set;}
+
+        [Compare("Password", ErrorMessage ="Passwords must match")]
+        public string? ConfirmPassword { get; set;}
         public IFormFile formFile { get; set; }
 
     }

@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="/css/style1.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <link rel="stylesheet" href="/css/style1.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    debugger;
+    <script src="/js/customValidation.js"></script>
+
 </head>
 
 <body class="bg-light">
@@ -69,7 +73,7 @@
                             <h5 class=" mt-3 mb-2">Patient Contact Information</h5>
                             <div class="col-md mt-2">
                                 <div class="form-floating input-info">
-                                    <input type="email" class="form-control" id="floatingInput"
+                                    <input type="email" class="form-control" id="email"
                                            placeholder="name@example.com" asp-for="Email">
                                     <label for="floatingInput" class="text-secondary">Email address</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.Email)</p>
@@ -82,6 +86,41 @@
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.PhoneNumber)</p>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            @if (TempData["viewPassword"] == "true")
+                            {
+                                <div class="row">
+
+                                    <div class="col-md-6 mb-3 form-floating hidden-pass">
+                                        <input type="password" class="form-control " id="passwordFields1" placeholder="Password" asp-for="Password">
+                                        <label class="ms-2 text-muted" for="passwordFields1">Password</label>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-3 form-floating hidden-pass">
+                                        <input type="password" class="form-control" id="passwordFields2" placeholder="Confirm Password" asp-for="ConfirmPassword">
+                                        <label class="ms-2 text-muted" for="passwordFields2">Confirm Password</label>
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-md-6 mb-3 form-floating hidden-pass" style="display:none;">
+                                        <input type="password" class="form-control " id="passwordFields1" placeholder="Password" asp-for="Password">
+                                        <label class="ms-2 text-muted" for="passwordFields1">Password</label>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-3 form-floating hidden-pass" style="display:none;">
+                                        <input type="password" class="form-control" id="passwordFields2" placeholder="Confirm Password" asp-for="ConfirmPassword">
+                                        <label class="ms-2 text-muted" for="passwordFields2">Confirm Password</label>
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            }
                         </div>
 
                         <div class="row">
@@ -153,7 +192,7 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+   @*  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> *@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
