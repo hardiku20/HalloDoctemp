@@ -578,9 +578,21 @@ namespace learning1.Controllers
         {
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
             var User = _context.Users.FirstOrDefault(x=>x.UserId == id);
+            string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
             PatientProfileViewModel model = new PatientProfileViewModel()
-            {
-                FirstName= User.FirstName
+            { 
+                UserName = userName,
+                FirstName= User.FirstName,
+                LastName = User.LastName,
+                Email = User.Email,
+                PhoneNo= User.Mobile,
+                Street = User.Street,
+                City = User.City,
+                State = User.State,
+                ZipCode = User.ZipCode,
+                DateOfBirth = User.CreatedDate
+
+
 
             };
 
@@ -649,5 +661,21 @@ namespace learning1.Controllers
             }
             return Json(new { isValid = isValidEmail });
         }
+
+        public IActionResult submitinformationme()
+        {
+            return View();
+        }
+
+
+        public IActionResult submitinformationelse()
+        {
+            return View();
+        }
+
+
+
+
+
     }
 }
