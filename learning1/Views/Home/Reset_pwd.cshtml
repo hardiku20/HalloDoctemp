@@ -1,0 +1,103 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+@model ResetPasswordViewModel;
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" integrity="...">
+    <link rel="stylesheet" href="~/css/style.css">
+    <title>Reset Password</title>
+</head>
+
+<body>
+    <div class="bg-image " style="background-image: url(/assets/images/PlatformLogin.jpg); background-size: cover; background-repeat: no-repeat;
+         background-position: center; background-blend-mode: lighten; background-color: rgba(255, 255, 255, 0.9);">
+        <section class="vh-100">
+            <div class="container pt-5 bg-transparent">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card border-0 bg-transparent" style="border-radius: 1rem;">
+                            <div class="card-body p-5 text-center">
+
+                                <button type="submit" class="ms-auto d-block rounded border-info bg-white p-1">
+                                    <img src="/assets/images/moon.svg"
+                                         style="transform: rotate(90deg);" alt="" class="p-1">
+                                </button>
+                                <div class="mb-md-2 pb-5">
+                                    <img src="/assets/images/logo.png" alt="">
+
+                                </div>
+                                <div class="d-flex ">
+                                    <a href="#" class="font-info text-decoration-none text-info fs-5 mb-3" style="color: #17a2b8;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                             class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd"
+                                                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                                        </svg> Back
+                                    </a>
+                                </div>
+                                <h2 class="fw-bold mb-3">Reset your Password </h2>
+
+                                @if (TempData["isTokenSame"] == "true")
+                                {
+                                    <form method="post">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control uname" id="floatingInput" value=@Model.Email disabled>
+                                            <img src="/assets/images/person-circle.svg" alt="" class="uicon">
+                                            <label for="floatingInput">Username</label>
+                                            <div class="form-floating input-info hidden-pass">
+                                                <input type="password" class="form-control mt-3 mb-3 " id="passwordFields1" asp-for="Password" placeholder="Password" required>
+                                                <label class="ms-2 text-muted" for="passwordFields1">Password</label>
+                                                <p class="text-start ps-2 text-danger fw-bold">@Html.ValidationMessageFor(x => x.Password)</p>
+
+                                            </div>
+                                            <div class=" form-floating input-info hidden-pass mb-3">
+                                                <input type="password" class="form-control" id="passwordFields2" placeholder="Password" asp-for="ConfirmPassword" required>
+                                                <label class="ms-2 text-muted" for="passwordFields2">Confirm Password</label>
+                                                <p class="text-start ps-2 text-danger fw-bold">@Html.ValidationMessageFor(x => x.ConfirmPassword)</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-floating">
+                                            <button class="btn btn-info w-100 btn-lg my-4 text-white" type="submit" asp-for="">Reset Password</button>
+                                            <a asp-controller="home" asp-action="login" class="font-info text-decoration-none text-info mb-5"
+                                               style="color: #17a2b8;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd"
+                                                          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+                                                </svg> Back to Login
+                                            </a>
+                                            <div class="text-secondary d-flex justify-content-center mt-5 footer">
+                                                <span class="me-3 border-end border-secondary pe-3">Terms and Conditions</span>
+                                                <span>Privacy Policy</span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        Token Expired!
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

@@ -3,10 +3,13 @@ using learning1.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using SQLitePCL;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
+using System.Net.Mail;
+using System.Net;
 
 namespace learning1.Controllers
 {
@@ -18,17 +21,21 @@ namespace learning1.Controllers
         //{
         //    _logger = logger;
         //}
+
+        private readonly ILogger<HomeController> _logger;
         private readonly DbHallodocContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMemoryCache _memoryCache;
 
 
-        public HomeController(DbHallodocContext context, IHttpContextAccessor httpContextAccessor)
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
         {
-            /* _logger = logger;*/
-            _context = context;
+            _logger = logger;
             _httpContextAccessor = httpContextAccessor;
-        }
+            _context = context;
+            _memoryCache = memoryCache;
 
+        }
 
 
 
@@ -86,10 +93,7 @@ namespace learning1.Controllers
         //    return View();
         //}
 
-        public IActionResult patientforgotpass()
-        {
-            return View();
-        }
+
 
         public IActionResult patientsite()
         {
@@ -109,7 +113,7 @@ namespace learning1.Controllers
             if (ModelState.IsValid)
             {
 
-                if(model.Password != null && model.Password==model.ConfirmPassword)
+                if (model.Password != null && model.Password == model.ConfirmPassword)
                 {
                     AspNetUser netUser = new AspNetUser
                     {
@@ -513,10 +517,10 @@ namespace learning1.Controllers
             return View();
         }
 
-        
 
 
-        public IActionResult viewdocuments( int requestId)
+
+        public IActionResult viewdocuments(int requestId)
         {
             if (requestId == 0)
             {
@@ -548,7 +552,7 @@ namespace learning1.Controllers
         [HttpPost]
         public IActionResult viewDocuments(ViewDocumentViewModel model, int requestId)
         {
-            if(model.formFile != null)
+            if (model.formFile != null)
             {
                 string fileName = requestId.ToString() + " - " + model.formFile.FileName;
                 string filePath = Path.Combine("Files", "PatientDocs", fileName);
@@ -569,7 +573,6 @@ namespace learning1.Controllers
                 _context.SaveChanges();
                 _httpContextAccessor.HttpContext.Session.SetInt32("requestId", requestId);
                 return RedirectToAction("viewdocuments", requestId);
-
             }
             return View(model);
         }
@@ -577,15 +580,15 @@ namespace learning1.Controllers
         public IActionResult patientprofile()
         {
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
-            var User = _context.Users.FirstOrDefault(x=>x.UserId == id);
+            var User = _context.Users.FirstOrDefault(x => x.UserId == id);
             string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
             PatientProfileViewModel model = new PatientProfileViewModel()
-            { 
+            {
                 UserName = userName,
-                FirstName= User.FirstName,
+                FirstName = User.FirstName,
                 LastName = User.LastName,
                 Email = User.Email,
-                PhoneNo= User.Mobile,
+                PhoneNo = User.Mobile,
                 Street = User.Street,
                 City = User.City,
                 State = User.State,
@@ -600,16 +603,16 @@ namespace learning1.Controllers
             return View(model);
         }
 
+
+
+
         public IActionResult reviewagreement()
         {
-            return View(); 
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
 
 
         //public IActionResult DownLoadAll()
@@ -666,6 +669,101 @@ namespace learning1.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult submitinformationme(SubmitInformationMeViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                AspNetUser netUser = new AspNetUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = model.Email,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    CreatedDate = DateTime.Now,
+
+                };
+                _context.AspNetUsers.Add(netUser);
+                _context.SaveChanges();
+
+
+                //User
+                User user = new User
+                {
+                    Email = model.Email,
+                    AspNetUserId = netUser.Id,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Mobile = model.PhoneNumber,
+                    Street = model.Street,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode,
+                    CreatedBy = "hardik",
+                    StrMonth = (model.DateofBirth.Month).ToString(),
+                    IntDate = (model.DateofBirth.Day),
+                    IntYear = (model.DateofBirth.Year),
+
+                    CreatedDate = DateTime.Now,
+                };
+
+                _context.Users.Add(user);
+                _context.SaveChanges();
+
+                Request request = new Request
+                {
+                    UserId = user.UserId,
+                    RequestTypeId = 2,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber,
+                    Email = model.Email,
+                    Status = 1,
+                    CreatedDate = DateTime.Now,
+
+                };
+
+
+                _context.Requests.Add(request);
+                _context.SaveChanges();
+
+
+                if (model.formFile != null)
+                {
+                    string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
+                    string filePath = Path.Combine("Files", "PatientDocs", fileName);
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.formFile.CopyTo(stream);
+                    }
+
+                    RequestWiseFile files = new()
+                    {
+                        RequestId = request.RequestId,
+                        FileName = fileName,
+                        CreatedDate = DateTime.Now,
+                    };
+                    _context.RequestWiseFiles.Add(files);
+                    _context.SaveChanges();
+
+                }
+
+
+            }
+            else
+            {
+                return View();
+            }
+            return View();
+
+        }
+
+
+
 
 
         public IActionResult submitinformationelse()
@@ -674,7 +772,218 @@ namespace learning1.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult submitinformationelse(SubmitInformationElseVIewModel model)
+        {
 
+            if (ModelState.IsValid)
+            {
+
+                AspNetUser netUser = new AspNetUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    UserName = model.Email,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    CreatedDate = DateTime.Now,
+
+                };
+                _context.AspNetUsers.Add(netUser);
+                _context.SaveChanges();
+
+
+                //User
+                User user = new User
+                {
+                    Email = model.Email,
+                    AspNetUserId = netUser.Id,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Mobile = model.PhoneNumber,
+                    Street = model.Street,
+                    City = model.City,
+                    State = model.State,
+                    ZipCode = model.ZipCode,
+                    CreatedBy = "hardik",
+                    StrMonth = (model.DateofBirth.Month).ToString(),
+                    IntDate = (model.DateofBirth.Day),
+                    IntYear = (model.DateofBirth.Year),
+
+                    CreatedDate = DateTime.Now,
+                };
+
+                _context.Users.Add(user);
+                _context.SaveChanges();
+
+                Request request = new Request
+                {
+                    UserId = user.UserId,
+                    RequestTypeId = 2,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    PhoneNumber = model.PhoneNumber,
+                    Email = model.Email,
+                    Status = 1,
+                    CreatedDate = DateTime.Now,
+
+                };
+
+
+                _context.Requests.Add(request);
+                _context.SaveChanges();
+
+                if (model.formFile != null)
+                {
+                    string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
+                    string filePath = Path.Combine("Files", "PatientDocs", fileName);
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.formFile.CopyTo(stream);
+                    }
+
+                    RequestWiseFile files = new()
+                    {
+                        RequestId = request.RequestId,
+                        FileName = fileName,
+                        CreatedDate = DateTime.Now,
+                    };
+                    _context.RequestWiseFiles.Add(files);
+                    _context.SaveChanges();
+
+                }
+            }
+            else
+            {
+                return View();
+            }
+            return View();
+
+        }
+
+        [HttpPost]
+        public IActionResult patientprofile(PatientProfileViewModel model)
+        {
+            int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
+            User user = _context.Users.FirstOrDefault(x => x.UserId == id);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email.ToString();
+            user.Mobile = model.PhoneNo;
+            user.Street = model.Street;
+            user.City = model.City;
+            user.State = model.State;
+            user.ZipCode = model.ZipCode;
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            //int requestId = _context.Requests.FirstOrDefault(x => x.UserId == id).RequestId;
+            //RequestClient requestClient = _context.RequestClients.FirstOrDefault(x => x.RequestId == requestId);
+
+            //requestClient.FirstName = model.FirstName;
+            //requestClient.LastName = model.LastName;
+            //requestClient.Email = model.Email.ToString();
+            //requestClient.PhoneNumber = model.PhoneNo;
+
+
+
+            return RedirectToAction("patientprofile");
+        }
+
+
+
+        public static void SendEmail(string email, string body, string subject)
+        {
+
+            var client = new SmtpClient("smtp.office365.com", 587);
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+            client.EnableSsl = true;
+
+            var message = new MailMessage();
+            message.From = new MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+            message.To.Add(email);
+            message.Subject = subject;
+            message.Body = body;
+            message.IsBodyHtml = true;
+            client.Send(message);
+        }
+
+        public IActionResult patientforgotpass()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult patientforgotpass(ForgotPasswordViewModel model)
+        {
+            var userEmail = _context.AspNetUsers.FirstOrDefault(x => x.Email == model.Email).Email;
+            if (userEmail != null)
+            {
+
+                var emailKey = Guid.NewGuid().ToString();
+                _httpContextAccessor.HttpContext.Session.SetString("EmailKey", emailKey);
+                _memoryCache.Set(userEmail, emailKey, TimeSpan.FromMinutes(30));
+                var resetLink = "https://localhost:7116/Home/Reset_pwd?uid=" + userEmail + "&token=" + emailKey;
+                var subject = "Request to Reset Password";
+                var body = "Hi" + "USER" + "Click on link below to reset your password " + resetLink;
+                SendEmail(userEmail, body, subject);
+                var tmp = _memoryCache.Get(userEmail);
+                return RedirectToAction("patientlogin");
+            }
+            else
+            {
+                return View();
+            }
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Reset_pwd([FromQuery] string uid, [FromQuery] string token)
+        {
+            var tokenStored = _memoryCache.Get(uid);
+            if (tokenStored.ToString() == token)
+            {
+                ResetPasswordViewModel model = new ResetPasswordViewModel();
+                model.Email = uid;
+                TempData["isTokenSame"] = "true";
+                return View(model);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Reset_pwd(ResetPasswordViewModel model, [FromQuery] string uid)
+        {
+            if (ModelState.IsValid)
+            {
+                model.Email = uid;
+                if (model.Password == model.ConfirmPassword)
+                {
+                    AspNetUser netUser = _context.AspNetUsers.FirstOrDefault(x => x.Email == uid);
+                    netUser.PasswordHash = model.Password;
+                    _context.AspNetUsers.Update(netUser);
+                    _context.SaveChanges();
+
+
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            return View();
+        }
+
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
 
     }
