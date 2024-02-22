@@ -1,5 +1,9 @@
-using learning1.Models;
+using learning1.DBEntities.Models;
 using Microsoft.EntityFrameworkCore;
+using learning1.Services.IServices;
+using learning1.Repositories.IRepositories;
+using learning1.Services.Services;
+using learning1.Repositories.Repositories;
 
 
 
@@ -9,8 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
+builder.Services.AddScoped<IPatientServices, PatientServices>();
+builder.Services.AddScoped<IPatientRepo, PatientRepo>();
+
 builder.Services.AddDbContext<DbHallodocContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
+
+
+//builder.Services.AddDbContext<learning1.DBEntities.Models.DbHallodocContext>(options =>
+//options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
 
 var app = builder.Build();
 

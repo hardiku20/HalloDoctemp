@@ -1,5 +1,5 @@
-﻿using learning1.Models;
-using learning1.ViewModel;
+﻿using learning1.DBEntities.Models;
+using learning1.DBEntities.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +7,11 @@ using Microsoft.Extensions.Caching.Memory;
 using SQLitePCL;
 using System.Diagnostics;
 using System.IO.Compression;
+using learning1.Services.Services;
 using System.Runtime.InteropServices;
 using System.Net.Mail;
 using System.Net;
+using learning1.Services.IServices;
 
 namespace learning1.Controllers
 {
@@ -26,10 +28,12 @@ namespace learning1.Controllers
         private readonly DbHallodocContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMemoryCache _memoryCache;
+        private readonly IPatientServices _patientServices;
 
-
-        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
+        //public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
+        public HomeController(ILogger<HomeController> logger, IPatientServices patientServices, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
         {
+            _patientServices = patientServices;
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
@@ -63,16 +67,15 @@ namespace learning1.Controllers
 
             if (ModelState.IsValid)
             {
-
-                var user = _context.AspNetUsers.FirstOrDefault(u => u.Email == model.Email && u.PasswordHash == model.Password);
-
-                if (user != null)
+                //var temp = loginmethod()
+                int userId = _patientServices.LoginMethod(model.Email, model.Password);
+                if (userId != -1)
                 {
                     //return View("patient_dashboard", user.Id);
-                    int id = _context.Users.Where(u => u.AspNetUserId == user.Id).FirstOrDefault().UserId;
+                    //int id = _context.Users.Where(u => u. == userId).FirstOrDefault().UserId;
                     //return patient_dashboard((short)id);
                     //TempData["id"] = (int)id;
-                    _httpContextAccessor.HttpContext.Session.SetInt32("Id", id);
+                    _httpContextAccessor.HttpContext.Session.SetInt32("Id", userId);
                     return RedirectToAction("patientdashboard", "Home");
                 }
                 else
@@ -105,107 +108,134 @@ namespace learning1.Controllers
             return View();
         }
 
-        //post 
         [HttpPost]
-        public IActionResult patientrequest(PatientRequestViewModel model)
+        public IActionResult Patientrequest(PatientRequestViewModel model)
         {
 
             if (ModelState.IsValid)
             {
-
-                if (model.Password != null && model.Password == model.ConfirmPassword)
-                {
-                    AspNetUser netUser = new AspNetUser
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        UserName = model.Email,
-                        Email = model.Email,
-                        PhoneNumber = model.PhoneNumber,
-                        CreatedDate = DateTime.Now,
-                        PasswordHash = model.Password
-                    };
-                    _context.AspNetUsers.Add(netUser);
-                    _context.SaveChanges();
-
-
-                    //User
-                    User user = new User
-                    {
-                        Email = model.Email,
-                        AspNetUserId = netUser.Id,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Mobile = model.PhoneNumber,
-                        Street = model.Street,
-                        City = model.City,
-                        State = model.State,
-                        ZipCode = model.ZipCode,
-                        CreatedBy = "hardik",
-                        StrMonth = (model.DateofBirth.Month).ToString(),
-                        IntDate = (model.DateofBirth.Day),
-                        IntYear = (model.DateofBirth.Year),
-
-                        CreatedDate = DateTime.Now,
-                    };
-
-                    _context.Users.Add(user);
-                    _context.SaveChanges();
-
-                }
-
-
-                var userId = _context.Users.Where(u => u.Email == model.Email).Select(u => u.UserId).FirstOrDefault();
-                //request
-                Request request = new Request
-                {
-                    UserId = userId,
-                    RequestTypeId = 2,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    Status = 1,
-                    CreatedDate = DateTime.Now,
-
-                };
-
-
-                _context.Requests.Add(request);
-                _context.SaveChanges();
-
-
-                if (model.formFile != null)
-                {
-                    string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
-                    string filePath = Path.Combine("Files", "PatientDocs", fileName);
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        model.formFile.CopyTo(stream);
-                    }
-
-                    RequestWiseFile files = new()
-                    {
-                        RequestId = request.RequestId,
-                        FileName = fileName,
-                        CreatedDate = DateTime.Now,
-                    };
-                    _context.RequestWiseFiles.Add(files);
-                    _context.SaveChanges();
-
-                }
-
-
-                TempData["viewPassword"] = "false";
+                _patientServices.GetPatientRequestData(model);
                 return RedirectToAction("patientlogin");
             }
-            else
-            {
-                TempData["viewPassword"] = "true";
-                return View();
-            }
+            return View();
         }
+
+
+        [HttpPost]
+        public IActionResult Familyrequest(Family_FriendRequestViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                _patientServices.GetFamilyRequestData(model);
+                return RedirectToAction("patientlogin");
+            }
+            return View();
+        }
+
+        
+
+
+        //post 
+        //[HttpPost]
+        //public IActionResult patientrequest(PatientRequestViewModel model)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+
+        //                if (model.Password != null && model.Password == model.ConfirmPassword)
+        //                {
+        //                    AspNetUser netUser = new AspNetUser
+        //                    {
+        //                        Id = Guid.NewGuid().ToString(),
+        //                        UserName = model.Email,
+        //                        Email = model.Email,
+        //                        PhoneNumber = model.PhoneNumber,
+        //                        CreatedDate = DateTime.Now,
+        //                        PasswordHash = model.Password
+        //                    };
+        //        _context.AspNetUsers.Add(netUser);
+        //                    _context.SaveChanges();
+
+
+        //                    //User
+        //                    User user = new User
+        //                    {
+        //                        Email = model.Email,
+        //                        AspNetUserId = netUser.Id,
+        //                        FirstName = model.FirstName,
+        //                        LastName = model.LastName,
+        //                        Mobile = model.PhoneNumber,
+        //                        Street = model.Street,
+        //                        City = model.City,
+        //                        State = model.State,
+        //                        ZipCode = model.ZipCode,
+        //                        CreatedBy = "hardik",
+        //                        StrMonth = (model.DateofBirth.Month).ToString(),
+        //                        IntDate = (model.DateofBirth.Day),
+        //                        IntYear = (model.DateofBirth.Year),
+
+        //                        CreatedDate = DateTime.Now,
+        //                    };
+
+        //        _context.Users.Add(user);
+        //                    _context.SaveChanges();
+
+        //                }
+
+
+        //    var userId = _context.Users.Where(u => u.Email == model.Email).Select(u => u.UserId).FirstOrDefault();
+        //    //request
+        //    Request request = new Request
+        //    {
+        //        UserId = userId,
+        //        RequestTypeId = 2,
+        //        FirstName = model.FirstName,
+        //        LastName = model.LastName,
+        //        PhoneNumber = model.PhoneNumber,
+        //        Email = model.Email,
+        //        Status = 1,
+        //        CreatedDate = DateTime.Now,
+
+        //    };
+
+
+        //    _context.Requests.Add(request);
+        //                _context.SaveChanges();
+
+
+        //                if (model.formFile != null)
+        //                {
+        //                    string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
+        //    string filePath = Path.Combine("Files", "PatientDocs", fileName);
+        //    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+        //                    using (var stream = new FileStream(filePath, FileMode.Create))
+        //                    {
+        //                        model.formFile.CopyTo(stream);
+        //                    }
+
+        //RequestWiseFile files = new()
+        //{
+        //    RequestId = request.RequestId,
+        //    FileName = fileName,
+        //    CreatedDate = DateTime.Now,
+        //};
+        //_context.RequestWiseFiles.Add(files);
+        //_context.SaveChanges();
+
+        //                }
+
+
+        //        TempData["viewPassword"] = "false";
+        //        return RedirectToAction("patientlogin");
+        //    }
+        //    else
+        //    {
+        //        TempData["viewPassword"] = "true";
+        //        return View();
+        //    }
+        //}
 
 
 
@@ -214,78 +244,78 @@ namespace learning1.Controllers
             return View();
         }
 
-
+      
         //familypage form data___
-        [HttpPost]
-        public IActionResult familyrequest(Family_FriendRequestViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        //[HttpPost]
+        //public IActionResult familyrequest(Family_FriendRequestViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-                AspNetUser netUser = new AspNetUser
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserName = model.Email,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    CreatedDate = DateTime.Now,
-                };
+        //        AspNetUser netUser = new AspNetUser
+        //        {
+        //            Id = Guid.NewGuid().ToString(),
+        //            UserName = model.Email,
+        //            Email = model.Email,
+        //            PhoneNumber = model.PhoneNumber,
+        //            CreatedDate = DateTime.Now,
+        //        };
 
-                _context.AspNetUsers.Add(netUser);
-                _context.SaveChanges();
-                //User
-                User user = new User
-                {
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Mobile = model.PhoneNumber,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    CreatedBy = "hardik",
-                    CreatedDate = DateTime.Now,
-                };
+        //        _context.AspNetUsers.Add(netUser);
+        //        _context.SaveChanges();
+        //        //User
+        //        User user = new User
+        //        {
+        //            Email = model.Email,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            Mobile = model.PhoneNumber,
+        //            Street = model.Street,
+        //            City = model.City,
+        //            State = model.State,
+        //            ZipCode = model.ZipCode,
+        //            CreatedBy = "hardik",
+        //            CreatedDate = DateTime.Now,
+        //        };
 
-                _context.Users.Add(user);
-                _context.SaveChanges();
-                //request
-                Request request = new Request
-                {
-                    UserId = user.UserId,
-                    RequestTypeId = 3,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    Status = 1,
-                    CreatedDate = DateTime.Now,
+        //        _context.Users.Add(user);
+        //        _context.SaveChanges();
+        //        //request
+        //        Request request = new Request
+        //        {
+        //            UserId = user.UserId,
+        //            RequestTypeId = 3,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            PhoneNumber = model.PhoneNumber,
+        //            Email = model.Email,
+        //            Status = 1,
+        //            CreatedDate = DateTime.Now,
 
-                };
+        //        };
 
-                _context.Requests.Add(request);
-                _context.SaveChanges();
+        //        _context.Requests.Add(request);
+        //        _context.SaveChanges();
 
-                RequestClient requestClient = new RequestClient
-                {
-                    RequestId = request.RequestId,
-                    FirstName = model.Fname,
-                    LastName = model.LastName,
-                    PhoneNumber = model.Phone,
-                    Email = model.Emailaddress,
-                };
+        //        RequestClient requestClient = new RequestClient
+        //        {
+        //            RequestId = request.RequestId,
+        //            FirstName = model.Fname,
+        //            LastName = model.LastName,
+        //            PhoneNumber = model.Phone,
+        //            Email = model.Emailaddress,
+        //        };
 
-                _context.RequestClients.Add(requestClient);
-                _context.SaveChanges();
+        //        _context.RequestClients.Add(requestClient);
+        //        _context.SaveChanges();
 
-                return RedirectToAction("patientlogin");
-            }
-            else
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("patientlogin");
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+        //}
 
         public IActionResult conciergerequest()
         {
@@ -978,7 +1008,10 @@ namespace learning1.Controllers
             }
             return View();
         }
-
+        public IActionResult admindashboard()
+        {
+            return View();
+        }
 
         public IActionResult Error()
         {
