@@ -124,7 +124,7 @@ namespace learning1.Controllers
         [HttpPost]
         public IActionResult Familyrequest(Family_FriendRequestViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _patientServices.GetFamilyRequestData(model);
                 return RedirectToAction("patientlogin");
@@ -132,7 +132,7 @@ namespace learning1.Controllers
             return View();
         }
 
-        
+
 
 
         //post 
@@ -244,7 +244,7 @@ namespace learning1.Controllers
             return View();
         }
 
-      
+
         //familypage form data___
         //[HttpPost]
         //public IActionResult familyrequest(Family_FriendRequestViewModel model)
@@ -317,117 +317,138 @@ namespace learning1.Controllers
         //    }
         //}
 
+
+
+        [HttpPost]
+        public IActionResult Conciergerequest(ConciergeRequestViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _patientServices.GetConciergeRequestData(model);
+                return RedirectToAction("patientlogin");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         public IActionResult conciergerequest()
         {
             return View();
         }
+
+
+
+
+
         //Concierge post method
-        [HttpPost]
-        public IActionResult conciergerequest(ConciergeRequestViewModel model)
-        {
+        //[HttpPost]
+        //public IActionResult conciergerequest(ConciergeRequestViewModel model)
+        //{
 
-            if (ModelState.IsValid)
-            {
-
-
-
-                AspNetUser netUser = new AspNetUser
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserName = model.Email,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    CreatedDate = DateTime.Now,
-                };
-
-                _context.AspNetUsers.Add(netUser);
-                _context.SaveChanges();
-                //User
-                User user = new User
-                {
-                    Email = model.Email,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Mobile = model.PhoneNumber,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    CreatedBy = "hardik",
-                    CreatedDate = DateTime.Now,
-                };
-
-                _context.Users.Add(user);
-                _context.SaveChanges();
-
-                Region region = new Region
-                {
-                    Name = model.State,
-                };
-                _context.Regions.Add(region);
-                _context.SaveChanges();
-
-
-                Concierge concierge = new Concierge
-                {
-
-                    ConciergeName = model.Fname,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    RegionId = region.RegionId,
-                    CreatedDate = DateTime.Now,
-
-                };
-
-                _context.Concierges.Add(concierge);
-                _context.SaveChanges();
-                //request
-                Request request = new Request
-                {
-                    UserId = user.UserId,
-                    RequestTypeId = 3,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    Status = 1,
-                    CreatedDate = DateTime.Now,
-
-                };
-
-                _context.Requests.Add(request);
-                _context.SaveChanges();
-
-                RequestConcierge requestConcierge = new RequestConcierge
-                {
-                    RequestId = request.RequestId,
-                    ConciergeId = concierge.ConciergeId,
-                };
-
-                _context.RequestConcierges.Add(requestConcierge);
-                _context.SaveChanges();
-
-                //RequestClient requestClient = new RequestClient
-                //{
-                //    RequestId = request.RequestId,
-                //    FirstName = model.Fname,
-                //    LastName = model.LastName,
-                //    PhoneNumber = model.Phone,
-                //    Email = model.Emailaddress,
-                //};
-
-                //_context.RequestClients.Add(requestClient);
-                //_context.SaveChanges();
+        //    if (ModelState.IsValid)
+        //    {
 
 
 
-                return RedirectToAction("patientlogin");
-            }
+        //        AspNetUser netUser = new AspNetUser
+        //        {
+        //            Id = Guid.NewGuid().ToString(),
+        //            UserName = model.Email,
+        //            Email = model.Email,
+        //            PhoneNumber = model.PhoneNumber,
+        //            CreatedDate = DateTime.Now,
+        //        };
 
-            else { return View(model); }
-        }
+        //        _context.AspNetUsers.Add(netUser);
+        //        _context.SaveChanges();
+        //        //User
+        //        User user = new User
+        //        {
+        //            Email = model.Email,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            Mobile = model.PhoneNumber,
+        //            Street = model.Street,
+        //            City = model.City,
+        //            State = model.State,
+        //            ZipCode = model.ZipCode,
+        //            CreatedBy = "hardik",
+        //            CreatedDate = DateTime.Now,
+        //        };
+
+        //        _context.Users.Add(user);
+        //        _context.SaveChanges();
+
+        //        Region region = new Region
+        //        {
+        //            Name = model.State,
+        //        };
+        //        _context.Regions.Add(region);
+        //        _context.SaveChanges();
+
+
+        //        Concierge concierge = new Concierge
+        //        {
+
+        //            ConciergeName = model.Fname,
+        //            Street = model.Street,
+        //            City = model.City,
+        //            State = model.State,
+        //            ZipCode = model.ZipCode,
+        //            RegionId = region.RegionId,
+        //            CreatedDate = DateTime.Now,
+
+        //        };
+
+        //        _context.Concierges.Add(concierge);
+        //        _context.SaveChanges();
+        //        //request
+        //        Request request = new Request
+        //        {
+        //            UserId = user.UserId,
+        //            RequestTypeId = 3,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            PhoneNumber = model.PhoneNumber,
+        //            Email = model.Email,
+        //            Status = 1,
+        //            CreatedDate = DateTime.Now,
+
+        //        };
+
+        //        _context.Requests.Add(request);
+        //        _context.SaveChanges();
+
+        //        RequestConcierge requestConcierge = new RequestConcierge
+        //        {
+        //            RequestId = request.RequestId,
+        //            ConciergeId = concierge.ConciergeId,
+        //        };
+
+        //        _context.RequestConcierges.Add(requestConcierge);
+        //        _context.SaveChanges();
+
+        //        //RequestClient requestClient = new RequestClient
+        //        //{
+        //        //    RequestId = request.RequestId,
+        //        //    FirstName = model.Fname,
+        //        //    LastName = model.LastName,
+        //        //    PhoneNumber = model.Phone,
+        //        //    Email = model.Emailaddress,
+        //        //};
+
+        //        //_context.RequestClients.Add(requestClient);
+        //        //_context.SaveChanges();
+
+
+
+        //        return RedirectToAction("patientlogin");
+        //    }
+
+        //    else { return View(model); }
+        //}
 
 
         public IActionResult businessrequest()
@@ -508,33 +529,38 @@ namespace learning1.Controllers
             return RedirectToAction("patientlogin");
         }
 
-        public IActionResult patientdashboard(short userId)
+        //public IActionResult patientdashboard()
+        //{
+        //    //int id = (int)TempData["id"];
+        //    int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
+        //    string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
+        //    var temp = _context.Requests.Include(x => x.RequestWiseFiles).Where(x => x.UserId == id)
+        //        .Select(x => new PatientHistoryViewModel
+        //        {
+        //            RequestId = x.RequestId,
+        //            CreatedDate = x.CreatedDate,
+        //            Status = x.Status,
+        //            fileCount = x.RequestWiseFiles.Count
+        //        });
+
+        //    PatientDashboardViewModel model = new PatientDashboardViewModel()
+        //    {
+        //        UserName = userName,
+        //        HistoryViewModel = temp.ToList()
+        //    };
+
+        //    //_httpContextAccessor.HttpContext.Session.SetInt32("id", id);
+        //    return View(model);
+
+        //}
+
+
+        public IActionResult patientdashboard()
         {
-            //int id = (int)TempData["id"];
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
-            string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
-            var temp = _context.Requests.Include(x => x.RequestWiseFiles).Where(x => x.UserId == id)
-                .Select(x => new PatientHistoryViewModel
-                {
-                    RequestId = x.RequestId,
-                    CreatedDate = x.CreatedDate,
-                    Status = x.Status,
-                    fileCount = x.RequestWiseFiles.Count
-                });
-
-            PatientDashboardViewModel model = new PatientDashboardViewModel()
-            {
-                UserName = userName,
-                HistoryViewModel = temp.ToList()
-            };
-
-            //_httpContextAccessor.HttpContext.Session.SetInt32("id", id);
+            var model = _patientServices.displayDashboard(id);
             return View(model);
-
         }
-
-
-
 
 
         public IActionResult patientsubmitrequest()
@@ -550,6 +576,36 @@ namespace learning1.Controllers
 
 
 
+        //public IActionResult viewdocuments(int requestId)
+        //    {
+        //        if (requestId == 0)
+        //        {
+        //            requestId = (int) _httpContextAccessor.HttpContext.Session.GetInt32("requestId");
+        //}
+        //int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
+        //string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
+
+
+        //    //List<int> requestTempId = _context.Requests.Where(x => x.UserId == id).Select(x => x.RequestId).Distinct().ToList();
+
+
+        //var documents = _context.RequestWiseFiles.Where(x => x.RequestId == requestId)
+        //                               .Select(x => new PatientDocumentsViewModel
+        //                               {
+        //                                   CreatedDate = x.CreatedDate,
+        //                                   FileName = x.FileName
+        //                               }).ToList();
+        //ViewDocumentViewModel model = new ViewDocumentViewModel()
+        //{
+        //    RequestId = requestId,
+        //    UserName = userName,
+        //    DocumentsViewModel = documents
+
+        //};
+        //    return View(model);
+        //}
+
+
         public IActionResult viewdocuments(int requestId)
         {
             if (requestId == 0)
@@ -557,79 +613,77 @@ namespace learning1.Controllers
                 requestId = (int)_httpContextAccessor.HttpContext.Session.GetInt32("requestId");
             }
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
-            string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
-
-
-            //List<int> requestTempId = _context.Requests.Where(x => x.UserId == id).Select(x => x.RequestId).Distinct().ToList();
-
-
-            var documents = _context.RequestWiseFiles.Where(x => x.RequestId == requestId)
-                                           .Select(x => new PatientDocumentsViewModel
-                                           {
-                                               CreatedDate = x.CreatedDate,
-                                               FileName = x.FileName
-                                           }).ToList();
-            ViewDocumentViewModel model = new ViewDocumentViewModel()
-            {
-                RequestId = requestId,
-                UserName = userName,
-                DocumentsViewModel = documents
-
-            };
+            var model = _patientServices.GetviewDocuments(requestId, id);
             return View(model);
         }
 
+        //[HttpPost]
+        //public IActionResult viewDocuments(ViewDocumentViewModel model, int requestId)
+        //{
+        //    if (model.formFile != null)
+        //    {
+        //        string fileName = requestId.ToString() + " - " + model.formFile.FileName;
+        //        string filePath = Path.Combine("Files", "PatientDocs", fileName);
+        //        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+        //        using (var stream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            model.formFile.CopyTo(stream);
+        //        }
+
+        //        RequestWiseFile files = new RequestWiseFile()
+        //        {
+        //            RequestId = requestId,
+        //            FileName = fileName,
+        //            CreatedDate = DateTime.Now,
+        //        };
+        //        _context.RequestWiseFiles.Add(files);
+        //        _context.SaveChanges();
+        //        _httpContextAccessor.HttpContext.Session.SetInt32("requestId", requestId);
+        //        return RedirectToAction("viewdocuments", requestId);
+        //    }
+        //    return View(model);
+        //}
+
+
         [HttpPost]
-        public IActionResult viewDocuments(ViewDocumentViewModel model, int requestId)
+        public IActionResult viewDocuments(learning1.DBEntities.ViewModel.ViewDocumentViewModel model, int requestId)
         {
             if (model.formFile != null)
             {
-                string fileName = requestId.ToString() + " - " + model.formFile.FileName;
-                string filePath = Path.Combine("Files", "PatientDocs", fileName);
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.formFile.CopyTo(stream);
-                }
-
-                RequestWiseFile files = new RequestWiseFile()
-                {
-                    RequestId = requestId,
-                    FileName = fileName,
-                    CreatedDate = DateTime.Now,
-                };
-                _context.RequestWiseFiles.Add(files);
-                _context.SaveChanges();
+                _patientServices.InsertviewDocuments(model, requestId);
                 _httpContextAccessor.HttpContext.Session.SetInt32("requestId", requestId);
                 return RedirectToAction("viewdocuments", requestId);
             }
+
             return View(model);
         }
+        //public IActionResult patientprofile()
+        //{
+        //    int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
+        //    var User = _context.Users.FirstOrDefault(x => x.UserId == id);
+        //    string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
+        //    PatientProfileViewModel model = new PatientProfileViewModel()
+        //    {
+        //        UserName = userName,
+        //        FirstName = User.FirstName,
+        //        LastName = User.LastName,
+        //        Email = User.Email,
+        //        PhoneNo = User.Mobile,
+        //        Street = User.Street,
+        //        City = User.City,
+        //        State = User.State,
+        //        ZipCode = User.ZipCode,
+        //        DateOfBirth = User.CreatedDate
+        //    };
 
+
+        //    return View(model);
+        //}
         public IActionResult patientprofile()
         {
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
-            var User = _context.Users.FirstOrDefault(x => x.UserId == id);
-            string userName = _context.Users.Where(x => x.UserId == id).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault();
-            PatientProfileViewModel model = new PatientProfileViewModel()
-            {
-                UserName = userName,
-                FirstName = User.FirstName,
-                LastName = User.LastName,
-                Email = User.Email,
-                PhoneNo = User.Mobile,
-                Street = User.Street,
-                City = User.City,
-                State = User.State,
-                ZipCode = User.ZipCode,
-                DateOfBirth = User.CreatedDate
-
-
-
-            };
-
-
+            var model = _patientServices.DisplayPatientProfile(id);
             return View(model);
         }
 
@@ -679,110 +733,143 @@ namespace learning1.Controllers
         }
 
 
+        //public IActionResult PatientCheck(string email)
+        //{
+        //    var existingUser = _context.AspNetUsers.FirstOrDefault(u => u.Email == email);
+        //    bool isValidEmail;
+        //    if (existingUser == null)
+        //    {
+        //        isValidEmail = false;
+        //        TempData["viewPassword"] = "true";
+        //    }
+        //    else
+        //    {
+        //        isValidEmail = true;
+        //    }
+        //    return Json(new { isValid = isValidEmail });
+        //}
+
         public IActionResult PatientCheck(string email)
         {
-            var existingUser = _context.AspNetUsers.FirstOrDefault(u => u.Email == email);
+            bool existingUser = _patientServices.IsExistingUser(email);
             bool isValidEmail;
-            if (existingUser == null)
+            if (existingUser)
             {
-                isValidEmail = false;
+                //isValidEmail = false;
                 TempData["viewPassword"] = "true";
             }
-            else
-            {
-                isValidEmail = true;
-            }
-            return Json(new { isValid = isValidEmail });
+            //else
+            //{
+            //    isValidEmail = true;
+            //}
+            return Json(new { isValid = existingUser });
         }
+
 
         public IActionResult submitinformationme()
         {
             return View();
         }
+        //[HttpPost]
+        //public IActionResult submitinformationme(SubmitInformationMeViewModel model)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+
+        //    AspNetUser netUser = new AspNetUser
+        //    {
+        //        Id = Guid.NewGuid().ToString(),
+        //        UserName = model.Email,
+        //        Email = model.Email,
+        //        PhoneNumber = model.PhoneNumber,
+        //        CreatedDate = DateTime.Now,
+
+        //    };
+        //    _context.AspNetUsers.Add(netUser);
+        //            _context.SaveChanges();
+
+
+        //            //User
+        //            User user = new User
+        //            {
+        //                Email = model.Email,
+        //                AspNetUserId = netUser.Id,
+        //                FirstName = model.FirstName,
+        //                LastName = model.LastName,
+        //                Mobile = model.PhoneNumber,
+        //                Street = model.Street,
+        //                City = model.City,
+        //                State = model.State,
+        //                ZipCode = model.ZipCode,
+        //                CreatedBy = "hardik",
+        //                StrMonth = (model.DateofBirth.Month).ToString(),
+        //                IntDate = (model.DateofBirth.Day),
+        //                IntYear = (model.DateofBirth.Year),
+
+        //                CreatedDate = DateTime.Now,
+        //            };
+
+        //    _context.Users.Add(user);
+        //            _context.SaveChanges();
+
+        //            Request request = new Request
+        //            {
+        //                UserId = user.UserId,
+        //                RequestTypeId = 2,
+        //                FirstName = model.FirstName,
+        //                LastName = model.LastName,
+        //                PhoneNumber = model.PhoneNumber,
+        //                Email = model.Email,
+        //                Status = 1,
+        //                CreatedDate = DateTime.Now,
+
+        //            };
+
+
+        //    _context.Requests.Add(request);
+        //            _context.SaveChanges();
+
+
+        //            if (model.formFile != null)
+        //            {
+        //                string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
+        //    string filePath = Path.Combine("Files", "PatientDocs", fileName);
+        //    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+        //                using (var stream = new FileStream(filePath, FileMode.Create))
+        //                {
+        //                    model.formFile.CopyTo(stream);
+        //                }
+
+        //RequestWiseFile files = new()
+        //{
+        //    RequestId = request.RequestId,
+        //    FileName = fileName,
+        //    CreatedDate = DateTime.Now,
+        //};
+        //_context.RequestWiseFiles.Add(files);
+        //                _context.SaveChanges();
+
+        //        }
+
+
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+        //    return View();
+
+        //}
+
+
         [HttpPost]
         public IActionResult submitinformationme(SubmitInformationMeViewModel model)
         {
-
             if (ModelState.IsValid)
             {
-
-                AspNetUser netUser = new AspNetUser
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserName = model.Email,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    CreatedDate = DateTime.Now,
-
-                };
-                _context.AspNetUsers.Add(netUser);
-                _context.SaveChanges();
-
-
-                //User
-                User user = new User
-                {
-                    Email = model.Email,
-                    AspNetUserId = netUser.Id,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Mobile = model.PhoneNumber,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    CreatedBy = "hardik",
-                    StrMonth = (model.DateofBirth.Month).ToString(),
-                    IntDate = (model.DateofBirth.Day),
-                    IntYear = (model.DateofBirth.Year),
-
-                    CreatedDate = DateTime.Now,
-                };
-
-                _context.Users.Add(user);
-                _context.SaveChanges();
-
-                Request request = new Request
-                {
-                    UserId = user.UserId,
-                    RequestTypeId = 2,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    Status = 1,
-                    CreatedDate = DateTime.Now,
-
-                };
-
-
-                _context.Requests.Add(request);
-                _context.SaveChanges();
-
-
-                if (model.formFile != null)
-                {
-                    string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
-                    string filePath = Path.Combine("Files", "PatientDocs", fileName);
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        model.formFile.CopyTo(stream);
-                    }
-
-                    RequestWiseFile files = new()
-                    {
-                        RequestId = request.RequestId,
-                        FileName = fileName,
-                        CreatedDate = DateTime.Now,
-                    };
-                    _context.RequestWiseFiles.Add(files);
-                    _context.SaveChanges();
-
-                }
-
-
+                _patientServices.GetInformationMe(model);
             }
             else
             {
@@ -791,9 +878,6 @@ namespace learning1.Controllers
             return View();
 
         }
-
-
-
 
 
         public IActionResult submitinformationelse()
@@ -802,126 +886,138 @@ namespace learning1.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult submitinformationelse(SubmitInformationElseVIewModel model)
-        {
 
+        [HttpPost]
+        public IActionResult submitinformationelse(learning1.DBEntities.ViewModel.SubmitInformationElseVIewModel model)
+        {
             if (ModelState.IsValid)
             {
-
-                AspNetUser netUser = new AspNetUser
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserName = model.Email,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                    CreatedDate = DateTime.Now,
-
-                };
-                _context.AspNetUsers.Add(netUser);
-                _context.SaveChanges();
-
-
-                //User
-                User user = new User
-                {
-                    Email = model.Email,
-                    AspNetUserId = netUser.Id,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Mobile = model.PhoneNumber,
-                    Street = model.Street,
-                    City = model.City,
-                    State = model.State,
-                    ZipCode = model.ZipCode,
-                    CreatedBy = "hardik",
-                    StrMonth = (model.DateofBirth.Month).ToString(),
-                    IntDate = (model.DateofBirth.Day),
-                    IntYear = (model.DateofBirth.Year),
-
-                    CreatedDate = DateTime.Now,
-                };
-
-                _context.Users.Add(user);
-                _context.SaveChanges();
-
-                Request request = new Request
-                {
-                    UserId = user.UserId,
-                    RequestTypeId = 2,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    Status = 1,
-                    CreatedDate = DateTime.Now,
-
-                };
-
-
-                _context.Requests.Add(request);
-                _context.SaveChanges();
-
-                if (model.formFile != null)
-                {
-                    string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
-                    string filePath = Path.Combine("Files", "PatientDocs", fileName);
-                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        model.formFile.CopyTo(stream);
-                    }
-
-                    RequestWiseFile files = new()
-                    {
-                        RequestId = request.RequestId,
-                        FileName = fileName,
-                        CreatedDate = DateTime.Now,
-                    };
-                    _context.RequestWiseFiles.Add(files);
-                    _context.SaveChanges();
-
-                }
-            }
-            else
-            {
+                _patientServices.GetInformationElse(model);
                 return View();
             }
             return View();
-
         }
 
-        [HttpPost]
-        public IActionResult patientprofile(PatientProfileViewModel model)
-        {
-            int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
-            User user = _context.Users.FirstOrDefault(x => x.UserId == id);
+        //[HttpPost]
+        //public IActionResult submitinformationelse(SubmitInformationElseVIewModel model)
+        //{
 
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.Email = model.Email.ToString();
-            user.Mobile = model.PhoneNo;
-            user.Street = model.Street;
-            user.City = model.City;
-            user.State = model.State;
-            user.ZipCode = model.ZipCode;
+        //    if (ModelState.IsValid)
+        //    {
 
-            _context.Users.Update(user);
-            _context.SaveChanges();
+        //        AspNetUser netUser = new AspNetUser
+        //        {
+        //            Id = Guid.NewGuid().ToString(),
+        //            UserName = model.Email,
+        //            Email = model.Email,
+        //            PhoneNumber = model.PhoneNumber,
+        //            CreatedDate = DateTime.Now,
 
-            //int requestId = _context.Requests.FirstOrDefault(x => x.UserId == id).RequestId;
-            //RequestClient requestClient = _context.RequestClients.FirstOrDefault(x => x.RequestId == requestId);
-
-            //requestClient.FirstName = model.FirstName;
-            //requestClient.LastName = model.LastName;
-            //requestClient.Email = model.Email.ToString();
-            //requestClient.PhoneNumber = model.PhoneNo;
+        //        };
+        //        _context.AspNetUsers.Add(netUser);
+        //        _context.SaveChanges();
 
 
+        //        //User
+        //        User user = new User
+        //        {
+        //            Email = model.Email,
+        //            AspNetUserId = netUser.Id,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            Mobile = model.PhoneNumber,
+        //            Street = model.Street,
+        //            City = model.City,
+        //            State = model.State,
+        //            ZipCode = model.ZipCode,
+        //            CreatedBy = "hardik",
+        //            StrMonth = (model.DateofBirth.Month).ToString(),
+        //            IntDate = (model.DateofBirth.Day),
+        //            IntYear = (model.DateofBirth.Year),
 
-            return RedirectToAction("patientprofile");
-        }
+        //            CreatedDate = DateTime.Now,
+        //        };
+
+        //        _context.Users.Add(user);
+        //        _context.SaveChanges();
+
+        //        Request request = new Request
+        //        {
+        //            UserId = user.UserId,
+        //            RequestTypeId = 2,
+        //            FirstName = model.FirstName,
+        //            LastName = model.LastName,
+        //            PhoneNumber = model.PhoneNumber,
+        //            Email = model.Email,
+        //            Status = 1,
+        //            CreatedDate = DateTime.Now,
+
+        //        };
+
+
+        //        _context.Requests.Add(request);
+        //        _context.SaveChanges();
+
+        //        if (model.formFile != null)
+        //        {
+        //            string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
+        //            string filePath = Path.Combine("Files", "PatientDocs", fileName);
+        //            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+        //            using (var stream = new FileStream(filePath, FileMode.Create))
+        //            {
+        //                model.formFile.CopyTo(stream);
+        //            }
+
+        //            RequestWiseFile files = new()
+        //            {
+        //                RequestId = request.RequestId,
+        //                FileName = fileName,
+        //                CreatedDate = DateTime.Now,
+        //            };
+        //            _context.RequestWiseFiles.Add(files);
+        //            _context.SaveChanges();
+
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+        //    return View();
+
+        //}
+
+        //[HttpPost]
+        //public IActionResult patientprofile(PatientProfileViewModel model)
+        //{
+        //    int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
+        //    User user = _context.Users.FirstOrDefault(x => x.UserId == id);
+
+        //    user.FirstName = model.FirstName;
+        //    user.LastName = model.LastName;
+        //    user.Email = model.Email.ToString();
+        //    user.Mobile = model.PhoneNo;
+        //    user.Street = model.Street;
+        //    user.City = model.City;
+        //    user.State = model.State;
+        //    user.ZipCode = model.ZipCode;
+
+        //    _context.Users.Update(user);
+        //    _context.SaveChanges();
+
+        //    //int requestId = _context.Requests.FirstOrDefault(x => x.UserId == id).RequestId;
+        //    //RequestClient requestClient = _context.RequestClients.FirstOrDefault(x => x.RequestId == requestId);
+
+        //    //requestClient.FirstName = model.FirstName;
+        //    //requestClient.LastName = model.LastName;
+        //    //requestClient.Email = model.Email.ToString();
+        //    //requestClient.PhoneNumber = model.PhoneNo;
+
+
+
+        //    return RedirectToAction("patientprofile");
+        //}
 
 
 

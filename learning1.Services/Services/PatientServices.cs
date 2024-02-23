@@ -2,6 +2,7 @@
 using learning1.Repositories.IRepositories;
 using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,64 @@ namespace learning1.Services.Services
             return userId;
         }
 
+        
+        public void GetConciergeRequestData(ConciergeRequestViewModel model)
+        {
+            _patientRepo.GetConciergeRequests(model);
+        }
+
 
         public void GetFamilyRequestData(Family_FriendRequestViewModel model)
         {
             _patientRepo.GetFamilyFriendRequests(model);
+        }
+
+        public PatientDashboardViewModel displayDashboard(int id)
+        {
+            string userName = _patientRepo.GetUserNameRepo(id);
+            var repoData = _patientRepo.DisplayDashboardRepo(id);
+            PatientDashboardViewModel model = new PatientDashboardViewModel()
+            {
+                UserName = userName,
+                HistoryViewModel = repoData
+            };
+
+            return model;
+        }
+
+        public ViewDocumentViewModel GetviewDocuments(int requestId,int id)
+        {
+            string userName = _patientRepo.GetUserNameRepo(id);
+            var model = _patientRepo.fetchviewDocuments(requestId,id);
+
+            return model;
+        }
+
+        public void InsertviewDocuments(ViewDocumentViewModel model, int requestId)
+        {
+             _patientRepo.Uploaddocuments(model,requestId);
+           
+        }
+
+        public PatientProfileViewModel DisplayPatientProfile(int id)
+        {
+            var model = _patientRepo.GetPatientProfile(id);
+            return model;
+        }
+
+        public bool IsExistingUser(string email)
+        {
+           return _patientRepo.CheckExistingUser(email);
+        }
+
+        public void GetInformationMe(SubmitInformationMeViewModel model)
+        {
+            _patientRepo.GetInformationMeData(model);
+        }
+
+        public void GetInformationElse(SubmitInformationElseVIewModel model)
+        {
+            _patientRepo.GetInformationElseData(model);
         }
     }
 }

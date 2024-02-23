@@ -4,7 +4,7 @@
 @{
 }
 
-@model ConciergeRequestViewModel;
+@model learning1.DBEntities.ViewModel.ConciergeRequestViewModel;
 
 
 <!DOCTYPE html>
@@ -44,7 +44,7 @@
                                     <input type="text" class="form-control" id="floatingInput"
                                            placeholder="Your First Name" asp-for="Fname" >
                                     <label for="floatingInput" class="text-secondary">Your First Name</label>
-                                    <p class="text-danger fw-bold">@Html.ValidationMessageFor(x=>x.Fname)</p>
+                                   @*  <p class="text-danger fw-bold">@Html.ValidationMessageFor(x=>x.Fname)</p> *@
                                 </div>
                             </div>
                             <div class="mb-3 mt-2 col-6">
