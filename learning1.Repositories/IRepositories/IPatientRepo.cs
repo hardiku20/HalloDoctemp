@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using learning1.DBEntities.Models;
 using learning1.DBEntities.ViewModel;
 namespace learning1.Repositories.IRepositories
 {
@@ -22,5 +23,6 @@ namespace learning1.Repositories.IRepositories
         bool CheckExistingUser(string email);
         void GetInformationMeData(SubmitInformationMeViewModel model);
         void GetInformationElseData(SubmitInformationElseVIewModel model);
+        List<Request> DisplayAdminDashboardRepo();
     }
 }

@@ -530,5 +530,12 @@ namespace learning1.Repositories.Repositories
 
             }
         }
+
+        public List<Request> DisplayAdminDashboardRepo()
+        {
+            
+           var model = _context.Requests.Include(x => x.RequestClients).ToList();
+            return model;
+        }
     }
 }

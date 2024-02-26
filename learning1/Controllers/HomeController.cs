@@ -1104,9 +1104,28 @@ namespace learning1.Controllers
             }
             return View();
         }
+
+
+
+        //public IActionResult admindashboard()
+        //{
+        //    return View();
+        //}
+
+
+
+        //public IActionResult patientdashboard()
+        //{
+        //    int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
+        //    var model = _patientServices.displayDashboard(id);
+        //    return View(model);
+        //}
+
+
         public IActionResult admindashboard()
         {
-            return View();
+            var model = _patientServices.DisplayAdminDashboard();
+            return View(model);
         }
 
         public IActionResult Error()

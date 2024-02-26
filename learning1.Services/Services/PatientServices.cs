@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace learning1.Services.Services
 {
-    public class PatientServices: IPatientServices
+    public class PatientServices : IPatientServices
     {
         public readonly IPatientRepo _patientRepo;
-        public PatientServices(IPatientRepo patientRepo) 
+        public PatientServices(IPatientRepo patientRepo)
         {
-           _patientRepo = patientRepo;
+            _patientRepo = patientRepo;
         }
 
         public void GetPatientRequestData(PatientRequestViewModel model)
@@ -30,7 +30,7 @@ namespace learning1.Services.Services
             return userId;
         }
 
-        
+
         public void GetConciergeRequestData(ConciergeRequestViewModel model)
         {
             _patientRepo.GetConciergeRequests(model);
@@ -55,18 +55,18 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public ViewDocumentViewModel GetviewDocuments(int requestId,int id)
+        public ViewDocumentViewModel GetviewDocuments(int requestId, int id)
         {
             string userName = _patientRepo.GetUserNameRepo(id);
-            var model = _patientRepo.fetchviewDocuments(requestId,id);
+            var model = _patientRepo.fetchviewDocuments(requestId, id);
 
             return model;
         }
 
         public void InsertviewDocuments(ViewDocumentViewModel model, int requestId)
         {
-             _patientRepo.Uploaddocuments(model,requestId);
-           
+            _patientRepo.Uploaddocuments(model, requestId);
+
         }
 
         public PatientProfileViewModel DisplayPatientProfile(int id)
@@ -77,7 +77,7 @@ namespace learning1.Services.Services
 
         public bool IsExistingUser(string email)
         {
-           return _patientRepo.CheckExistingUser(email);
+            return _patientRepo.CheckExistingUser(email);
         }
 
         public void GetInformationMe(SubmitInformationMeViewModel model)
@@ -88,6 +88,26 @@ namespace learning1.Services.Services
         public void GetInformationElse(SubmitInformationElseVIewModel model)
         {
             _patientRepo.GetInformationElseData(model);
+        }
+
+        public AdminDashboardViewModel DisplayAdminDashboard()
+        {
+            var temp = _patientRepo.DisplayAdminDashboardRepo().
+                Select(x => new  AdminTableViewModel
+                {
+                    RequestId = x.RequestId,
+                     RequestedDate = x.CreatedDate,
+                     Phone = x.PhoneNumber,
+                     Name = x.FirstName + " " + x.LastName,
+                     /*Address = x.RequestClients. + ", " + x.City + ", " + x.State + " - " + x.ZipCode*/
+                     Requester = x.FirstName + " " + x.LastName,
+            }).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = temp
+            };
+            return model;
         }
     }
 }

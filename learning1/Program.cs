@@ -6,23 +6,24 @@ using learning1.Services.Services;
 using learning1.Repositories.Repositories;
 
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
-builder.Services.AddScoped<IPatientServices, PatientServices>();
-builder.Services.AddScoped<IPatientRepo, PatientRepo>();
-
 builder.Services.AddDbContext<DbHallodocContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
+
+builder.Services.AddScoped<IPatientRepo, PatientRepo>();
+builder.Services.AddScoped<IPatientServices, PatientServices>();
+
+
+
 
 
 //builder.Services.AddDbContext<learning1.DBEntities.Models.DbHallodocContext>(options =>
 //options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,5 +45,9 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=patientsite}/{id?}");
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Admin}/{action=admindashboard}/{id?}");
 
 app.Run();

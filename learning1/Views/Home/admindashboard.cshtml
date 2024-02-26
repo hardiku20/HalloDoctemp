@@ -1,4 +1,6 @@
-﻿@{
+﻿@model learning1.DBEntities.ViewModel.AdminDashboardViewModel;
+
+@{
     Layout = "_AdminLayout";
 }
 
@@ -318,44 +320,57 @@
 
 
     <div class="d-md-block d-none">
-        <table class="table">
+        <table class="table-responsive w-100">
 
 
-            <tr class="table-secondary">
-                <td scope="col">Name</td>
-                <td scope="col">Date of Birth</td>
-                <td scope="col">Requestor</td>
-                <td scope="col">Requested Date</td>
-                <td scope="col">Phone</td>
-                <td scope="col">Address</td>
-                <td scope="col">Notes</td>
-                <td scope="col">Chat With</td>
-                <td scope="col">Actions</td>
+            <tr class="border border-bottom border-white bg-secondary-subtle">
+                <td scope="col" class="py-3 ps-4">Name</td>
+                <td scope="col" class="py-3 ">Date of Birth</td>
+                <td scope="col" class="py-3">Requestor</td>
+                <td scope="col" class="py-3">Requested Date</td>
+                <td scope="col" class="py-3">Phone</td>
+                <td scope="col" class="py-3">Address</td>
+                <td scope="col" class="py-3">Notes</td>
+                <td scope="col" class="py-3">Chat With</td>
+                <td scope="col" class="py-3">Actions</td>
             </tr>
 
+            @foreach (var items in Model.TableViewModel)
+            {
+                <tr class="bg-success border border-bottom border-white">
 
-            <tr class="table-success">
-                <td class="">Mark</td>
-                <td>Otto</td>
-                <td></td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td></td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td></td>
-            </tr>
-            <tr class="bg-primary">
-                <td>Mark</td>
-                <td>Otto</td>
-                <td></td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td></td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td></td>
-            </tr>
+                    <td class="text-white py-5 ps-4">@items.Name</td>
+                    <td class="text-white py-3 ps-2">-</td>
+                    <td class="text-white py-3 ps-2">Patient @items.Requester</td>
+                    <td class="text-white py-3 ps-2">@items.RequestedDate</td>
+                    <td class="text-white ps-2">
+                        @if (items.Phone != null)
+                        {
+                            <button class="border border-white py-1 w-100 text-white bg-success ">@items.Phone</button>
+                            
+                        }
+                        
+                    </td>
+                    <td class="text-white py-3 ps-2">Addresssssssssssss</td>
+                    <td class="text-white py-3 ps-2"> - </td>
+                    <td ><button type="button" class="btn btn-sm border border-white text-white">Provider</button></td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Assign Case</a></li>
+                                <li><a class="dropdown-item" href="#">Cancel Case</a></li>
+                                <li><a class="dropdown-item" href="#">View Case</a></li>
+                                <li><a class="dropdown-item" href="#">View Notes</a></li>
+                                <li><a class="dropdown-item" href="#">Block Patients</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+
 
         </table>
 

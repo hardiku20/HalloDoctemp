@@ -10,6 +10,7 @@ namespace learning1.Services.IServices
 {
     public interface IPatientServices
     {
+        AdminDashboardViewModel DisplayAdminDashboard();
         PatientDashboardViewModel displayDashboard(int id);
         PatientProfileViewModel DisplayPatientProfile(int id);
         void GetConciergeRequestData(ConciergeRequestViewModel model);
