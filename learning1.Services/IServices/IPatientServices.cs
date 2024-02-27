@@ -13,6 +13,7 @@ namespace learning1.Services.IServices
         AdminDashboardViewModel DisplayAdminDashboard();
         PatientDashboardViewModel displayDashboard(int id);
         PatientProfileViewModel DisplayPatientProfile(int id);
+        ViewCaseViewModel DisplsyViewCase(int requestId);
         void GetConciergeRequestData(ConciergeRequestViewModel model);
         void GetFamilyRequestData(Family_FriendRequestViewModel model);
         void GetInformationElse(SubmitInformationElseVIewModel model);

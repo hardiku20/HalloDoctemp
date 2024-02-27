@@ -109,5 +109,13 @@ namespace learning1.Services.Services
             };
             return model;
         }
+
+        public ViewCaseViewModel DisplsyViewCase(int requestId)
+        {
+            var model = _patientRepo.DisplayViewCaseRepo(requestId);
+           
+
+            return model;
+        }
     }
 }

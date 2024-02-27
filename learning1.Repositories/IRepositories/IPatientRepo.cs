@@ -24,5 +24,6 @@ namespace learning1.Repositories.IRepositories
         void GetInformationMeData(SubmitInformationMeViewModel model);
         void GetInformationElseData(SubmitInformationElseVIewModel model);
         List<Request> DisplayAdminDashboardRepo();
+        ViewCaseViewModel DisplayViewCaseRepo(int requestId);
     }
 }

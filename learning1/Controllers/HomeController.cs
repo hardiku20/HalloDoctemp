@@ -1127,6 +1127,14 @@ namespace learning1.Controllers
             var model = _patientServices.DisplayAdminDashboard();
             return View(model);
         }
+        
+
+        public IActionResult ViewCase(int RequestId)
+        {
+            var model = _patientServices.DisplsyViewCase(RequestId);
+            return View(model);
+        }
+
 
         public IActionResult Error()
         {

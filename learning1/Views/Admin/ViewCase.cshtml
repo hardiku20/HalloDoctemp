@@ -1,0 +1,153 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model learning1.DBEntities.ViewModel.ViewCaseViewModel;
+@{
+
+}
+@{
+    Layout = "_AdminLayout";
+}
+
+
+
+
+<div class="container ">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4>View Reservation</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a asp-action="admindashboard" asp-controller="Admin"
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+    <div class="card bg-white">
+        <div class="card-body">
+            <form action="" class="form-floating">
+
+                <div class="row mt-3">
+                    <h5 class="mb-3">Patient Information</h5>
+
+                    <div class=""> 
+                        <p class="mb-0 text-secondary" style="font-size:small">Confirmation Number</p>
+                        <h4 class="text-info">MDO095435487343498</h4>
+                    </div>
+                    <div class="form-floating input-info mt-2 mb-3">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" value="dshfsiudh"
+                                  style="height: 100px" disabled></textarea>
+                        <label for="floatingTextarea2" class="mx-2">
+                            Patient Notes
+                        </label>
+                    </div>
+
+                </div>
+
+                <hr />
+                <div class="row mt-3">
+                    <div class="mb-3 col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name"
+                                  asp-for="firstName" disabled>
+                            <label for="floatingInput" class="">First Name</label>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" asp-for="lastName"
+                                   placeholder="Last Name" disabled>
+                            <label for="floatingInput" class="">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="form-floating col-md-6 mb-3 input-info">
+                        <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                               aria-describedby="basic-addon1" disabled>
+                        <label for="floatingInputValue" class="mx-2">Date of birth</label>
+                    </div>
+                    <div class="form-floating col-md-6 mb-3 input-info">
+                        <div class="row me-2">
+                            <div class="form-floating input-info col-10">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="City"
+                                       asp-for="city" disabled>
+                              
+                            </div>
+                            <div class="form-floating col-2 p-0">
+                                <button type="button" class="btn btn-outline-info  text-decoration-none bg-white text-info p-3" id="Map" data-bs-toggle="modal" data-bs-target="#MapModal">
+                                    <img src="/assets/images/telephone.svg" class="" alt="...">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating col-md-6 mb-3 input-info">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="Email"
+                               asp-for="email" disabled>
+                        <label for="floatingInput" class="mx-2">Email</label>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button"
+                                class="btn btn-outline-info  text-decoration-none bg-white text-info   d-flex  align-items-center px-5 py-3">
+                            Edit
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <h5 class="mt-3 mb-2">Location Information</h5>
+                    <div class="col-md-6 mb-3 mt-2">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Street"
+                                  asp-for="street" disabled>
+                            <label for="floatingInput">Street</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 mt-2 ">
+                        <div class="row">
+                            <div class="form-floating input-info col-10">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="City"
+                                       asp-for="city" disabled>
+                                <label for="floatingInput" class="mx-2">City</label>
+                            </div>
+                            <div class="form-floating col-2 p-0">
+                                <button type="button" class="btn btn-outline-info  text-decoration-none bg-white text-info p-3" id="Map" data-bs-toggle="modal" data-bs-target="#MapModal">
+                                    <img src="/assets/images/geo-alt-fill.svg" class="" alt="...">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State"
+                                  asp-for="state" disabled>
+                            <label for="floatingInput">State</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex mt-3 mb-2 justify-content-end">
+                    <button type="button"
+                            class="btn btn-info text-white text-decoration-none py-2 ">
+                        Assign Case
+                    </button>
+                    <button type="button"
+                            class="btn btn-info text-white text-decoration-none py-2 ms-2">
+                        View Notes
+                    </button>
+                    <button type="button"
+                            class="btn btn-danger text-white text-decoration-none py-2 ms-2">
+                        Cancel
+                    </button>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+

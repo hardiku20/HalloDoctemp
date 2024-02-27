@@ -17,7 +17,8 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")
 
 builder.Services.AddScoped<IPatientRepo, PatientRepo>();
 builder.Services.AddScoped<IPatientServices, PatientServices>();
-
+builder.Services.AddScoped<IAdminServices, AdminServices>();
+builder.Services.AddScoped<IAdminRepo, AdminRepo>();
 
 
 
