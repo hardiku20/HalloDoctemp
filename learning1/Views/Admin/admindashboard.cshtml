@@ -5,6 +5,50 @@
 }
 
 
+<!-- Modal for Cancel Case -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Cancel Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text text-secondary " class="col-form-label">Patient Name :<span class="text-info ps-2">Test Test,</span></label>
+                        <div class="my-4">
+                            <select class="form-select form-select shadow-none" aria-label="Small select example">
+                                <label selected">Reason for cancellation</label>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-floating">
+                            <textarea class="form-control"
+                                      placeholder="Please provide a brief explanation for your cancelation"
+                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">
+                                Provide Additional Notes
+                            </label>
+                        </div>
+
+                    </div>
+
+                    
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-info text-white" >Confirm</button>
+                <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -343,16 +387,16 @@
                     <td class="text-white py-3 ps-2">-</td>
                     <td class="text-white py-3 ps-2">Patient @items.Requester</td>
                     <td class="text-white py-3 ps-2">@items.RequestedDate</td>
-                    <td class="text-white ps-2">
+                    <td class="text-white py-3 ps-2">
                         @if (items.Phone != null)
                         {
 
-                            <button class="border border-white py-1 w-75 text-white bg-success text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
-                            <div class="text-white">(Patient)</div>
+                            <button class="border border-white py-1 w-100 text-white bg-success text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
+                            <div class="text-white">(@items.RequestType)</div>
                         }
                         
                     </td>
-                    <td class="text-white py-3 ps-2">Addresssssssssssss</td>
+                    <td class="text-white py-3 ps-2">@items.Address</td>
                     <td class="text-white py-3 ps-2"> - </td>
                     <td ><button type="button" class="btn btn-sm border border-white text-white">Provider</button></td>
                     <td>
@@ -362,9 +406,12 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="#">Assign Case</a></li>
-                                <li><a class="dropdown-item" href="#">Cancel Case</a></li>
+                                <li>
+                                    <a class="dropdown-item" data-bs-toggle="modal"
+                                       data-bs-target="#exampleModal" data-bs-whatever="">Cancel Case</a>
+                                </li>
                                 <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
-                                <li><a class="dropdown-item" href="#">View Notes</a></li>
+                                <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin">View Notes</a></li>
                                 <li><a class="dropdown-item" href="#">Block Patients</a></li>
                             </ul>
                         </div>
@@ -380,7 +427,7 @@
 
 
 
-    @Html.Partial("_adminNewState",Model);
+    @Html.Partial("_adminNewState",Model)
 
 
 

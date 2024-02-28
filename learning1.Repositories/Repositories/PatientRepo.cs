@@ -86,7 +86,24 @@ namespace learning1.Repositories.Repositories
 
             _context.Requests.Add(request);
             _context.SaveChanges();
+          
+            RequestClient requestClient = new RequestClient
+            {
 
+                RequestId = request.RequestId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
+                State = model.State,
+                City = model.City,
+                Street = model.Street,
+                ZipCode = model.ZipCode,
+                Address = model.Street + ", " + model.City+ ", " + model.State+"- "+ model.ZipCode 
+            };
+
+            _context.RequestClients.Add(requestClient);
+            _context.SaveChanges();
 
             if (model.formFile != null)
             {
@@ -163,17 +180,21 @@ namespace learning1.Repositories.Repositories
 
             RequestClient requestClient = new RequestClient
             {
+
                 RequestId = request.RequestId,
                 FirstName = model.Fname,
-                LastName = model.LastName,
+                LastName = model.Lname,
                 PhoneNumber = model.Phone,
                 Email = model.Emailaddress,
+                State = model.State,
+                City = model.City,
+                Street = model.Street,
+                ZipCode = model.ZipCode,
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
             };
 
             _context.RequestClients.Add(requestClient);
             _context.SaveChanges();
-
-
 
         }
 
@@ -250,6 +271,24 @@ namespace learning1.Repositories.Repositories
             };
 
             _context.Requests.Add(request);
+            _context.SaveChanges();
+
+            RequestClient requestClient = new RequestClient
+            {
+
+                RequestId = request.RequestId,
+                FirstName = model.Fname,
+                LastName = model.Lname,
+                PhoneNumber = model.Phone,
+                Email = model.Emailaddress,
+                State = model.State,
+                City = model.City,
+                Street = model.Street,
+                ZipCode = model.ZipCode,
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
+            };
+
+            _context.RequestClients.Add(requestClient);
             _context.SaveChanges();
 
             RequestConcierge requestConcierge = new RequestConcierge
@@ -429,6 +468,23 @@ namespace learning1.Repositories.Repositories
             _context.Requests.Add(request);
             _context.SaveChanges();
 
+            RequestClient requestClient = new RequestClient
+            {
+
+                RequestId = request.RequestId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
+                State = model.State,
+                City = model.City,
+                Street = model.Street,
+                ZipCode = model.ZipCode,
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
+            };
+
+            _context.RequestClients.Add(requestClient);
+            _context.SaveChanges();
 
             if (model.formFile != null)
             {
@@ -507,6 +563,8 @@ namespace learning1.Repositories.Repositories
             _context.Requests.Add(request);
             _context.SaveChanges();
 
+
+
             if (model.formFile != null)
             {
                 string fileName = request.RequestId.ToString() + " - " + model.formFile.FileName;
@@ -550,6 +608,70 @@ namespace learning1.Repositories.Repositories
             };
 
             return model;
+        }
+
+        public void GetBusinessrequest(BusinessRequestViewModel model)
+        {
+            AspNetUser netUser = new AspNetUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = model.Email,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                CreatedDate = DateTime.Now,
+            };
+
+            _context.AspNetUsers.Add(netUser);
+            _context.SaveChanges();
+
+
+            //User
+            User user = new User
+            {
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Mobile = model.PhoneNumber,
+                Street = model.Street,
+                City = model.City,
+                State = model.State,
+                ZipCode = model.ZipCode,
+                CreatedBy = "hardik",
+                CreatedDate = DateTime.Now,
+            };
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+
+            //request
+            Request request = new Request
+            {
+                UserId = user.UserId,
+                RequestTypeId = 3,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
+                Status = 1,
+                CreatedDate = DateTime.Now,
+
+            };
+
+            _context.Requests.Add(request);
+            _context.SaveChanges();
+
+            RequestClient requestClient = new RequestClient
+            {
+                RequestId = request.RequestId,
+                FirstName = model.Fname,
+                LastName = model.LastName,
+                PhoneNumber = model.Phone,
+                Email = model.Emailaddress,
+            };
+
+            _context.RequestClients.Add(requestClient);
+            _context.SaveChanges();
         }
     }
 }

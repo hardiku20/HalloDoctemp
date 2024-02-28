@@ -26,11 +26,16 @@ namespace learning1.Controllers
             return View(model);
         }
 
-
         public IActionResult ViewCase(int RequestId)
         {
             var model = _adminServices.DisplayViewCase(RequestId);
             return View(model);
+        }
+
+
+        public IActionResult ViewNotes()
+        {
+            return View();
         }
 
     }

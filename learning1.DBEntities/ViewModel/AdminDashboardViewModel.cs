@@ -27,5 +27,17 @@ namespace learning1.DBEntities.ViewModel
         public string? State { get; set; }
         public string? Zipcode {  get; set; }
         public string? Requester {  get; set; }
+        public int? Status { get; set; }
+        public RequestType? RequestType { get; set; }
+
+   
+    }
+
+    public enum RequestType
+    {
+        Business= 1,
+        Patient = 2,
+        Family = 3,
+        Concierge = 4
     }
 }

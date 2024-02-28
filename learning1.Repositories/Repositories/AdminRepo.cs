@@ -25,17 +25,19 @@ namespace learning1.Repositories.Repositories
 
         public ViewCaseViewModel DisplayViewCaseRepo(int requestId)
         {
-            var Requests = _context.Requests.FirstOrDefault(x => x.RequestId == requestId);
-            ViewCaseViewModel model = new ViewCaseViewModel()
-            {
-                firstName = Requests.FirstName,
-                lastName = Requests.LastName,
-                email = Requests.Email,
-                phone = Requests.PhoneNumber
+            var Requests = _context.RequestClients.Include(y => y.Request).Where(x => x.RequestId == requestId)
+                .Select(x => new ViewCaseViewModel()
+                {
+                    firstName = x.Request.FirstName,
+                    lastName = x.Request.LastName,
+                    email = x.Request.Email,
+                    phone = x.PhoneNumber,
+                }).FirstOrDefault();
+            
 
-            };
 
-            return model;
+
+            return Requests;
         }
     }
 }

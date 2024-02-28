@@ -42,6 +42,7 @@ namespace learning1.Services.Services
             _patientRepo.GetFamilyFriendRequests(model);
         }
 
+        
         public PatientDashboardViewModel displayDashboard(int id)
         {
             string userName = _patientRepo.GetUserNameRepo(id);
@@ -116,6 +117,11 @@ namespace learning1.Services.Services
            
 
             return model;
+        }
+
+        public void GetBusinesssRequestData(BusinessRequestViewModel model)
+        {
+            _patientRepo.GetBusinessrequest(model);
         }
     }
 }

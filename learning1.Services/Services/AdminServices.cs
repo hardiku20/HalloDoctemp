@@ -28,8 +28,9 @@ namespace learning1.Services.Services
                     RequestedDate = x.CreatedDate,
                     Phone = x.PhoneNumber,
                     Name = x.FirstName + " " + x.LastName,
-                    /*Address = x.RequestClients. + ", " + x.City + ", " + x.State + " - " + x.ZipCode*/
+                    Address = x.RequestClients.Select(x =>x.Address).FirstOrDefault(),
                     Requester = x.FirstName + " " + x.LastName,
+                    RequestType = (RequestType)x.RequestTypeId,
                 }).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()

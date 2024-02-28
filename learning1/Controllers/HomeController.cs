@@ -325,11 +325,11 @@ namespace learning1.Controllers
             if (ModelState.IsValid)
             {
                 _patientServices.GetConciergeRequestData(model);
-                return RedirectToAction("patientlogin");
+                return RedirectToAction("conciergerequest");
             }
             else
             {
-                return View();
+                return View(null);
             }
         }
 
@@ -338,7 +338,24 @@ namespace learning1.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Businessrequest(BusinessRequestViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _patientServices.GetBusinesssRequestData(model);
+                return RedirectToAction(null);
+            }
+            else
+            {
+                return View();
+            }
+        }
 
+        public IActionResult businessrequest()
+        {
+            return View();
+        }
 
 
 
@@ -451,83 +468,10 @@ namespace learning1.Controllers
         //}
 
 
-        public IActionResult businessrequest()
-        {
-            return View();
-        }
+       
 
 
-        //Business post method
-        [HttpPost]
-        public IActionResult businessrequest(BusinessRequestViewModel model)
-        {
-            AspNetUser netUser = new AspNetUser
-            {
-                Id = Guid.NewGuid().ToString(),
-                UserName = model.Email,
-                Email = model.Email,
-                PhoneNumber = model.PhoneNumber,
-                CreatedDate = DateTime.Now,
-            };
-
-            _context.AspNetUsers.Add(netUser);
-            _context.SaveChanges();
-
-
-            //User
-            User user = new User
-            {
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Mobile = model.PhoneNumber,
-                Street = model.Street,
-                City = model.City,
-                State = model.State,
-                ZipCode = model.ZipCode,
-                CreatedBy = "hardik",
-                CreatedDate = DateTime.Now,
-            };
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-
-            //request
-            Request request = new Request
-            {
-                UserId = user.UserId,
-                RequestTypeId = 3,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
-                Status = 1,
-                CreatedDate = DateTime.Now,
-
-            };
-
-            _context.Requests.Add(request);
-            _context.SaveChanges();
-
-            RequestClient requestClient = new RequestClient
-            {
-                RequestId = request.RequestId,
-                FirstName = model.Fname,
-                LastName = model.LastName,
-                PhoneNumber = model.Phone,
-                Email = model.Emailaddress,
-            };
-
-            _context.RequestClients.Add(requestClient);
-            _context.SaveChanges();
-
-
-
-
-
-            return RedirectToAction("patientlogin");
-        }
+      
 
         //public IActionResult patientdashboard()
         //{
