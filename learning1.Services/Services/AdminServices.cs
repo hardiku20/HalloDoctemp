@@ -20,6 +20,7 @@ namespace learning1.Services.Services
 
         public AdminDashboardViewModel DisplayAdminDashboard()
         
+        
         {
             var temp = _adminRepo.DisplayAdminDashboardRepo().
                 Select(x => new AdminTableViewModel
@@ -43,6 +44,42 @@ namespace learning1.Services.Services
         public ViewCaseViewModel DisplayViewCase(int requestId)
         {
             var model = _adminRepo.DisplayViewCaseRepo(requestId);
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderActiveStateData(int status)
+        {
+            var model = _adminRepo.RenderToActiveState(status);
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderConcludeStateData(int status)
+        {
+            var model = _adminRepo.RenderConcludeState(status);
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderNewStateData(int status)
+        {
+            var model = _adminRepo.RenderNewState(status);
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderPendingStateData(int status)
+        {
+            var model = _adminRepo.RenderPendingState(status);
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderToCloseStateData(int status)
+        {
+            var model = _adminRepo.RenderToCloseState(status);
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderUnpaidStateData(int status)
+        {
+            var model = _adminRepo.RenderUnpaidState(status);
             return model;
         }
     }

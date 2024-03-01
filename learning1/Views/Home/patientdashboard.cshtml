@@ -153,7 +153,7 @@
             $("#me_btn, #else_btn").click(function () {
                 $("#continueBtn").prop("disabled", false); // Enable "Continue" button
                 $(".btn-outline-info").removeClass("active"); // Remove active state from all buttons
-                $(this).addClass("active"); // Add active state to the clicked button
+                $(this).("active"); // Add active state to the clicked button
             });
 
             // Handle "Continue" button click
@@ -191,7 +191,7 @@
             $("#me_btn, #else_btn").click(function () {
                 $("#continueBtn").prop("disabled", false); // Enable "Continue" button
                 $(".btn-outline-info").removeClass("active"); // Remove active state from all buttons
-                $(this).addClass("active"); // Add active state to the clicked button
+                $(this).("active"); // Add active state to the clicked button
             });
 
             // Handle "Continue" button click using server-side redirection

@@ -1,11 +1,150 @@
-.uname{
+.uname {
     position: relative;
 }
-.uicon{
+
+.uicon {
     position: absolute;
     margin-top: -37px;
     margin-left: 90%;
     z-index: 999;
 }
 
+.form-floating {
+    box-shadow: none;
+}
 
+    .form-floating input:focus {
+        border-color: rgb(36, 152, 152);
+        box-shadow: none;
+    }
+
+        .form-floating input:focus ~ label {
+            color: white;
+        }
+
+    .form-floating.input-info input:focus ~ label {
+        color: rgb(36, 191, 191);
+    }
+
+    .form-floating textarea:focus {
+        border-color: rgb(36, 152, 152);
+        box-shadow: none;
+    }
+
+        .form-floating textarea:focus ~ label {
+            color: white;
+        }
+
+    .form-floating.input-info textarea:focus ~ label {
+        color: rgb(36, 191, 191);
+    }
+
+.iti {
+    width: 100% !important;
+    display: inline-block;
+}
+
+.iti__country-list {
+    z-index: 999;
+    width: 600%;
+}
+
+
+
+
+
+
+
+
+.newState {
+    background-color: #E9EAEF;
+    border: 1px solid #203F9A;
+    color: #203F9A;
+}
+
+.newState-active {
+    background-color: #203F9A;
+    border: 1px solid #203F9A;
+    color: white;
+}
+
+.pendingState {
+    background-color: #E5F2F8;
+    border: 1px solid #00ADEF;
+    color: #00ADEF;
+}
+
+.pendingState-active {
+    background-color: #00ADEF;
+    border: 1px solid #00ADEF;
+    color: white;
+}
+
+.activeState {
+    background-color: #E9F0E8;
+    border: 1px solid #228C20;
+    color: #228C20;
+}
+
+.activeState-active {
+    background-color: #228C20;
+    border: 1px solid #228C20;
+    color: white;
+}
+
+.concludeState {
+    background-color: #F7E6EE;
+    border: 1px solid #DA0F82;
+    color: #DA0F82;
+}
+
+.concludeState-active {
+    background-color: #DA0F82;
+    border: 1px solid #DA0F82;
+    color: white;
+}
+
+.tocloseState {
+    background-color: #E5EEF5;
+    border: 1px solid #0370D7;
+    color: #0370D7;
+}
+
+.tocloseState-active {
+    background-color: #0370D7;
+    border: 1px solid #0370D7;
+    color: white;
+}
+
+.unpaidState {
+    border: 1px solid #9966CD;
+    background-color: #EFEEF4;
+    color: #9966CD;
+}
+
+.unpaidState-active {
+    border: 1px solid #9966CD;
+    background-color: #9966CD;
+    color: white;
+}
+
+.icon-size {
+    height: 26px;
+    width: 28px;
+}
+
+.hidden {
+    display: none;
+}
+
+.hide-caret {
+    display: none;
+}
+
+.caret {
+    height: 35px;
+    width: 35px;
+    display: flex;
+    margin: auto;
+    margin-top: -12px
+}

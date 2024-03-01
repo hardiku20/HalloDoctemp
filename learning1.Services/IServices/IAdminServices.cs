@@ -11,5 +11,11 @@ namespace learning1.Services.IServices
     {
         AdminDashboardViewModel DisplayAdminDashboard();
         ViewCaseViewModel DisplayViewCase(int requestId);
+        AdminDashboardViewModel RenderActiveStateData(int status);
+        AdminDashboardViewModel RenderConcludeStateData(int status);
+        AdminDashboardViewModel RenderNewStateData(int status);
+        AdminDashboardViewModel RenderPendingStateData(int status);
+        AdminDashboardViewModel RenderToCloseStateData(int status);
+        AdminDashboardViewModel RenderUnpaidStateData(int status);
     }
 }

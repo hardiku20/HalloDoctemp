@@ -12,5 +12,11 @@ namespace learning1.Repositories.IRepositories
     {
         List<Request> DisplayAdminDashboardRepo();
         ViewCaseViewModel DisplayViewCaseRepo(int requestId);
+        AdminDashboardViewModel RenderConcludeState(int status);
+        AdminDashboardViewModel RenderNewState(int status);
+        AdminDashboardViewModel RenderPendingState(int status);
+        AdminDashboardViewModel RenderToActiveState(int status);
+        AdminDashboardViewModel RenderToCloseState(int status);
+        AdminDashboardViewModel RenderUnpaidState(int status);
     }
 }

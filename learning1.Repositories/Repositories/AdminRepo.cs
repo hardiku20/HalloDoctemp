@@ -39,5 +39,131 @@ namespace learning1.Repositories.Repositories
 
             return Requests;
         }
+
+        public AdminDashboardViewModel RenderConcludeState(int status)
+        {
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            Select(x => new AdminTableViewModel()
+            {
+                RequestId = x.RequestId,
+                RequestedDate = x.CreatedDate,
+                Phone = x.PhoneNumber,
+                Name = x.FirstName + " " + x.LastName,
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
+                RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+            }).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = tempmodel
+            };
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderNewState(int status)
+        {
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            Select(x => new AdminTableViewModel()
+            {
+                RequestId = x.RequestId,
+                RequestedDate = x.CreatedDate,
+                Phone = x.PhoneNumber,
+                Name = x.FirstName + " " + x.LastName,
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
+                RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+            }).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = tempmodel
+            };
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderPendingState(int status)
+        {
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            Select(x => new AdminTableViewModel()
+            {
+                RequestId = x.RequestId,
+                RequestedDate = x.CreatedDate,
+                Phone = x.PhoneNumber,
+                Name = x.FirstName + " " + x.LastName,
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
+                RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+            }).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = tempmodel
+            };
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderToActiveState(int status)
+        {
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+             Select(x => new AdminTableViewModel()
+             {
+                 RequestId = x.RequestId,
+                 RequestedDate = x.CreatedDate,
+                 Phone = x.PhoneNumber,
+                 Name = x.FirstName + " " + x.LastName,
+                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                 Requester = x.FirstName + " " + x.LastName,
+                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+             }).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = tempmodel
+            };
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderToCloseState(int status)
+        {
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+             Select(x => new AdminTableViewModel()
+             {
+                 RequestId = x.RequestId,
+                 RequestedDate = x.CreatedDate,
+                 Phone = x.PhoneNumber,
+                 Name = x.FirstName + " " + x.LastName,
+                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                 Requester = x.FirstName + " " + x.LastName,
+                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+             }).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = tempmodel
+            };
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderUnpaidState(int status)
+        {
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            Select(x => new AdminTableViewModel()
+            {
+                RequestId = x.RequestId,
+                RequestedDate = x.CreatedDate,
+                Phone = x.PhoneNumber,
+                Name = x.FirstName + " " + x.LastName,
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
+                RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+            }).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = tempmodel
+            };
+            return model;
+        }
     }
 }

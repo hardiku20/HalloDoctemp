@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model learning1.DBEntities.ViewModel.AdminDashboardViewModel;
+<div class="d-md-block d-none">
+    <table class="table-responsive w-100">
+
+
+        <tr class="border border-bottom border-white bg-secondary-subtle">
+            <td scope="col" class="py-3 ps-4">Name</td>
+            <td scope="col" class="py-3 ">Date of Birth</td>
+            <td scope="col" class="py-3">Requestor</td>
+            <td scope="col" class="py-3">Physician Name</td>
+            <td scope="col" class="py-3">Date of Service</td>
+            <td scope="col" class="py-3">Phone</td>
+            <td scope="col" class="py-3">Address</td>
+            <td scope="col" class="py-3">Notes</td>
+            <td scope="col" class="py-3">Chat With</td>
+            <td scope="col" class="py-3">Actions</td>
+        </tr>
+
+        @foreach (var items in Model.TableViewModel)
+        {
+            var bgcolor = "";
+            if (@items.RequestType.ToString() == "Family")
+            {
+                bgcolor = " rgb(212, 107, 21)";
+            }
+            else if (@items.RequestType.ToString() == "Business")
+            {
+                bgcolor = "rgb(203, 22, 134)";
+            }
+            else if (@items.RequestType.ToString() == "Concierge")
+            {
+                bgcolor = "rgb(65, 65, 232)";
+            }
+            else
+            {
+                bgcolor = "rgb(15, 189, 64)";
+            }
+
+
+
+            <tr class=" border border-bottom border-white" style="background-color:@bgcolor">
+
+                <td class="text-white py-5">@items.Name</td>
+                <td class="text-white py-3">
+                    <img src="~/assets/images/envelope.svg" class="p-1 border "> -
+                </td>
+                <td class="text-white py-3 ">@items.RequestType @items.Requester</td>
+                <td class="text-white py-3">physician name</td>
+                <td class="text-white py-3">12/12/2012</td>
+                <td class="text-white">
+                    @if (items.Phone != null)
+                    {
+
+                        <button class=" btn btn-outline-white border border-white py-1 w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
+                        <div class="text-white">(@items.RequestType)</div>
+                    }
+
+                </td>
+                <td class="text-white py-3">Addresssssssssssss</td>
+                <td class="text-white py-3"> - </td>
+                <td class=" ">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="button" class="btn btn-sm border border-white text-white me-2">Patient</button>
+                        <button type="button" class="btn btn-sm border border-white text-white">Provider</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
+                            <li><a class="dropdown-item" href="#">View Uploads</a></li>
+                            <li><a class="dropdown-item" href="#">View Notes</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+</div>

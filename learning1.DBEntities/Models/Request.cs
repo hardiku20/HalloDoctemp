@@ -53,13 +53,15 @@ public partial class Request
 
     public string? Ip { get; set; }
 
-    public string? CaseTag { get; set; }
-
     public string? CaseTagPhysician { get; set; }
 
     public string? PatientAccountId { get; set; }
 
     public int? CreatedUserId { get; set; }
+
+    public int? CaseTagId { get; set; }
+
+    public virtual CaseTag? CaseTag { get; set; }
 
     public virtual Physician? Physician { get; set; }
 

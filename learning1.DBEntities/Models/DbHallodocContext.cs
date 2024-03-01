@@ -87,7 +87,7 @@ public partial class DbHallodocContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=Db_hallodoc;Username=postgres ;Password=tatva123");
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=Db_hallodoc;Username=postgres;Password=tatva123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -228,11 +228,10 @@ public partial class DbHallodocContext : DbContext
 
         modelBuilder.Entity<CaseTag>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("CaseTag");
+            entity.HasKey(e => e.CaseTagId).HasName("CaseTag_pkey");
 
-            entity.Property(e => e.CaseTagId).ValueGeneratedOnAdd();
+            entity.ToTable("CaseTag");
+
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
@@ -444,7 +443,6 @@ public partial class DbHallodocContext : DbContext
 
             entity.Property(e => e.AcceptedDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.CaseNumber).HasMaxLength(50);
-            entity.Property(e => e.CaseTag).HasMaxLength(50);
             entity.Property(e => e.CaseTagPhysician).HasMaxLength(50);
             entity.Property(e => e.ConfirmationNumber).HasMaxLength(20);
             entity.Property(e => e.CreatedDate).HasColumnType("timestamp without time zone");
@@ -462,6 +460,10 @@ public partial class DbHallodocContext : DbContext
             entity.Property(e => e.PhoneNumber).HasMaxLength(23);
             entity.Property(e => e.RelationName).HasMaxLength(100);
             entity.Property(e => e.UserId).ValueGeneratedOnAdd();
+
+            entity.HasOne(d => d.CaseTag).WithMany(p => p.Requests)
+                .HasForeignKey(d => d.CaseTagId)
+                .HasConstraintName("Request_CaseTagId_fkey");
 
             entity.HasOne(d => d.Physician).WithMany(p => p.Requests)
                 .HasForeignKey(d => d.PhysicianId)

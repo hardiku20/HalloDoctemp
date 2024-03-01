@@ -13,6 +13,7 @@ namespace learning1.DBEntities.ViewModel
         public DateTime RequestedDate { get; set; }
         public List<AdminTableViewModel> TableViewModel { get; set; }
 
+        
     }
 
     public class AdminTableViewModel
