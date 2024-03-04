@@ -13,14 +13,62 @@ namespace learning1.Repositories.Repositories
     public class AdminRepo : IAdminRepo
     {
         private readonly DbHallodocContext _context;
-        public AdminRepo(DbHallodocContext context) { 
+        public AdminRepo(DbHallodocContext context) {
             _context = context;
         }
+
+        public void CancelCaseRepo(AdminDashboardViewModel model)
+        {
+            RequestStatusLog canceldata = new RequestStatusLog()
+            {
+                RequestId = model.RequestId,
+                Status = 3,
+                Notes = model.CancelNotes,
+                CreatedDate = DateTime.Now,
+
+            };
+
+            _context.RequestStatusLogs.Add(canceldata);
+            _context.SaveChanges();
+
+
+            //Request request = new Request()
+            //{
+            //    Status =3,             
+            //};
+
+            //_context.Requests.Add(request);
+            //_context.SaveChanges();
+
+        }
+
+        //public void AddRequestStatusLog(RequestStatusLog requestStatusLog)
+        //{
+        //  _context.RequestStatusLogs.Add(requestStatusLog);
+        //  _context.SaveChanges();
+        //}
+
+        //public void CancelCaseDataRepo(AdminDashboardViewModel model)
+        //{
+        //    //Console.WriteLine( something);
+        //}
 
         public List<Request> DisplayAdminDashboardRepo()
         {
             var model = _context.Requests.Include(x => x.RequestClients).ToList();
             return model;
+        }
+
+        public List<string> DisplayCasetags()
+        {
+            var Casetags = _context.CaseTags.Select(x => x.Name).ToList();
+            return Casetags;
+        }
+
+        public List<string> DisplayRegions()
+        {
+            var Regions = _context.Regions.Select(x => x.Name).ToList();
+            return Regions;
         }
 
         public ViewCaseViewModel DisplayViewCaseRepo(int requestId)
@@ -33,12 +81,17 @@ namespace learning1.Repositories.Repositories
                     email = x.Request.Email,
                     phone = x.PhoneNumber,
                 }).FirstOrDefault();
-            
+
 
 
 
             return Requests;
         }
+
+        //public Request GetRequestById(int requestId)
+        //{
+        //    return _context.Requests.Where(x => x.RequestId == requestId).FirstOrDefault();
+        //}
 
         public AdminDashboardViewModel RenderConcludeState(int status)
         {
@@ -103,9 +156,9 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
-        public AdminDashboardViewModel RenderToActiveState(int status)
+        public AdminDashboardViewModel RenderToActiveState(int status1, int status2)
         {
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 || x.Status== status2).
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
@@ -124,9 +177,9 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
-        public AdminDashboardViewModel RenderToCloseState(int status)
+        public AdminDashboardViewModel RenderToCloseState(int status1, int status2, int status3)
         {
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 ||  x.Status == status2 ||  x.Status == status3).
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
@@ -165,5 +218,11 @@ namespace learning1.Repositories.Repositories
             };
             return model;
         }
+
+        //public void updateRequest(Request request)
+        //{
+        //    _context.Requests.Update(request);
+        //    _context.SaveChanges();
+        //}
     }
 }

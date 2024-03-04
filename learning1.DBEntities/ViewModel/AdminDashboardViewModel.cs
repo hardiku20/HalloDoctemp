@@ -13,6 +13,13 @@ namespace learning1.DBEntities.ViewModel
         public DateTime RequestedDate { get; set; }
         public List<AdminTableViewModel> TableViewModel { get; set; }
 
+        public string? ReasonForCancellation { get; set; }
+        public List<string>? Region {  get; set; }
+
+        public List<string>? CancellationReason { get; set; }
+
+        public string? CancelNotes { get; set; }
+
         
     }
 
@@ -23,6 +30,8 @@ namespace learning1.DBEntities.ViewModel
         public DateTime RequestedDate { get; set; }
         public string? Address {  get; set; }
         public string? Phone {  get; set; }
+
+        public string? PatientNumber { get; set; }
         public string? Street { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }

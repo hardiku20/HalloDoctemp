@@ -12,25 +12,27 @@
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Cancel Confirmation</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white  shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" asp-action="CancelCase" asp-controller="Admin">
+                    <input type="text" value=""  id="Cancel-RequestId" asp-for="RequestId"/>
                     <div class="mb-3">
-                        <label for="message-text text-secondary " class="col-form-label">Patient Name :<span class="text-info ps-2">Test Test,</span></label>
+                        <label for="message-text text-secondary " class="col-form-label">Patient Name :<span class="text-info ps-2" id="Cancel-PatientName"></span></label>
                         <div class="my-4">
-                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example">
-                                <label selected">Reason for cancellation</label>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" asp-for="ReasonForCancellation">
+                                <label selected" >Reason for cancellation</label>
+                                @foreach(string items in Model.CancellationReason)
+                                {
+                                    <option>@items</option>
+                                }
                             </select>
                         </div>
 
                         <div class="form-floating">
                             <textarea class="form-control"
                                       placeholder="Please provide a brief explanation for your cancelation"
-                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                                      id="floatingTextarea2" style="height: 100px" asp-for="CancelNotes"></textarea>
                             <label for="floatingTextarea2">
                                 Provide Additional Notes
                             </label>
@@ -38,13 +40,13 @@
 
                     </div>
 
-
+                    <div class="modal-footer border-0">
+                        <button type="submit" class="btn btn-info text-white">Confirm</button>
+                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer border-0">
-                <button type="button" class="btn btn-info text-white">Confirm</button>
-                <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-            </div>
+           
         </div>
     </div>
 </div>
@@ -68,9 +70,9 @@
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" aria-label="Small select example">
                                 <label selected">Narrow Search by Region</label>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                @foreach(string items in Model.Region ){
+                                    <option>@items</option>
+                                }
                             </select>
                         </div>
 
@@ -107,7 +109,40 @@
 
 
 
+<!-- Modal for Block Case -->
+<div class="modal fade" id="BlockCaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Confirm Block</h1>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text text-secondary " class="col-form-label">Patient Name :<span class="text-info ps-2">Test Test,</span></label>
+                        <div class="form-floating my-4">
+                            <textarea class="form-control"
+                                      placeholder="Please provide a brief explanation for Block Request"
+                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">
+                                Reason for Block Request
+                            </label>
+                        </div>
 
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-info text-white">Confirm</button>
+                <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -627,7 +662,15 @@
 </div>
 
 <script src="/js/DashboardRenderPartialView.js"></script>
-
+<script>
+    function onPass(Name,RequestId) {
+        // debugger;
+        // console.log(Name);
+        // console.log(RequestId);
+        document.getElementById("Cancel-PatientName").textContent = Name;
+        document.getElementById("Cancel-RequestId").value = RequestId;
+    }
+</script>
 
 
 

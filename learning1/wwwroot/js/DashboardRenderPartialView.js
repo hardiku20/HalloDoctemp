@@ -114,7 +114,8 @@
                     type: "get",
                     url: "/admin/RenderActivePartialView",
                     data: {
-                        Status: 3
+                        Status1: 4,
+                        Status2: 5
                         
                     },
                     success: function (result) {
@@ -203,7 +204,9 @@
                     type: "get",
                     url: "/admin/RenderToClosePartialView",
                     data: {
-                        Status: 7
+                        Status1: 3,
+                        Status2: 7,
+                        Status3: 8
                     },
                     success: function (result) {
                         console.log(result);
@@ -247,7 +250,7 @@
                     type: "get",
                     url: "/admin/RenderUnpaidPartialView",
                     data: {
-                        Status: 8
+                        Status: 9
                     },
                     success: function (result) {
                         console.log(result);

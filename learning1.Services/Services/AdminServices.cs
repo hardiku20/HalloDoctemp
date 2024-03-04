@@ -1,4 +1,5 @@
-﻿using learning1.DBEntities.ViewModel;
+﻿using learning1.DBEntities.Models;
+using learning1.DBEntities.ViewModel;
 using learning1.Repositories.IRepositories;
 using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
@@ -19,9 +20,9 @@ namespace learning1.Services.Services
         }
 
         public AdminDashboardViewModel DisplayAdminDashboard()
-        
-        
         {
+            var Casetags = _adminRepo.DisplayCasetags();
+            var Regions = _adminRepo.DisplayRegions();
             var temp = _adminRepo.DisplayAdminDashboardRepo().
                 Select(x => new AdminTableViewModel
                 {
@@ -31,12 +32,16 @@ namespace learning1.Services.Services
                     Name = x.FirstName + " " + x.LastName,
                     Address = x.RequestClients.Select(x =>x.Address).FirstOrDefault(),
                     Requester = x.FirstName + " " + x.LastName,
-                    RequestType = (RequestType)x.RequestTypeId,
+                    PatientNumber = x.PhoneNumber,
+                    RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+
                 }).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = temp
+                TableViewModel = temp,
+                CancellationReason = Casetags,
+                Region = Regions,       
             };
             return model;
         }
@@ -47,9 +52,33 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public AdminDashboardViewModel RenderActiveStateData(int status)
+        public void GetCancelCaseData(AdminDashboardViewModel model)
         {
-            var model = _adminRepo.RenderToActiveState(status);
+            _adminRepo.CancelCaseRepo(model);
+        }
+
+
+
+        //public void GetCancelCaseData(AdminDashboardViewModel model)
+        //{
+        //    var request = _adminRepo.GetRequestById(model.RequestId);
+        //    request.Status = 3;
+        //    _adminRepo.updateRequest(request);
+
+        //    RequestStatusLog requestStatusLog = new RequestStatusLog()
+        //    {
+        //        RequestId = model.RequestId,
+        //        Status = request.Status,
+        //        CreatedDate = request.CreatedDate,
+        //        Notes = model.CancelNotes,
+        //    };
+        //    _adminRepo.AddRequestStatusLog(requestStatusLog);
+
+        //}
+
+        public AdminDashboardViewModel RenderActiveStateData(int status1, int status2)
+        {
+            var model = _adminRepo.RenderToActiveState(status1,status2 );
             return model;
         }
 
@@ -71,9 +100,9 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public AdminDashboardViewModel RenderToCloseStateData(int status)
+        public AdminDashboardViewModel RenderToCloseStateData(int status1,int status2, int status3)
         {
-            var model = _adminRepo.RenderToCloseState(status);
+            var model = _adminRepo.RenderToCloseState(status1 , status2,status3);
             return model;
         }
 

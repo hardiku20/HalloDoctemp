@@ -9,7 +9,7 @@
 @{
     Layout = "_AdminLayout";
 }
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 
 
 
@@ -68,8 +68,10 @@
                     <div class="form-floating col-md-6 mb-3 input-info">
                         <div class="row me-2">
                             <div class="form-floating input-info col-10">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="City"
-                                       asp-for="city" disabled>
+                                
+                                    <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                           id="phone1" disabled>
+                              
                               
                             </div>
                             <div class="form-floating col-2 p-0">
@@ -131,7 +133,11 @@
                 <div class="d-flex mt-3 mb-2 justify-content-end">
                     <button type="button"
                             class="btn btn-info text-white text-decoration-none py-2 ">
-                        Assign Case
+                        Assign
+                    </button>
+                    <button type="button"
+                            class="btn btn-info text-white text-decoration-none py-2 ms-2">
+                        View Notes
                     </button>
                     
                     <button type="button"
@@ -146,5 +152,17 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    const phoneInputField1 = document.querySelector("#phone1");
+    const phoneInput1 = window.intlTelInput(phoneInputField1, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
 
 

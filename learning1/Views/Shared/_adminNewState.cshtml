@@ -56,15 +56,15 @@
                 <td class="text-white py-3 ">@items.RequestType @items.Requester</td>
                 <td class="text-white py-3">@items.RequestedDate</td>
                 <td class="text-white">
+                   
                     @if (items.Phone != null)
                     {
-
                         <button class=" btn btn-outline-white border border-white py-1 w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
                         <div class="text-white">(@items.RequestType)</div>
                     }
 
                 </td>
-                <td class="text-white py-3">Addresssssssssssss</td>
+                <td class="text-white py-3">@items.Address</td>
                 <td class="text-white py-3"> - </td>
                 <td><button type="button" class="btn btn-sm border border-white text-white">Provider</button></td>
                 <td>
@@ -79,11 +79,14 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#CancelCaseModal" data-bs-whatever="">Cancel Case</a>
+                                   data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onPass('@items.Name','@items.RequestId')">Cancel Case</a>
                             </li>
                             <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
                             <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin">View Notes</a></li>
-                            <li><a class="dropdown-item" href="#">Block Patients</a></li>
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal"
+                                   data-bs-target="#BlockCaseModal" data-bs-whatever="">Block Patients</a>
+                            </li>
                         </ul>
                     </div>
                 </td>
