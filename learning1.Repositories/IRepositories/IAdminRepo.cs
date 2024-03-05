@@ -20,6 +20,7 @@ namespace learning1.Repositories.IRepositories
         List<string> DisplayCasetags();
        List<string> DisplayRegions();
         ViewCaseViewModel DisplayViewCaseRepo(int requestId);
+        List<string> GetPhysicianByRegionName(string regionName);
         AdminDashboardViewModel RenderConcludeState(int status);
         AdminDashboardViewModel RenderNewState(int status);
         AdminDashboardViewModel RenderPendingState(int status);

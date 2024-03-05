@@ -83,5 +83,11 @@ namespace learning1.Controllers
             return RedirectToAction("AdminDashboard");
         }
 
+
+        public List<string> GetPhysicianByRegionName(string regionName)
+        {
+            var PhysicianList = _adminServices.GetPhysicianByRegion(regionName);
+            return PhysicianList;
+        }
     }
 }

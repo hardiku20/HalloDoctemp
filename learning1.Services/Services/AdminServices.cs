@@ -57,6 +57,12 @@ namespace learning1.Services.Services
             _adminRepo.CancelCaseRepo(model);
         }
 
+        public List<string> GetPhysicianByRegion(string regionName)
+        {
+            var physicianName = _adminRepo.GetPhysicianByRegionName(regionName);
+            return physicianName;
+        }
+
 
 
         //public void GetCancelCaseData(AdminDashboardViewModel model)

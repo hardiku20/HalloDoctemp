@@ -293,4 +293,32 @@
         }
     })
 
+
+    $("#regionSelector").change(function () {
+        debugger;
+        console.log(this);
+        var region = this.value;
+        $.ajax({
+            method: 'GET',
+            url: '/Admin/GetPhysicianByRegionName',
+            data: {
+                regionName: region,
+            },
+            success: function (result) {
+                let str = ""
+                for (let index = 0; index < result.length; index++) {
+                    const value = result[index]; // Extract the string value
+                    str += `<option value="${value}">${value}</option>`;
+                }
+                $("#physicianSelector").html(str);
+            },
+
+            error: function (xhr, status, error) {
+                console.log(error);
+
+            }
+        })
+
+    })
+
 })

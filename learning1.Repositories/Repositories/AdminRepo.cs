@@ -32,6 +32,16 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges();
 
 
+
+            Request request = _context.Requests.Where(x=>x.RequestId==model.RequestId).First();
+            request.Status = 3;
+                
+            
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+
+
             //Request request = new Request()
             //{
             //    Status =3,             
@@ -86,6 +96,13 @@ namespace learning1.Repositories.Repositories
 
 
             return Requests;
+        }
+
+        public List<string> GetPhysicianByRegionName(string regionName)
+        {
+            int regionId = _context.Regions.Where(x => x.Name == regionName).Select(x =>x.RegionId).First();
+            var PhysicianName = _context.Physicians.Where(x => x.RegionId == regionId).Select(x => x.FirstName).ToList();
+            return PhysicianName;
         }
 
         //public Request GetRequestById(int requestId)
