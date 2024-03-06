@@ -77,7 +77,7 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
-                            <li><a class="dropdown-item" href="#">View Uploads</a></li>
+                            <li><a class="dropdown-item" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId" >View Uploads</a></li>
                             <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin">View Notes</a></li>
                             <li><a class="dropdown-item" href="#">Transfer</a></li>
                             <li><a class="dropdown-item" href="#">Clear Case</a></li>

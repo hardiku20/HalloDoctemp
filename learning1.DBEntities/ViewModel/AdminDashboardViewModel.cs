@@ -20,6 +20,8 @@ namespace learning1.DBEntities.ViewModel
 
         public string? CancelNotes { get; set; }
 
+        public string? BlockNotes { get; set; }
+
         
     }
 

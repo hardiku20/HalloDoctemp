@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Net.Mail;
 using System.Net;
 using learning1.Services.IServices;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace learning1.Controllers
 {
@@ -29,16 +30,17 @@ namespace learning1.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMemoryCache _memoryCache;
         private readonly IPatientServices _patientServices;
+        private readonly INotyfService _notyf;
 
         //public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
-        public HomeController(ILogger<HomeController> logger, IPatientServices patientServices, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
+        public HomeController(ILogger<HomeController> logger, IPatientServices patientServices, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache, INotyfService notyf)
         {
             _patientServices = patientServices;
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
             _context = context;
             _memoryCache = memoryCache;
-
+            _notyf = notyf;
         }
 
 
@@ -76,6 +78,7 @@ namespace learning1.Controllers
                     //return patient_dashboard((short)id);
                     //TempData["id"] = (int)id;
                     _httpContextAccessor.HttpContext.Session.SetInt32("Id", userId);
+                    _notyf.Success("Login Successfully");
                     return RedirectToAction("patientdashboard", "Home");
                 }
                 else
@@ -639,7 +642,6 @@ namespace learning1.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 
 
 
@@ -1049,37 +1051,7 @@ namespace learning1.Controllers
             return View();
         }
 
-
-
-        //public IActionResult admindashboard()
-        //{
-        //    return View();
-        //}
-
-
-
-        //public IActionResult patientdashboard()
-        //{
-        //    int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
-        //    var model = _patientServices.displayDashboard(id);
-        //    return View(model);
-        //}
-
-
-        public IActionResult admindashboard()
-        {
-            var model = _patientServices.DisplayAdminDashboard();
-            return View(model);
-        }
-        
-
-        public IActionResult ViewCase(int RequestId)
-        {
-            var model = _patientServices.DisplsyViewCase(RequestId);
-            return View(model);
-        }
-
-
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

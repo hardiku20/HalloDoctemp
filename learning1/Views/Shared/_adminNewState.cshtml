@@ -79,13 +79,13 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onPass('@items.Name','@items.RequestId')">Cancel Case</a>
+                                   data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onCancel('@items.Name','@items.RequestId')">Cancel Case</a>
                             </li>
                             <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
                             <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin">View Notes</a></li>
                             <li>
                                 <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#BlockCaseModal" data-bs-whatever="">Block Patients</a>
+                                   data-bs-target="#BlockCaseModal" data-bs-whatever="" onclick="onBlock('@items.Name','@items.RequestId')">Block Patients</a>
                             </li>
                         </ul>
                     </div>

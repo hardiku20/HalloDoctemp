@@ -4,7 +4,8 @@ using learning1.Services.IServices;
 using learning1.Repositories.IRepositories;
 using learning1.Services.Services;
 using learning1.Repositories.Repositories;
-
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,7 @@ builder.Services.AddScoped<IPatientRepo, PatientRepo>();
 builder.Services.AddScoped<IPatientServices, PatientServices>();
 builder.Services.AddScoped<IAdminServices, AdminServices>();
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();
-
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
 
 
 
@@ -38,16 +39,15 @@ if (!app.Environment.IsDevelopment())
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
+app.UseNotyf();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Admin}/{action=admindashboard}/{id?}");
-app.MapControllerRoute(
-    name: "",
     pattern: "{controller=Home}/{action=patientsite}/{id?}");
+app.MapControllerRoute(
+    name:"default",
+    pattern: "{controller=Admin}/{action=admindashboard}/{id?}");
 
 
 

@@ -11,8 +11,11 @@ namespace learning1.Services.IServices
     {
         AdminDashboardViewModel DisplayAdminDashboard();
         ViewCaseViewModel DisplayViewCase(int requestId);
+        void GetBlockCaseData(AdminDashboardViewModel model);
         void GetCancelCaseData(AdminDashboardViewModel model);
         List<string> GetPhysicianByRegion(string regionName);
+        ViewUploadViewModel GetviewUploads(int requestId);
+        void InsertviewUploads(ViewUploadViewModel model, int requestId);
         AdminDashboardViewModel RenderActiveStateData(int status1,int status2);
         AdminDashboardViewModel RenderConcludeStateData(int status);
         AdminDashboardViewModel RenderNewStateData(int status);

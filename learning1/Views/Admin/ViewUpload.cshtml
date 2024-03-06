@@ -1,0 +1,143 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+@model learning1.DBEntities.ViewModel.ViewUploadViewModel;
+
+
+<div class="container-fluid">
+    <div class="container">
+
+        <div class="d-flex justify-content-between">
+            <h4 class="m-4 d-block">Documents</h4>
+            <div class="d-flex justify-content-end m-4">
+                <a asp-controller="Admin" asp-action="admindashboard"
+                   class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                    <img src="/assets/images/chevron-left.svg" alt=""> Back
+                </a>
+            </div>
+
+        </div>
+        <div class="bg-white border px-3">
+            <p class="mb-0 mt-3">Patient Name</p>
+            <h4 class=" text-info">
+             ghfghk
+            </h4>
+            <p class="text-secondary fs-5">
+                Check here to review and add files that you or the Client/Member has attached to the Request.
+            </p>
+            <form method="post" enctype="multipart/form-data">
+                <div class="input-group mb-3 py-2">
+                    <input type="file" name="formFile" class="form-control fs-5 " placeholder="Select file" aria-label="Select File"
+                           aria-describedby="basic-addon2" asp-for="formFile">
+                    <label for="inputGroupFile02" class=" btn btn-info text-white  rounded input-group-text">
+                        <button type="submit" class=" btn btn-info text-white  rounded input-group-text" asp-action="ViewUpload" asp-route-requestId= "@Model.RequestId">
+                            <img src="/assets/images/cloud-upload.svg" alt="cloud" class="text-white rounded-end">
+                            Upload
+                        </button>
+                    </label>
+                    <input type="file" class="form-control" id="inputGroupFile02" style="display: none;">
+                </div>
+            </form>
+            <div class="d-flex justify-content-between mb-4">
+                <h5 class="fs-5 fs-sm-0">Documents</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                    <button id="downloadAllButton" class="btn btn-outline-info d-none d-sm-flex me-2 p-2">Download All</button>
+                    <button class="btn btn-outline-info d-none d-sm-flex me-2 p-2">Delete All</button>
+                    <button class="btn btn-outline-info d-none d-sm-flex p-2">Send Mail</button>
+               </div>
+            </div>
+        </div>
+
+        <table class="table border border-top-0">
+            <thead class="thead-light">
+                <tr>
+                    <th colspan="2"><input type="checkbox" id="selectAllCheckbox"></th>
+                    <th scope="col">Documents</th>
+                    <th scope="col">Upload Date <i class="bi bi-arrow-up"></i></th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+                @foreach (var item in Model.DocumentsViewModel)
+                {
+                    <tr>
+                        <td colspan="2">
+                            <input type="checkbox" class="rowCheckbox">
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FileName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+
+         
+                        <td>
+                            <a class="btn btn-outline-info text-info bg-white download-link" asp-action="download_file" asp-controller="Admin" asp-route-filename="@item.FileName">Download</a>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        var rowCheckboxes = document.querySelectorAll('.rowCheckbox');
+        var downloadAllButton = document.getElementById('downloadAllButton');
+
+        selectAllCheckbox.addEventListener('change', function () {
+            rowCheckboxes.forEach(function (checkbox) {
+                checkbox.checked = this.checked;
+            }.bind(this));
+        });
+
+        rowCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                if (!this.checked) {
+                    selectAllCheckbox.checked = false;
+                } else {
+                    var allChecked = true;
+                    rowCheckboxes.forEach(function (rowCheckbox) {
+                        if (!rowCheckbox.checked) {
+                            allChecked = false;
+                        }
+                    });
+                    selectAllCheckbox.checked = allChecked;
+                }
+            });
+        });
+
+        downloadAllButton.addEventListener('click', function () {
+            var checkedRowCheckboxes = document.querySelectorAll('.rowCheckbox:checked');
+            var downloadLinks = [];
+            checkedRowCheckboxes.forEach(function (checkbox) {
+                var row = checkbox.closest('tr');
+                var downloadLink = row.querySelector('.download-link');
+                if (downloadLink) {
+                    downloadLinks.push(downloadLink.href);
+                }
+            });
+            // Start downloading each file
+            downloadLinks.forEach(function (link) {
+                var a = document.createElement('a');
+                a.href = link;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        });
+    });
+</script>

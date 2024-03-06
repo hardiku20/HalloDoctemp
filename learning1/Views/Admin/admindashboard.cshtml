@@ -118,13 +118,14 @@
                 <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form asp-action="BlockCase" asp-controller="Admin" method="post">
                     <div class="mb-3">
-                        <label for="message-text text-secondary" class="col-form-label">Patient Name :<span class="text-info ps-2">Test Test,</span></label>
+                        <input class="hidden" asp-for="RequestId"  id="Block-RequestId"/>
+                        <label for="message-text text-secondary" class="col-form-label">Patient Name :<span class="text-info ps-2" id="Block-PatientName"></span></label>
                         <div class="form-floating my-4">
                             <textarea class="form-control"
                                       placeholder="Please provide a brief explanation for Block Request"
-                                      id="floatingTextarea2" style="height: 100px" ></textarea>
+                                      id="floatingTextarea2" style="height: 100px" asp-for="BlockNotes" ></textarea>
                             <label for="floatingTextarea2">
                                 Reason for Block Request
                             </label>
@@ -132,13 +133,13 @@
 
                     </div>
 
-
+                    <div class="modal-footer border-0">
+                        <button type="submit" class="btn btn-info text-white">Confirm</button>
+                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
             </div>
-            <div class="modal-footer border-0">
-                <button type="button" class="btn btn-info text-white">Confirm</button>
-                <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-            </div>
+          
         </div>
     </div>
 </div>
@@ -662,7 +663,7 @@
 
 <script src="/js/DashboardRenderPartialView.js"></script>
 <script>
-    function onPass(Name,RequestId) {
+    function onCancel(Name,RequestId) {
         // debugger;
         // console.log(Name);
         // console.log(RequestId);
@@ -672,5 +673,10 @@
 </script>
 
 
-
+<script>
+    function onBlock(Name,RequestId){
+        document.getElementById("Block-PatientName").textContent = Name;
+        document.getElementById("Block-RequestId").value = RequestId;
+    }
+</script>
 

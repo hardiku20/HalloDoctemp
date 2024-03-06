@@ -1,5 +1,6 @@
 ﻿using learning1.DBEntities.ViewModel;
 using learning1.Services.IServices;
+using learning1.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace learning1.Controllers
@@ -7,12 +8,13 @@ namespace learning1.Controllers
     public class AdminController : Controller
     {
 
-
+        private readonly IHttpContextAccessor _httpcontextAccessor;
         private readonly IAdminServices _adminServices;
 
-        public AdminController(IAdminServices adminServices)
+        public AdminController(IAdminServices adminServices,IHttpContextAccessor httpContextAccessor)
         {
             _adminServices = adminServices;
+            _httpcontextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
@@ -89,5 +91,45 @@ namespace learning1.Controllers
             var PhysicianList = _adminServices.GetPhysicianByRegion(regionName);
             return PhysicianList;
         }
+
+
+        public IActionResult BlockCase(AdminDashboardViewModel model)
+        {
+            _adminServices.GetBlockCaseData(model);
+            return RedirectToAction("AdminDashboard");
+        }
+
+
+
+
+        public IActionResult ViewUpload(int requestId)
+        {
+            
+            var model = _adminServices.GetviewUploads(requestId);
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public IActionResult ViewUpload(ViewUploadViewModel model, int requestId)
+        {
+            if (model.formFile != null)
+            {
+                _adminServices.InsertviewUploads(model, requestId);
+                return RedirectToAction("ViewUpload", model);
+            }
+            return View(model);
+        }
+
+
+        public IActionResult download_file(string filename)
+        {
+            var net = new System.Net.WebClient();
+            var data = net.DownloadData("Files/PatientDocs/" + filename);
+            var content = new System.IO.MemoryStream(data);
+            var contentType = "APPLICATION/octet-stream";
+            return File(content, contentType, filename);
+        }
+
     }
 }

@@ -17,6 +17,26 @@ namespace learning1.Repositories.Repositories
             _context = context;
         }
 
+        public void BlockCaseRepo(AdminDashboardViewModel model)
+        {
+            RequestStatusLog blockdata = new RequestStatusLog()
+            {
+                RequestId= model.RequestId,
+                Status= 11,
+                Notes = model.BlockNotes,
+                CreatedDate = DateTime.Now,
+            };
+
+            _context.RequestStatusLogs.Add(blockdata);
+            _context.SaveChanges();
+
+            Request request =_context.Requests.Where(x=> x.RequestId == model.RequestId).First();
+            request.Status = 11;
+
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+        }
+
         public void CancelCaseRepo(AdminDashboardViewModel model)
         {
             RequestStatusLog canceldata = new RequestStatusLog()
@@ -96,6 +116,23 @@ namespace learning1.Repositories.Repositories
 
 
             return Requests;
+        }
+
+        public ViewUploadViewModel FetchViewUploads(int requestId)
+        {
+            var documents = _context.RequestWiseFiles.Where(x=> x.RequestId == requestId)
+                .Select(x => new AdminDocumentViewModel
+                {
+                    CreatedDate= x.CreatedDate,
+                    FileName = x.FileName,
+                }).ToList();
+        ViewUploadViewModel model = new ViewUploadViewModel()
+        {
+            RequestId = requestId,
+            DocumentsViewModel = documents
+        };
+
+           return model;
         }
 
         public List<string> GetPhysicianByRegionName(string regionName)
@@ -234,6 +271,30 @@ namespace learning1.Repositories.Repositories
                 TableViewModel = tempmodel
             };
             return model;
+        }
+
+        public ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId)
+        {
+            string fileName = requestId.ToString() + " - " + model.formFile.FileName;
+            string filePath = Path.Combine("Files", "PatientDocs", fileName);
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                model.formFile.CopyTo(stream);
+            }
+
+            RequestWiseFile files = new RequestWiseFile()
+            {
+                RequestId = requestId,
+                FileName = fileName,
+                CreatedDate = DateTime.Now,
+            };
+            _context.RequestWiseFiles.Add(files);
+            _context.SaveChanges();
+
+            return model;
+
         }
 
         //public void updateRequest(Request request)

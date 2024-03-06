@@ -10,6 +10,7 @@ namespace learning1.Repositories.IRepositories
 {
     public interface IAdminRepo
     {
+        void BlockCaseRepo(AdminDashboardViewModel model);
         void CancelCaseRepo(AdminDashboardViewModel model);
 
         //void AddRequestStatusLog(RequestStatusLog requestStatusLog);
@@ -20,6 +21,7 @@ namespace learning1.Repositories.IRepositories
         List<string> DisplayCasetags();
        List<string> DisplayRegions();
         ViewCaseViewModel DisplayViewCaseRepo(int requestId);
+        ViewUploadViewModel FetchViewUploads(int requestId);
         List<string> GetPhysicianByRegionName(string regionName);
         AdminDashboardViewModel RenderConcludeState(int status);
         AdminDashboardViewModel RenderNewState(int status);
@@ -27,5 +29,6 @@ namespace learning1.Repositories.IRepositories
         AdminDashboardViewModel RenderToActiveState(int status1,int status2);
         AdminDashboardViewModel RenderToCloseState(int status1, int status2,int status3);
         AdminDashboardViewModel RenderUnpaidState(int status);
+        ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
     }
 }

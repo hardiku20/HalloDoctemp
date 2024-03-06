@@ -52,6 +52,11 @@ namespace learning1.Services.Services
             return model;
         }
 
+        public void GetBlockCaseData(AdminDashboardViewModel model)
+        {
+            _adminRepo.BlockCaseRepo(model);
+        }
+
         public void GetCancelCaseData(AdminDashboardViewModel model)
         {
             _adminRepo.CancelCaseRepo(model);
@@ -61,6 +66,17 @@ namespace learning1.Services.Services
         {
             var physicianName = _adminRepo.GetPhysicianByRegionName(regionName);
             return physicianName;
+        }
+
+        public ViewUploadViewModel GetviewUploads(int requestId)
+        {
+           var model= _adminRepo.FetchViewUploads(requestId);
+           return model;
+        }
+
+        public void InsertviewUploads(ViewUploadViewModel model, int requestId)
+        {
+            _adminRepo.Uploaddocuments(model, requestId);
         }
 
 
