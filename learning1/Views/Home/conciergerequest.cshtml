@@ -147,10 +147,9 @@
                                 </div>
                             </div>
                             <div class="col-md mt-2">
-                                <div class="form-floating input-info">
-                                    <input type="email" class="form-control" id="floatingInput"
-                                           placeholder="name@example.com" asp-for="Email">
-                                    <label for="floatingInput" class="text-secondary">Email address</label>
+                                <div class="form-floating input-info  w-100">
+                                    <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                           id="phone1" asp-for="PhoneNumber">
                                 </div>
                             </div>
                         </div>
@@ -197,6 +196,12 @@
                 "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         });
     </script>
+    <script>
+        const phoneInputField1 = document.querySelector("#phone1");
+        const phoneInput1 = window.intlTelInput(phoneInputField1, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    </script>
 </body>
-
 </html>

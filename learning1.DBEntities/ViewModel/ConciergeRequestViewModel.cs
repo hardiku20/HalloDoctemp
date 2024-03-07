@@ -13,6 +13,7 @@ namespace learning1.DBEntities.ViewModel
         public string Lname { get; set; }
 
         public string Phone { get; set; }
+       
         public string Emailaddress { get; set; }
         public string houseName { get; set; }
         public string Email { get; set; }

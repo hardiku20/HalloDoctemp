@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container pb-4">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="ms-4">Send Order</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a asp-action="admindashboard" asp-controller="admin" class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body ">
+            <form action="" class="form-floating" method="post">
+                <div class="row p-2">
+                    <div class="form-floating input-info col-md-6 mb-4">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option selected class="">Select Profession</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <label for="floatingSelect" class="mx-2 text-secondary" >Select Profession</label>
+                    </div>
+                    <div class="mb-4 col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Business">
+                            <label for="floatingInput" class="text-secondary">Business</label>
+                        </div>
+                    </div>
+                    <div class="form-floating col-md-6 mb-4 input-info">
+                        <input type="text" class="form-control" id="floatingInputValue" aria-describedby="basic-addon1" placeholder="Business Contact">
+                        <label for="floatingInputValue" class="mx-2  text-secondary">Business Contact</label>
+                    </div>
+                    <div class="form-floating col-md-6 mb-4 input-info">
+                        <input type="text" class="form-control" id="floatingInputValue" aria-describedby="basic-addon1" placeholder="Email">
+                        <label for="floatingInputValue" class="mx-2  text-secondary">Email</label>
+                    </div>
+                    <div class="form-floating col-md-6 mb-4 input-info">
+                        <input type="text" class="form-control" id="floatingInputValue" aria-describedby="basic-addon1" placeholder="Fax Number">
+                        <label for="floatingInputValue" class="mx-2  text-secondary">Fax Number</label>
+                    </div>
+                    <div class="form-floating input-info mb-4">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                  style="height: 120px"></textarea>
+                        <label for="floatingTextarea2" class="mx-2 text-secondary">
+                           Prescription or Order Details
+                        </label>
+                    </div>
+                    <div class="form-floating input-info col-md-6 mb-4">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option selected>Not required</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <label for="floatingSelect" class="mx-2  text-secondary">Number of Refill</label>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex savebutton justify-content-end gap-2 me-2 mb-5">
+                        <button class="btn btn-info text-white" type="submit">Submit</button>
+                        <button class="btn border-info text-info" asp-action="admindashboard" asp-controller="Admin">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

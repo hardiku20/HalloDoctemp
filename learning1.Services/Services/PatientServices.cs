@@ -123,5 +123,11 @@ namespace learning1.Services.Services
         {
             _patientRepo.GetBusinessrequest(model);
         }
+
+        public UserInfoViewModel CheckValidUserWithRole(string email, string password)
+        {
+            var model = _patientRepo.GetRoleByAspNetId(email, password);
+            return model;
+        }
     }
 }

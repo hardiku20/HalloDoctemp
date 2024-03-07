@@ -13,6 +13,9 @@ using System.Net.Mail;
 using System.Net;
 using learning1.Services.IServices;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using learning1.Utils;
+using learning1.Authentication;
+//using learning1.Authentication;
 
 namespace learning1.Controllers
 {
@@ -70,6 +73,28 @@ namespace learning1.Controllers
             if (ModelState.IsValid)
             {
                 //var temp = loginmethod()
+
+
+
+
+                //im Authentication visit me
+                //var user = new AuthManager().Login(model);
+                //if(user== null)
+                //{
+                //    return View();
+                //}
+
+                //else
+                //{
+                //    SessionUtils.SetLoggedInUser(HttpContext.Session, user);
+                //    return RedirectToAction("",user.Role.RoleName);
+                //}
+                UserInfoViewModel validUser = _patientServices.CheckValidUserWithRole(model.Email, model.Password);
+                SessionUtils.SetLoggedInUser(HttpContext.Session, validUser);
+
+
+
+
                 int userId = _patientServices.LoginMethod(model.Email, model.Password);
                 if (userId != -1)
                 {
@@ -78,7 +103,7 @@ namespace learning1.Controllers
                     //return patient_dashboard((short)id);
                     //TempData["id"] = (int)id;
                     _httpContextAccessor.HttpContext.Session.SetInt32("Id", userId);
-                    _notyf.Success("Login Successfully");
+                    //_notyf.Success("Login Successfully");
                     return RedirectToAction("patientdashboard", "Home");
                 }
                 else
@@ -471,10 +496,10 @@ namespace learning1.Controllers
         //}
 
 
-       
 
 
-      
+
+
 
         //public IActionResult patientdashboard()
         //{
@@ -501,7 +526,7 @@ namespace learning1.Controllers
 
         //}
 
-
+        [CustomAuthorize("Patient")]
         public IActionResult patientdashboard()
         {
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");

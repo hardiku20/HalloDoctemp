@@ -10,6 +10,7 @@ namespace learning1.Services.IServices
 {
     public interface IPatientServices
     {
+        UserInfoViewModel CheckValidUserWithRole(string email, string password);
         AdminDashboardViewModel DisplayAdminDashboard();
         PatientDashboardViewModel displayDashboard(int id);
         PatientProfileViewModel DisplayPatientProfile(int id);
@@ -20,6 +21,7 @@ namespace learning1.Services.IServices
         void GetInformationElse(SubmitInformationElseVIewModel model);
         void GetInformationMe(SubmitInformationMeViewModel model);
         void GetPatientRequestData(PatientRequestViewModel model);
+      
         ViewDocumentViewModel GetviewDocuments(int requestId, int id);
         void InsertviewDocuments(ViewDocumentViewModel model, int requestId);
         bool IsExistingUser(string email);

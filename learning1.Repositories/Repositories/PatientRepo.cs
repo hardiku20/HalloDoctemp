@@ -86,7 +86,7 @@ namespace learning1.Repositories.Repositories
 
             _context.Requests.Add(request);
             _context.SaveChanges();
-          
+
             RequestClient requestClient = new RequestClient
             {
 
@@ -99,7 +99,7 @@ namespace learning1.Repositories.Repositories
                 City = model.City,
                 Street = model.Street,
                 ZipCode = model.ZipCode,
-                Address = model.Street + ", " + model.City+ ", " + model.State+"- "+ model.ZipCode 
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
             };
 
             _context.RequestClients.Add(requestClient);
@@ -590,8 +590,8 @@ namespace learning1.Repositories.Repositories
 
         public List<Request> DisplayAdminDashboardRepo()
         {
-            
-           var model = _context.Requests.Include(x => x.RequestClients).ToList();
+
+            var model = _context.Requests.Include(x => x.RequestClients).ToList();
             return model;
         }
 
@@ -673,5 +673,36 @@ namespace learning1.Repositories.Repositories
             _context.RequestClients.Add(requestClient);
             _context.SaveChanges();
         }
+
+
+
+        public UserInfoViewModel GetRoleByAspNetId(string username, string password)
+        {
+            UserInfoViewModel userInfo = new UserInfoViewModel();
+            var Aspuser = _context.AspNetUsers.FirstOrDefault(u => u.Email == username && u.PasswordHash == password);
+
+            var AspNetId = _context.AspNetUsers.Where(x => x.Email == username && x.PasswordHash == password).Select(x => x.Id).FirstOrDefault();
+            string RoleName = "";
+            if (_context.Admins?.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Admin";
+            }
+            else if (_context.Physicians.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Physicians";
+            }
+            else if (_context.Users.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Patient";
+            }
+            return userInfo;
+        }
+
     }
 }

@@ -23,6 +23,17 @@ namespace learning1.Controllers
         }
 
 
+        public IActionResult PlatformLogin()
+        {
+            return View();
+        }
+
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+
         public IActionResult admindashboard()
         {
 
@@ -99,9 +110,6 @@ namespace learning1.Controllers
             return RedirectToAction("AdminDashboard");
         }
 
-
-
-
         public IActionResult ViewUpload(int requestId)
         {
             
@@ -131,5 +139,11 @@ namespace learning1.Controllers
             return File(content, contentType, filename);
         }
 
+
+
+        public IActionResult Orders()
+        {
+            return View();
+        }
     }
 }

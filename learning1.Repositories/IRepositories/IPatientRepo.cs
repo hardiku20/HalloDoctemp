@@ -26,5 +26,6 @@ namespace learning1.Repositories.IRepositories
         List<Request> DisplayAdminDashboardRepo();
         ViewCaseViewModel DisplayViewCaseRepo(int requestId);
         void GetBusinessrequest(BusinessRequestViewModel model);
+         UserInfoViewModel GetRoleByAspNetId(string username, string password);
     }
 }
