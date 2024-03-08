@@ -19,12 +19,7 @@ namespace learning1.DBEntities.ViewModel
 
         public DateTime? dateofbirth { get; set; }
 
-        public string? street {  get; set; }
-        public string? city { get; set; }
-        public string? state { get; set; }
-
-        public string? zipcode { get; set;}
-
+        
         public string? Address { get; set; }
         public string? Region { get; set; }
 

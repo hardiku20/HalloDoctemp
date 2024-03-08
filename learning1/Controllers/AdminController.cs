@@ -141,9 +141,34 @@ namespace learning1.Controllers
 
 
 
-        public IActionResult Orders()
+        public IActionResult SendOrders()
         {
-            return View();
+           var model= _adminServices.GetOrderdetails();
+           return View(model);
         }
+
+        public List<string> GetBusinessByProfessionName(string ProfessionName)
+        {
+            var BusinessList = _adminServices.GetBusinessByProfession(ProfessionName);
+            return BusinessList;
+
+        }
+
+        public SendOrderViewModel GetOrderdetailByBusiness(string BusinessName)
+        {
+            var model = _adminServices.GetDetailsByBusiness(BusinessName);
+            return model;
+        }
+
+
+        [HttpPost]
+        public IActionResult SendOrders(SendOrderViewModel model)
+        {
+
+            _adminServices.InsertOrderDetails(model);
+            return RedirectToAction("admindashboard");
+        }
+
+
     }
 }

@@ -95,6 +95,12 @@ namespace learning1.Repositories.Repositories
             return Casetags;
         }
 
+        public List<string> DisplayProfession()
+        {
+           var Profession = _context.HealthProfessionalTypes.Select(x=>x.ProfessionName).ToList();
+           return Profession;
+        }
+
         public List<string> DisplayRegions()
         {
             var Regions = _context.Regions.Select(x => x.Name).ToList();
@@ -135,12 +141,66 @@ namespace learning1.Repositories.Repositories
            return model;
         }
 
+        public List<string> GetBusinessByProfessionName(string professionName)
+        {
+            int professionId = _context.HealthProfessionalTypes.Where(x=> x.ProfessionName == professionName).Select(x=>x.HealthProfessionalId).First();
+            var BusinessName = _context.HealthProfessionals.Where(x=>x.Profession == professionId).Select(x=>x.VendorName).ToList();
+            return BusinessName;
+        }
+
+        public SendOrderViewModel GetOrder(string businessName)
+        {
+
+            var Orderdetails = _context.HealthProfessionals.Where(x => x.VendorName == businessName)
+                .Select(x => new SendOrderViewModel
+                {
+                    BusinessContact= x.BusinessContact,
+                    Email= x.Email,
+                    FaxNumber= x.FaxNumber,
+                    VendorId= x.VendorId,
+                    
+                }).First();
+
+            SendOrderViewModel model = new SendOrderViewModel()
+            {
+                BusinessContact = Orderdetails.BusinessContact, 
+                Email= Orderdetails.Email,
+                FaxNumber = Orderdetails.FaxNumber,
+                VendorId = Orderdetails.VendorId,
+            };
+            return model;
+        }
+
         public List<string> GetPhysicianByRegionName(string regionName)
         {
             int regionId = _context.Regions.Where(x => x.Name == regionName).Select(x =>x.RegionId).First();
             var PhysicianName = _context.Physicians.Where(x => x.RegionId == regionId).Select(x => x.FirstName).ToList();
             return PhysicianName;
         }
+
+        public void OrderDetailRepo(SendOrderViewModel model)
+        {
+            OrderDetail order = new OrderDetail()
+            {
+                VendorId= model.VendorId,
+                FaxNumber = model.FaxNumber,
+                Email = model.Email,
+                BusinessContact = model.BusinessContact,
+                Prescription = model.OrderNotes,
+                NoOfRefill = model.No_of_Refills,
+                CreatedDate = DateTime.Now,
+                RequestId = model.RequestId,
+                CreatedBy ="Admin"
+            };
+
+            _context.OrderDetails.Add(order);
+            _context.SaveChanges();
+        }
+
+        //public void OrderdetailsRepo(SendOrderViewModel model)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public Request GetRequestById(int requestId)
         //{

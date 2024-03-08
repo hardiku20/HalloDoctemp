@@ -57,10 +57,37 @@ namespace learning1.Services.Services
             _adminRepo.BlockCaseRepo(model);
         }
 
+        public List<string> GetBusinessByProfession(string professionName)
+        {
+            var BusinessName = _adminRepo.GetBusinessByProfessionName(professionName);
+            return BusinessName;
+        }
+
         public void GetCancelCaseData(AdminDashboardViewModel model)
         {
             _adminRepo.CancelCaseRepo(model);
         }
+
+        public SendOrderViewModel GetDetailsByBusiness(string businessName)
+        {
+            var Orderdetails = _adminRepo.GetOrder(businessName);
+            return Orderdetails;
+        }
+
+        public SendOrderViewModel GetOrderdetails()
+        {
+            var Profession =_adminRepo.DisplayProfession();
+            SendOrderViewModel model = new SendOrderViewModel()
+            {
+                Profession = Profession,
+            };
+            return model;
+        }
+
+        //public void GetOrderdetails(SendOrderViewModel model)
+        //{
+        //    _adminRepo.OrderdetailsRepo(model);
+        //}
 
         public List<string> GetPhysicianByRegion(string regionName)
         {
@@ -72,6 +99,11 @@ namespace learning1.Services.Services
         {
            var model= _adminRepo.FetchViewUploads(requestId);
            return model;
+        }
+
+        public void InsertOrderDetails(SendOrderViewModel model)
+        {
+            _adminRepo.OrderDetailRepo(model);
         }
 
         public void InsertviewUploads(ViewUploadViewModel model, int requestId)

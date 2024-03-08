@@ -16,13 +16,13 @@
             </div>
             <div class="modal-body">
                 <form method="post" asp-action="CancelCase" asp-controller="Admin">
-                    <input type="text" value=""  id="Cancel-RequestId" asp-for="RequestId" hidden/>
+                    <input type="text" value="" id="Cancel-RequestId" asp-for="RequestId" hidden />
                     <div class="mb-3">
                         <label for="message-text text-secondary " class="col-form-label">Patient Name :<span class="text-info ps-2" id="Cancel-PatientName"></span></label>
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" aria-label="Small select example" asp-for="ReasonForCancellation">
-                                <label selected" >Reason for cancellation</label>
-                                @foreach(string items in Model.CancellationReason)
+                                <label selected">Reason for cancellation</label>
+                                @foreach (string items in Model.CancellationReason)
                                 {
                                     <option>@items</option>
                                 }
@@ -46,7 +46,7 @@
                     </div>
                 </form>
             </div>
-           
+
         </div>
     </div>
 </div>
@@ -70,7 +70,8 @@
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="regionSelector">
                                 <label selected">Narrow Search by Region</label>
-                                @foreach(string items in Model.Region ){
+                                @foreach (string items in Model.Region)
+                                {
                                     <option>@items</option>
                                 }
                             </select>
@@ -120,12 +121,12 @@
             <div class="modal-body">
                 <form asp-action="BlockCase" asp-controller="Admin" method="post">
                     <div class="mb-3">
-                        <input class="hidden" asp-for="RequestId"  id="Block-RequestId"/>
+                        <input class="hidden" asp-for="RequestId" id="Block-RequestId" />
                         <label for="message-text text-secondary" class="col-form-label">Patient Name :<span class="text-info ps-2" id="Block-PatientName"></span></label>
                         <div class="form-floating my-4">
                             <textarea class="form-control"
                                       placeholder="Please provide a brief explanation for Block Request"
-                                      id="floatingTextarea2" style="height: 100px" asp-for="BlockNotes" ></textarea>
+                                      id="floatingTextarea2" style="height: 100px" asp-for="BlockNotes"></textarea>
                             <label for="floatingTextarea2">
                                 Reason for Block Request
                             </label>
@@ -139,7 +140,63 @@
                     </div>
                 </form>
             </div>
-          
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal for Transfer Case -->
+<div class="modal fade" id="TransferCaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Transfer Request</h1>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="message-text text-secondary" class="col-form-label">To assign this request,search and select another Physician</label>
+                        <div class="my-4">
+                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="regionSelector">
+                                <label selected">Narrow Search by Region</label>
+                                @foreach (string items in Model.Region)
+                                {
+                                    <option>@items</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="my-4">
+                            <select class="form-select form-select-lg shadow-none" id="physicianSelector" aria-label="Small select example">
+                                <label selected">Select Physician</label>
+                                <option selected class="text-secondary fs-6">Select Physician</option>
+
+                            </select>
+                        </div>
+
+                        <div class="form-floating">
+                            <textarea class="form-control"
+                                      placeholder="Please provide a brief explanation for your cancelation"
+                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">
+                                Description
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-info text-white">Submit</button>
+                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -171,7 +228,7 @@
                 </div>
                 <p class="h3 d-flex justify-content-start">1223</p>
             </button>
-                <img src="./assets/images/caret-down-fill-new.svg" alt="" id="newState-img" class="caret d-none z-2"/>           
+            <img src="./assets/images/caret-down-fill-new.svg" alt="" id="newState-img" class="caret d-none z-2" />
         </div>
         <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
             <button id="pendingbtn" class="states-btn w-100 rounded-0 pendingState">
@@ -663,7 +720,7 @@
 
 <script src="/js/DashboardRenderPartialView.js"></script>
 <script>
-    function onCancel(Name,RequestId) {
+    function onCancel(Name, RequestId) {
         // debugger;
         // console.log(Name);
         // console.log(RequestId);
@@ -674,7 +731,7 @@
 
 
 <script>
-    function onBlock(Name,RequestId){
+    function onBlock(Name, RequestId) {
         document.getElementById("Block-PatientName").textContent = Name;
         document.getElementById("Block-RequestId").value = RequestId;
     }

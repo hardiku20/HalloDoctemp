@@ -19,10 +19,16 @@ namespace learning1.Repositories.IRepositories
         //Request GetRequestById(int requestId);
         List<Request> DisplayAdminDashboardRepo();
         List<string> DisplayCasetags();
-       List<string> DisplayRegions();
+        List<string> DisplayProfession();
+        List<string> DisplayRegions();
         ViewCaseViewModel DisplayViewCaseRepo(int requestId);
         ViewUploadViewModel FetchViewUploads(int requestId);
+        List<string> GetBusinessByProfessionName(string professionName);
+        SendOrderViewModel GetOrder(string businessName);
         List<string> GetPhysicianByRegionName(string regionName);
+        void OrderDetailRepo(SendOrderViewModel model);
+
+        //void OrderdetailsRepo(SendOrderViewModel model);
         AdminDashboardViewModel RenderConcludeState(int status);
         AdminDashboardViewModel RenderNewState(int status);
         AdminDashboardViewModel RenderPendingState(int status);
