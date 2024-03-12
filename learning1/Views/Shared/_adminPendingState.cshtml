@@ -78,12 +78,15 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
                             <li><a class="dropdown-item" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId" >View Uploads</a></li>
-                            <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin">View Notes</a></li>
+                            <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Notes</a></li>
                             <li>
                                 <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#TransferCaseModal" data-bs-whatever="">Transfer</a>
+                                   data-bs-target="#TransferCaseModal" data-bs-whatever="" onclick="onTransfer('@items.Name','@items.RequestId')">Transfer</a>
                             </li>
-                            <li><a class="dropdown-item" href="#">Clear Case</a></li>
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal"
+                                   data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')">Clear Case</a>
+                            </li>
                             <li><a class="dropdown-item" href="#">Send Agreement</a></li>
                         </ul>
                     </div>

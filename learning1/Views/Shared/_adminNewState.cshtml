@@ -75,14 +75,14 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#AssignCaseModal" data-bs-whatever="">Assign Case</a>
+                                   data-bs-target="#AssignCaseModal" data-bs-whatever="" onclick="onAssign('@items.Name','@items.RequestId')">Assign Case</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" data-bs-toggle="modal"
                                    data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onCancel('@items.Name','@items.RequestId')">Cancel Case</a>
                             </li>
                             <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
-                            <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin">View Notes</a></li>
+                            <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Notes</a></li>
                             <li>
                                 <a class="dropdown-item" data-bs-toggle="modal"
                                    data-bs-target="#BlockCaseModal" data-bs-whatever="" onclick="onBlock('@items.Name','@items.RequestId')">Block Patients</a>

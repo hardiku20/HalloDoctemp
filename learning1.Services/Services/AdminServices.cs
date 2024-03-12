@@ -52,6 +52,17 @@ namespace learning1.Services.Services
             return model;
         }
 
+        public void GetAssignCaseData(AdminDashboardViewModel model, int requestId)
+        {
+            _adminRepo.AssignCaseRepo(model, requestId);
+        }
+
+        public List<string> GetAvailablePhysicianByRegion(string regionName)
+        {
+            var physicianName = _adminRepo.GetAvailablePhysicianByRegionName(regionName);
+            return physicianName;
+        }
+
         public void GetBlockCaseData(AdminDashboardViewModel model)
         {
             _adminRepo.BlockCaseRepo(model);
@@ -95,6 +106,17 @@ namespace learning1.Services.Services
             return physicianName;
         }
 
+        public void GetTransferCaseData(AdminDashboardViewModel model, int requestId)
+        {
+            _adminRepo.TransferCaseRepo(model, requestId);
+        }
+
+        public ViewNotesViewModel GetViewNotesData(int requestId)
+        {
+            var model = _adminRepo.GetViewNotesRepo(requestId);
+            return model;
+        }
+
         public ViewUploadViewModel GetviewUploads(int requestId)
         {
            var model= _adminRepo.FetchViewUploads(requestId);
@@ -109,6 +131,11 @@ namespace learning1.Services.Services
         public void InsertviewUploads(ViewUploadViewModel model, int requestId)
         {
             _adminRepo.Uploaddocuments(model, requestId);
+        }
+
+        public void IsClearCase(AdminDashboardViewModel model)
+        {
+            _adminRepo.ClearCaseRepo(model);
         }
 
 

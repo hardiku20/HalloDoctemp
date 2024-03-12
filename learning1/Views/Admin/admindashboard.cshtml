@@ -64,12 +64,13 @@
                 <button type="button" class="btn-close btn-close-white  shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" asp-action="AssignCase" asp-controller="Admin">
+                    <input type="text" value="" id="Assign-RequestId" asp-for="RequestId" hidden/>
                     <div class="mb-3">
                         <label for="message-text text-secondary " class="col-form-label">To assign this request,search and select another Physician</label>
                         <div class="my-4">
-                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="regionSelector">
-                                <label selected">Narrow Search by Region</label>
+                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="regionSelector" asp-for="SelectedRegion">
+                                <label class="selected">Narrow Search by Region</label>
                                 @foreach (string items in Model.Region)
                                 {
                                     <option>@items</option>
@@ -78,7 +79,7 @@
                         </div>
 
                         <div class="my-4">
-                            <select class="form-select form-select-lg shadow-none" id="physicianSelector" aria-label="Small select example">
+                            <select class="form-select form-select-lg shadow-none" id="physicianSelector" aria-label="Small select example" asp-for="SelectedPhysician">
                                 <label selected">Select Physician</label>
                                 <option selected class="text-secondary fs-6">Select Physician</option>
 
@@ -87,22 +88,22 @@
 
                         <div class="form-floating">
                             <textarea class="form-control"
-                                      placeholder="Please provide a brief explanation for your cancelation"
-                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                                      placeholder="Description about Assign-Case"
+                                      id="floatingTextarea2" style="height: 100px" asp-for="AssignCaseDescription"></textarea>
                             <label for="floatingTextarea2">
                                 Description
                             </label>
                         </div>
 
                     </div>
-
+                    <div class="modal-footer border-0">
+                        <button type="submit" class="btn btn-info text-white">Submit</button>
+                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
 
                 </form>
             </div>
-            <div class="modal-footer border-0">
-                <button type="button" class="btn btn-info text-white">Submit</button>
-                <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-            </div>
+            
         </div>
     </div>
 </div>
@@ -158,12 +159,13 @@
                 <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" asp-action="TransferCase" asp-controller="Admin">
                     <div class="mb-3">
+                        <input class="hidden" asp-for="RequestId" id="Transfer-RequestId" hidden/>
                         <label for="message-text text-secondary" class="col-form-label">To assign this request,search and select another Physician</label>
                         <div class="my-4">
-                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="regionSelector">
-                                <label selected">Narrow Search by Region</label>
+                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="TransferRegionSelector" asp-for="SelectedTransferRegion">
+                                <label class="selected">Narrow Search by Region</label>
                                 @foreach (string items in Model.Region)
                                 {
                                     <option>@items</option>
@@ -172,7 +174,7 @@
                         </div>
 
                         <div class="my-4">
-                            <select class="form-select form-select-lg shadow-none" id="physicianSelector" aria-label="Small select example">
+                            <select class="form-select form-select-lg shadow-none" id="AvailablephysicianSelector" aria-label="Small select example" asp-for="SelectedTransferPhysician">
                                 <label selected">Select Physician</label>
                                 <option selected class="text-secondary fs-6">Select Physician</option>
 
@@ -192,7 +194,7 @@
 
 
                     <div class="modal-footer border-0">
-                        <button type="button" class="btn btn-info text-white">Submit</button>
+                        <button type="submit" class="btn btn-info text-white">Submit</button>
                         <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -202,9 +204,38 @@
 </div>
 
 
+<!-- Modal for Clear Case -->
+<div class="modal fade" id="ClearCaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form method="post" asp-action="ClearCase" asp-controller="Admin">
+                    <div class="modal-header d-flex flex-column border-0 mt-4">
+                        <input class="" asp-for="RequestId" id="Clear-RequestId" hidden/>
+                        <div class="">
+                            <img src="/assets/images/exclamation-circle-fill.svg"
+                                 class="border img-fluid border-warning p-1 rounded-circle mx-auto mb-4" style="height:80px" alt="...">
+                        </div> 
+                        <h5 class="modal-title">Confirmation for Clear Case</h5>
+                    </div>
+                    <div class="modal-body ">
+                        <p class="justify-content-center">
+                            Are you sure want to clear this request? Once clear this request then you are not able to see this request.
+                        </p>
+                    </div>
+                       
+                       
+                    <div class="modal-footer border-0 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-info text-white">Clear</button>
+                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
 
-
-
+        </div>
+    </div>
+</div>
 
 
 
@@ -228,7 +259,7 @@
                 </div>
                 <p class="h3 d-flex justify-content-start">1223</p>
             </button>
-            <img src="./assets/images/caret-down-fill-new.svg" alt="" id="newState-img" class="caret d-none z-2" />
+            <img src="/assets/images/caret-down-new-fill.svg" alt="" id="newState-img" class="caret d-none z-2" />
         </div>
         <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
             <button id="pendingbtn" class="states-btn w-100 rounded-0 pendingState">
@@ -239,7 +270,7 @@
                 </div>
                 <p class="h3 d-flex justify-content-start">1223</p>
             </button>
-            <img src="~/assets/images/caret-down-fill1.svg" alt="" id="pendingState-img" class="caret d-none z-2">
+            <img src="/assets/images/caret-down-pending-fill.svg" alt="" id="pendingState-img" class="caret d-none z-2">
         </div>
         <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
             <button id="activebtn" class="states-btn w-100 rounded-0 activeState">
@@ -250,7 +281,7 @@
                 </div>
                 <p class="h3 d-flex justify-content-start">1223</p>
             </button>
-            <img src="./assets/images/caret-down-fill2.svg" alt="" id="activeState-img" class="caret d-none z-2">
+            <img src="/assets/images/caret-down-active-fill.svg" alt="" id="activeState-img" class="caret d-none z-2">
         </div>
         <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
             <button id="concludebtn" class="states-btn w-100 rounded-0 concludeState">
@@ -261,7 +292,7 @@
                 </div>
                 <p class="h3 d-flex justify-content-start">1223</p>
             </button>
-            <img src="~/assets/images/caret-down-fil3.svg" alt="" id="concludeState-img" class="caret d-none z-2">
+            <img src="/assets/images/caret-down-conclude-fill.svg" alt="" id="concludeState-img" class="caret d-none z-2">
         </div>
         <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
             <button id="toclosebtn" class="states-btn w-100 rounded-0 tocloseState">
@@ -272,7 +303,7 @@
                 </div>
                 <p class="h3 d-flex justify-content-start">1223</p>
             </button>
-            <img src="./assets/images/caret-down-fill-toclose.svg" alt="" id="tocloseState-img" class="caret d-none z-2">
+            <img src="~/assets/images/caret-down-close-fill.svg" alt="" id="tocloseState-img" class="caret d-none z-2">
         </div>
         <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
             <button id="unpaidbtn" class="states-btn w-100 rounded-0 unpaidState">
@@ -283,9 +314,8 @@
                 </div>
                 <p class="h3 d-flex justify-content-start">1223</p>
             </button>
-            <img src="./assets/images/caret-down-fill-unpaid.svg" alt="" id="unpaidState-img" class="caret d-none z-2">
+            <img src="~/assets/images/caret-down-unpaid-fill.svg" alt="" id="unpaidState-img" class="caret d-none z-2">
         </div>
-
     </div>
 
 
@@ -719,6 +749,9 @@
 </div>
 
 <script src="/js/DashboardRenderPartialView.js"></script>
+
+
+
 <script>
     function onCancel(Name, RequestId) {
         // debugger;
@@ -726,14 +759,20 @@
         // console.log(RequestId);
         document.getElementById("Cancel-PatientName").textContent = Name;
         document.getElementById("Cancel-RequestId").value = RequestId;
+        
     }
-</script>
-
-
-<script>
     function onBlock(Name, RequestId) {
         document.getElementById("Block-PatientName").textContent = Name;
         document.getElementById("Block-RequestId").value = RequestId;
+    }
+    function onClear(Name, RequestId) {
+        document.getElementById("Clear-RequestId").value = RequestId;
+    }
+    function onAssign(Name, RequestId) {
+        document.getElementById("Assign-RequestId").value = RequestId;
+    }
+    function onTransfer(Name,RequestId){
+        document.getElementById("Transfer-RequestId").value = RequestId;
     }
 </script>
 

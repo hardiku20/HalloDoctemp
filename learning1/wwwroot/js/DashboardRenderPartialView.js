@@ -377,4 +377,42 @@
         })
     })
 
+
+    $("#TransferRegionSelector").change(function () {
+        console.log(this);
+        debugger;
+        var region = this.value;
+        $.ajax({
+            method: 'GET',
+            url: '/Admin/GetAvailablePhysicianByRegionName',
+            data: {
+                regionName: region,
+            },
+            success: function (result) {
+               let str = ""
+               for (let index = 0; index < result.length; index++) {
+                    const value = result[index]; // Extract the string value
+                    str += `<option value="${value}">${value}</option>`;
+               }
+                 $("#AvailablephysicianSelector").html(str);
+            },
+
+            error: function (xhr, status, error) {
+                console.log(error);
+
+            }
+        })
+    })
+
+
+
+
+
+
+
+
+
+
+    
+
 })

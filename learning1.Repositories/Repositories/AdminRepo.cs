@@ -17,6 +17,44 @@ namespace learning1.Repositories.Repositories
             _context = context;
         }
 
+        public void AssignCaseRepo(AdminDashboardViewModel model, int requestId)
+        {
+            var regionId = _context.Regions.First(x => x.Name.Equals(model.SelectedRegion)).RegionId;
+            var physicianId = _context.Physicians.First(x => x.FirstName.Equals(model.SelectedPhysician)).PhysicianId;
+            //int RequestTypeId = .Select(x=>x.RequestTypeId).FirstOrDefault();
+
+
+            Request request = _context.Requests.Where(x => x.RequestId == requestId).First();
+            request.Status = 2;
+            request.PhysicianId = physicianId;  
+            request.ModifiedDate = DateTime.Now;
+            request.CompletedByPhysician = false;
+          
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            RequestClient requestClient = _context.RequestClients.Where(x => x.RequestId == requestId).First();
+            requestClient.RegionId = regionId;
+            requestClient.State = model.SelectedRegion;
+            _context.RequestClients.Update(requestClient);
+            _context.SaveChanges(true);
+
+            string dateString = DateTime.Now.ToString("dd/mm/yyyy");
+            string notetotransfer="Admin Transfer to Dr."+ model.SelectedPhysician + dateString;
+            RequestStatusLog StatusData = new RequestStatusLog()
+            {
+                RequestId = requestId,
+                Status = 2,
+                Notes = notetotransfer,
+                TransToPhysicianId = physicianId,
+                CreatedDate = DateTime.Now,
+                TransToAdmin = false,
+
+            };
+            _context.RequestStatusLogs.Add(StatusData);
+            _context.SaveChanges();
+        }
+
         public void BlockCaseRepo(AdminDashboardViewModel model)
         {
             RequestStatusLog blockdata = new RequestStatusLog()
@@ -70,6 +108,14 @@ namespace learning1.Repositories.Repositories
             //_context.Requests.Add(request);
             //_context.SaveChanges();
 
+        }
+
+        public void ClearCaseRepo(AdminDashboardViewModel model)
+        {
+            Request request = _context.Requests.Where(x=>x.RequestId == model.RequestId).First();
+            request.Status = 10;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
         }
 
         //public void AddRequestStatusLog(RequestStatusLog requestStatusLog)
@@ -141,6 +187,13 @@ namespace learning1.Repositories.Repositories
            return model;
         }
 
+        public List<string> GetAvailablePhysicianByRegionName(string regionName)
+        {
+            int regionId = _context.Regions.Where(x => x.Name == regionName).Select(x => x.RegionId).First();
+            var PhysicianName = _context.Physicians.Where(x => x.RegionId == regionId).Select(x => x.FirstName).ToList();
+            return PhysicianName;
+        }
+
         public List<string> GetBusinessByProfessionName(string professionName)
         {
             int professionId = _context.HealthProfessionalTypes.Where(x=> x.ProfessionName == professionName).Select(x=>x.HealthProfessionalId).First();
@@ -176,6 +229,41 @@ namespace learning1.Repositories.Repositories
             int regionId = _context.Regions.Where(x => x.Name == regionName).Select(x =>x.RegionId).First();
             var PhysicianName = _context.Physicians.Where(x => x.RegionId == regionId).Select(x => x.FirstName).ToList();
             return PhysicianName;
+        }
+
+        public ViewNotesViewModel GetViewNotesRepo(int requestId)
+        {
+            var requestStatus = _context.RequestStatusLogs.FirstOrDefault(r => r.RequestId == requestId);
+            var requestNotes = _context.RequestNotes.Where(r => r.RequestId == requestId).Select(r => new { r.RequestId, r.AdminNotes, r.PhysicianNotes }).ToList();
+
+
+            if(requestStatus?.PhysicianId != null)
+            {
+                var physicianName = _context.Physicians.Find(requestStatus.PhysicianId);
+
+                var model = new ViewNotesViewModel
+                {
+                    RequestId= requestId,
+                    TransferNotes= requestStatus.Notes,
+                    PhysicianName= physicianName.FirstName + " " + physicianName.LastName,
+                    CreatedDate= requestStatus.CreatedDate,
+                    PhysicianNotes= requestNotes.FirstOrDefault()?.PhysicianNotes,
+                    AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
+                };
+                return model;
+            }
+            else
+            {
+                var model = new ViewNotesViewModel
+                {
+                    RequestId = requestId,
+                    TransferNotes = requestStatus.Notes,
+                    CreatedDate = requestStatus.CreatedDate,
+                    PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
+                    AdminNotes= requestNotes.FirstOrDefault()?.AdminNotes,
+                };
+                return model;    
+            }
         }
 
         public void OrderDetailRepo(SendOrderViewModel model)
@@ -331,6 +419,35 @@ namespace learning1.Repositories.Repositories
                 TableViewModel = tempmodel
             };
             return model;
+        }
+
+        public void TransferCaseRepo(AdminDashboardViewModel model, int requestId)
+        {
+            var regionId = _context.Regions.First(x => x.Name.Equals(model.SelectedTransferRegion)).RegionId;
+            var physicianId = _context.Physicians.First(x => x.FirstName.Equals(model.SelectedTransferPhysician)).PhysicianId;
+
+            Request request = _context.Requests.Where(x => x.RequestId == requestId).First();
+            request.Status = 2;
+            request.PhysicianId = physicianId;
+            request.ModifiedDate = DateTime.Now;
+            request.CompletedByPhysician = false;
+
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+            RequestClient requestClient = _context.RequestClients.Where(x => x.RequestId == requestId).First();
+            requestClient.RegionId = regionId;
+            requestClient.State = model.SelectedRegion;
+            _context.RequestClients.Update(requestClient);
+            _context.SaveChanges(true);
+
+            string dateString = DateTime.Now.ToString("dd/mm/yyyy 'at' hh:mm:ss tt" );
+            string notetotransfer = "Admin Transfer to Dr." + model.SelectedPhysician + dateString;
+            RequestStatusLog StatusData = _context.RequestStatusLogs.Where(x => x.RequestId==requestId).First();
+            StatusData.TransToPhysicianId = physicianId;
+            
+            _context.RequestStatusLogs.Update(StatusData);
+            _context.SaveChanges();
         }
 
         public ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId)

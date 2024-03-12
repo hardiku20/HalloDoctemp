@@ -49,9 +49,17 @@ namespace learning1.Controllers
         }
 
 
-        public IActionResult ViewNotes()
+        //public IActionResult ViewNotes()
+        //{
+        //    return View();
+        //}
+
+
+
+        public IActionResult ViewNotes(int RequestId)
         {
-            return View();
+            var model = _adminServices.GetViewNotesData(RequestId);
+            return View(model);
         }
 
         public IActionResult RenderNewPartialView(int status)
@@ -103,11 +111,19 @@ namespace learning1.Controllers
             return PhysicianList;
         }
 
-
+        [HttpPost]
         public IActionResult BlockCase(AdminDashboardViewModel model)
         {
             _adminServices.GetBlockCaseData(model);
-            return RedirectToAction("AdminDashboard");
+            return RedirectToAction("admindashboard");
+        }
+
+
+        [HttpPost]
+        public IActionResult AssignCase(AdminDashboardViewModel model,int RequestId)
+        {
+            _adminServices.GetAssignCaseData(model,RequestId);
+            return RedirectToAction("admindashboard");
         }
 
         public IActionResult ViewUpload(int requestId)
@@ -169,6 +185,26 @@ namespace learning1.Controllers
             return RedirectToAction("admindashboard");
         }
 
+
+        [HttpPost]
+        public IActionResult ClearCase(AdminDashboardViewModel model)
+        {
+            _adminServices.IsClearCase(model);
+            return RedirectToAction("admindashboard");
+        }
+
+        public List<string> GetAvailablePhysicianByRegionName(string regionName)
+        {
+
+            var PhysicianList = _adminServices.GetAvailablePhysicianByRegion(regionName);
+            return PhysicianList;
+        }
+
+        public IActionResult TransferCase(AdminDashboardViewModel model,int RequestId)
+        {
+            _adminServices.GetTransferCaseData(model, RequestId);
+            return RedirectToAction("admindashboard");
+        }
 
     }
 }

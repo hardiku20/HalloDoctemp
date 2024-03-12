@@ -12,17 +12,23 @@ namespace learning1.DBEntities.ViewModel
         public int RequestId { get; set; }
         public DateTime RequestedDate { get; set; }
         public List<AdminTableViewModel> TableViewModel { get; set; }
-
+       
         public string? ReasonForCancellation { get; set; }
         public List<string>? Region {  get; set; }
+        public string? SelectedRegion {  get; set; }
 
+        public string? SelectedTransferRegion {  get; set; }
         public List<string>? CancellationReason { get; set; }
 
         public string? CancelNotes { get; set; }
 
         public string? BlockNotes { get; set; }
 
-        
+        public string? SelectedPhysician {  get; set; }
+
+        public string? SelectedTransferPhysician { get; set; }
+
+        public string? AssignCaseDescription {  get; set; }
     }
 
     public class AdminTableViewModel
