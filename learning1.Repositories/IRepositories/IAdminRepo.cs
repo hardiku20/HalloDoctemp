@@ -39,6 +39,7 @@ namespace learning1.Repositories.IRepositories
         AdminDashboardViewModel RenderToActiveState(int status1,int status2);
         AdminDashboardViewModel RenderToCloseState(int status1, int status2,int status3);
         AdminDashboardViewModel RenderUnpaidState(int status);
+        void SetViewNotes(ViewNotesViewModel model, int requestId);
         void TransferCaseRepo(AdminDashboardViewModel model, int requestId);
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
     }

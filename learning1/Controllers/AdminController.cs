@@ -62,6 +62,14 @@ namespace learning1.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        public IActionResult ViewNotes(ViewNotesViewModel model, int RequestId)
+        {
+            _adminServices.SetViewNotesData(model, RequestId);
+            return RedirectToAction("ViewNotes",model);
+        }
+
         public IActionResult RenderNewPartialView(int status)
         {
             var model = _adminServices.RenderNewStateData(status);
@@ -117,7 +125,6 @@ namespace learning1.Controllers
             _adminServices.GetBlockCaseData(model);
             return RedirectToAction("admindashboard");
         }
-
 
         [HttpPost]
         public IActionResult AssignCase(AdminDashboardViewModel model,int RequestId)
@@ -195,7 +202,6 @@ namespace learning1.Controllers
 
         public List<string> GetAvailablePhysicianByRegionName(string regionName)
         {
-
             var PhysicianList = _adminServices.GetAvailablePhysicianByRegion(regionName);
             return PhysicianList;
         }

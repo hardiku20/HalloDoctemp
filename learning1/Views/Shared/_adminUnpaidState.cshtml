@@ -5,7 +5,7 @@
 }
 
 @model learning1.DBEntities.ViewModel.AdminDashboardViewModel;
-<div class="d-md-block d-none">
+<div class="d-md-block d-none overflow-x-auto">
     <table class="table-responsive w-100">
 
 
@@ -62,7 +62,7 @@
                     }
 
                 </td>
-                <td class="text-white py-3">Addresssssssssssss</td>
+                <td class="text-white py-3">@items.Address</td>
                 <td class="text-white py-3"> - </td>
                 <td class=" ">
                     <div class="d-flex justify-content-center align-items-center">
@@ -84,8 +84,5 @@
                 </td>
             </tr>
         }
-
-
     </table>
-
 </div>

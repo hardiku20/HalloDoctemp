@@ -33,5 +33,6 @@ namespace learning1.Services.IServices
         AdminDashboardViewModel RenderPendingStateData(int status);
         AdminDashboardViewModel RenderToCloseStateData(int status1,int status2,int status3);
         AdminDashboardViewModel RenderUnpaidStateData(int status);
+        void SetViewNotesData(ViewNotesViewModel model, int requestId);
     }
 }

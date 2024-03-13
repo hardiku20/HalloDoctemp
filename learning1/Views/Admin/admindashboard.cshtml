@@ -5,17 +5,22 @@
 }
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+
 <!-- Modal for Cancel Case -->
 <div class="modal fade" id="CancelCaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-info">
-                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Cancel Confirmation</h1>
-                <button type="button" class="btn-close btn-close-white  shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" asp-action="CancelCase" asp-controller="Admin">
+            <form method="post" asp-action="CancelCase" asp-controller="Admin">
+
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Cancel Confirmation</h1>
+                    <button type="button" class="btn-close btn-close-white  shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
                     <input type="text" value="" id="Cancel-RequestId" asp-for="RequestId" hidden />
                     <div class="mb-3">
                         <label for="message-text text-secondary " class="col-form-label">Patient Name :<span class="text-info ps-2" id="Cancel-PatientName"></span></label>
@@ -28,7 +33,6 @@
                                 }
                             </select>
                         </div>
-
                         <div class="form-floating">
                             <textarea class="form-control"
                                       placeholder="Please provide a brief explanation for your cancelation"
@@ -37,16 +41,15 @@
                                 Provide Additional Notes
                             </label>
                         </div>
-
                     </div>
+                </div>
 
-                    <div class="modal-footer border-0">
-                        <button type="submit" class="btn btn-info text-white">Confirm</button>
-                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Confirm</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
 
+            </form>
         </div>
     </div>
 </div>
@@ -59,13 +62,14 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-info">
-                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Assign Request</h1>
-                <button type="button" class="btn-close btn-close-white  shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" asp-action="AssignCase" asp-controller="Admin">
-                    <input type="text" value="" id="Assign-RequestId" asp-for="RequestId" hidden/>
+            <form method="post" asp-action="AssignCase" asp-controller="Admin">
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Assign Request</h1>
+                    <button type="button" class="btn-close btn-close-white  shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="text" value="" id="Assign-RequestId" asp-for="RequestId" hidden />
                     <div class="mb-3">
                         <label for="message-text text-secondary " class="col-form-label">To assign this request,search and select another Physician</label>
                         <div class="my-4">
@@ -77,15 +81,12 @@
                                 }
                             </select>
                         </div>
-
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" id="physicianSelector" aria-label="Small select example" asp-for="SelectedPhysician">
                                 <label selected">Select Physician</label>
                                 <option selected class="text-secondary fs-6">Select Physician</option>
-
                             </select>
                         </div>
-
                         <div class="form-floating">
                             <textarea class="form-control"
                                       placeholder="Description about Assign-Case"
@@ -94,16 +95,15 @@
                                 Description
                             </label>
                         </div>
-
                     </div>
-                    <div class="modal-footer border-0">
-                        <button type="submit" class="btn btn-info text-white">Submit</button>
-                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-                    </div>
+                </div>
 
-                </form>
-            </div>
-            
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Submit</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
@@ -115,12 +115,13 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-info">
-                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Confirm Block</h1>
-                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form asp-action="BlockCase" asp-controller="Admin" method="post">
+            <form asp-action="BlockCase" asp-controller="Admin" method="post">
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Confirm Block</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
                     <div class="mb-3">
                         <input class="hidden" asp-for="RequestId" id="Block-RequestId" />
                         <label for="message-text text-secondary" class="col-form-label">Patient Name :<span class="text-info ps-2" id="Block-PatientName"></span></label>
@@ -132,16 +133,14 @@
                                 Reason for Block Request
                             </label>
                         </div>
-
                     </div>
+                </div>
 
-                    <div class="modal-footer border-0">
-                        <button type="submit" class="btn btn-info text-white">Confirm</button>
-                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
-
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Confirm</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -154,14 +153,14 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-info">
-                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Transfer Request</h1>
-                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" asp-action="TransferCase" asp-controller="Admin">
+            <form method="post" asp-action="TransferCase" asp-controller="Admin">
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Transfer Request</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <div class="mb-3">
-                        <input class="hidden" asp-for="RequestId" id="Transfer-RequestId" hidden/>
+                        <input class="hidden" asp-for="RequestId" id="Transfer-RequestId" hidden />
                         <label for="message-text text-secondary" class="col-form-label">To assign this request,search and select another Physician</label>
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="TransferRegionSelector" asp-for="SelectedTransferRegion">
@@ -193,12 +192,12 @@
                     </div>
 
 
-                    <div class="modal-footer border-0">
-                        <button type="submit" class="btn btn-info text-white">Submit</button>
-                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Submit</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -209,14 +208,14 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-body">
-                <form method="post" asp-action="ClearCase" asp-controller="Admin">
+            <form method="post" asp-action="ClearCase" asp-controller="Admin">
+                <div class="modal-body">
                     <div class="modal-header d-flex flex-column border-0 mt-4">
-                        <input class="" asp-for="RequestId" id="Clear-RequestId" hidden/>
+                        <input class="" asp-for="RequestId" id="Clear-RequestId" hidden />
                         <div class="">
                             <img src="/assets/images/exclamation-circle-fill.svg"
                                  class="border img-fluid border-warning p-1 rounded-circle mx-auto mb-4" style="height:80px" alt="...">
-                        </div> 
+                        </div>
                         <h5 class="modal-title">Confirmation for Clear Case</h5>
                     </div>
                     <div class="modal-body ">
@@ -224,18 +223,137 @@
                             Are you sure want to clear this request? Once clear this request then you are not able to see this request.
                         </p>
                     </div>
-                       
-                       
-                    <div class="modal-footer border-0 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-info text-white">Clear</button>
-                        <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
-            </div>
 
+                </div>
+
+                <div class="modal-footer border-0 d-flex justify-content-center">
+                    <button type="submit" class="btn btn-info text-white">Clear</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- Modal for Send Agreement -->
+<div class="modal fade" id="SendAgreementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send Agreement</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="message-text text-secondary" class="col-form-label">Patient</label>
+                        <label for="message-text text-secondary" class="col-form-label">To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="abc@gmail.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingPhonenumber" placeholder="PhoneNumber" value="9875868658">
+                        <label for="floatingPhoneNumber">Phone Number</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+
+            </form>
         </div>
     </div>
 </div>
+
+
+<!-- Modal for Send Link -->
+<div class="modal fade" id="SendLinkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send mail to patient for submitting request</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName">
+                        <label for="floatingInput">First Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName">
+                        <label for="floatingInput">Last Name</label>
+                    </div>
+                    <div class="form-floating input-info w-100 me-2 mb-3">
+                        <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                               id="phone">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal for Request Support -->
+<div class="modal fade" id="RequestSupportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Request Support</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="message-text text-secondary" class="col-form-label">To all unscheduled Physicians: We are short on converage and needs additional support On Call to respond to Requests.</label>
+                    </div>
+                    <div class="form-floating my-4">
+                        <textarea class="form-control"
+                                  placeholder="Please provide a brief explanation for Request Support"
+                                  id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">
+                            Message
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
@@ -247,11 +365,9 @@
 <!-- Content of the web-page -->
 <div class="container-fluid ">
 
-
-
-    <div class="row d-sm-flex d-none px-3 mt-5">
-        <div class="col-lg-2 col-sm-4 col-4 align-items-start mb-4 px-1">
-            <button id="newbtn" class="states-btn w-100 rounded-0 newState">
+    <div class="row px-3 mt-5">
+        <div class="col-lg-2 col-sm-4 col-4 align-items-start px-1 mb-2">
+            <button id="newbtn" class="states-btn w-100 rounded newState">
                 <div class="d-flex my-2">
                     <img src="/assets/images/new.svg" id="newState" class="icon-size hide pe-1 d-none d-md-block">
                     <img src="/assets/images/new_active.png" id="newState-active" class="icon-size pe-1 d-none">
@@ -261,8 +377,8 @@
             </button>
             <img src="/assets/images/caret-down-new-fill.svg" alt="" id="newState-img" class="caret d-none z-2" />
         </div>
-        <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
-            <button id="pendingbtn" class="states-btn w-100 rounded-0 pendingState">
+        <div class="col-lg-2 col-sm-4 col-4 px-1 mb-2">
+            <button id="pendingbtn" class="states-btn w-100 rounded pendingState">
                 <div class="d-flex my-2">
                     <img src="/assets/images/pending.svg" id="pendingState" class="icon-size pe-1 d-none d-md-block">
                     <img src="/assets/images/pending_active.png" id="pendingState-active" class="icon-size pe-1  d-none">
@@ -272,8 +388,8 @@
             </button>
             <img src="/assets/images/caret-down-pending-fill.svg" alt="" id="pendingState-img" class="caret d-none z-2">
         </div>
-        <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
-            <button id="activebtn" class="states-btn w-100 rounded-0 activeState">
+        <div class="col-lg-2 col-sm-4 col-4 px-1 mb-2">
+            <button id="activebtn" class="states-btn w-100 rounded activeState">
                 <div class="d-flex my-2">
                     <img src="/assets/images/active.svg" id="activeState" class="icon-size pe-1 d-none d-md-block">
                     <img src="/assets/images/active_active.png" id="activeState-active" class="icon-size hide pe-1 d-none">
@@ -283,8 +399,8 @@
             </button>
             <img src="/assets/images/caret-down-active-fill.svg" alt="" id="activeState-img" class="caret d-none z-2">
         </div>
-        <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
-            <button id="concludebtn" class="states-btn w-100 rounded-0 concludeState">
+        <div class="col-lg-2 col-sm-4 col-4 px-1 mb-2">
+            <button id="concludebtn" class="states-btn w-100 rounded concludeState">
                 <div class="d-flex my-2">
                     <img src="/assets/images/conclude.svg" id="concludeState" class="icon-size pe-1 d-none d-md-block">
                     <img src="/assets/images/conclude_active.png" id="concludeState-active" class="icon-size hide pe-1 d-none">
@@ -294,8 +410,8 @@
             </button>
             <img src="/assets/images/caret-down-conclude-fill.svg" alt="" id="concludeState-img" class="caret d-none z-2">
         </div>
-        <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
-            <button id="toclosebtn" class="states-btn w-100 rounded-0 tocloseState">
+        <div class="col-lg-2 col-sm-4 col-4 px-1 mb-2">
+            <button id="toclosebtn" class="states-btn w-100 rounded tocloseState">
                 <div class="d-flex my-2">
                     <img src="/assets/images/toclose.svg" id="tocloseState" class="icon-size pe-1 d-none d-md-block">
                     <img src="/assets/images/toclose_active.png" id="tocloseState-active" class="icon-size hide pe-1 d-none">
@@ -305,8 +421,8 @@
             </button>
             <img src="~/assets/images/caret-down-close-fill.svg" alt="" id="tocloseState-img" class="caret d-none z-2">
         </div>
-        <div class="col-lg-2 col-sm-4 col-4 mb-4 px-1">
-            <button id="unpaidbtn" class="states-btn w-100 rounded-0 unpaidState">
+        <div class="col-lg-2 col-sm-4 col-4 px-1 mb-2">
+            <button id="unpaidbtn" class="states-btn w-100 rounded unpaidState">
                 <div class="d-flex my-2">
                     <img src="~/assets/images/unpaid.svg" id="unpaidState" class="icon-size pe-1 d-none d-md-block">
                     <img src="/assets/images/unpaid_active.png" id="unpaidState-active" class="icon-size hide pe-1 d-none">
@@ -320,7 +436,7 @@
 
 
 
-    <div class="row d-sm-none d-flex py-2 px-2">
+   @*  <div class="row d-sm-none d-flex py-2 px-2">
         <div class="col-4 mb-2 px-1">
             <button class="btn bg-primary text-white w-100 rounded-0">
                 <p class="h6 pb-1" style="font-size: small;">NEW</p>
@@ -357,13 +473,15 @@
                 <p class="h5">1223</p>
             </button>
         </div>
-    </div>
+    </div> *@
+
+
 </div>
 
 
 
 
-<div class="container-fluid px-3">
+<div class="container-fluid px-3 mt-3">
     <div class="d-flex justify-content-between mb-2">
         <div class="d-sm-flex d-none">
             <h4 class="">Patients <span class="text-primary fs-6">(New)</span></h4>
@@ -374,48 +492,58 @@
 
 
 
-        <div class="d-none d-lg-flex">
-            <div class="me-2">
-                <button class="btn btn-info text-white d-flex align-items-center">
-                    <i class="bi bi-send me-2 "></i>
-                    <p class="my-auto">Send Link</p>
+        <div class="d-flex gap-2">
+            <div class="">
+                <button class="btn btn-info text-white d-flex align-items-center p-2" data-bs-toggle="modal"
+                        data-bs-target="#SendLinkModal" data-bs-whatever="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                    </svg>
+                    <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Send Link</p>
                 </button>
 
             </div>
-            <div class="me-2">
-                <button class="btn btn-info text-white d-flex align-items-center">
-                    <i class="bi bi-file-earmark-text me-2"></i>
-                    <p class="my-auto ">Create Request</p>
+            <div class="">
+                <button class="btn btn-info text-white d-flex align-items-center p-2" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                    </svg>
+                    <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Create Request</p>
                 </button>
             </div>
-            <div class="me-2">
-                <button class="btn btn-info text-white d-flex align-items-center">
+            <div class="">
+                <button class="btn btn-info text-white d-flex align-items-center p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-reply-all-fill me-2" viewBox="0 0 16 16" style="transform: scale(-1, 1);">
+                         class="bi bi-reply-all-fill" viewBox="0 0 16 16" style="transform: scale(-1, 1);">
                         <path d="M8.021 11.9 3.453 8.62a.72.72 0 0 1 0-1.238L8.021 4.1a.716.716 0 0 1 1.079.619V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
                     </svg>
-                    <p class="my-auto ">Export</p>
+                    <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Export</p>
                 </button>
             </div>
-            <div class="me-2">
-                <button class="btn btn-info text-white d-flex align-items-center">
+            <div class="">
+                <button class="btn btn-info text-white d-flex align-items-center p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-reply-all-fill me-2" viewBox="0 0 16 16" style="transform: scale(-1, 1);">
+                         class="bi bi-reply-all-fill" viewBox="0 0 16 16" style="transform: scale(-1, 1);">
                         <path d="M8.021 11.9 3.453 8.62a.72.72 0 0 1 0-1.238L8.021 4.1a.716.716 0 0 1 1.079.619V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
                         <path d="M5.232 4.293a.5.5 0 0 1-.106.7L1.114 7.945l-.042.028a.147.147 0 0 0 0 .252l.042.028 4.012 2.954a.5.5 0 1 1-.593.805L.539 9.073a1.147 1.147 0 0 1 0-1.946l3.994-2.94a.5.5 0 0 1 .699.106" />
                     </svg>
-                    <p class="my-auto">Export All</p>
+                    <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Export All</p>
                 </button>
             </div>
-            <div class="me-2">
-                <button class="btn btn-info text-white d-flex align-items-center ">
-                    <i class="bi bi-person-check-fill me-2"></i>
-                    <p class="my-auto">Request DIY Support</p>
+            <div class="">
+                <button class="btn btn-info text-white d-flex align-items-center p-2" data-bs-toggle="modal"
+                        data-bs-target="#RequestSupportModal" data-bs-whatever="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0" />
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                    </svg>
+                    <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Request DIY Support</p>
                 </button>
             </div>
         </div>
 
-
+@* 
         <div class="d-lg-none d-flex">
             <div class="pe-1">
                 <button class="btn btn-info text-white">
@@ -459,7 +587,7 @@
                     </svg>
                 </button>
             </div>
-        </div>
+        </div> *@
 
     </div>
 
@@ -748,6 +876,12 @@
 
 </div>
 
+
+
+
+
+
+
 <script src="/js/DashboardRenderPartialView.js"></script>
 
 
@@ -759,7 +893,7 @@
         // console.log(RequestId);
         document.getElementById("Cancel-PatientName").textContent = Name;
         document.getElementById("Cancel-RequestId").value = RequestId;
-        
+
     }
     function onBlock(Name, RequestId) {
         document.getElementById("Block-PatientName").textContent = Name;
@@ -771,8 +905,20 @@
     function onAssign(Name, RequestId) {
         document.getElementById("Assign-RequestId").value = RequestId;
     }
-    function onTransfer(Name,RequestId){
+    function onTransfer(Name, RequestId) {
         document.getElementById("Transfer-RequestId").value = RequestId;
     }
+
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script>
+    const phoneInputField1 = document.querySelector("#phone");
+    const phoneInput1 = window.intlTelInput(phoneInputField1, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
 </script>
 

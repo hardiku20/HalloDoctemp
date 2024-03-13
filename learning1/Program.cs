@@ -42,9 +42,9 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.UseNotyf();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=patientsite}/{id?}");
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Home}/{action=patientsite}/{id?}");
 app.MapControllerRoute(
     name:"default",
     pattern: "{controller=Admin}/{action=admindashboard}/{id?}");

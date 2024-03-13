@@ -577,7 +577,7 @@ namespace learning1.Controllers
         //    return View(model);
         //}
 
-
+        [CustomAuthorize("Patient")]
         public IActionResult viewdocuments(int requestId)
         {
             if (requestId == 0)
@@ -1027,7 +1027,7 @@ namespace learning1.Controllers
                 _memoryCache.Set(userEmail, emailKey, TimeSpan.FromMinutes(30));
                 var resetLink = "https://localhost:7116/Home/Reset_pwd?uid=" + userEmail + "&token=" + emailKey;
                 var subject = "Request to Reset Password";
-                var body = "Hi" + "USER" + "Click on link below to reset your password " + resetLink;
+                var body = "Hi " + "USER " + "Click on link below to reset your password " + resetLink;
                 SendEmail(userEmail, body, subject);
                 var tmp = _memoryCache.Get(userEmail);
                 return RedirectToAction("patientlogin");
@@ -1075,6 +1075,9 @@ namespace learning1.Controllers
             }
             return View();
         }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

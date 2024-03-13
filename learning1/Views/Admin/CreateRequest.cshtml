@@ -1,0 +1,131 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@* 
+<div class="container pb-4">
+    <div class="d-flex justify-content-end m-3">
+        <a asp-controller="Home" asp-action="patientsubmitrequest"
+           class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+            <img src="/assets/images/chevron-left.svg" alt=""> Back
+        </a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <form action="" method="post" class="form-floating" enctype="multipart/form-data">
+                <div class="row">
+                    <h5 class="my-2">Patient Information</h5>
+                    <div class="col-12">
+                        <div class="form-floating input-info mb-3">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                      style="height: 100px"></textarea>
+                            <label for="floatingTextarea2" class="text-secondary">
+                                Enter brief details of Symptoms
+                                (Optional)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName">
+                            <label for="floatingInput" class="text-secondary">First Name</label>
+                            <p class="text-danger">@Html.ValidationMessageFor(x=>x.FirstName)</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName">
+                            <label for="floatingInput" class="text-secondary">Last Name</label>
+                            <p class="text-danger">@Html.ValidationMessageFor(x=>x.LastName)</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                   aria-describedby="basic-addon1" asp-for="DateofBirth">
+                            <label for="floatingInputValue" class="text-secondary">Date of birth</label>
+                            <p class="text-danger">@Html.ValidationMessageFor(x=>x.DateofBirth)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h5 class="my-2">Patient Contact Information</h5>
+                    <div class="col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="email" class="form-control" id="email"
+                                   placeholder="name@example.com" asp-for="Email">
+                            <label for="floatingInput" class="text-secondary">Email address</label>
+                            <p class="text-danger">@Html.ValidationMessageFor(x=>x.Email)</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating input-info w-100">
+                            <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                   id="phone" asp-for="PhoneNumber">
+                            <p class="text-danger">@Html.ValidationMessageFor(x=>x.PhoneNumber)</p>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+
+
+                <div class="row">
+                    <h5 class="my-2">Patient Location</h5>
+                    <div class="col-sm-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Street">
+                            <label for="floatingInput" class="text-secondary">Street</label>
+                          
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City">
+                            <label for="floatingInput" class="text-secondary">City</label>
+                          
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State">
+                            <label for="floatingInput" class="text-secondary">State</label>
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Zip Code">
+                            <label for="floatingInput" class="text-secondary">Zip Code</label>
+                           
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput"
+                                   placeholder="Room #/Suite (Optional)">
+                            <label for="floatingInput" class="text-secondary">Room #/Suite (Optional)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex mt-3 mb-2">
+                    <div class="ms-auto">
+                        <button type="submit" class="btn btn-info text-white">Submit</button>
+                    </div>
+                    <div class="ms-3">
+                        <button type="button" class="btn btn-outline-info">Cancel</button>
+                    </div>
+
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+</div> *@

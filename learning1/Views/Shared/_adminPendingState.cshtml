@@ -5,7 +5,7 @@
 }
 
 @model learning1.DBEntities.ViewModel.AdminDashboardViewModel;
-<div class="d-md-block d-none">
+<div class="d-md-block d-none overflow-x-auto">
     <table class="table-responsive w-100">
 
 
@@ -62,7 +62,7 @@
                     }
 
                 </td>
-                <td class="text-white py-3">Addresssssssssssss</td>
+                <td class="text-white py-3">@items.Address</td>
                 <td class="text-white py-3"> - </td>
                 <td class=" ">
                     <div class="d-flex justify-content-center align-items-center">
@@ -87,7 +87,10 @@
                                 <a class="dropdown-item" data-bs-toggle="modal"
                                    data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')">Clear Case</a>
                             </li>
-                            <li><a class="dropdown-item" href="#">Send Agreement</a></li>
+                            <li>
+                                <a class="dropdown-item" data-bs-toggle="modal"
+                                   data-bs-target="#SendAgreementModal" data-bs-whatever="">Send Agreement</a>
+                            </li>
                         </ul>
                     </div>
                 </td>

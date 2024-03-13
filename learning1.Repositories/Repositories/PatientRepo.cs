@@ -260,7 +260,7 @@ namespace learning1.Repositories.Repositories
             Request request = new Request
             {
                 UserId = user.UserId,
-                RequestTypeId = 3,
+                RequestTypeId = 4,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
@@ -648,7 +648,7 @@ namespace learning1.Repositories.Repositories
             Request request = new Request
             {
                 UserId = user.UserId,
-                RequestTypeId = 3,
+                RequestTypeId = 1,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,

@@ -257,8 +257,8 @@ namespace learning1.Repositories.Repositories
                 var model = new ViewNotesViewModel
                 {
                     RequestId = requestId,
-                    TransferNotes = requestStatus.Notes,
-                    CreatedDate = requestStatus.CreatedDate,
+                    //TransferNotes = requestStatus.Notes,
+                    //CreatedDate = requestStatus.CreatedDate,
                     PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
                     AdminNotes= requestNotes.FirstOrDefault()?.AdminNotes,
                 };
@@ -419,6 +419,38 @@ namespace learning1.Repositories.Repositories
                 TableViewModel = tempmodel
             };
             return model;
+        }
+
+        public void SetViewNotes(ViewNotesViewModel model, int requestId)
+        {
+            //var temp = from rn in _context.RequestNotes
+            //           join rs in _context.RequestStatusLogs on rn.RequestId equals rs.RequestId into rgroup
+            //           from r in rgroup
+            //           select new;
+            var AdminId = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).Select(x => x.AdminId)?.FirstOrDefault();
+            var ExistingRequestId = _context.RequestNotes.Where(x => x.RequestId == requestId).Select(x => x.RequestId).FirstOrDefault();
+            if (ExistingRequestId != 0)
+            {
+                RequestNote requestNote = _context.RequestNotes.Where(X => X.RequestId == requestId)?.FirstOrDefault();
+                requestNote.AdminNotes = model.NewAdminNotes;
+                requestNote.CreatedBy = "Hardikkk";
+                requestNote.CreatedDate = DateTime.Now;
+                _context.Update(requestNote);
+                _context.SaveChanges();
+            }
+
+            else
+            {
+                RequestNote requestNote = new RequestNote()
+                {
+                    RequestId = requestId,
+                    AdminNotes = model.NewAdminNotes,  
+                    CreatedBy= "Hardikkk",
+                    CreatedDate = DateTime.Now,
+                };
+                _context.Add(requestNote);
+                _context.SaveChanges();
+            }
         }
 
         public void TransferCaseRepo(AdminDashboardViewModel model, int requestId)

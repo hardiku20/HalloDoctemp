@@ -192,5 +192,10 @@ namespace learning1.Services.Services
             var model = _adminRepo.RenderUnpaidState(status);
             return model;
         }
+
+        public void SetViewNotesData(ViewNotesViewModel model, int requestId)
+        {
+            _adminRepo.SetViewNotes(model, requestId);
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace learning1.DBEntities.ViewModel
         public string? AdminNotes {  get; set; }
         public string? PhysicianNotes {  get; set; }
         public DateTime? CreatedDate { get; set;}
+         public string? CreatedBy { get; set; }
+        public string? NewAdminNotes {  get; set; }
     }
 }
