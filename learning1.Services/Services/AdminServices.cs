@@ -23,25 +23,26 @@ namespace learning1.Services.Services
         {
             var Casetags = _adminRepo.DisplayCasetags();
             var Regions = _adminRepo.DisplayRegions();
+            var Count = _adminRepo.SetCount();
             var temp = _adminRepo.DisplayAdminDashboardRepo().
                 Select(x => new AdminTableViewModel
                 {
                     RequestId = x.RequestId,
-                    RequestedDate = x.CreatedDate,
+                    RequestedDate = x.CreatedDate.ToString(),
                     Phone = x.PhoneNumber,
                     Name = x.FirstName + " " + x.LastName,
                     Address = x.RequestClients.Select(x =>x.Address).FirstOrDefault(),
                     Requester = x.FirstName + " " + x.LastName,
-                    PatientNumber = x.PhoneNumber,
+                    PhoneNumber = x.PhoneNumber,
                     RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
-
                 }).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
                 TableViewModel = temp,
                 CancellationReason = Casetags,
-                Region = Regions,       
+                Region = Regions, 
+                RequestCount = Count,
             };
             return model;
         }

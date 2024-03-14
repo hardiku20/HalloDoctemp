@@ -53,14 +53,17 @@
                 <td class="text-white py-3 ">@items.RequestType @items.Requester</td>
                 <td class="text-white py-3">physician name</td>
                 <td class="text-white py-3">12/12/2012</td>
-                <td class="text-white">
-                    @if (items.Phone != null)
+                <td class="text-white py-3">
+                    @if (items.PhoneNumber != null)
                     {
-
-                        <button class=" btn btn-outline-white border border-white py-1 w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
+                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.PhoneNumber</button>
+                        <div class="text-white">(Patient)</div>
+                    }
+                    @if (items.Phone != null && items.RequestType.ToString() != "Patient")
+                    {
+                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
                         <div class="text-white">(@items.RequestType)</div>
                     }
-
                 </td>
                 <td class="text-white py-3">@items.Address</td>
                 <td class="text-white py-3"> - </td>
@@ -76,12 +79,12 @@
                             Actions
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
-                            <li><a class="dropdown-item" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Uploads</a></li>
-                            <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Notes</a></li>
-                            <li><a class="dropdown-item" asp-action="SendOrders" asp-controller="Admin" asp-route-requestId="@items.RequestId">Orders</a></li>
-                            <li><a class="dropdown-item" href="#">Doctors Note</a></li>
-                            <li><a class="dropdown-item" href="#">Encounter</a></li>
+                            <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
+                            <li><a class="dropdown-item" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-journal-text me-2"></i>View Uploads</a></li>
+                            <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
+                            <li><a class="dropdown-item" asp-action="SendOrders" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-list-task me-2"></i>Orders</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-file-text me-2"></i>Doctors Note</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-files me-2"></i>Encounter</a></li>
                         </ul>
                     </div>
                 </td>

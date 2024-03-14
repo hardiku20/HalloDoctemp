@@ -20,6 +20,8 @@ namespace learning1.Repositories.IRepositories
         //void updateRequest(Request request);
         //Request GetRequestById(int requestId);
         List<Request> DisplayAdminDashboardRepo();
+
+        public RequestCount SetCount();
         List<string> DisplayCasetags();
         List<string> DisplayProfession();
         List<string> DisplayRegions();

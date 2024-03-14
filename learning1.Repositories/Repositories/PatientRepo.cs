@@ -267,7 +267,6 @@ namespace learning1.Repositories.Repositories
                 Email = model.Email,
                 Status = 1,
                 CreatedDate = DateTime.Now,
-
             };
 
             _context.Requests.Add(request);

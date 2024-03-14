@@ -1,0 +1,258 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+<div class="container pb-4">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="">Encounter Form</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a asp-action="admindashboard" asp-controller="Admin" class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <form action="" class="form-floating">
+                <div class="row">
+                    <h1 class="text-info mb-4 text-center">Medical Report-Confidential</h1>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name">
+                            <label for="floatingInput" class="text-secondary">First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name">
+                            <label for="floatingInput" class="text-secondary">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Location">
+                            <label for="floatingInput" class="text-secondary">Location</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                   aria-describedby="basic-addon1">
+                            <label for="floatingInputValue" class="text-secondary">Date of birth</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                   aria-describedby="basic-addon1">
+                            <label for="floatingInputValue" class="text-secondary">Date</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info w-100">
+                            <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                   id="phone">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="email" class="form-control" id="email"
+                                   placeholder="name@example.com">
+                            <label for="floatingInput" class="text-secondary">Email address</label>
+                        </div>
+                    </div>  
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control text-start" style="height:100px;" id="floatingInput" placeholder="History Of Present illness Or injury">
+                            <label for="floatingInput" class="text-secondary">History Of Present illness Or injury</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medical History">
+                            <label for="floatingInput" class="text-secondary">Medical History</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medications">
+                            <label for="floatingInput" class="text-secondary">Medications</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Allergies">
+                            <label for="floatingInput" class="text-secondary">Allergies</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Temp">
+                            <label for="floatingInput" class="text-secondary">Temp</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="HR">
+                            <label for="floatingInput" class="text-secondary">HR</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="RR">
+                            <label for="floatingInput" class="text-secondary">RR</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-md-flex gap-2">
+                        <div class="form-floating input-info mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure">
+                            <label for="floatingInput" class="text-secondary">Blood Pressure</label>
+                        </div>
+                        <div class="form-floating input-info mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure">
+                            <label for="floatingInput" class="text-secondary">Blood Pressure</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="O2">
+                            <label for="floatingInput" class="text-secondary">O2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Pain">
+                            <label for="floatingInput" class="text-secondary">Pain</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Heent">
+                            <label for="floatingInput" class="text-secondary">Heent</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="CV">
+                            <label for="floatingInput" class="text-secondary">CV</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Chest">
+                            <label for="floatingInput" class="text-secondary">Chest</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="ABD">
+                            <label for="floatingInput" class="text-secondary">ABD</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Extr">
+                            <label for="floatingInput" class="text-secondary">Extr</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Skin">
+                            <label for="floatingInput" class="text-secondary">Skin</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Neuro">
+                            <label for="floatingInput" class="text-secondary">Neuro</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Others">
+                            <label for="floatingInput" class="text-secondary">Others</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Diagonsis">
+                            <label for="floatingInput" class="text-secondary">Diagonsis</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Treatment Plan">
+                            <label for="floatingInput" class="text-secondary">Treatment Plan</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medication dispensed">
+                            <label for="floatingInput" class="text-secondary">Medication dispensed</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Procedures">
+                            <label for="floatingInput" class="text-secondary">Procedures</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Followup">
+                            <label for="floatingInput" class="text-secondary">Followup</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex mb-2 gap-2">
+                    <div class="ms-auto">
+                        <button type="submit" class="btn btn-info text-white">Save Changes</button>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn text-white" style="background-color: rgb(153,50,204)">Finalize</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="btn btn-outline-info">Cancel</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>

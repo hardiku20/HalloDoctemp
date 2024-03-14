@@ -23,10 +23,11 @@
             <td scope="col" class="py-3">Actions</td>
         </tr>
 
-
-
+        
+        
         @foreach (var items in Model.TableViewModel)
         {
+            
             var bgcolor = "";
             if (@items.RequestType.ToString()=="Family")
             {
@@ -45,8 +46,6 @@
                 bgcolor = "rgb(15, 189, 64)";
             }
 
-
-
             <tr class=" border border-bottom border-white" style="background-color:@bgcolor">
 
                 <td class="text-white py-5">@items.Name </td>
@@ -55,14 +54,17 @@
                 </td>
                 <td class="text-white py-3 ">@items.RequestType @items.Requester</td>
                 <td class="text-white py-3">@items.RequestedDate</td>
-                <td class="text-white">
-                   
-                    @if (items.Phone != null)
+                <td class="text-white py-3">
+                    @if (items.PhoneNumber != null)
                     {
-                        <button class=" btn btn-outline-white border border-white py-1 w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
+                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.PhoneNumber</button>
+                        <div class="text-white">(Patient)</div>
+                    }
+                    @if (items.Phone != null && items.RequestType.ToString()!="Patient")
+                    {
+                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
                         <div class="text-white">(@items.RequestType)</div>
                     }
-
                 </td>
                 <td class="text-white py-3">@items.Address</td>
                 <td class="text-white py-3"> - </td>
@@ -74,26 +76,24 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#AssignCaseModal" data-bs-whatever="" onclick="onAssign('@items.Name','@items.RequestId')">Assign Case</a>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal"
+                                   data-bs-target="#AssignCaseModal" data-bs-whatever="" onclick="onAssign('@items.Name','@items.RequestId')"><i class="bi bi-file-text me-2"></i>Assign Case</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onCancel('@items.Name','@items.RequestId')">Cancel Case</a>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal"
+                                   data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onCancel('@items.Name','@items.RequestId')"><i class="bi bi-x-circle  me-2"></i>Cancel Case</a>
                             </li>
-                            <li><a class="dropdown-item" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Case</a></li>
-                            <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Notes</a></li>
+                            <li><a class="dropdown-item d-flex" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
+                            <li><a class="dropdown-item d-flex" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
                             <li>
-                                <a class="dropdown-item" data-bs-toggle="modal"
-                                   data-bs-target="#BlockCaseModal" data-bs-whatever="" onclick="onBlock('@items.Name','@items.RequestId')">Block Patients</a>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal"
+                                   data-bs-target="#BlockCaseModal" data-bs-whatever="" onclick="onBlock('@items.Name','@items.RequestId')"><i class="bi bi-ban me-2"></i>Block Patients</a>
                             </li>
                         </ul>
                     </div>
                 </td>
             </tr>
         }
-
-
     </table>
 
 </div>

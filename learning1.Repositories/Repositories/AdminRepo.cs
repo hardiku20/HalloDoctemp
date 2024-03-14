@@ -17,6 +17,32 @@ namespace learning1.Repositories.Repositories
             _context = context;
         }
 
+        public int GetCurrentStateCount(params int[] status)
+        {
+            int sum = 0;
+            foreach (var item in status)
+            {
+                sum += _context.Requests.Where(e => e.Status == item).Count();
+            }
+            return sum;
+        }
+        public RequestCount SetCount()
+        {
+            RequestCount requestCount = new()
+            {
+                NewStateCount = GetCurrentStateCount(1),
+                PendingStateCount = GetCurrentStateCount(2),
+                ActiveStateCount = GetCurrentStateCount(4, 5),
+                ConcludeStateCount = GetCurrentStateCount(6),
+                ToCloseStateCount = GetCurrentStateCount(3, 7, 8),
+                UnpaidStateCount = GetCurrentStateCount(9)
+            };
+
+
+            return requestCount;
+        }
+
+
         public void AssignCaseRepo(AdminDashboardViewModel model, int requestId)
         {
             var regionId = _context.Regions.First(x => x.Name.Equals(model.SelectedRegion)).RegionId;
@@ -301,8 +327,9 @@ namespace learning1.Repositories.Repositories
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
-                RequestedDate = x.CreatedDate,
-                Phone = x.PhoneNumber,
+                RequestedDate = x.CreatedDate.ToString(),
+                Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                PhoneNumber = x.PhoneNumber,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
@@ -311,7 +338,7 @@ namespace learning1.Repositories.Repositories
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel
+                TableViewModel = tempmodel,
             };
             return model;
         }
@@ -322,17 +349,20 @@ namespace learning1.Repositories.Repositories
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
-                RequestedDate = x.CreatedDate,
-                Phone = x.PhoneNumber,
+                RequestedDate = x.CreatedDate.ToString(),
+                Phone = x.RequestClients.Select(x=>x.PhoneNumber).FirstOrDefault(),
+                PhoneNumber = x.PhoneNumber,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
+            
+
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel
+                TableViewModel = tempmodel,
             };
             return model;
         }
@@ -343,8 +373,9 @@ namespace learning1.Repositories.Repositories
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
-                RequestedDate = x.CreatedDate,
-                Phone = x.PhoneNumber,
+                RequestedDate = x.CreatedDate.ToString(),
+                Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                PhoneNumber = x.PhoneNumber,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
@@ -353,7 +384,7 @@ namespace learning1.Repositories.Repositories
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel
+                TableViewModel = tempmodel, 
             };
             return model;
         }
@@ -364,8 +395,9 @@ namespace learning1.Repositories.Repositories
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
-                 RequestedDate = x.CreatedDate,
-                 Phone = x.PhoneNumber,
+                 RequestedDate = x.CreatedDate.ToString(),
+                 Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                 PhoneNumber = x.PhoneNumber,
                  Name = x.FirstName + " " + x.LastName,
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                  Requester = x.FirstName + " " + x.LastName,
@@ -374,7 +406,7 @@ namespace learning1.Repositories.Repositories
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel
+                TableViewModel = tempmodel,
             };
             return model;
         }
@@ -385,8 +417,9 @@ namespace learning1.Repositories.Repositories
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
-                 RequestedDate = x.CreatedDate,
-                 Phone = x.PhoneNumber,
+                 RequestedDate = x.CreatedDate.ToString(),
+                 Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                 PhoneNumber = x.PhoneNumber,
                  Name = x.FirstName + " " + x.LastName,
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                  Requester = x.FirstName + " " + x.LastName,
@@ -395,7 +428,7 @@ namespace learning1.Repositories.Repositories
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel
+                TableViewModel = tempmodel,
             };
             return model;
         }
@@ -406,8 +439,9 @@ namespace learning1.Repositories.Repositories
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
-                RequestedDate = x.CreatedDate,
-                Phone = x.PhoneNumber,
+                RequestedDate = x.CreatedDate.ToString(),
+                Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                PhoneNumber = x.PhoneNumber,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
@@ -416,7 +450,7 @@ namespace learning1.Repositories.Repositories
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel
+                TableViewModel = tempmodel,
             };
             return model;
         }
@@ -426,7 +460,7 @@ namespace learning1.Repositories.Repositories
             //var temp = from rn in _context.RequestNotes
             //           join rs in _context.RequestStatusLogs on rn.RequestId equals rs.RequestId into rgroup
             //           from r in rgroup
-            //           select new;
+            //           select new ;
             var AdminId = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).Select(x => x.AdminId)?.FirstOrDefault();
             var ExistingRequestId = _context.RequestNotes.Where(x => x.RequestId == requestId).Select(x => x.RequestId).FirstOrDefault();
             if (ExistingRequestId != 0)

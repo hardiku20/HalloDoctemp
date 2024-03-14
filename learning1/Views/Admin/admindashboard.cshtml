@@ -373,7 +373,7 @@
                     <img src="/assets/images/new_active.png" id="newState-active" class="icon-size pe-1 d-none">
                     <h6 class="my-auto">NEW</h6>
                 </div>
-                <p class="h3 d-flex justify-content-start">1223</p>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.NewStateCount</p>
             </button>
             <img src="/assets/images/caret-down-new-fill.svg" alt="" id="newState-img" class="caret d-none z-2" />
         </div>
@@ -384,7 +384,7 @@
                     <img src="/assets/images/pending_active.png" id="pendingState-active" class="icon-size pe-1  d-none">
                     <h6 class="my-auto">PENDING</h6>
                 </div>
-                <p class="h3 d-flex justify-content-start">1223</p>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.PendingStateCount</p>
             </button>
             <img src="/assets/images/caret-down-pending-fill.svg" alt="" id="pendingState-img" class="caret d-none z-2">
         </div>
@@ -395,7 +395,7 @@
                     <img src="/assets/images/active_active.png" id="activeState-active" class="icon-size hide pe-1 d-none">
                     <h6 class="my-auto">ACTIVE</h6>
                 </div>
-                <p class="h3 d-flex justify-content-start">1223</p>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.ActiveStateCount</p>
             </button>
             <img src="/assets/images/caret-down-active-fill.svg" alt="" id="activeState-img" class="caret d-none z-2">
         </div>
@@ -406,7 +406,7 @@
                     <img src="/assets/images/conclude_active.png" id="concludeState-active" class="icon-size hide pe-1 d-none">
                     <h6 class="my-auto">CONCLUDE</h6>
                 </div>
-                <p class="h3 d-flex justify-content-start">1223</p>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.ConcludeStateCount</p>
             </button>
             <img src="/assets/images/caret-down-conclude-fill.svg" alt="" id="concludeState-img" class="caret d-none z-2">
         </div>
@@ -417,7 +417,7 @@
                     <img src="/assets/images/toclose_active.png" id="tocloseState-active" class="icon-size hide pe-1 d-none">
                     <h6 class="my-auto">TO CLOSE</h6>
                 </div>
-                <p class="h3 d-flex justify-content-start">1223</p>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.ToCloseStateCount</p>
             </button>
             <img src="~/assets/images/caret-down-close-fill.svg" alt="" id="tocloseState-img" class="caret d-none z-2">
         </div>
@@ -428,13 +428,11 @@
                     <img src="/assets/images/unpaid_active.png" id="unpaidState-active" class="icon-size hide pe-1 d-none">
                     <h6 class="my-auto">UNPAID</h6>
                 </div>
-                <p class="h3 d-flex justify-content-start">1223</p>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.UnpaidStateCount</p>
             </button>
             <img src="~/assets/images/caret-down-unpaid-fill.svg" alt="" id="unpaidState-img" class="caret d-none z-2">
         </div>
     </div>
-
-
 
    @*  <div class="row d-sm-none d-flex py-2 px-2">
         <div class="col-4 mb-2 px-1">
@@ -504,13 +502,13 @@
 
             </div>
             <div class="">
-                <button class="btn btn-info text-white d-flex align-items-center p-2" >
+                <a class="btn btn-info text-white d-flex align-items-center p-2" asp-action="CreateRequest" asp-controller="Admin">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
                         <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
                         <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
                     </svg>
                     <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Create Request</p>
-                </button>
+                </a>
             </div>
             <div class="">
                 <button class="btn btn-info text-white d-flex align-items-center p-2">

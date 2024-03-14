@@ -97,7 +97,7 @@ namespace learning1.Services.Services
                 Select(x => new  AdminTableViewModel
                 {
                     RequestId = x.RequestId,
-                     RequestedDate = x.CreatedDate,
+                     RequestedDate = x.CreatedDate.ToString(),
                      Phone = x.PhoneNumber,
                      Name = x.FirstName + " " + x.LastName,
                      /*Address = x.RequestClients. + ", " + x.City + ", " + x.State + " - " + x.ZipCode*/

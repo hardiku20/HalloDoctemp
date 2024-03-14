@@ -49,11 +49,7 @@ namespace learning1.Controllers
         }
 
 
-        //public IActionResult ViewNotes()
-        //{
-        //    return View();
-        //}
-
+   
 
 
         public IActionResult ViewNotes(int RequestId)
@@ -212,5 +208,15 @@ namespace learning1.Controllers
             return RedirectToAction("admindashboard");
         }
 
+
+        public IActionResult CreateRequest()
+        {
+            return View();
+        }
+
+        public IActionResult EncounterForm()
+        {
+            return View();
+        }
     }
 }

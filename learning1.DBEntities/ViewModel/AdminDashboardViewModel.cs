@@ -29,17 +29,18 @@ namespace learning1.DBEntities.ViewModel
         public string? SelectedTransferPhysician { get; set; }
 
         public string? AssignCaseDescription {  get; set; }
+
+        public RequestCount RequestCount { get; set; }
     }
 
     public class AdminTableViewModel
     {
         public string? Name { get; set; }
         public int RequestId { get; set; }
-        public DateTime RequestedDate { get; set; }
+        public string? RequestedDate { get; set; }
         public string? Address {  get; set; }
         public string? Phone {  get; set; }
-
-        public string? PatientNumber { get; set; }
+        public string? PhoneNumber { get; set; }
         public string? Street { get; set; }
         public string? City { get; set; }
         public string? State { get; set; }
@@ -49,6 +50,17 @@ namespace learning1.DBEntities.ViewModel
         public RequestType? RequestType { get; set; }
 
    
+    }
+
+
+    public class RequestCount
+    {
+        public int? NewStateCount { get; set; }
+        public int? PendingStateCount { get; set; }
+        public int? ActiveStateCount { get; set; }
+        public int? ConcludeStateCount { get; set; }
+        public int? ToCloseStateCount { get; set; }
+        public int? UnpaidStateCount { get; set; }
     }
 
     public enum RequestType

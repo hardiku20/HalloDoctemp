@@ -19,10 +19,9 @@
                     <img src="/assets/images/chevron-left.svg" alt=""> Back
                 </a>
             </div>
-
         </div>
-        <div class="bg-white border px-3">
-            <p class="mb-0 mt-3">Patient Name</p>
+        <div class="bg-white border-0 shadow-sm px-3">
+            <p class="mb-0 pt-4">Patient Name</p>
             <h4 class=" text-info">
              ghfghk
             </h4>
@@ -42,7 +41,7 @@
                     <input type="file" class="form-control" id="inputGroupFile02" style="display: none;">
                 </div>
             </form>
-            <div class="d-flex justify-content-between mb-4">
+            <div class="d-flex justify-content-between">
                 <h5 class="fs-5 fs-sm-0">Documents</h5>
                 <div class="d-flex justify-content-between align-items-center">
                     <button id="downloadAllButton" class="btn btn-outline-info d-none d-sm-flex me-2 p-2">Download All</button>
@@ -52,7 +51,7 @@
             </div>
         </div>
 
-        <table class="table border border-top-0">
+        <table class="table pt-2">
             <thead class="thead-light">
                 <tr>
                     <th colspan="2"><input type="checkbox" id="selectAllCheckbox"></th>
@@ -77,10 +76,10 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.CreatedDate)
                         </td>
-
-         
+ 
                         <td>
                             <a class="btn btn-outline-info text-info bg-white download-link" asp-action="download_file" asp-controller="Admin" asp-route-filename="@item.FileName">Download</a>
+                            <a class="btn btn-outline-info text-info bg-white">Delete</a>
                         </td>
 
                     </tr>
