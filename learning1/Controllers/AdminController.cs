@@ -218,5 +218,13 @@ namespace learning1.Controllers
         {
             return View();
         }
+
+
+        [HttpPost]
+        public IActionResult SendAgreementMail(AdminDashboardViewModel model, int RequestId)
+        {
+            _adminServices.SendAgreementData(model, RequestId);
+            return RedirectToAction("admindashboard");
+        }
     }
 }

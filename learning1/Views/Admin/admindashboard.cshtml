@@ -243,23 +243,24 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form>
+            <form method="post" asp-action="SendAgreementMail" asp-controller="Admin">
                 <div class="modal-header bg-info">
                     <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send Agreement</h1>
                     <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
+                        <input type="text" id="Agreement-RequestId" asp-for="RequestId"/>
                         <label for="message-text text-secondary" class="col-form-label">Patient</label>
                         <label for="message-text text-secondary" class="col-form-label">To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="abc@gmail.com">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="PatientEmail">
                         <label for="floatingInput">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingPhonenumber" placeholder="PhoneNumber" value="9875868658">
+                        <input type="text" class="form-control" id="floatingPhonenumber" placeholder="PhoneNumber" asp-for="PatientPhone">
                         <label for="floatingPhoneNumber">Phone Number</label>
                     </div>
                 </div>
@@ -268,7 +269,6 @@
                     <button type="submit" class="btn btn-info text-white">Send</button>
                     <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
                 </div>
-
             </form>
         </div>
     </div>
@@ -705,7 +705,7 @@
 
 
     <!-- mobile view for table -->
-    <div class="d-md-none">
+    @* <div class="d-md-none">
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -867,7 +867,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
 
 
 
@@ -906,7 +906,9 @@
     function onTransfer(Name, RequestId) {
         document.getElementById("Transfer-RequestId").value = RequestId;
     }
-
+    function onSendAgreement(Name,RequestId){
+        document.getElementById("Agreement-RequestId").value = RequestId
+    }
 
 </script>
 

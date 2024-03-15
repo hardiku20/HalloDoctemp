@@ -18,9 +18,9 @@ namespace learning1.Services.IServices
         void GetCancelCaseData(AdminDashboardViewModel model);
         SendOrderViewModel GetDetailsByBusiness(string businessName);
         SendOrderViewModel GetOrderdetails();
-
         //void GetOrderdetails(SendOrderViewModel model);
         List<string> GetPhysicianByRegion(string regionName);
+        void SendAgreementData(AdminDashboardViewModel model, int requestId);
         void GetTransferCaseData(AdminDashboardViewModel model, int requestId);
         ViewNotesViewModel GetViewNotesData(int requestId);
         ViewUploadViewModel GetviewUploads(int requestId);

@@ -10,6 +10,10 @@ namespace learning1.DBEntities.ViewModel
     {
         public string? Name { get; set; }
         public int RequestId { get; set; }
+
+        public string? PatientPhone { get; set; }
+
+        public string? PatientEmail {  get; set; }
         public DateTime RequestedDate { get; set; }
         public List<AdminTableViewModel> TableViewModel { get; set; }
        
@@ -29,7 +33,6 @@ namespace learning1.DBEntities.ViewModel
         public string? SelectedTransferPhysician { get; set; }
 
         public string? AssignCaseDescription {  get; set; }
-
         public RequestCount RequestCount { get; set; }
     }
 
@@ -46,6 +49,7 @@ namespace learning1.DBEntities.ViewModel
         public string? State { get; set; }
         public string? Zipcode {  get; set; }
         public string? Requester {  get; set; }
+        public string? Email { get; set; }
         public int? Status { get; set; }
         public RequestType? RequestType { get; set; }
 

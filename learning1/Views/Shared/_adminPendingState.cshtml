@@ -92,7 +92,7 @@
                             </li>
                             <li>
                                 <a class="dropdown-item d-flex" data-bs-toggle="modal"
-                                   data-bs-target="#SendAgreementModal" data-bs-whatever=""><i class="bi bi-file-text me-2"></i>Send Agreement</a>
+                                   data-bs-target="#SendAgreementModal" data-bs-whatever="" onclick="onSendAgreement('@items.Name','@items.RequestId')"><i class="bi bi-file-text me-2"></i>Send Agreement</a>
                             </li>
                         </ul>
                     </div>
@@ -103,4 +103,160 @@
 
     </table>
 
+</div>
+
+
+
+<div class="d-md-none">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            @foreach (var items in Model.TableViewModel)
+            {
+
+
+                var bgcolor = "";
+                if (@items.RequestType.ToString() == "Family")
+                {
+                    bgcolor = " rgb(212, 107, 21)";
+                }
+                else if (@items.RequestType.ToString() == "Business")
+                {
+                    bgcolor = "rgb(203, 22, 134)";
+                }
+                else if (@items.RequestType.ToString() == "Concierge")
+                {
+                    bgcolor = "rgb(65, 65, 232)";
+                }
+                else
+                {
+                    bgcolor = "rgb(15, 189, 64)";
+                }
+
+
+                <h2 class="accordion-header">
+                    <div class="accordion-button collapsed bg-primary-subtle" type="button"
+                         data-bs-toggle="collapse" data-bs-target="#flush-@items.RequestId" aria-expanded="false"
+                         aria-controls="flush-@items.RequestId">
+                        <div class="container-fluid">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="">
+                                    <h6>@items.Name</h6>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <h6 class="me-1">@items.RequestType</h6>
+                                    <div class="rounded-circle mt-1"
+                                         style="height: 12px; width: 12px; background-color:@bgcolor ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="">
+                                    <p class="fw-normal mb-0 text-break">@items.Address</p>
+                                </div>
+                                <div class="">
+                                    <button class="btn btn-outline-info btn-sm rounded-pill">
+                                        Map Location
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <img src="" alt="">
+                                <p class="text-secondary fw-small" style="font-size: 0.8rem;">
+                                    Wait Time: <span class="fw-small">Dec 5,2023 08:52AM (641.59)</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </h2>
+                <div id="flush-@items.RequestId" class="accordion-collapse collapse"
+                     data-bs-parent="#accordionFlushExample">
+
+                    <hr class="m-0">
+                    <div class="d-flex justify-content-end" style="margin-top: -12px; ">
+                        <a class="btn text-primary btn-outline-primary rounded-pill bg-white py-0 px-2 me-4 z-3"
+                           style="font-size:small; position: absolute;" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">
+                            View Case
+                        </a>
+                    </div>
+
+
+                    <div class="accordion-body container-fluid mt-2">
+                        <div class="d-flex">
+                            <div class="me-1">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                            <label for="" class="me-2 text-secondary">Date of birth:</label>
+                            <p>Jun 28, 1991(33)</p>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-1">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <label for="" class="me-2 text-secondary">Email:</label>
+                            <p>@items.Email</p>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-1">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <label for="" class="me-2 text-secondary">Patient:</label>
+                            <p>@items.PhoneNumber</p>
+                        </div>
+                        <div class="d-flex">
+                            <div class="me-1">
+                                <i class="bi bi-person"></i>
+                            </div>
+                            <label for="" class="me-2 text-secondary">Requestor:</label>
+                            <p>@items.RequestType @items.Requester</p>
+                        </div>
+                        <div>
+                            <div class="row mb-2 ">
+                                <div class="col-6">
+                                    <a class="btn text-white rounded-pill w-100"
+                                       style="background-color: purple; font-size: small;" data-bs-toggle="modal"
+                                       data-bs-target="#AssignCaseModal" data-bs-whatever="" onclick="onAssign('@items.Name','@items.RequestId')">
+                                        Assign Case
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
+                                       style="font-size: small;" data-bs-toggle="modal"
+                                       data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onCancel('@items.Name','@items.RequestId')">
+                                        Cancel Case
+                                    </a>
+                                </div>
+
+
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">
+                                        View Notes
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
+                                       style="font-size: small;" data-bs-toggle="modal"
+                                       data-bs-target="#BlockCaseModal" data-bs-whatever="" onclick="onBlock('@items.Name','@items.RequestId')">
+                                        Block Patients
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-6">
+                                    <button class="btn bg-success text-white rounded-pill w-100"
+                                            style="font-size: small;">
+                                        Email
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>

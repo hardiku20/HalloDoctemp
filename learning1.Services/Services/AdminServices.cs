@@ -107,6 +107,11 @@ namespace learning1.Services.Services
             return physicianName;
         }
 
+        //public void GetSendAgreementData(AdminDashboardViewModel model, int requestId)
+        //{
+        //    _adminRepo.SendAgreementRepo(model, requestId);
+        //}
+
         public void GetTransferCaseData(AdminDashboardViewModel model, int requestId)
         {
             _adminRepo.TransferCaseRepo(model, requestId);
@@ -192,6 +197,11 @@ namespace learning1.Services.Services
         {
             var model = _adminRepo.RenderUnpaidState(status);
             return model;
+        }
+
+        public void SendAgreementData(AdminDashboardViewModel model, int requestId)
+        {
+            _adminRepo.SendAgreementRepo(model, requestId);
         }
 
         public void SetViewNotesData(ViewNotesViewModel model, int requestId)

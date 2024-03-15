@@ -44,5 +44,6 @@ namespace learning1.Repositories.IRepositories
         void SetViewNotes(ViewNotesViewModel model, int requestId);
         void TransferCaseRepo(AdminDashboardViewModel model, int requestId);
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
+        void SendAgreementRepo(AdminDashboardViewModel model, int requestId);
     }
 }
