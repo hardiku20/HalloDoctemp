@@ -233,25 +233,18 @@ namespace learning1.Repositories.Repositories
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            Region region = new Region
-            {
-                Name = model.State,
-            };
-            _context.Regions.Add(region);
-            _context.SaveChanges();
+            
 
 
             Concierge concierge = new Concierge
             {
-
                 ConciergeName = model.Fname,
                 Street = model.Street,
                 City = model.City,
                 State = model.State,
                 ZipCode = model.ZipCode,
-                RegionId = region.RegionId,
+                RegionId = _context.Regions.Where(x => x.Name== model.State).Select(x => x.RegionId).FirstOrDefault(),
                 CreatedDate = DateTime.Now,
-
             };
 
             _context.Concierges.Add(concierge);
@@ -664,9 +657,14 @@ namespace learning1.Repositories.Repositories
             {
                 RequestId = request.RequestId,
                 FirstName = model.Fname,
-                LastName = model.LastName,
+                LastName = model.Lname,
                 PhoneNumber = model.Phone,
                 Email = model.Emailaddress,
+                State = model.State,
+                City = model.City,
+                Street = model.Street,
+                ZipCode = model.ZipCode,
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode,
             };
 
             _context.RequestClients.Add(requestClient);
@@ -692,7 +690,7 @@ namespace learning1.Repositories.Repositories
             {
                 userInfo.UserId = AspNetId;
                 userInfo.Email = Aspuser.Email;
-                userInfo.Role = "Physicians";
+                userInfo.Role = "Physician";
             }
             else if (_context.Users.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
             {

@@ -335,7 +335,7 @@ namespace learning1.Repositories.Repositories
                 Email = x.Email,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.FirstName + " " + x.LastName,
+                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
 
@@ -358,7 +358,7 @@ namespace learning1.Repositories.Repositories
                 Email = x.Email,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.FirstName + " " + x.LastName,
+                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
             
@@ -383,7 +383,7 @@ namespace learning1.Repositories.Repositories
                 Email = x.Email,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.FirstName + " " + x.LastName,
+                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
 
@@ -406,7 +406,7 @@ namespace learning1.Repositories.Repositories
                  Email = x.Email,
                  Name = x.FirstName + " " + x.LastName,
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                 Requester = x.FirstName + " " + x.LastName,
+                 Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
              }).ToList();
 
@@ -429,7 +429,7 @@ namespace learning1.Repositories.Repositories
                  Email = x.Email,
                  Name = x.FirstName + " " + x.LastName,
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                 Requester = x.FirstName + " " + x.LastName,
+                 Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
              }).ToList();
 
@@ -452,7 +452,7 @@ namespace learning1.Repositories.Repositories
                 Email = x.Email,
                 Name = x.FirstName + " " + x.LastName,
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.FirstName + " " + x.LastName,
+                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
 
@@ -550,15 +550,7 @@ namespace learning1.Repositories.Repositories
 
         public void SendAgreementRepo(AdminDashboardViewModel model, int requestId)
         {
-            AdminDashboardViewModel SendAgreementData = new AdminDashboardViewModel()
-            {
-                RequestId= requestId,
-                PatientEmail = model.PatientEmail,
-                PatientPhone = model.PatientPhone,
-            };
-
             Mails(model.PatientEmail, requestId);
-
         }
 
 
@@ -581,23 +573,61 @@ namespace learning1.Repositories.Repositories
             smtp.Send(message);
             smtp.UseDefaultCredentials = false;
         }
-        //public AdminDashboardViewModel SendAgreementRepo(AdminDashboardViewModel model, int requestId)
-        //{
-        //    var email = _context.Requests.Where(x => x.RequestId == requestId).Select(x=>x.Email) ;
-        //    AdminDashboardViewModel adminDashboard = new AdminDashboardViewModel()
-        //    {
-        //        RequestId=requestId,
-        //        PatientEmail = email.ToString(),
-        //        PatientPhone = model.PatientPhone,
-        //    };
 
-        //    return adminDashboard;
-        //}
+        public void SendLinkRepo(AdminDashboardViewModel model)
+        {  
+            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+            message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+            message.To.Add(new System.Net.Mail.MailAddress(model.PatientEmail));
+            message.Subject = "AGREEMENT";
+            message.IsBodyHtml = true;
+            var resetLink = "https://localhost:44352/home/reviewagreement?reqId=";
+            message.Body = resetLink + "Agreement";
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.office365.com";
+            smtp.Port = 587;
+            smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+            smtp.EnableSsl = true;
+            smtp.Send(message);
+            smtp.UseDefaultCredentials = false;
+        }
 
-        //public void updateRequest(Request request)
-        //{
-        //    _context.Requests.Update(request);
-        //    _context.SaveChanges();
-        //}
+        public AdminDashboardViewModel ListToExportAllData()
+        {
+            List<ExportDataViewModel> data;
+            var query = from r in _context.Requests
+                        join rc in _context.RequestClients on r.RequestId equals rc.RequestId
+                        join u in _context.Users on r.UserId equals u.UserId
+                        select new ExportDataViewModel
+                        {
+                            FirstName = rc.FirstName,
+                            LastName = rc.LastName,
+                            Intdate = rc.IntDate,
+                            Intyear = rc.IntYear,
+                            Strmonth = rc.StrMonth,
+                            RequestorFirstname = r.FirstName,
+                            RequestorLastname = r.LastName,
+                            Createddate = r.CreatedDate,
+                            Phonenumber = rc.PhoneNumber,
+                            City = rc.City,
+                            State = rc.State,
+                            Street = rc.Street,
+                            Zipcode = rc.ZipCode,
+                            Notes = rc.Notes,
+                            Status = r.Status,
+                            Email = u.Email,
+                            RequestTypeId = r.RequestTypeId,
+                            RequestId = r.RequestId,
+                            ConfirmationNumber = r.ConfirmationNumber
+                        };
+            data = query.ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                ExportViewModel = data,
+            };
+
+            return model;
+        }
     }
 }

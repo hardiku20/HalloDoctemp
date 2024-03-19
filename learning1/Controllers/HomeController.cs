@@ -34,9 +34,10 @@ namespace learning1.Controllers
         private readonly IMemoryCache _memoryCache;
         private readonly IPatientServices _patientServices;
         private readonly INotyfService _notyf;
+        private readonly IJWTService _JWTService;
 
         //public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
-        public HomeController(ILogger<HomeController> logger, IPatientServices patientServices, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache, INotyfService notyf)
+        public HomeController(ILogger<HomeController> logger, IJWTService JWTService , IPatientServices patientServices, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache, INotyfService notyf)
         {
             _patientServices = patientServices;
             _logger = logger;
@@ -44,6 +45,7 @@ namespace learning1.Controllers
             _context = context;
             _memoryCache = memoryCache;
             _notyf = notyf;
+            _JWTService = JWTService;
         }
 
 
@@ -90,6 +92,8 @@ namespace learning1.Controllers
                 //    return RedirectToAction("",user.Role.RoleName);
                 //}
                 UserInfoViewModel validUser = _patientServices.CheckValidUserWithRole(model.Email, model.Password);
+                var JWTToken = _JWTService.GenerateJWTToken(validUser);
+                Response.Cookies.Append("jwt", JWTToken);
                 SessionUtils.SetLoggedInUser(HttpContext.Session, validUser);
 
 

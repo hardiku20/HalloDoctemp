@@ -11,6 +11,8 @@ namespace learning1.DBEntities.ViewModel
         public string? Name { get; set; }
         public int RequestId { get; set; }
 
+        public string? firstName { get; set; }
+        public string? lastName { get; set; }
         public string? PatientPhone { get; set; }
 
         public string? PatientEmail {  get; set; }
@@ -34,6 +36,7 @@ namespace learning1.DBEntities.ViewModel
 
         public string? AssignCaseDescription {  get; set; }
         public RequestCount RequestCount { get; set; }
+        public List<ExportDataViewModel> ExportViewModel { get; set; }
     }
 
     public class AdminTableViewModel
@@ -54,6 +57,34 @@ namespace learning1.DBEntities.ViewModel
         public RequestType? RequestType { get; set; }
 
    
+    }
+
+
+    public class ExportDataViewModel
+    {
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? RequestorLastname { get; set; }
+        public string? RequestorFirstname { get; set; }
+        public string? Strmonth { get; set; }
+        public int? Intyear { get; set; }
+        public int? Intdate { get; set; }
+
+        public string? ConfirmationNumber { get; set; }
+        public string? Email { get; set; }
+        public string? Notes { get; set; }
+        public string? Street { get; set; }
+        public string? State { get; set; }
+        public string? City { get; set; }
+
+        public int? RequestId { get; set; }
+        public int? RequestTypeId { get; set; }
+        public int? Status { get; set; }
+        public string? Zipcode { get; set; }
+        public string? Phonenumber { get; set; }
+
+        public DateTime? Createddate { get; set; }
+
     }
 
 

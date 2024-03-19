@@ -254,7 +254,6 @@
                         <label for="message-text text-secondary" class="col-form-label">Patient</label>
                         <label for="message-text text-secondary" class="col-form-label">To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </label>
                     </div>
-
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="PatientEmail">
                         <label for="floatingInput">Email address</label>
@@ -275,31 +274,33 @@
 </div>
 
 
+
+
 <!-- Modal for Send Link -->
 <div class="modal fade" id="SendLinkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form>
+            <form method="post" asp-action="SendLink" asp-controller="Admin">
                 <div class="modal-header bg-info">
                     <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send mail to patient for submitting request</h1>
                     <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName" asp-for="firstName">
                         <label for="floatingInput">First Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName" asp-for="lastName">
                         <label for="floatingInput">Last Name</label>
                     </div>
                     <div class="form-floating input-info w-100 me-2 mb-3">
                         <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                               id="phone">
+                               id="phone" asp-for="PatientPhone">
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="PatientEmail">
                         <label for="floatingInput">Email address</label>
                     </div>
 
@@ -339,25 +340,16 @@
                             Message
                         </label>
                     </div>
-
                 </div>
 
                 <div class="modal-footer border-0">
                     <button type="submit" class="btn btn-info text-white">Send</button>
                     <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
                 </div>
-
             </form>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 
 
 
@@ -488,8 +480,6 @@
             <h6 class="">Patients <span class="text-primary" style="font-size:small;">(New)</span></h6>
         </div>
 
-
-
         <div class="d-flex gap-2">
             <div class="">
                 <button class="btn btn-info text-white d-flex align-items-center p-2" data-bs-toggle="modal"
@@ -520,14 +510,14 @@
                 </button>
             </div>
             <div class="">
-                <button class="btn btn-info text-white d-flex align-items-center p-2">
+                <a class="btn btn-info text-white d-flex align-items-center p-2" asp-action="ExportListUsingEPPlus" asp-controller="Admin">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-reply-all-fill" viewBox="0 0 16 16" style="transform: scale(-1, 1);">
                         <path d="M8.021 11.9 3.453 8.62a.72.72 0 0 1 0-1.238L8.021 4.1a.716.716 0 0 1 1.079.619V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
                         <path d="M5.232 4.293a.5.5 0 0 1-.106.7L1.114 7.945l-.042.028a.147.147 0 0 0 0 .252l.042.028 4.012 2.954a.5.5 0 1 1-.593.805L.539 9.073a1.147 1.147 0 0 1 0-1.946l3.994-2.94a.5.5 0 0 1 .699.106" />
                     </svg>
                     <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Export All</p>
-                </button>
+                </a>
             </div>
             <div class="">
                 <button class="btn btn-info text-white d-flex align-items-center p-2" data-bs-toggle="modal"

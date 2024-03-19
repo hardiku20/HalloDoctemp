@@ -201,21 +201,13 @@
                         <div>
                             <div class="row mb-2 ">
                                 <div class="col-6">
-                                    <a class="btn text-white rounded-pill w-100"
-                                       style="background-color: purple; font-size: small;" data-bs-toggle="modal"
-                                       data-bs-target="#AssignCaseModal" data-bs-whatever="" onclick="onAssign('@items.Name','@items.RequestId')">
-                                        Assign Case
-                                    </a>
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Uploads</a>
                                 </div>
                                 <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" data-bs-toggle="modal"
-                                       data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onCancel('@items.Name','@items.RequestId')">
-                                        Cancel Case
-                                    </a>
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Notes</a>
                                 </div>
-
-
                             </div>
                             <div class="row mb-2">
                                 <div class="col-6">
@@ -225,21 +217,19 @@
                                     </a>
                                 </div>
                                 <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" data-bs-toggle="modal"
-                                       data-bs-target="#BlockCaseModal" data-bs-whatever="" onclick="onBlock('@items.Name','@items.RequestId')">
-                                        Block Patients
-                                    </a>
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" asp-action="SendOrders" asp-controller="Admin" asp-route-requestId="@items.RequestId">Orders</a>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-6">
-                                    <button class="btn bg-success text-white rounded-pill w-100"
-                                            style="font-size: small;">
-                                        Email
-                                    </button>
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" href="#">Doctors Note</a>
                                 </div>
-
+                                <div class="col-6">
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" href="#">Encounter</a>
+                                </div>
                             </div>
                         </div>
 

@@ -295,7 +295,7 @@
 
 
     $("#regionSelector").change(function () {
-        debugger;
+        /*debugger;*/
         console.log(this);
         var region = this.value;
         $.ajax({
@@ -403,16 +403,5 @@
             }
         })
     })
-
-
-
-
-
-
-
-
-
-
-    
 
 })

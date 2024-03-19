@@ -32,7 +32,7 @@ namespace learning1.Services.Services
                     Phone = x.PhoneNumber,
                     Name = x.FirstName + " " + x.LastName,
                     Address = x.RequestClients.Select(x =>x.Address).FirstOrDefault(),
-                    Requester = x.FirstName + " " + x.LastName,
+                    Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                     PhoneNumber = x.PhoneNumber,
                     RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 }).ToList();
@@ -144,6 +144,12 @@ namespace learning1.Services.Services
             _adminRepo.ClearCaseRepo(model);
         }
 
+        public AdminDashboardViewModel ListToExportAllData()
+        {
+            var model = _adminRepo.ListToExportAllData();
+            return model;
+        }
+
 
 
         //public void GetCancelCaseData(AdminDashboardViewModel model)
@@ -202,6 +208,11 @@ namespace learning1.Services.Services
         public void SendAgreementData(AdminDashboardViewModel model, int requestId)
         {
             _adminRepo.SendAgreementRepo(model, requestId);
+        }
+
+        public void SendLinkData(AdminDashboardViewModel model)
+        {
+            _adminRepo.SendLinkRepo(model);
         }
 
         public void SetViewNotesData(ViewNotesViewModel model, int requestId)

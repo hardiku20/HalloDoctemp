@@ -2,6 +2,9 @@
 using learning1.Services.IServices;
 using learning1.Services.Services;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using System.ComponentModel;
+using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace learning1.Controllers
 {
@@ -219,12 +222,65 @@ namespace learning1.Controllers
             return View();
         }
 
-
+        
         [HttpPost]
         public IActionResult SendAgreementMail(AdminDashboardViewModel model, int RequestId)
         {
             _adminServices.SendAgreementData(model, RequestId);
             return RedirectToAction("admindashboard");
         }
+
+        [HttpPost]
+        public IActionResult SendLink(AdminDashboardViewModel model)
+        {
+            _adminServices.SendLinkData(model);
+            return RedirectToAction("admindashboard");
+        }
+
+        
+
+        public IActionResult CloseCase()
+        {
+            return View();
+        }
+
+
+        public IActionResult AdminProfile()
+        {
+            return View();
+        }
+
+
+
+        public FileStreamResult ExportListUsingEPPlus()
+        {
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Set license
+
+            // Fetch data and create Excel content
+            AdminDashboardViewModel model = _adminServices.ListToExportAllData();
+            var data = model.ExportViewModel?.ToList();
+            ExcelPackage excel = new ExcelPackage();
+            var worksheet = excel.Workbook.Worksheets.Add("Sheet1");
+            worksheet.Cells[1, 1].LoadFromCollection(data, true);
+
+            var memoryStream = new MemoryStream();
+
+            // Save Excel content to MemoryStream
+            excel.SaveAs(memoryStream);
+
+            // Rewind stream before returning as a file
+            memoryStream.Position = 0;
+            return File(memoryStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ExportedData.xlsx");
+            // MemoryStream disposed here
+        }
+
+
+
+
+
+
+
+
     }
 }

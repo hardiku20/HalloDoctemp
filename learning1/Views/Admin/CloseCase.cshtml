@@ -1,0 +1,156 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+
+
+<div class="container-fluid">
+    <div class="container">
+
+        <div class="d-flex justify-content-between my-4">
+            <h4 class="">Close Case</h4>
+            <div class="d-flex justify-content-end">
+                <a asp-controller="Admin" asp-action="admindashboard"
+                   class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                    <img src="/assets/images/chevron-left.svg" alt=""> Back
+                </a>
+            </div>
+        </div>
+        <div class="bg-white border-0 shadow-sm px-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="">
+                    <p class="mb-0 pt-4">Patient Name</p>
+                    <h4 class=" text-info">
+                        ghfghk
+                    </h4>
+                </div>
+                <div class="">
+                    <a asp-controller="Admin" asp-action="admindashboard"
+                       class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                        Create Invoice Through Quickbooks
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="bg-white shadow-sm">
+            <h5 class="ps-3">Documents</h5>
+            <table class="table table-responsive w-100">
+                <thead class="thead-light">
+                    <tr class="table-secondary">
+                        <th scope="col"></th>
+                        <th scope="col" class="">Upload Date <i class="bi bi-arrow-up"></i></th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr>
+                        <td>
+                            cvgvsxhgfjgbv
+                        </td>
+
+                        <td>
+                            dgtfuggggggh
+                        </td>
+
+                        <td>
+                            <a class="btn btn-outline-info text-info bg-white download-link">Download</a>
+                            <a class="btn btn-outline-info text-info bg-white">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+            <form>
+                <div class="row mb-3 p-2">
+                    <h5 class="mb-2">Patient Information</h5>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name"
+                                   disabled>
+                            <label for="floatingInput" class="">First Name</label>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput"
+                                   placeholder="Last Name" disabled>
+                            <label for="floatingInput" class="">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 input-info">
+                        <div class="form-floating ">
+                            <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                   aria-describedby="basic-addon1" disabled>
+                            <label for="floatingInputValue" class="">Date of birth</label>
+                        </div>
+                    </div>
+                    <div class="form-floating col-md-6 mb-3 input-info">
+                        <div class="d-flex justify-content-between">
+                            <div class="form-floating input-info w-100 me-2">
+                                <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                       id="phone1" disabled>
+                            </div>
+                            <div class="">
+                                <button type="button" class="btn btn-outline-info  text-decoration-none bg-white text-info p-3" id="" data-bs-toggle="modal" data-bs-target="#MapModal">
+                                    <img src="/assets/images/telephone.svg" class="" alt="...">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="email" class="form-control" id="floatingInputValue" aria-label="Email"
+                                   aria-describedby="basic-addon1" disabled>
+                            <label for="floatingInputValue" class="">Email</label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex my-1 gap-2 justify-content-end">
+                        <a class="btn btn-info text-white text-decoration-none py-2">
+                            Edit
+                        </a>
+                        <a class="btn btn-outline-info text-info bg-white text-decoration-none py-2">
+                            Close Case
+                        </a>
+                    </div>
+                </div>
+            </form>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    const phoneInputField1 = document.querySelector("#phone1");
+    const phoneInput1 = window.intlTelInput(phoneInputField1, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>

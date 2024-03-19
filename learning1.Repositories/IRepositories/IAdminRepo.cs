@@ -45,5 +45,7 @@ namespace learning1.Repositories.IRepositories
         void TransferCaseRepo(AdminDashboardViewModel model, int requestId);
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
         void SendAgreementRepo(AdminDashboardViewModel model, int requestId);
+        void SendLinkRepo(AdminDashboardViewModel model);
+        AdminDashboardViewModel ListToExportAllData();
     }
 }
