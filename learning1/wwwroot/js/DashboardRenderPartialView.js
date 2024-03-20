@@ -404,4 +404,27 @@
         })
     })
 
+    //function onSendAgreement(RequestId) {
+    //    document.getElementById("Agreement-RequestId").value = RequestId
+    //    $.ajax({
+    //        method: 'GET',
+    //        url: '/Admin/GetSendAgreementDetails',
+    //        data: {
+    //            requestId: RequestId,
+    //        },
+
+    //        success: function (result) {
+    //            $("#PatientEmail").val(result.patientemail);
+    //            $("#PatientPhone").val(result.patientphone);
+    //        },
+
+    //        error: function (xhr, status, error) {
+    //            console.log(error);
+    //        }
+
+    //    })
+    //}
+
+  
+
 })

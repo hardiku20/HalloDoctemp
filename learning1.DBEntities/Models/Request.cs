@@ -63,6 +63,8 @@ public partial class Request
 
     public virtual CaseTag? CaseTag { get; set; }
 
+    public virtual ICollection<EncounterForm> EncounterForms { get; set; } = new List<EncounterForm>();
+
     public virtual Physician? Physician { get; set; }
 
     public virtual ICollection<RequestBusiness> RequestBusinesses { get; set; } = new List<RequestBusiness>();

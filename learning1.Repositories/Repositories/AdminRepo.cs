@@ -39,8 +39,6 @@ namespace learning1.Repositories.Repositories
                 ToCloseStateCount = GetCurrentStateCount(3, 7, 8),
                 UnpaidStateCount = GetCurrentStateCount(9)
             };
-
-
             return requestCount;
         }
 
@@ -125,17 +123,6 @@ namespace learning1.Repositories.Repositories
             
             _context.Requests.Update(request);
             _context.SaveChanges();
-
-
-
-            //Request request = new Request()
-            //{
-            //    Status =3,             
-            //};
-
-            //_context.Requests.Add(request);
-            //_context.SaveChanges();
-
         }
 
         public void ClearCaseRepo(AdminDashboardViewModel model)
@@ -191,10 +178,6 @@ namespace learning1.Repositories.Repositories
                     email = x.Request.Email,
                     phone = x.PhoneNumber,
                 }).FirstOrDefault();
-
-
-
-
             return Requests;
         }
 
@@ -330,12 +313,12 @@ namespace learning1.Repositories.Repositories
             {
                 RequestId = x.RequestId,
                 RequestedDate = x.CreatedDate.ToString(),
-                Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
-                PhoneNumber = x.PhoneNumber,
+                PhoneNumber = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                Phone = x.PhoneNumber,
                 Email = x.Email,
-                Name = x.FirstName + " " + x.LastName,
+                Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
 
@@ -353,16 +336,14 @@ namespace learning1.Repositories.Repositories
             {
                 RequestId = x.RequestId,
                 RequestedDate = x.CreatedDate.ToString(),
-                Phone = x.RequestClients.Select(x=>x.PhoneNumber).FirstOrDefault(),
-                PhoneNumber = x.PhoneNumber,
+                PhoneNumber = x.RequestClients.Select(x=>x.PhoneNumber).FirstOrDefault(),
+                Phone = x.PhoneNumber,
                 Email = x.Email,
-                Name = x.FirstName + " " + x.LastName,
+                Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
-            
-
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
@@ -378,12 +359,12 @@ namespace learning1.Repositories.Repositories
             {
                 RequestId = x.RequestId,
                 RequestedDate = x.CreatedDate.ToString(),
-                Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
-                PhoneNumber = x.PhoneNumber,
+                PhoneNumber = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                Phone = x.PhoneNumber,
                 Email = x.Email,
-                Name = x.FirstName + " " + x.LastName,
+                Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
 
@@ -401,12 +382,12 @@ namespace learning1.Repositories.Repositories
              {
                  RequestId = x.RequestId,
                  RequestedDate = x.CreatedDate.ToString(),
-                 Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
-                 PhoneNumber = x.PhoneNumber,
+                 PhoneNumber = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                 Phone = x.PhoneNumber,
                  Email = x.Email,
-                 Name = x.FirstName + " " + x.LastName,
+                 Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                 Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                 Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
              }).ToList();
 
@@ -424,12 +405,12 @@ namespace learning1.Repositories.Repositories
              {
                  RequestId = x.RequestId,
                  RequestedDate = x.CreatedDate.ToString(),
-                 Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
-                 PhoneNumber = x.PhoneNumber,
+                 PhoneNumber = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                 Phone = x.PhoneNumber,
                  Email = x.Email,
-                 Name = x.FirstName + " " + x.LastName,
+                 Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                 Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                 Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
              }).ToList();
 
@@ -447,12 +428,12 @@ namespace learning1.Repositories.Repositories
             {
                 RequestId = x.RequestId,
                 RequestedDate = x.CreatedDate.ToString(),
-                Phone = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
-                PhoneNumber = x.PhoneNumber,
+                PhoneNumber = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                Phone = x.PhoneNumber,
                 Email = x.Email,
-                Name = x.FirstName + " " + x.LastName,
+                Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
             }).ToList();
 
@@ -548,49 +529,45 @@ namespace learning1.Repositories.Repositories
 
         }
 
-        public void SendAgreementRepo(AdminDashboardViewModel model, int requestId)
-        {
-            Mails(model.PatientEmail, requestId);
-        }
+      
 
+        //public void Mails(string email, int reqId)
+        //{
+        //    var usr = _context.Users.Where(u => u.Email == email).FirstOrDefault();
+        //    System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
 
-        public void Mails(string email, int reqId)
-        {
-            var usr = _context.Users.Where(u => u.Email == email).FirstOrDefault();
-            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+        //    message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+        //    message.To.Add(new System.Net.Mail.MailAddress(email));
+        //    message.Subject = "AGREEMENT";
+        //    message.IsBodyHtml = true;
+        //    var resetLink = "https://localhost:44352/home/reviewagreement?reqId=" + reqId;
+        //    message.Body = resetLink + "Agreement";
+        //    SmtpClient smtp = new SmtpClient();
+        //    smtp.Host = "smtp.office365.com";
+        //    smtp.Port = 587;
+        //    smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+        //    smtp.EnableSsl = true;
+        //    smtp.Send(message);
+        //    smtp.UseDefaultCredentials = false;
+        //}
 
-            message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
-            message.To.Add(new System.Net.Mail.MailAddress(email));
-            message.Subject = "AGREEMENT";
-            message.IsBodyHtml = true;
-            var resetLink = "https://localhost:44352/home/reviewagreement?reqId=" + reqId;
-            message.Body = resetLink + "Agreement";
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.office365.com";
-            smtp.Port = 587;
-            smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
-            smtp.EnableSsl = true;
-            smtp.Send(message);
-            smtp.UseDefaultCredentials = false;
-        }
-
-        public void SendLinkRepo(AdminDashboardViewModel model)
-        {  
-            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
-            message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
-            message.To.Add(new System.Net.Mail.MailAddress(model.PatientEmail));
-            message.Subject = "AGREEMENT";
-            message.IsBodyHtml = true;
-            var resetLink = "https://localhost:44352/home/reviewagreement?reqId=";
-            message.Body = resetLink + "Agreement";
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = "smtp.office365.com";
-            smtp.Port = 587;
-            smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
-            smtp.EnableSsl = true;
-            smtp.Send(message);
-            smtp.UseDefaultCredentials = false;
-        }
+        //public void SendLinkRepo(AdminDashboardViewModel model)
+        //{  
+        //    System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+        //    message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+        //    message.To.Add(new System.Net.Mail.MailAddress(model.PatientEmail));
+        //    message.Subject = "AGREEMENT";
+        //    message.IsBodyHtml = true;
+        //    var resetLink = "https://localhost:44352/home/reviewagreement?reqId=";
+        //    message.Body = resetLink + "Agreement";
+        //    SmtpClient smtp = new SmtpClient();
+        //    smtp.Host = "smtp.office365.com";
+        //    smtp.Port = 587;
+        //    smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+        //    smtp.EnableSsl = true;
+        //    smtp.Send(message);
+        //    smtp.UseDefaultCredentials = false;
+        //}
 
         public AdminDashboardViewModel ListToExportAllData()
         {
@@ -625,6 +602,50 @@ namespace learning1.Repositories.Repositories
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
                 ExportViewModel = data,
+            };
+
+            return model;
+        }
+
+        public void Mails(int requestId)
+        {   
+                var email = _context.Requests.Where(x => x.RequestId == requestId).Select(x => x.Email).FirstOrDefault();
+                System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+
+                message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+                message.To.Add(new System.Net.Mail.MailAddress(email));
+                message.Subject = "AGREEMENT";
+                message.IsBodyHtml = true;
+                var resetLink = "https://localhost:7165/Patient/Agreement?reqId=" + requestId;
+                message.Body = resetLink + "Agreement";
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "mail.etatvasoft.com";
+                smtp.Port = 587;
+                smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+                smtp.EnableSsl = true;
+                smtp.Send(message);
+                smtp.UseDefaultCredentials = false;
+        }
+
+        public EncounterFormViewModel GetEncounterRepo(int requestId)
+        {
+            var Encounterdata = _context.RequestClients.Where(x => x.RequestId == requestId)
+                .Select(x => new EncounterFormViewModel()
+                {
+                    FirstName= x.FirstName,
+                    LastName= x.LastName,   
+                    Location = x.Address,
+                    Email = x.Email,
+                    Phone= x.PhoneNumber,
+                }).FirstOrDefault();
+
+            EncounterFormViewModel model = new EncounterFormViewModel()
+            {
+                FirstName= Encounterdata.FirstName,
+                LastName= Encounterdata.LastName,
+                Location = Encounterdata.Location,
+                Email = Encounterdata.Email,
+                Phone= Encounterdata.Phone,
             };
 
             return model;

@@ -544,10 +544,13 @@ namespace learning1.Controllers
             return View();
         }
 
+
+
         public IActionResult createpatient()
         {
             return View();
         }
+
 
 
 

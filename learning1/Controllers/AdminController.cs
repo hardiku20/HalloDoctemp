@@ -217,25 +217,34 @@ namespace learning1.Controllers
             return View();
         }
 
-        public IActionResult EncounterForm()
+        public IActionResult EncounterForm(int RequestId)
         {
-            return View();
+            var model = _adminServices.GetEncounterformData(RequestId);
+            return View(model);
         }
 
         
-        [HttpPost]
-        public IActionResult SendAgreementMail(AdminDashboardViewModel model, int RequestId)
-        {
-            _adminServices.SendAgreementData(model, RequestId);
-            return RedirectToAction("admindashboard");
-        }
+        //public IActionResult SendAgreementMail(string email, int reqId)
+        //{
+        //    _adminServices.SendAgreementData(email, reqId);
+        //    return RedirectToAction("admindashboard");
+        //}
 
-        [HttpPost]
-        public IActionResult SendLink(AdminDashboardViewModel model)
-        {
-            _adminServices.SendLinkData(model);
-            return RedirectToAction("admindashboard");
-        }
+
+
+        //[HttpPost]
+        //public IActionResult SendAgreementMail(AdminDashboardViewModel model, int RequestId)
+        //{
+        //    _adminServices.SendAgreementData(model, RequestId);
+        //    return RedirectToAction("admindashboard");
+        //}
+
+        //[HttpPost]
+        //public IActionResult SendLink(AdminDashboardViewModel model)
+        //{
+        //    _adminServices.SendLinkData(model);
+        //    return RedirectToAction("admindashboard");
+        //}
 
         
 
@@ -277,9 +286,11 @@ namespace learning1.Controllers
 
 
 
-
-
-
+        public IActionResult SendAgreementMail(int RequestId)
+        {
+            _adminServices.SendAgreement(RequestId);
+            return RedirectToAction("admindashboard");
+        }
 
 
     }

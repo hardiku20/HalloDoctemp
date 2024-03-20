@@ -166,10 +166,10 @@ namespace learning1.Repositories.Repositories
             {
                 UserId = user.UserId,
                 RequestTypeId = 3,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
+                FirstName = model.Fname,
+                LastName = model.Lname,
+                PhoneNumber = model.Phone,
+                Email = model.Emailaddress,
                 Status = 1,
                 CreatedDate = DateTime.Now,
 
@@ -182,10 +182,10 @@ namespace learning1.Repositories.Repositories
             {
 
                 RequestId = request.RequestId,
-                FirstName = model.Fname,
-                LastName = model.Lname,
-                PhoneNumber = model.Phone,
-                Email = model.Emailaddress,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
                 State = model.State,
                 City = model.City,
                 Street = model.Street,
@@ -254,10 +254,10 @@ namespace learning1.Repositories.Repositories
             {
                 UserId = user.UserId,
                 RequestTypeId = 4,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
+                FirstName = model.Fname,
+                LastName = model.Lname,
+                PhoneNumber = model.Phone,
+                Email = model.Emailaddress,
                 Status = 1,
                 CreatedDate = DateTime.Now,
             };
@@ -269,10 +269,10 @@ namespace learning1.Repositories.Repositories
             {
 
                 RequestId = request.RequestId,
-                FirstName = model.Fname,
-                LastName = model.Lname,
-                PhoneNumber = model.Phone,
-                Email = model.Emailaddress,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
                 State = model.State,
                 City = model.City,
                 Street = model.Street,
@@ -641,10 +641,10 @@ namespace learning1.Repositories.Repositories
             {
                 UserId = user.UserId,
                 RequestTypeId = 1,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
+                FirstName = model.Fname,
+                LastName = model.Lname,
+                PhoneNumber = model.Phone,
+                Email = model.Emailaddress,
                 Status = 1,
                 CreatedDate = DateTime.Now,
 
@@ -656,10 +656,10 @@ namespace learning1.Repositories.Repositories
             RequestClient requestClient = new RequestClient
             {
                 RequestId = request.RequestId,
-                FirstName = model.Fname,
-                LastName = model.Lname,
-                PhoneNumber = model.Phone,
-                Email = model.Emailaddress,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
+                Email = model.Email,
                 State = model.State,
                 City = model.City,
                 Street = model.Street,

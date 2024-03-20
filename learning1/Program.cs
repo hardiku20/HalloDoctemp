@@ -25,8 +25,8 @@ builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDi
 
 
 
-//builder.Services.AddDbContext<learning1.DBEntities.Models.DbHallodocContext>(options =>
-//options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
+builder.Services.AddDbContext<learning1.DBEntities.Models.DbHallodocContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

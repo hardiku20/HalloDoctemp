@@ -91,8 +91,8 @@
                                    data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')"><i class="bi bi-x-circle  me-2"></i>Clear Case</a>
                             </li>
                             <li>
-                                <a class="dropdown-item d-flex sendAgreementMail" data-bs-toggle="modal"
-                                   data-bs-target="#SendAgreementModal" data-bs-whatever="" onclick="onSendAgreement('@items.Name','@items.RequestId')"><i class="bi bi-file-text me-2"></i>Send Agreement</a>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal" id="SendAgreement"
+                                   data-bs-target="#SendAgreementModal" data-bs-whatever="" onclick="onSendAgreement('@items.Name','@items.RequestId','@items.Email','@items.PhoneNumber')"><i class="bi bi-file-text me-2"></i>Send Agreement</a>
                             </li>
                         </ul>
                     </div>
@@ -100,9 +100,7 @@
             </tr>
         }
     </table>
-
 </div>
-
 
 
 <div class="d-md-none">
@@ -110,8 +108,6 @@
         <div class="accordion-item">
             @foreach (var items in Model.TableViewModel)
             {
-
-
                 var bgcolor = "";
                 if (@items.RequestType.ToString() == "Family")
                 {
@@ -238,7 +234,7 @@
                                 <div class="col-6">
                                     <a class="btn bg-success text-white rounded-pill w-100"
                                        style="font-size: small;" data-bs-toggle="modal"
-                                       data-bs-target="#SendAgreementModal" data-bs-whatever="" onclick="onSendAgreement('@items.Name','@items.RequestId')">Send Agreement</a>
+                                       data-bs-target="#SendAgreementModal" data-bs-whatever="" onclick="onSendAgreement('@items.Name','@items.RequestId','@items.Email','@items.PhoneNumber')">Send Agreement</a>
                                 </div>
                             </div>
                         </div>

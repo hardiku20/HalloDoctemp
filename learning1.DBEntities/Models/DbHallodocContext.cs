@@ -35,6 +35,8 @@ public partial class DbHallodocContext : DbContext
 
     public virtual DbSet<EmailLog> EmailLogs { get; set; }
 
+    public virtual DbSet<EncounterForm> EncounterForms { get; set; }
+
     public virtual DbSet<HealthProfessional> HealthProfessionals { get; set; }
 
     public virtual DbSet<HealthProfessionalType> HealthProfessionalTypes { get; set; }
@@ -274,6 +276,37 @@ public partial class DbHallodocContext : DbContext
             entity.Property(e => e.FilePath).HasColumnType("character varying");
             entity.Property(e => e.SentDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.SubjectName).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<EncounterForm>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("EncounterForm_pkey");
+
+            entity.ToTable("EncounterForm");
+
+            entity.Property(e => e.Abd).HasColumnName("ABD");
+            entity.Property(e => e.BpD).HasColumnName("BP(D)");
+            entity.Property(e => e.BpS).HasColumnName("BP(S)");
+            entity.Property(e => e.Cv).HasColumnName("CV");
+            entity.Property(e => e.Date).HasColumnType("timestamp without time zone");
+            entity.Property(e => e.FollowUp).HasColumnName("Follow_up");
+            entity.Property(e => e.Heent).HasColumnName("HEENT");
+            entity.Property(e => e.HistoryIllness).HasColumnName("history_illness");
+            entity.Property(e => e.Hr).HasColumnName("HR");
+            entity.Property(e => e.IsFinalized)
+                .HasDefaultValueSql("'0'::\"bit\"")
+                .HasColumnType("bit(1)")
+                .HasColumnName("isFinalized");
+            entity.Property(e => e.MedicalHistory).HasColumnName("medical_history");
+            entity.Property(e => e.MedicationDispensed).HasColumnName("medication_dispensed");
+            entity.Property(e => e.Procedures).HasColumnName("procedures");
+            entity.Property(e => e.Rr).HasColumnName("RR");
+            entity.Property(e => e.TreatmentPlan).HasColumnName("Treatment_Plan");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.EncounterForms)
+                .HasForeignKey(d => d.RequestId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_encounter_request");
         });
 
         modelBuilder.Entity<HealthProfessional>(entity =>

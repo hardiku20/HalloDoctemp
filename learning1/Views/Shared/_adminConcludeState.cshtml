@@ -84,7 +84,7 @@
                             <li><a class="dropdown-item" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
                             <li><a class="dropdown-item" asp-action="SendOrders" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-list-task me-2"></i>Orders</a></li>
                             <li><a class="dropdown-item" href="#"><i class="bi bi-file-text me-2"></i>Doctors Note</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-files me-2"></i>Encounter</a></li>
+                            <li><a class="dropdown-item" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-files me-2"></i>Encounter</a></li>
                         </ul>
                     </div>
                 </td>
@@ -228,7 +228,7 @@
                                 </div>
                                 <div class="col-6">
                                     <a class="btn bg-success text-white rounded-pill w-100"
-                                       style="font-size: small;" href="#">Encounter</a>
+                                       style="font-size: small;" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId">Encounter</a>
                                 </div>
                             </div>
                         </div>

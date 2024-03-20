@@ -18,9 +18,7 @@ namespace learning1.Services.IServices
         void GetCancelCaseData(AdminDashboardViewModel model);
         SendOrderViewModel GetDetailsByBusiness(string businessName);
         SendOrderViewModel GetOrderdetails();
-        //void GetOrderdetails(SendOrderViewModel model);
         List<string> GetPhysicianByRegion(string regionName);
-        void SendAgreementData(AdminDashboardViewModel model, int requestId);
         void GetTransferCaseData(AdminDashboardViewModel model, int requestId);
         ViewNotesViewModel GetViewNotesData(int requestId);
         ViewUploadViewModel GetviewUploads(int requestId);
@@ -34,7 +32,8 @@ namespace learning1.Services.IServices
         AdminDashboardViewModel RenderToCloseStateData(int status1,int status2,int status3);
         AdminDashboardViewModel RenderUnpaidStateData(int status);
         void SetViewNotesData(ViewNotesViewModel model, int requestId);
-        void SendLinkData(AdminDashboardViewModel model);
         AdminDashboardViewModel ListToExportAllData();
+        void SendAgreement(int requestId);
+       EncounterFormViewModel GetEncounterformData(int requestId);
     }
 }

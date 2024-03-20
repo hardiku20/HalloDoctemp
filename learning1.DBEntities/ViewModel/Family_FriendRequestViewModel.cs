@@ -12,7 +12,6 @@ namespace learning1.DBEntities.ViewModel
         public string Phone { get; set; }
         [Required]
         public string Emailaddress { get; set; }
-        [Required]
         public string Relation {  get; set; }
         [Required]
         public string Email { get; set; }

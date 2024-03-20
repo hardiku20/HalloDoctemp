@@ -89,7 +89,7 @@
                                 <a class="dropdown-item d-flex" data-bs-toggle="modal"
                                    data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')"><i class="bi bi-x-circle  me-2"></i>Clear Case</a>
                             </li>
-                            <li><a class="dropdown-item d-flex" href="#"><i class="bi bi-files me-2"></i>Encounter</a></li>
+                            <li><a class="dropdown-item d-flex" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-files me-2"></i>Encounter</a></li>
                         </ul>
                     </div>
                 </td>
@@ -235,6 +235,10 @@
                                     <a class ="btn bg-success text-white rounded-pill w-100"
                                             style="font-size: small;" data-bs-toggle="modal"
                                        data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')">Clear Case</a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId"></a>
                                 </div>
                             </div>
                         </div>

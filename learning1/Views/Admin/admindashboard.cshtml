@@ -232,7 +232,6 @@
                 </div>
             </form>
         </div>
-
     </div>
 </div>
 
@@ -243,29 +242,28 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" asp-action="SendAgreementMail" asp-controller="Admin">
+            <form>
                 <div class="modal-header bg-info">
+                    <input class="" asp-for="RequestId" id="Agreement-RequestId" />
                     <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send Agreement</h1>
                     <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <input type="text" id="Agreement-RequestId" asp-for="RequestId"/>
                         <label for="message-text text-secondary" class="col-form-label">Patient</label>
                         <label for="message-text text-secondary" class="col-form-label">To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="PatientEmail">
+                        <input type="email" class="form-control" id="PatientEmail" placeholder="name@example.com" asp-for="PatientEmail">
                         <label for="floatingInput">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingPhonenumber" placeholder="PhoneNumber" asp-for="PatientPhone">
+                        <input type="text" class="form-control" id="PatientPhone" placeholder="PhoneNumber" asp-for="PatientPhone">
                         <label for="floatingPhoneNumber">Phone Number</label>
                     </div>
                 </div>
-
                 <div class="modal-footer border-0">
-                    <button type="submit" class="btn btn-info text-white">Send</button>
+                    <button type="submit" class="SendAgreement btn btn-info text-white">Send</button>
                     <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </form>
@@ -281,36 +279,33 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" asp-action="SendLink" asp-controller="Admin">
+            <form>
                 <div class="modal-header bg-info">
                     <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send mail to patient for submitting request</h1>
                     <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName" asp-for="firstName">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName">
                         <label for="floatingInput">First Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName" asp-for="lastName">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName">
                         <label for="floatingInput">Last Name</label>
                     </div>
                     <div class="form-floating input-info w-100 me-2 mb-3">
                         <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                               id="phone" asp-for="PatientPhone">
+                               id="phone">
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="PatientEmail">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                         <label for="floatingInput">Email address</label>
                     </div>
-
                 </div>
-
                 <div class="modal-footer border-0">
                     <button type="submit" class="btn btn-info text-white">Send</button>
                     <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
                 </div>
-
             </form>
         </div>
     </div>
@@ -871,7 +866,7 @@
 
 
 <script src="/js/DashboardRenderPartialView.js"></script>
-
+<script src="/js/SendMail.js"></script>
 
 
 <script>
@@ -896,10 +891,13 @@
     function onTransfer(Name, RequestId) {
         document.getElementById("Transfer-RequestId").value = RequestId;
     }
-    function onSendAgreement(Name,RequestId){
+    function onSendAgreement(Name,RequestId,email,phone){
         document.getElementById("Agreement-RequestId").value = RequestId
-    }
+        document.getElementById("PatientEmail").value =email
+        document.getElementById("PatientPhone").value = phone
+      
 
+    }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>

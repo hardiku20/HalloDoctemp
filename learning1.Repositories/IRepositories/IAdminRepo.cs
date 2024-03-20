@@ -20,7 +20,6 @@ namespace learning1.Repositories.IRepositories
         //void updateRequest(Request request);
         //Request GetRequestById(int requestId);
         List<Request> DisplayAdminDashboardRepo();
-
         public RequestCount SetCount();
         List<string> DisplayCasetags();
         List<string> DisplayProfession();
@@ -33,8 +32,6 @@ namespace learning1.Repositories.IRepositories
         List<string> GetPhysicianByRegionName(string regionName);
         ViewNotesViewModel GetViewNotesRepo(int requestId);
         void OrderDetailRepo(SendOrderViewModel model);
-
-        //void OrderdetailsRepo(SendOrderViewModel model);
         AdminDashboardViewModel RenderConcludeState(int status);
         AdminDashboardViewModel RenderNewState(int status);
         AdminDashboardViewModel RenderPendingState(int status);
@@ -44,8 +41,8 @@ namespace learning1.Repositories.IRepositories
         void SetViewNotes(ViewNotesViewModel model, int requestId);
         void TransferCaseRepo(AdminDashboardViewModel model, int requestId);
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
-        void SendAgreementRepo(AdminDashboardViewModel model, int requestId);
-        void SendLinkRepo(AdminDashboardViewModel model);
         AdminDashboardViewModel ListToExportAllData();
+        void Mails(int requestId);
+        EncounterFormViewModel GetEncounterRepo(int requestId);
     }
 }

@@ -30,9 +30,9 @@ namespace learning1.Services.Services
                     RequestId = x.RequestId,
                     RequestedDate = x.CreatedDate.ToString(),
                     Phone = x.PhoneNumber,
-                    Name = x.FirstName + " " + x.LastName,
+                    Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
                     Address = x.RequestClients.Select(x =>x.Address).FirstOrDefault(),
-                    Requester = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                    Requester = x.FirstName + " " + x.LastName,
                     PhoneNumber = x.PhoneNumber,
                     RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 }).ToList();
@@ -51,6 +51,11 @@ namespace learning1.Services.Services
         {
             var model = _adminRepo.DisplayViewCaseRepo(requestId);
             return model;
+        }
+
+        public void SendAgreement(int requestId)
+        {
+            _adminRepo.Mails(requestId);    
         }
 
         public void GetAssignCaseData(AdminDashboardViewModel model, int requestId)
@@ -205,19 +210,30 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public void SendAgreementData(AdminDashboardViewModel model, int requestId)
-        {
-            _adminRepo.SendAgreementRepo(model, requestId);
-        }
+        //public void SendAgreementData(string email, int requestId)
+        //{
+        //    _adminRepo.Mails(email, requestId);
+        //}
 
-        public void SendLinkData(AdminDashboardViewModel model)
-        {
-            _adminRepo.SendLinkRepo(model);
-        }
+        //public void SendAgreementData(AdminDashboardViewModel model, int requestId)
+        //{
+        //    _adminRepo.SendAgreementRepo(model, requestId);
+        //}
+
+        //public void SendLinkData(AdminDashboardViewModel model)
+        //{
+        //    _adminRepo.SendLinkRepo(model);
+        //}
 
         public void SetViewNotesData(ViewNotesViewModel model, int requestId)
         {
             _adminRepo.SetViewNotes(model, requestId);
+        }
+
+        public EncounterFormViewModel GetEncounterformData(int requestId)
+        {
+            var model = _adminRepo.GetEncounterRepo(requestId);
+            return model;
         }
     }
 }
