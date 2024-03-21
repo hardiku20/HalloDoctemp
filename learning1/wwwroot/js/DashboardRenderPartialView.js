@@ -325,7 +325,7 @@
 
     $("#professionSelector").change(function () {
         console.log(this);
-        debugger;
+        //debugger;
         var Profession = this.value;
         $.ajax({
             

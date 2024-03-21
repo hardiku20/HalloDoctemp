@@ -244,7 +244,7 @@
         <div class="modal-content">
             <form>
                 <div class="modal-header bg-info">
-                    <input class="" asp-for="RequestId" id="Agreement-RequestId" />
+                    <input class="" asp-for="RequestId" id="Agreement-RequestId" hidden/>
                     <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send Agreement</h1>
                     <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -279,26 +279,26 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form>
+            <form method="post" asp-controller="admin" asp-action="Sendlink">
                 <div class="modal-header bg-info">
                     <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send mail to patient for submitting request</h1>
                     <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName" asp-for="firstName">
                         <label for="floatingInput">First Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName" asp-for="lastName">
                         <label for="floatingInput">Last Name</label>
                     </div>
                     <div class="form-floating input-info w-100 me-2 mb-3">
                         <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                               id="phone">
+                               id="phone" asp-for="PatientPhone">
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="PatientEmail">
                         <label for="floatingInput">Email address</label>
                     </div>
                 </div>

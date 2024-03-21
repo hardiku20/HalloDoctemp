@@ -1,7 +1,9 @@
-﻿using learning1.DBEntities.ViewModel;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using learning1.DBEntities.ViewModel;
 using learning1.Services.IServices;
 using learning1.Services.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using OfficeOpenXml;
 using System.ComponentModel;
 using LicenseContext = OfficeOpenXml.LicenseContext;
@@ -13,11 +15,13 @@ namespace learning1.Controllers
 
         private readonly IHttpContextAccessor _httpcontextAccessor;
         private readonly IAdminServices _adminServices;
+        private readonly INotyfService _notyf;
 
-        public AdminController(IAdminServices adminServices,IHttpContextAccessor httpContextAccessor)
+        public AdminController(IAdminServices adminServices,IHttpContextAccessor httpContextAccessor, INotyfService notyf)
         {
             _adminServices = adminServices;
             _httpcontextAccessor = httpContextAccessor;
+            _notyf = notyf;
         }
 
         public IActionResult Index()
@@ -28,6 +32,24 @@ namespace learning1.Controllers
 
         public IActionResult PlatformLogin()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult PlatformLogin(LoginViewModel model)
+        {
+            int userId = _adminServices.LoginMethod(model.Email, model.Password);
+
+            if(userId!= -1)
+            {
+                _httpcontextAccessor.HttpContext.Session.SetInt32("Id", userId);
+                _notyf.Success("Success Notification");
+                return RedirectToAction("Admindashboard", "Admin");  
+            }
+            else
+            {
+                return View();
+            }
             return View();
         }
 
@@ -66,40 +88,41 @@ namespace learning1.Controllers
         public IActionResult ViewNotes(ViewNotesViewModel model, int RequestId)
         {
             _adminServices.SetViewNotesData(model, RequestId);
+           
             return RedirectToAction("ViewNotes",model);
         }
 
-        public IActionResult RenderNewPartialView(int status)
+        public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null)
         {
-            var model = _adminServices.RenderNewStateData(status);
+            var model = _adminServices.RenderNewStateData(Status, Page, PageSize, patientName);
             return PartialView("_adminNewState", model);
         }
 
-        public IActionResult RenderPendingPartialView(int status)
+        public IActionResult RenderPendingPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null)
         {
-            var model = _adminServices.RenderPendingStateData(status);
+            var model = _adminServices.RenderPendingStateData(Status, Page, PageSize, patientName);
             return PartialView("_adminPendingState", model);
         }
 
-        public IActionResult RenderActivePartialView(int status1, int status2)
+        public IActionResult RenderActivePartialView(int status1, int status2,int Page = 1, int PageSize = 4, string patientName = null)
         {
-            var model = _adminServices.RenderActiveStateData(status1,status2);
+            var model = _adminServices.RenderActiveStateData(status1,status2,Page,PageSize,patientName);
             return PartialView("_adminActiveState", model);
         }
-        public IActionResult RenderConcludePartialView(int status)
+        public IActionResult RenderConcludePartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null)
         {
-            var model = _adminServices.RenderConcludeStateData(status);
+            var model = _adminServices.RenderConcludeStateData(Status, Page, PageSize, patientName);
             return PartialView("_adminConcludeState", model);
         }
 
-        public IActionResult RenderToClosePartialView(int status1, int status2, int status3)
+        public IActionResult RenderToClosePartialView(int status1, int status2, int status3,int Page = 1, int PageSize = 4, string patientName = null)
         {
-            var model = _adminServices.RenderToCloseStateData(status1,status2,status3);
+            var model = _adminServices.RenderToCloseStateData(status1,status2,status3, Page, PageSize, patientName);
             return PartialView("_adminToCloseState", model);
         }
-        public IActionResult RenderUnpaidPartialView(int status)
+        public IActionResult RenderUnpaidPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null)
         {
-            var model = _adminServices.RenderUnpaidStateData(status);
+            var model = _adminServices.RenderUnpaidStateData(Status, Page, PageSize, patientName);
             return PartialView("_adminUnpaidState", model);
         }
 
@@ -108,6 +131,7 @@ namespace learning1.Controllers
         public IActionResult CancelCase(AdminDashboardViewModel model)
         {
             _adminServices.GetCancelCaseData(model);
+            
             return RedirectToAction("AdminDashboard");
         }
 
@@ -188,6 +212,7 @@ namespace learning1.Controllers
         {
 
             _adminServices.InsertOrderDetails(model);
+            _notyf.Success("Success Notification");
             return RedirectToAction("admindashboard");
         }
 
@@ -289,6 +314,22 @@ namespace learning1.Controllers
         public IActionResult SendAgreementMail(int RequestId)
         {
             _adminServices.SendAgreement(RequestId);
+            return RedirectToAction("admindashboard");
+        }
+
+
+        [HttpPost]
+        public IActionResult Sendlink(AdminDashboardViewModel model)
+        {
+            _adminServices.SendlinktoPatient(model);
+            return RedirectToAction("admindashboard");
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateRequest(CreateRequestViewModel model)
+        {
+            _adminServices.CreatePatientRequest(model);
             return RedirectToAction("admindashboard");
         }
 

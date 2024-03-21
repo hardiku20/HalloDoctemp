@@ -3,6 +3,7 @@ using learning1.DBEntities.ViewModel;
 using learning1.Repositories.IRepositories;
 using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -174,39 +175,39 @@ namespace learning1.Services.Services
 
         //}
 
-        public AdminDashboardViewModel RenderActiveStateData(int status1, int status2)
+        public AdminDashboardViewModel RenderActiveStateData(int status1, int status2 ,int page, int pageSize, string patientName)
         {
-            var model = _adminRepo.RenderToActiveState(status1,status2 );
+            var model = _adminRepo.RenderToActiveState(status1, status2 ,page, pageSize, patientName);
             return model;
         }
 
-        public AdminDashboardViewModel RenderConcludeStateData(int status)
+        public AdminDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName)
         {
-            var model = _adminRepo.RenderConcludeState(status);
+            var model = _adminRepo.RenderConcludeState(status, page, pageSize, patientName);
             return model;
         }
 
-        public AdminDashboardViewModel RenderNewStateData(int status)
+        public AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName)
         {
-            var model = _adminRepo.RenderNewState(status);
+            var model = _adminRepo.RenderNewState(status, page, pageSize, patientName);
             return model;
         }
 
-        public AdminDashboardViewModel RenderPendingStateData(int status)
+        public AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName)
         {
-            var model = _adminRepo.RenderPendingState(status);
+            var model = _adminRepo.RenderPendingState(status, page, pageSize, patientName);
             return model;
         }
 
-        public AdminDashboardViewModel RenderToCloseStateData(int status1,int status2, int status3)
+        public AdminDashboardViewModel RenderToCloseStateData(int status1,int status2, int status3, int page, int pageSize, string patientName)
         {
-            var model = _adminRepo.RenderToCloseState(status1 , status2,status3);
+            var model = _adminRepo.RenderToCloseState(status1 , status2,status3, page, pageSize, patientName);
             return model;
         }
 
-        public AdminDashboardViewModel RenderUnpaidStateData(int status)
+        public AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName)
         {
-            var model = _adminRepo.RenderUnpaidState(status);
+            var model = _adminRepo.RenderUnpaidState(status, page, pageSize, patientName);
             return model;
         }
 
@@ -234,6 +235,22 @@ namespace learning1.Services.Services
         {
             var model = _adminRepo.GetEncounterRepo(requestId);
             return model;
+        }
+
+        public int LoginMethod(string email, string password)
+        {
+            int UserId= _adminRepo.LoginMethodRepo(email, password);
+            return UserId;
+        }
+
+        public void SendlinktoPatient(AdminDashboardViewModel model)
+        {
+            _adminRepo.SendlinkMail(model);
+        }
+
+        public void CreatePatientRequest(CreateRequestViewModel model)
+        {
+            _adminRepo.CreateRequestRepo(model);
         }
     }
 }

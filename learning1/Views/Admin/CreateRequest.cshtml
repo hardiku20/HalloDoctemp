@@ -4,6 +4,10 @@
 @{
     Layout = "_AdminLayout";
 }
+
+@model learning1.DBEntities.ViewModel.CreateRequestViewModel;
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 
 <div class="container pb-4">
@@ -17,39 +21,39 @@
     </div>
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form action="" class="form-floating">
+            <form class="form-floating" method="post" asp-action="CreateRequest" asp-controller="Admin">
                 <div class="row mb-4">
                     <h5 class="mb-2">Patient</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName">
                             <label for="floatingInput" class="text-secondary">First Name</label>
                            
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName">
                             <label for="floatingInput" class="text-secondary">Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="email" class="form-control" id="email"
-                                   placeholder="name@example.com">
+                                   placeholder="name@example.com" asp-for="Email">
                             <label for="floatingInput" class="text-secondary">Email address</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone">
+                                   id="phone" asp-for="Phone">
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
-                                   aria-describedby="basic-addon1">
+                                   aria-describedby="basic-addon1" asp-for="DateOfBirth">
                             <label for="floatingInputValue" class="text-secondary">Date of birth</label>     
                         </div>
                     </div>
@@ -61,34 +65,34 @@
                     <h5 class="mb-2">Location</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Street">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Street" asp-for="Street">
                             <label for="floatingInput" class="text-secondary">Street</label>
                           
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="City">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City">
                             <label for="floatingInput" class="text-secondary">City</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="State">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State">
                             <label for="floatingInput" class="text-secondary">State</label>
                             
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Zip Code">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Zip Code" asp-for="ZipCode">
                             <label for="floatingInput" class="text-secondary">Zip Code</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput"
-                                   placeholder="Room #/Suite (Optional)">
+                                   placeholder="Room #/Suite (Optional)" asp-for="Room">
                             <label for="floatingInput" class="text-secondary">Room #/Suite (Optional)</label>
                         </div>
                     </div>
@@ -109,7 +113,7 @@
                     <div class="col-12">
                         <div class="form-floating input-info mb-3">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                      style="height: 150px"></textarea>
+                                      style="height: 150px" asp-for="AdminNotes"></textarea>
                             <label for="floatingTextarea2" class="text-secondary">
                                 Admin Notes
                                 (Optional)

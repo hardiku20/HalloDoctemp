@@ -9,13 +9,16 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace learning1.Repositories.Repositories
 {
     public class AdminRepo : IAdminRepo
     {
         private readonly DbHallodocContext _context;
-        public AdminRepo(DbHallodocContext context) {
+        public AdminRepo(DbHallodocContext context)
+        {
             _context = context;
         }
 
@@ -52,10 +55,10 @@ namespace learning1.Repositories.Repositories
 
             Request request = _context.Requests.Where(x => x.RequestId == requestId).First();
             request.Status = 2;
-            request.PhysicianId = physicianId;  
+            request.PhysicianId = physicianId;
             request.ModifiedDate = DateTime.Now;
             request.CompletedByPhysician = false;
-          
+
             _context.Requests.Update(request);
             _context.SaveChanges();
 
@@ -66,7 +69,7 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges(true);
 
             string dateString = DateTime.Now.ToString("dd/mm/yyyy");
-            string notetotransfer="Admin Transfer to Dr."+ model.SelectedPhysician + dateString;
+            string notetotransfer = "Admin Transfer to Dr." + model.SelectedPhysician + dateString;
             RequestStatusLog StatusData = new RequestStatusLog()
             {
                 RequestId = requestId,
@@ -85,8 +88,8 @@ namespace learning1.Repositories.Repositories
         {
             RequestStatusLog blockdata = new RequestStatusLog()
             {
-                RequestId= model.RequestId,
-                Status= 11,
+                RequestId = model.RequestId,
+                Status = 11,
                 Notes = model.BlockNotes,
                 CreatedDate = DateTime.Now,
             };
@@ -94,7 +97,7 @@ namespace learning1.Repositories.Repositories
             _context.RequestStatusLogs.Add(blockdata);
             _context.SaveChanges();
 
-            Request request =_context.Requests.Where(x=> x.RequestId == model.RequestId).First();
+            Request request = _context.Requests.Where(x => x.RequestId == model.RequestId).First();
             request.Status = 11;
 
             _context.Requests.Update(request);
@@ -117,17 +120,17 @@ namespace learning1.Repositories.Repositories
 
 
 
-            Request request = _context.Requests.Where(x=>x.RequestId==model.RequestId).First();
+            Request request = _context.Requests.Where(x => x.RequestId == model.RequestId).First();
             request.Status = 3;
-                
-            
+
+
             _context.Requests.Update(request);
             _context.SaveChanges();
         }
 
         public void ClearCaseRepo(AdminDashboardViewModel model)
         {
-            Request request = _context.Requests.Where(x=>x.RequestId == model.RequestId).First();
+            Request request = _context.Requests.Where(x => x.RequestId == model.RequestId).First();
             request.Status = 10;
             _context.Requests.Update(request);
             _context.SaveChanges();
@@ -158,8 +161,8 @@ namespace learning1.Repositories.Repositories
 
         public List<string> DisplayProfession()
         {
-           var Profession = _context.HealthProfessionalTypes.Select(x=>x.ProfessionName).ToList();
-           return Profession;
+            var Profession = _context.HealthProfessionalTypes.Select(x => x.ProfessionName).ToList();
+            return Profession;
         }
 
         public List<string> DisplayRegions()
@@ -183,19 +186,19 @@ namespace learning1.Repositories.Repositories
 
         public ViewUploadViewModel FetchViewUploads(int requestId)
         {
-            var documents = _context.RequestWiseFiles.Where(x=> x.RequestId == requestId)
+            var documents = _context.RequestWiseFiles.Where(x => x.RequestId == requestId)
                 .Select(x => new AdminDocumentViewModel
                 {
-                    CreatedDate= x.CreatedDate,
+                    CreatedDate = x.CreatedDate,
                     FileName = x.FileName,
                 }).ToList();
-        ViewUploadViewModel model = new ViewUploadViewModel()
-        {
-            RequestId = requestId,
-            DocumentsViewModel = documents
-        };
+            ViewUploadViewModel model = new ViewUploadViewModel()
+            {
+                RequestId = requestId,
+                DocumentsViewModel = documents
+            };
 
-           return model;
+            return model;
         }
 
         public List<string> GetAvailablePhysicianByRegionName(string regionName)
@@ -207,8 +210,8 @@ namespace learning1.Repositories.Repositories
 
         public List<string> GetBusinessByProfessionName(string professionName)
         {
-            int professionId = _context.HealthProfessionalTypes.Where(x=> x.ProfessionName == professionName).Select(x=>x.HealthProfessionalId).First();
-            var BusinessName = _context.HealthProfessionals.Where(x=>x.Profession == professionId).Select(x=>x.VendorName).ToList();
+            int professionId = _context.HealthProfessionalTypes.Where(x => x.ProfessionName == professionName).Select(x => x.HealthProfessionalId).First();
+            var BusinessName = _context.HealthProfessionals.Where(x => x.Profession == professionId).Select(x => x.VendorName).ToList();
             return BusinessName;
         }
 
@@ -218,17 +221,17 @@ namespace learning1.Repositories.Repositories
             var Orderdetails = _context.HealthProfessionals.Where(x => x.VendorName == businessName)
                 .Select(x => new SendOrderViewModel
                 {
-                    BusinessContact= x.BusinessContact,
-                    Email= x.Email,
-                    FaxNumber= x.FaxNumber,
-                    VendorId= x.VendorId,
-                    
+                    BusinessContact = x.BusinessContact,
+                    Email = x.Email,
+                    FaxNumber = x.FaxNumber,
+                    VendorId = x.VendorId,
+
                 }).First();
 
             SendOrderViewModel model = new SendOrderViewModel()
             {
-                BusinessContact = Orderdetails.BusinessContact, 
-                Email= Orderdetails.Email,
+                BusinessContact = Orderdetails.BusinessContact,
+                Email = Orderdetails.Email,
                 FaxNumber = Orderdetails.FaxNumber,
                 VendorId = Orderdetails.VendorId,
             };
@@ -237,7 +240,7 @@ namespace learning1.Repositories.Repositories
 
         public List<string> GetPhysicianByRegionName(string regionName)
         {
-            int regionId = _context.Regions.Where(x => x.Name == regionName).Select(x =>x.RegionId).First();
+            int regionId = _context.Regions.Where(x => x.Name == regionName).Select(x => x.RegionId).First();
             var PhysicianName = _context.Physicians.Where(x => x.RegionId == regionId).Select(x => x.FirstName).ToList();
             return PhysicianName;
         }
@@ -248,17 +251,17 @@ namespace learning1.Repositories.Repositories
             var requestNotes = _context.RequestNotes.Where(r => r.RequestId == requestId).Select(r => new { r.RequestId, r.AdminNotes, r.PhysicianNotes }).ToList();
 
 
-            if(requestStatus?.PhysicianId != null)
+            if (requestStatus?.PhysicianId != null)
             {
                 var physicianName = _context.Physicians.Find(requestStatus.PhysicianId);
 
                 var model = new ViewNotesViewModel
                 {
-                    RequestId= requestId,
-                    TransferNotes= requestStatus.Notes,
-                    PhysicianName= physicianName.FirstName + " " + physicianName.LastName,
-                    CreatedDate= requestStatus.CreatedDate,
-                    PhysicianNotes= requestNotes.FirstOrDefault()?.PhysicianNotes,
+                    RequestId = requestId,
+                    TransferNotes = requestStatus.Notes,
+                    PhysicianName = physicianName.FirstName + " " + physicianName.LastName,
+                    CreatedDate = requestStatus.CreatedDate,
+                    PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
                     AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
                 };
                 return model;
@@ -271,9 +274,9 @@ namespace learning1.Repositories.Repositories
                     //TransferNotes = requestStatus.Notes,
                     //CreatedDate = requestStatus.CreatedDate,
                     PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
-                    AdminNotes= requestNotes.FirstOrDefault()?.AdminNotes,
+                    AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
                 };
-                return model;    
+                return model;
             }
         }
 
@@ -281,7 +284,7 @@ namespace learning1.Repositories.Repositories
         {
             OrderDetail order = new OrderDetail()
             {
-                VendorId= model.VendorId,
+                VendorId = model.VendorId,
                 FaxNumber = model.FaxNumber,
                 Email = model.Email,
                 BusinessContact = model.BusinessContact,
@@ -289,7 +292,7 @@ namespace learning1.Repositories.Repositories
                 NoOfRefill = model.No_of_Refills,
                 CreatedDate = DateTime.Now,
                 RequestId = model.RequestId,
-                CreatedBy ="Admin"
+                CreatedBy = "Admin"
             };
 
             _context.OrderDetails.Add(order);
@@ -306,8 +309,9 @@ namespace learning1.Repositories.Repositories
         //    return _context.Requests.Where(x => x.RequestId == requestId).FirstOrDefault();
         //}
 
-        public AdminDashboardViewModel RenderConcludeState(int status)
+        public AdminDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName)
         {
+            var Count = SetCount();
             var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
             Select(x => new AdminTableViewModel()
             {
@@ -320,40 +324,19 @@ namespace learning1.Repositories.Repositories
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
-            }).ToList();
+            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
                 TableViewModel = tempmodel,
+                RequestCount = Count,
             };
             return model;
         }
 
-        public AdminDashboardViewModel RenderNewState(int status)
+        public AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName)
         {
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
-            Select(x => new AdminTableViewModel()
-            {
-                RequestId = x.RequestId,
-                RequestedDate = x.CreatedDate.ToString(),
-                PhoneNumber = x.RequestClients.Select(x=>x.PhoneNumber).FirstOrDefault(),
-                Phone = x.PhoneNumber,
-                Email = x.Email,
-                Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
-                Requester = x.FirstName + " " + x.LastName,
-                RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
-            }).ToList();
-
-            AdminDashboardViewModel model = new AdminDashboardViewModel()
-            {
-                TableViewModel = tempmodel,
-            };
-            return model;
-        }
-
-        public AdminDashboardViewModel RenderPendingState(int status)
-        {
+            var Count = SetCount();
             var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
             Select(x => new AdminTableViewModel()
             {
@@ -366,18 +349,45 @@ namespace learning1.Repositories.Repositories
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
-            }).ToList();
+            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel, 
+                TableViewModel = tempmodel,
+                RequestCount = Count,
             };
             return model;
         }
 
-        public AdminDashboardViewModel RenderToActiveState(int status1, int status2)
+        public AdminDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName)
         {
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 || x.Status== status2).
+            var Count = SetCount();
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            Select(x => new AdminTableViewModel()
+            {
+                RequestId = x.RequestId,
+                RequestedDate = x.CreatedDate.ToString(),
+                PhoneNumber = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
+                Phone = x.PhoneNumber,
+                Email = x.Email,
+                Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Requester = x.FirstName + " " + x.LastName,
+                RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            AdminDashboardViewModel model = new AdminDashboardViewModel()
+            {
+                TableViewModel = tempmodel,
+                RequestCount = Count,
+            };
+            return model;
+        }
+
+        public AdminDashboardViewModel RenderToActiveState(int status1, int status2, int page, int pageSize, string patientName)
+        {
+            var Count = SetCount();
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 || x.Status == status2).
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
@@ -389,18 +399,20 @@ namespace learning1.Repositories.Repositories
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
-             }).ToList();
+             }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
                 TableViewModel = tempmodel,
+                RequestCount = Count,
             };
             return model;
         }
 
-        public AdminDashboardViewModel RenderToCloseState(int status1, int status2, int status3)
+        public AdminDashboardViewModel RenderToCloseState(int status1, int status2, int status3, int page, int pageSize, string patientName)
         {
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 ||  x.Status == status2 ||  x.Status == status3).
+            var Count = SetCount();
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 || x.Status == status2 || x.Status == status3).
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
@@ -412,17 +424,19 @@ namespace learning1.Repositories.Repositories
                  Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
-             }).ToList();
+             }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
                 TableViewModel = tempmodel,
+                RequestCount = Count,
             };
             return model;
         }
 
-        public AdminDashboardViewModel RenderUnpaidState(int status)
+        public AdminDashboardViewModel RenderUnpaidState(int status, int page, int pageSize, string patientName)
         {
+            var Count = SetCount();
             var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
             Select(x => new AdminTableViewModel()
             {
@@ -435,11 +449,12 @@ namespace learning1.Repositories.Repositories
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
-            }).ToList();
+            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
                 TableViewModel = tempmodel,
+                RequestCount = Count,
             };
             return model;
         }
@@ -467,8 +482,8 @@ namespace learning1.Repositories.Repositories
                 RequestNote requestNote = new RequestNote()
                 {
                     RequestId = requestId,
-                    AdminNotes = model.NewAdminNotes,  
-                    CreatedBy= "Hardikkk",
+                    AdminNotes = model.NewAdminNotes,
+                    CreatedBy = "Hardikkk",
                     CreatedDate = DateTime.Now,
                 };
                 _context.Add(requestNote);
@@ -496,11 +511,11 @@ namespace learning1.Repositories.Repositories
             _context.RequestClients.Update(requestClient);
             _context.SaveChanges(true);
 
-            string dateString = DateTime.Now.ToString("dd/mm/yyyy 'at' hh:mm:ss tt" );
+            string dateString = DateTime.Now.ToString("dd/mm/yyyy 'at' hh:mm:ss tt");
             string notetotransfer = "Admin Transfer to Dr." + model.SelectedPhysician + dateString;
-            RequestStatusLog StatusData = _context.RequestStatusLogs.Where(x => x.RequestId==requestId).First();
+            RequestStatusLog StatusData = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).First();
             StatusData.TransToPhysicianId = physicianId;
-            
+
             _context.RequestStatusLogs.Update(StatusData);
             _context.SaveChanges();
         }
@@ -529,7 +544,7 @@ namespace learning1.Repositories.Repositories
 
         }
 
-      
+
 
         //public void Mails(string email, int reqId)
         //{
@@ -608,23 +623,23 @@ namespace learning1.Repositories.Repositories
         }
 
         public void Mails(int requestId)
-        {   
-                var email = _context.Requests.Where(x => x.RequestId == requestId).Select(x => x.Email).FirstOrDefault();
-                System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+        {
+            var email = _context.Requests.Where(x => x.RequestId == requestId).Select(x => x.Email).FirstOrDefault();
+            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
 
-                message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
-                message.To.Add(new System.Net.Mail.MailAddress(email));
-                message.Subject = "AGREEMENT";
-                message.IsBodyHtml = true;
-                var resetLink = "https://localhost:7165/Patient/Agreement?reqId=" + requestId;
-                message.Body = resetLink + "Agreement";
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "mail.etatvasoft.com";
-                smtp.Port = 587;
-                smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
-                smtp.EnableSsl = true;
-                smtp.Send(message);
-                smtp.UseDefaultCredentials = false;
+            message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+            message.To.Add(new System.Net.Mail.MailAddress(email));
+            message.Subject = "AGREEMENT";
+            message.IsBodyHtml = true;
+            var resetLink = "https://localhost:44352/home/reviewagreement?requsetId=" + requestId;
+            message.Body = resetLink + "Agreement";
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "mail.etatvasoft.com";
+            smtp.Port = 587;
+            smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+            smtp.EnableSsl = true;
+            smtp.Send(message);
+            smtp.UseDefaultCredentials = false;
         }
 
         public EncounterFormViewModel GetEncounterRepo(int requestId)
@@ -632,23 +647,144 @@ namespace learning1.Repositories.Repositories
             var Encounterdata = _context.RequestClients.Where(x => x.RequestId == requestId)
                 .Select(x => new EncounterFormViewModel()
                 {
-                    FirstName= x.FirstName,
-                    LastName= x.LastName,   
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
                     Location = x.Address,
                     Email = x.Email,
-                    Phone= x.PhoneNumber,
+                    Phone = x.PhoneNumber,
                 }).FirstOrDefault();
 
             EncounterFormViewModel model = new EncounterFormViewModel()
             {
-                FirstName= Encounterdata.FirstName,
-                LastName= Encounterdata.LastName,
+                FirstName = Encounterdata.FirstName,
+                LastName = Encounterdata.LastName,
                 Location = Encounterdata.Location,
                 Email = Encounterdata.Email,
-                Phone= Encounterdata.Phone,
+                Phone = Encounterdata.Phone,
             };
 
             return model;
+        }
+
+        public int LoginMethodRepo(string email, string password)
+        {
+            var temp = _context.AspNetUsers.Where(u => u.Email == email && u.PasswordHash == password).FirstOrDefault();
+            if (temp != null)
+            {
+                int userId = _context.Users.Where(u => u.AspNetUserId == temp.Id).Select(x => x.UserId).FirstOrDefault();
+                return userId;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public void SendlinkMail(AdminDashboardViewModel model)
+        {
+            var email = model.PatientEmail;
+            var name = model.firstName + " " + model.lastName;
+            var Createlink = "https://localhost:44352/home/reviewagreement";
+            var emailbody = $@" 
+<html>
+        <head>
+            <title>Agreement Form</title>
+        </head>
+        <body>
+            <p>Hello {name},</p>
+            <p>Please Create your account by clicking the link below:</p>
+            <p>{Createlink}</p>
+            <p>Sincerely,</p>
+            <p>Admin</p>
+        </body>
+        </html>
+";
+            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+
+            message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+            message.To.Add(new System.Net.Mail.MailAddress(email));
+            message.Subject = "Create your Account";
+            message.IsBodyHtml = true;
+            message.Body = emailbody;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "mail.etatvasoft.com";
+            smtp.Port = 587;
+            smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+            smtp.EnableSsl = true;
+            smtp.Send(message);
+            smtp.UseDefaultCredentials = false;
+        }
+
+        public void CreateRequestRepo(CreateRequestViewModel model)
+        {
+            AspNetUser netUser = new AspNetUser
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = model.Email,
+                Email = model.Email,
+                PhoneNumber = model.Phone,
+                CreatedDate = DateTime.Now,
+            };
+            _context.AspNetUsers.Add(netUser);
+            _context.SaveChanges();
+
+
+            //User
+            User user = new User
+            {
+                Email = model.Email,
+                AspNetUserId = netUser.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Mobile = model.Phone,
+                Street = model.Street,
+                City = model.City,
+                State = model.State,
+                ZipCode = model.ZipCode,
+                CreatedBy = "hardik",
+                CreatedDate = DateTime.Now,
+            };
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+
+
+            Request request = new Request
+            {
+                UserId = user.UserId,
+                RequestTypeId = 2,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.Phone,
+                Email = model.Email,
+                Status = 1,
+                CreatedDate = DateTime.Now,
+
+            };
+
+
+            _context.Requests.Add(request);
+            _context.SaveChanges();
+
+            RequestClient requestClient = new RequestClient
+            {
+
+                RequestId = request.RequestId,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.Phone,
+                Email = model.Email,
+                State = model.State,
+                City = model.City,
+                Street = model.Street,
+                ZipCode = model.ZipCode,
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
+            };
+
+
+            _context.RequestClients.Add(requestClient);
+            _context.SaveChanges();
         }
     }
 }

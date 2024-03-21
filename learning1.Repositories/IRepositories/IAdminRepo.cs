@@ -1,5 +1,6 @@
 ﻿using learning1.DBEntities.Models;
 using learning1.DBEntities.ViewModel;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,17 +33,20 @@ namespace learning1.Repositories.IRepositories
         List<string> GetPhysicianByRegionName(string regionName);
         ViewNotesViewModel GetViewNotesRepo(int requestId);
         void OrderDetailRepo(SendOrderViewModel model);
-        AdminDashboardViewModel RenderConcludeState(int status);
-        AdminDashboardViewModel RenderNewState(int status);
-        AdminDashboardViewModel RenderPendingState(int status);
-        AdminDashboardViewModel RenderToActiveState(int status1,int status2);
-        AdminDashboardViewModel RenderToCloseState(int status1, int status2,int status3);
-        AdminDashboardViewModel RenderUnpaidState(int status);
+        AdminDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName);
+        AdminDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderToActiveState(int status1,int status2, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderToCloseState(int status1, int status2,int status3, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderUnpaidState(int status, int page, int pageSize, string patientName);
         void SetViewNotes(ViewNotesViewModel model, int requestId);
         void TransferCaseRepo(AdminDashboardViewModel model, int requestId);
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
         AdminDashboardViewModel ListToExportAllData();
         void Mails(int requestId);
         EncounterFormViewModel GetEncounterRepo(int requestId);
+        int LoginMethodRepo(string email, string password);
+        void SendlinkMail(AdminDashboardViewModel model);
+        void CreateRequestRepo(CreateRequestViewModel model);
     }
 }
