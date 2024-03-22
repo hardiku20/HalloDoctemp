@@ -577,17 +577,18 @@
 </div>
 
 <div class="container-fluid px-3">
+
     <form action="" role="" class=" ">
         <div class="row m-0 p-2 bg-white">
             <div class="col-lg-4 d-md-flex d-block">
 
                 <div class="input-group border me-2 rounded-0 mb-2 form-control">
                     <div class="input-group-append">
-                        <button class="btn text-secondary border border-0 bg-white" type="button">
+                        <button class="btn text-secondary border border-0 bg-white" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control border-0  shadow-none" placeholder="Search Patients">
+                    <input type="text" class="form-control border-0  shadow-none" placeholder="Search Patients" id="searchInput">
                 </div>
 
                 <div class="input-group border rounded-0 mb-2 form-control">
@@ -668,6 +669,8 @@
             </div>
         </div>
     </form>
+
+
 
 
 
@@ -863,8 +866,7 @@
 
 
 
-
-
+@* @await Component.InvokeAsync("Notyf") *@
 <script src="/js/DashboardRenderPartialView.js"></script>
 <script src="/js/SendMail.js"></script>
 

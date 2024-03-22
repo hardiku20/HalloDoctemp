@@ -5,6 +5,12 @@
 }
 
 @model learning1.DBEntities.ViewModel.AdminDashboardViewModel;
+
+
+
+
+
+
 <div class="d-md-block d-none overflow-x-auto">
     <table class="table-responsive w-100">
 
@@ -101,46 +107,48 @@
         }
     </table>
         @{
-            double d = (double)Model.RequestCount?.PendingStateCount / 2;
+            double d = (double)Model.RequestCount?.PendingStateCount / 4;
             double pages = Math.Ceiling(d);
         }
-        <div class="pagination-nav bg-white d-flex justify-content-between flex-row-reverse pe-3 mx-3">
+    <div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
 
-            <nav aria-label="Page navigation example d-flex justify-content-between">
-                <ul class="pagination">
-                    @* <li class="page-item page-item-story d-flex" id="1-newState">
+
+        <span class="d-flex justify-content-start fs-5">
+            Showing 4 of @Model.RequestCount?.PendingStateCount Entries
+        </span>
+        <nav aria-label="Page navigation example d-flex justify-content-between">
+            <ul class="pagination">
+                @* <li class="page-item page-item-story d-flex" id="1-newState">
+                <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true"> << </span>
+                </a>
+                </li> *@
+                <li class="page-item page-item-story d-flex" id="previousPage-pendingState">
                     <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true"> << </span>
+                        <span aria-hidden="true">Previous</span>
                     </a>
-                    </li> *@
-                    <li class="page-item page-item-story d-flex me-2 p-3" id="previousPage-pendingState">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true"> < </span>
-                        </a>
-                    </li>
+                </li>
 
-                    @for (int j = 1; j <= @pages; j++)
-                    {
-                        <li class="page-item page-item-story pt-3" id="@j-pendingState"><a class="page-link">@j</a></li>
-                    }
-                    <li class="page-item page-item-story d-flex ms-2 p-3" id="nextPage-pendingState" data-TotalPages=@pages>
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true"> > </span>
-                        </a>
-                    </li>
-                    @* <li class="page-item page-item-story d-flex" id="@pages-newState">
+                @for (int j = 1; j <= @pages; j++)
+                {
+                    <li class="page-item page-item-story" id="@j-pendingState"><a class="page-link">@j</a></li>
+                }
+                <li class="page-item page-item-story d-flex" id="nextPage-pendingState" data-TotalPages=@pages>
                     <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true"> >> </span>
+                        <span aria-hidden="true">Next</span>
                     </a>
-                    </li> *@
-                </ul>
-            </nav>
+                </li>
+                @* <li class="page-item page-item-story d-flex" id="@pages-newState">
+                <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true"> >> </span>
+                </a>
+                </li> *@
+            </ul>
+        </nav>
 
-            <span class="d-flex justify-content-start pt-3 ps-3 fs-5">
-                Showing 2 of @Model.RequestCount?.PendingStateCount Entries
-            </span>
 
-        </div>
+
+    </div>
 </div>
 
 

@@ -43,14 +43,14 @@ namespace learning1.Controllers
             if(userId!= -1)
             {
                 _httpcontextAccessor.HttpContext.Session.SetInt32("Id", userId);
-                _notyf.Success("Success Notification");
+                _notyf.Success("Success Notificationabcc");
                 return RedirectToAction("Admindashboard", "Admin");  
             }
             else
             {
+                _notyf.Error("Success Notificatioxcfvbfvbn");
                 return View();
             }
-            return View();
         }
 
         public IActionResult ForgotPassword()
@@ -98,6 +98,8 @@ namespace learning1.Controllers
             return PartialView("_adminNewState", model);
         }
 
+
+
         public IActionResult RenderPendingPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null)
         {
             var model = _adminServices.RenderPendingStateData(Status, Page, PageSize, patientName);
@@ -131,7 +133,6 @@ namespace learning1.Controllers
         public IActionResult CancelCase(AdminDashboardViewModel model)
         {
             _adminServices.GetCancelCaseData(model);
-            
             return RedirectToAction("AdminDashboard");
         }
 

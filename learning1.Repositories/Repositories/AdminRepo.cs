@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq.Expressions;
 
 namespace learning1.Repositories.Repositories
 {
@@ -311,8 +312,21 @@ namespace learning1.Repositories.Repositories
 
         public AdminDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName)
         {
+            Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+
+            if (!string.IsNullOrEmpty(patientName))
+            {
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+            }
+
+            else
+            {
+                predicate = x => x.Status == status;
+            }
+
+
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(predicate).
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
@@ -334,10 +348,24 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
+
+
         public AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName)
         {
+            Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+
+            if (!string.IsNullOrEmpty(patientName)) {
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+            }
+
+            else
+            {
+                predicate = x => x.Status == status;
+            }
+                
+            
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(predicate).
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
@@ -361,8 +389,18 @@ namespace learning1.Repositories.Repositories
 
         public AdminDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName)
         {
+            Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            if (!string.IsNullOrEmpty(patientName))
+            {
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+            }
+
+            else
+            {
+                predicate = x => x.Status == status;
+            }
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(predicate).
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
@@ -386,8 +424,19 @@ namespace learning1.Repositories.Repositories
 
         public AdminDashboardViewModel RenderToActiveState(int status1, int status2, int page, int pageSize, string patientName)
         {
+            Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 || x.Status == status2).
+
+            if (!string.IsNullOrEmpty(patientName))
+            {
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2);
+            }
+
+            else
+            {
+                predicate = x => (x.Status == status1 || x.Status == status2);
+            }
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(predicate).
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
@@ -411,8 +460,18 @@ namespace learning1.Repositories.Repositories
 
         public AdminDashboardViewModel RenderToCloseState(int status1, int status2, int status3, int page, int pageSize, string patientName)
         {
+            Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status1 || x.Status == status2 || x.Status == status3).
+            if (!string.IsNullOrEmpty(patientName))
+            {
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2 || x.Status == status3);
+            }
+
+            else
+            {
+                predicate = x => (x.Status == status1 || x.Status == status2 || x.Status == status3);
+            }
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(predicate).
              Select(x => new AdminTableViewModel()
              {
                  RequestId = x.RequestId,
@@ -436,8 +495,18 @@ namespace learning1.Repositories.Repositories
 
         public AdminDashboardViewModel RenderUnpaidState(int status, int page, int pageSize, string patientName)
         {
+            Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(x => x.Status == status).
+            if (!string.IsNullOrEmpty(patientName))
+            {
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+            }
+
+            else
+            {
+                predicate = x => x.Status == status;
+            }
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(predicate).
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,

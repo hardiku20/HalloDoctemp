@@ -95,11 +95,15 @@
     </table>
 
     @{
-        double d = (double)Model.RequestCount?.ConcludeStateCount / 2;
+        double d = (double)Model.RequestCount?.ConcludeStateCount / 4;
         double pages = Math.Ceiling(d);
     }
-    <div class="pagination-nav bg-white d-flex justify-content-between flex-row-reverse pe-3 mx-3">
+    <div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
 
+
+        <span class="d-flex justify-content-start fs-5">
+            Showing 4 of @Model.RequestCount?.ConcludeStateCount Entries
+        </span>
         <nav aria-label="Page navigation example d-flex justify-content-between">
             <ul class="pagination">
                 @* <li class="page-item page-item-story d-flex" id="1-newState">
@@ -107,19 +111,18 @@
                 <span aria-hidden="true"> << </span>
                 </a>
                 </li> *@
-                <li class="page-item page-item-story d-flex me-2 p-3" id="previousPage-concludeState">
+                <li class="page-item page-item-story d-flex" id="previousPage-concludeState">
                     <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true"> < </span>
+                        <span aria-hidden="true">Previous</span>
                     </a>
                 </li>
-
                 @for (int j = 1; j <= @pages; j++)
                 {
-                    <li class="page-item page-item-story pt-3" id="@j-concludeState"><a class="page-link">@j</a></li>
+                    <li class="page-item page-item-story" id="@j-concludeState"><a class="page-link">@j</a></li>
                 }
-                <li class="page-item page-item-story d-flex ms-2 p-3" id="nextPage-concludeState" data-TotalPages=@pages>
+                <li class="page-item page-item-story d-flex" id="nextPage-concludeState" data-TotalPages=@pages>
                     <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true"> > </span>
+                        <span aria-hidden="true">Next</span>
                     </a>
                 </li>
                 @* <li class="page-item page-item-story d-flex" id="@pages-newState">
@@ -129,13 +132,7 @@
                 </li> *@
             </ul>
         </nav>
-
-        <span class="d-flex justify-content-start pt-3 ps-3 fs-5">
-            Showing 2 of @Model.RequestCount?.ConcludeStateCount Entries
-        </span>
-
     </div>
-
 </div>
 
 <div class="d-md-none">
