@@ -57,8 +57,27 @@
                     <li class="nav-item">
                         <a class="nav-link text-secondary px-2 fw-medium" asp-action="AdminProfile" asp-controller="Admin">My Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary px-2 fw-medium" href="#">Providers</a>
+                    <li class="nav-item dropdown">
+                        @* <a class="nav-link text-secondary px-2 fw-medium" href="#">Providers</a> *@
+                            @* <button class="nav-link btn dropdown-toggle text-secondary fw-medium px-2 rounded-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Provider
+                            </button>
+                            <ul class="dropdown-menu border-0 rounded-0 shadow-lg">
+                                <li><a class="dropdown-item" >Provider</a></li>
+                                <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                                <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                            </ul>
+ *@
+
+                        <div class="dropdown">
+                            <a role="button" class="nav-link text-secondary px-2 fw-medium" data-bs-toggle="dropdown">Providers</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a role="button" class="dropdown-item" asp-action="ProviderMenu" asp-controller="Admin">Provider</a></li>
+                                <li><a role="button" class="dropdown-item" >Scheduling</a></li>
+                                <li><a role="button" class="dropdown-item">Invoicing</a></li>
+                            </ul>
+                        </div>
+                        
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-secondary px-2 fw-medium" href="#">Partners</a>
@@ -119,8 +138,17 @@
                     <li class="nav-item">
                         <a class="nav-link text-secondary" href="#">My Profile</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="#">Providers</a>
+                    <li class="nav-item dropdown">
+                       @*  <a class="nav-link text-secondary" href="#">Providers</a> *@
+                        <div class="dropdown">
+                            <a role="button" class="nav-link text-secondary px-2 fw-medium" data-bs-toggle="dropdown">Providers</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a role="button" class="dropdown-item" asp-action="ProviderMenu" asp-controller="Admin">Provider</a></li>
+                                <li><a role="button" class="dropdown-item">Scheduling</a></li>
+                                <li><a role="button" class="dropdown-item">Invoicing</a></li>
+                            </ul>
+                        </div>
+                     
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-secondary" href="#">Partners</a>

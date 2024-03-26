@@ -28,7 +28,7 @@ namespace learning1.Services.IServices
         void IsClearCase(AdminDashboardViewModel model);
         AdminDashboardViewModel RenderActiveStateData(int status1,int status2,int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName);
+        AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName,RequestType requestType);
         AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderToCloseStateData(int status1,int status2,int status3, int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName);

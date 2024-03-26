@@ -43,12 +43,12 @@ namespace learning1.Controllers
             if(userId!= -1)
             {
                 _httpcontextAccessor.HttpContext.Session.SetInt32("Id", userId);
-                _notyf.Success("Success Notificationabcc");
+                _notyf.Success("Login Successful");
                 return RedirectToAction("Admindashboard", "Admin");  
             }
             else
             {
-                _notyf.Error("Success Notificatioxcfvbfvbn");
+                _notyf.Error("Login Failed");
                 return View();
             }
         }
@@ -61,8 +61,6 @@ namespace learning1.Controllers
 
         public IActionResult admindashboard()
         {
-
-
             var model = _adminServices.DisplayAdminDashboard();
             return View(model);
         }
@@ -88,13 +86,12 @@ namespace learning1.Controllers
         public IActionResult ViewNotes(ViewNotesViewModel model, int RequestId)
         {
             _adminServices.SetViewNotesData(model, RequestId);
-           
             return RedirectToAction("ViewNotes",model);
         }
 
-        public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null)
+        public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null,RequestType requestType=(RequestType)5)
         {
-            var model = _adminServices.RenderNewStateData(Status, Page, PageSize, patientName);
+            var model = _adminServices.RenderNewStateData(Status, Page, PageSize, patientName,requestType);
             return PartialView("_adminNewState", model);
         }
 
@@ -333,6 +330,20 @@ namespace learning1.Controllers
             _adminServices.CreatePatientRequest(model);
             return RedirectToAction("admindashboard");
         }
+
+
+        public IActionResult ProviderMenu()
+        {
+            return View();
+        }
+
+
+        public IActionResult EditPhysicianAccount()
+        {
+            return View();
+        }
+
+
 
 
     }

@@ -350,18 +350,19 @@ namespace learning1.Repositories.Repositories
 
 
 
-        public AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName)
+        public AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
 
             if (!string.IsNullOrEmpty(patientName)) {
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+                //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else
             {
-                predicate = x => x.Status == status;
+                predicate = x => ( x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
                 
             
@@ -377,6 +378,7 @@ namespace learning1.Repositories.Repositories
                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
+               
             }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()

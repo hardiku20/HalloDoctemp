@@ -24,7 +24,7 @@ namespace learning1.Services.Services
         {
             var Casetags = _adminRepo.DisplayCasetags();
             var Regions = _adminRepo.DisplayRegions();
-            var Count = _adminRepo.SetCount();
+            var Count = _adminRepo.SetCount(); 
             var temp = _adminRepo.DisplayAdminDashboardRepo().
                 Select(x => new AdminTableViewModel
                 {
@@ -187,9 +187,9 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName)
+        public AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderNewState(status, page, pageSize, patientName);
+            var model = _adminRepo.RenderNewState(status, page, pageSize, patientName,requestType);
             return model;
         }
 

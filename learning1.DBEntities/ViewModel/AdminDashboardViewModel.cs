@@ -103,6 +103,7 @@ namespace learning1.DBEntities.ViewModel
         Business= 1,
         Patient = 2,
         Family = 3,
-        Concierge = 4
+        Concierge = 4,
+        All = 5,
     }
 }

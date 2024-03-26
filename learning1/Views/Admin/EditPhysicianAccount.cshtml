@@ -1,0 +1,320 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+<div class="container pb-4">
+    <div class="d-flex justify-content-between my-4">
+        <h4 class="">Edit Physician Account</h4>
+        <div class="d-flex justify-content-end">
+            <a asp-controller="Admin" asp-action="admindashboard"
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <form action="" class="form-floating">
+                <div class="row">
+                    <h5 class="my-3">Account Information</h5>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" value="admin" disabled>
+                            <label for="floatingInput" class="text-secondary">User Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Password" disabled>
+                            <label for="floatingInput" class="text-secondary">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Status" disabled>
+                            <label for="floatingInput" class="text-secondary">Status</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Role" disabled>
+                            <label for="floatingInput" class="text-secondary">Role</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="submit" class="btn btn-info text-white">Edit</button>
+                    <button type="submit" class="btn btn-outline-info text-info bg-white">Reset Password</button>
+                </div>
+            </form>
+
+
+
+            <form>
+                <div class="row">
+                    <h5 class="my-3">Physician Information</h5>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" value="admin1" disabled>
+                            <label for="floatingInput" class="text-secondary">First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" value="admin2" disabled>
+                            <label for="floatingInput" class="text-secondary">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Email" disabled>
+                            <label for="floatingInput" class="text-secondary">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 input-info">
+                        <div class="form-floating input-info w-100">
+                            <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                   id="phone1" disabled>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medical License" disabled>
+                            <label for="floatingInput" class="text-secondary">Medical License #</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="NPI Number" disabled>
+                            <label for="floatingInput" class="text-secondary">NPI Number</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Synchronization Email Address" disabled>
+                            <label for="floatingInput" class="text-secondary">Synchronization Email Address</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                    Checked checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                    Checked checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                    Checked checkbox
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-floating d-flex">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                    Checked checkbox
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-info text-white px-4">Edit</button>
+                </div>
+            </form>
+
+
+            <form>
+                <div class="row">
+                    <h5 class="my-3">Mailing & Billing Information</h5>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" disabled>
+                            <label for="floatingInput" class="text-secondary">Address 1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" disabled>
+                            <label for="floatingInput" class="text-secondary">Address 2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City" disabled>
+                            <label for="floatingInput" class="text-secondary">City</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State" disabled>
+                            <label for="floatingInput" class="text-secondary">State</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="ZipCode" disabled>
+                            <label for="floatingInput" class="text-secondary">Zip</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3 input-info">
+                        <div class="form-floating input-info w-100">
+                            <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                   id="phone2" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-info text-white px-4">Edit</button>
+                </div>
+            </form>
+
+
+            <form>
+                <div class="row">
+                    <h5 class="my-3">Mailing & Billing Information</h5>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Business Name" disabled>
+                            <label for="floatingInput" class="text-secondary">Business Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Business website" disabled>
+                            <label for="floatingInput" class="text-secondary">Business website</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City" disabled>
+                            <label for="floatingInput" class="text-secondary">City</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State" disabled>
+                            <label for="floatingInput" class="text-secondary">State</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="" disabled>
+                            <label for="floatingInput" class="text-secondary">SIgnatureeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="form-floating input-info">
+                            <textarea class="form-control" placeholder="" id="floatingTextarea2"
+                                      style="height: 150px" disabled></textarea>
+                            <label for="floatingTextarea2" class="text-secondary">
+                                Admin Notes
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-info text-white px-4">Edit</button>
+                </div>
+            </form>
+
+
+            <hr class="text-secondary"/>
+            <div class="row">
+                <h5 class="mt-3 mb-5">Onboarding</h5>
+                <div class="d-flex align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label w-25 ms-2" for="flexCheckDefault">
+                        Independent Contractor Agreement
+                    </label>
+                    <button type="submit" class="btn btn-info text-white px-4 me-4">Upload</button>
+                    <button type="submit" class="btn btn-info text-white px-4">View</button>
+                </div>
+
+                <div class="d-flex align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label w-25 ms-2" for="flexCheckDefault">
+                        Background Check
+                    </label>
+                    <button type="submit" class="btn btn-info text-white px-4 me-4">Upload</button>
+                    <button type="submit" class="btn btn-info text-white px-4">View</button>
+                </div>
+
+                <div class="d-flex align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label w-25 ms-2" for="flexCheckDefault">
+                        HIPAA Compliance
+                    </label>
+                    <button type="submit" class="btn btn-info text-white px-4 me-4">Upload</button>
+                    <button type="submit" class="btn btn-info text-white px-4">View</button>
+                </div>
+
+                <div class="d-flex align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label w-25 ms-2" for="flexCheckDefault">
+                        Non-disclosure Agreement
+                    </label>
+                    <button type="submit" class="btn btn-info text-white px-4 me-4">Upload</button>
+                </div>
+
+                <div class="d-flex align-items-center mb-2">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label w-25 ms-2" for="flexCheckDefault">
+                        License Document
+                    </label>
+                    <button type="submit" class="btn btn-info text-white px-4 me-4">Upload</button>
+                </div> 
+            </div>
+
+            <hr/>
+
+            <div class="d-flex justify-content-end gap-2">
+                <button type="submit" class="btn btn-info text-white">Save</button>
+                <button type="submit" class="btn btn-danger text-white">Delete Account</button>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script>
+    const phoneInputField1 = document.querySelector("#phone1");
+    const phoneInput1 = window.intlTelInput(phoneInputField1, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+    const phoneInputField2 = document.querySelector("#phone2");
+    const phoneInput2 = window.intlTelInput(phoneInputField2, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>

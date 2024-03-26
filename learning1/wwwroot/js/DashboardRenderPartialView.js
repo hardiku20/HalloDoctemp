@@ -380,7 +380,6 @@
 
     $("#TransferRegionSelector").change(function () {
         console.log(this);
-        debugger;
         var region = this.value;
         $.ajax({
             method: 'GET',

@@ -587,23 +587,83 @@
                         <button class="btn text-secondary border border-0 bg-white" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
-                    </div>
+                    </div>` 
                     <input type="text" class="form-control border-0  shadow-none" placeholder="Search Patients" id="searchInput">
                 </div>
 
-                <div class="input-group border rounded-0 mb-2 form-control">
+               @*  <div class="input-group border rounded-0 mb-2 form-control">
+                <div class="input-group-append">
+                <button class="btn text-secondary border border-0 bg-white" type="button">
+                <i class="bi bi-search"></i>
+                </button>
+                </div>
+                    <input type="text" class="form-control border-0 shadow-none" placeholder="All Regions">
+                </div>
+ *@
+
+                <div class="input-group border me-2 rounded-0 mb-2 form-control">
                     <div class="input-group-append">
                         <button class="btn text-secondary border border-0 bg-white" type="button">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>
-                    <input type="text" class="form-control border-0 shadow-none" placeholder="All Regions">
+                    <select class="form-select border-0 shadow-none" id="" aria-label="Floating label select example">
+                        <option selected class="">Search Region</option>
+                        @foreach (string items in Model.Region)
+                        {
+                            <option value=@items>@items</option>
+                        }
+                    </select>
+                    @* <label for="floatingSelect" class="mx-2 text-secondary">Search Region</label> *@
+                </div>
+            </div>
+
+            <div class="col-md-7 col-lg-6 mt-2  d-flex justify-content-around me-0 ">
+                <div class="btn form-check btn-outline-secondary d-none d-md-block">
+                    <input class="form-check-input" hidden type="radio" value="All" name="relationshipType" id="allRadio">
+
+                    <label class="form-check-label" for="allRadio">
+                        All
+                    </label>
                 </div>
 
+                <div class="btn form-check d-md-flex pt-2 me-2 lh-base">
+                    <input class="form-check-input" hidden type="radio" value="Patient" name="relationshipType" id="patientRadio">
+                    <span style="color: green;"><i class="bi bi-circle-fill me-1"></i></span>
+                    <label class="form-check-label" for="patientRadio">
+                        Patient
+                    </label>
+                </div>
+
+                <div class="btn form-check d-md-flex pt-2 me-2 lh-base">
+                    <input class="form-check-input" hidden type="radio" value="Family/Friend" name="relationshipType" id="familyRadio">
+                    <span style="color:  #DE943D;"><i class="bi bi-circle-fill me-1"></i></span>
+                    <label class="form-check-label" for="familyRadio">
+                        Family/Friend
+                    </label>
+                </div>
+
+                <div class="form-check d-md-flex pt-2 me-2 lh-base">
+                    <input class="form-check-input" hidden type="radio" value="Business" name="relationshipType" id="businessRadio">
+                    <span style="color: orangered;"><i class="bi bi-circle-fill me-1"></i></span>
+                    <label class="form-check-label" for="businessRadio">
+                        Business
+                    </label>
+                </div>
+
+                <div class="form-check d-md-flex pt-2 me-2 lh-base">
+                    <input class="form-check-input" hidden type="radio" value="Concierge" name="relationshipType" id="conciergeRadio">
+                    <span style="color: midnightblue;"><i class="bi bi-circle-fill me-1"></i></span>
+                    <label class="form-check-label" for="conciergeRadio">
+                        Concierge
+                    </label>
+                </div>
             </div>
 
 
-            <div class="col-lg-8 pt-2">
+
+
+         @*    <div class="col-lg-8 pt-2">
                 <div class="d-lg-flex d-none justify-content-end align-items-center">
                     <div class="me-4">
                         <button class="btn btn-outline-secondary">All</button>
@@ -666,7 +726,7 @@
                         <p class="my-auto ps-1" style="font-size: small;">VIP</p>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
     </form>
 
@@ -677,6 +737,7 @@
 
     <div id="admin-table-wrapper">
         @* //table renders here *@
+        @* Mobile view Renders here *@
     </div>
 
 
@@ -687,179 +748,8 @@
     @Html.Partial("_adminActiveState",Model)
     @Html.Partial("_adminConcludeState",Model)
     @Html.Partial("_adminToCloseState",Model)
-    @Html.Partial("_adminUnpaidState",Model)
-
-    *@
-
-
-    <!-- mobile view for table -->
-    @* <div class="d-md-none">
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <div class="accordion-button collapsed bg-primary-subtle" type="button"
-                         data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
-                         aria-controls="flush-collapseOne">
-                        <div class="container-fluid">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="">
-                                    <h6>Patel, Sahil</h6>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <h6 class="me-1">Patients</h6>
-                                    <div class="rounded-circle mt-1"
-                                         style="height: 12px; width: 12px; background-color: rgb(15, 189, 64);">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="">
-                                    <p class="fw-normal mb-0">Maryland Maryland,</p>
-                                    <p class="fw-normal">Maryland 2121</p>
-                                </div>
-                                <div class="">
-                                    <button class="btn btn-outline-info btn-sm rounded-pill">
-                                        Map
-                                        Location
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="d-flex">
-                                <img src="" alt="">
-                                <p class="text-secondary fw-small" style="font-size: 0.8rem;">
-                                    Wait Time: <span class="fw-small">Dec 5,2023 08:52AM (641.59)</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse"
-                     data-bs-parent="#accordionFlushExample">
-
-                    <hr class="m-0">
-                    <div class="d-flex justify-content-end" style="margin-top: -12px; ">
-                        <button class="btn text-primary btn-outline-primary rounded-pill bg-white py-0 px-2 me-4 z-3"
-                                style="font-size:small; position: absolute;">
-                            View Case
-                        </button>
-                    </div>
-
-
-                    <div class="accordion-body container-fluid mt-2">
-                        <div class="d-flex">
-                            <div class="me-1">
-                                <i class="bi bi-calendar-event"></i>
-                            </div>
-                            <label for="" class="me-2 text-secondary">Date of birth:</label>
-                            <p>Jun 28, 1991(33)</p>
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-1">
-                                <i class="bi bi-envelope"></i>
-                            </div>
-                            <label for="" class="me-2 text-secondary">Email:</label>
-                            <p>sahil.patel@gmail.com</p>
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-1">
-                                <i class="bi bi-telephone"></i>
-                            </div>
-                            <label for="" class="me-2 text-secondary">Patient:</label>
-                            <p>2-23-1991(33)</p>
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-1">
-                                <i class="bi bi-person"></i>
-                            </div>
-                            <label for="" class="me-2 text-secondary">Requestor:</label>
-                            <p>Patient Patel,sahil</p>
-                        </div>
-                        <div>
-                            <div class="row mb-2 ">
-                                <div class="col-6">
-                                    <button class="btn text-white rounded-pill w-100"
-                                            style="background-color: purple; font-size: small;">
-                                        Assign Case
-                                    </button>
-                                </div>
-                                <div class="col-6">
-                                    <button class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                            style="font-size: small;">
-                                        Cancel Case
-                                    </button>
-                                </div>
-
-
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-6">
-                                    <button class="btn bg-success text-white rounded-pill w-100"
-                                            style="font-size: small;">
-                                        View Notes
-                                    </button>
-                                </div>
-                                <div class="col-6">
-                                    <button class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                            style="font-size: small;">
-                                        Block Patients
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-6">
-                                    <button class="btn bg-success text-white rounded-pill w-100"
-                                            style="font-size: small;">
-                                        Email
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        Accordion Item #2
-                    </button>
-                </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                     data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                        Placeholder content for this accordion, which is intended to
-                        demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion
-                        body. Let's imagine this being filled with some actual content.
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseThree" aria-expanded="false"
-                            aria-controls="flush-collapseThree">
-                        Accordion Item #3
-                    </button>
-                </h2>
-                <div id="flush-collapseThree" class="accordion-collapse collapse"
-                     data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                        Placeholder content for this accordion, which is intended to
-                        demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion
-                        body. Nothing more exciting happening here in terms of content, but just filling up the
-                        space to make it look, at least at first glance, a bit more representative of how this would
-                        look in a real-world application.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> *@
-
-
-
-
+    @Html.Partial("_adminUnpaidState",Model)  *@
+   
 </div>
 
 

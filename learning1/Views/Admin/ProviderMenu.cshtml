@@ -1,0 +1,145 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+
+<!-- Modal for Contact your provider-->
+<div class="modal fade" id="ContactProviderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Contact Your Provider</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="message-text text-secondary" class="col-form-label">Choose communication to send message</label>
+                        <div class="form-check mt-4">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                SMS
+                            </label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Email
+                            </label>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Both
+                            </label>
+                        </div>
+
+
+
+                        <div class="form-floating my-4">
+                            <textarea class="form-control"
+                                      placeholder="Message"
+                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">
+                                Message
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* Content of the Web-page *@
+<div class="container pb-4">
+    <div class="d-flex justify-content-between my-4">
+        <h4 class="">My Profile</h4>      
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between align-items-center mb-2 p-2">
+                <div class="input-group border me-2 rounded-0 form-control w-25">
+                    <div class="input-group-append">
+                        <button class="btn text-secondary border border-0 bg-white" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    <select class="form-select border-0 shadow-none" id="" aria-label="Floating label select example">
+                        <option selected class="">All</option>
+                      
+                    </select>
+                    @* <label for="floatingSelect" class="mx-2 text-secondary">Search Region</label> *@
+                </div>
+                <div class="">
+                    <a data-bs-target="#ContactProviderModal" data-bs-toggle="modal"
+                       class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                        Create Provider Account
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="">
+                <table class="table-responsive w-100"> 
+                    <tr class="border border-bottom border-white bg-secondary-subtle">
+                        <td scope="col" class="py-3 d-flex justify-content-center">Stop Notification</td>
+                        <td scope="col" class="py-3 ">Provider Name</td>
+                        <td scope="col" class="py-3">Role</td>
+                        <td scope="col" class="py-3">On Call Status</td>
+                        <td scope="col" class="py-3">Status</td>
+                        <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+                    </tr>
+
+
+                    <tr class=" border border-bottom border-white">
+                        <td class="form-check d-flex justify-content-center">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        </td>
+                        <td class="">providdedsfri</td>
+                        <td class="">ROlemf</td>
+                        <td class="">UN Available</td>
+                        <td class="">Pendinmg</td>
+                        <td class="d-flex justify-content-center gap-1">
+                            <a class="btn btn-outline-info text-info bg-white">Contact</a>
+                            <a class="btn btn-outline-info text-info bg-white" asp-action="EditPhysicianAccount" asp-controller="Admin">Edit</a>
+                        </td>
+                     </tr>
+                </table>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
