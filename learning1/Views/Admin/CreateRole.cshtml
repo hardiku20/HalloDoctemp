@@ -1,0 +1,76 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+
+@* Content of the Web-page *@
+<div class="container pb-4">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="">Create Role</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a asp-action="admindashboard" asp-controller="Admin" class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+            <div class="row">
+                <h5 class="my-3">Details</h5>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating input-info">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Role Name" disabled>
+                        <label for="floatingInput" class="text-secondary">Role Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="form-floating input-info">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Account type" disabled>
+                        <label for="floatingInput" class="text-secondary">Account type</label>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="d-flex gap-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                Checked checkbox
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                Checked checkbox
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                Checked checkbox
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                            <label class="form-check-label text-secondary" for="flexCheckChecked">
+                                Checked checkbox
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mb-3">
+                <button type="submit" class="btn btn-info text-white">Save</button>
+                <button type="submit" class="btn btn-outline-info bg-white text-info">Cancel</button>
+            </div>
+
+
+           
+        </div>
+    </div>
+</div>

@@ -91,6 +91,7 @@ namespace learning1.Controllers
 
         public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null,RequestType requestType=(RequestType)5)
         {
+            
             var model = _adminServices.RenderNewStateData(Status, Page, PageSize, patientName,requestType);
             return PartialView("_adminNewState", model);
         }
@@ -182,8 +183,6 @@ namespace learning1.Controllers
             var contentType = "APPLICATION/octet-stream";
             return File(content, contentType, filename);
         }
-
-
 
         public IActionResult SendOrders()
         {
@@ -344,6 +343,27 @@ namespace learning1.Controllers
         }
 
 
+        public IActionResult AccountAccess()
+        {
+            return View();
+        }
+
+
+        public IActionResult CreateRole()
+        {
+            return View();
+        }
+
+
+        public IActionResult CreateProviderAccount()
+        {
+            return View();
+        }
+
+        public IActionResult CreateAdminAccount()
+        {
+            return View();
+        }
 
 
     }

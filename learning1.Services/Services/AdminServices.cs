@@ -24,7 +24,7 @@ namespace learning1.Services.Services
         {
             var Casetags = _adminRepo.DisplayCasetags();
             var Regions = _adminRepo.DisplayRegions();
-            var Count = _adminRepo.SetCount(); 
+            var Count = _adminRepo.SetCount();
             var temp = _adminRepo.DisplayAdminDashboardRepo().
                 Select(x => new AdminTableViewModel
                 {
@@ -32,7 +32,7 @@ namespace learning1.Services.Services
                     RequestedDate = x.CreatedDate.ToString(),
                     Phone = x.PhoneNumber,
                     Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                    Address = x.RequestClients.Select(x =>x.Address).FirstOrDefault(),
+                    Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
                     Requester = x.FirstName + " " + x.LastName,
                     PhoneNumber = x.PhoneNumber,
                     RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
@@ -40,7 +40,7 @@ namespace learning1.Services.Services
 
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = temp,
+                //TableViewModel = temp,
                 CancellationReason = Casetags,
                 Region = Regions, 
                 RequestCount = Count,
