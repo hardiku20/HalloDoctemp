@@ -370,7 +370,7 @@ namespace learning1.Repositories.Repositories
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
-                RequestedDate = x.CreatedDate.ToString(),
+                RequestedDate = x.CreatedDate.ToString("MMM dd, yyyy hh:mm tt"), 
                 PhoneNumber = x.RequestClients.Select(x => x.PhoneNumber).FirstOrDefault(),
                 Phone = x.PhoneNumber,
                 Email = x.Email,

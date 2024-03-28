@@ -23,7 +23,7 @@
                 <div class="modal-body">
                     <input type="text" value="" id="Cancel-RequestId" asp-for="RequestId" hidden />
                     <div class="mb-3">
-                        <label for="message-text text-secondary " class="col-form-label">Patient Name :<span class="text-info ps-2" id="Cancel-PatientName"></span></label>
+                        <label for="message-text" class="col-form-label text-secondary">Patient Name :<span class="text-info ps-2" id="Cancel-PatientName"></span></label>
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" aria-label="Small select example" asp-for="ReasonForCancellation">
                                 <label selected">Reason for cancellation</label>
@@ -71,7 +71,7 @@
                 <div class="modal-body">
                     <input type="text" value="" id="Assign-RequestId" asp-for="RequestId" hidden />
                     <div class="mb-3">
-                        <label for="message-text text-secondary " class="col-form-label">To assign this request,search and select another Physician</label>
+                        <label for="message-text" class="col-form-label text-secondary ">To assign this request,search and select another Physician</label>
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="regionSelector" asp-for="SelectedRegion">
                                 <label class="selected">Narrow Search by Region</label>
@@ -124,7 +124,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <input class="hidden" asp-for="RequestId" id="Block-RequestId" />
-                        <label for="message-text text-secondary" class="col-form-label">Patient Name :<span class="text-info ps-2" id="Block-PatientName"></span></label>
+                        <label for="message-text" class="col-form-label text-secondary">Patient Name :<span class="text-info ps-2" id="Block-PatientName"></span></label>
                         <div class="form-floating my-4">
                             <textarea class="form-control"
                                       placeholder="Please provide a brief explanation for Block Request"
@@ -161,7 +161,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <input class="hidden" asp-for="RequestId" id="Transfer-RequestId" hidden />
-                        <label for="message-text text-secondary" class="col-form-label">To assign this request,search and select another Physician</label>
+                        <label for="message-text" class="col-form-label text-secondary">To assign this request,search and select another Physician</label>
                         <div class="my-4">
                             <select class="form-select form-select-lg shadow-none" aria-label="Small select example" id="TransferRegionSelector" asp-for="SelectedTransferRegion">
                                 <label class="selected">Narrow Search by Region</label>
@@ -250,8 +250,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="message-text text-secondary" class="col-form-label">Patient</label>
-                        <label for="message-text text-secondary" class="col-form-label">To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </label>
+                        <label for="message-text" class="col-form-label text-secondary">Patient</label>
+                        <label for="message-text" class="col-form-label text-secondary">To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="PatientEmail" placeholder="name@example.com" asp-for="PatientEmail">
@@ -286,11 +286,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="FirstName" asp-for="firstName">
+                        <input type="text" class="form-control" placeholder="FirstName" asp-for="firstName">
                         <label for="floatingInput">First Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="LastName" asp-for="lastName">
+                        <input type="text" class="form-control" placeholder="LastName" asp-for="lastName">
                         <label for="floatingInput">Last Name</label>
                     </div>
                     <div class="form-floating input-info w-100 me-2 mb-3">
@@ -298,7 +298,7 @@
                                id="phone" asp-for="PatientPhone">
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="PatientEmail">
+                        <input type="email" class="form-control" placeholder="name@example.com" asp-for="PatientEmail">
                         <label for="floatingInput">Email address</label>
                     </div>
                 </div>
@@ -325,7 +325,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="message-text text-secondary" class="col-form-label">To all unscheduled Physicians: We are short on converage and needs additional support On Call to respond to Requests.</label>
+                        <label for="message-text" class="col-form-label text-secondary">To all unscheduled Physicians: We are short on converage and needs additional support On Call to respond to Requests.</label>
                     </div>
                     <div class="form-floating my-4">
                         <textarea class="form-control"
@@ -462,7 +462,6 @@
 
 
 </div>
-
 
 
 
@@ -667,7 +666,7 @@
 
             <div class="col-lg-8 pt-2">
                 <div class="d-lg-flex d-none justify-content-end align-items-center">
-                    <div class="me-4">
+                    <div class="btn me-4">
                         <input class="form-check-input" hidden type="radio" value="All" name="relationshipType" id="allRadio">
                         <label class="form-check-label" for="allRadio">
                             All
@@ -715,34 +714,52 @@
                 </div>
 
 
-             @*    <div class="d-lg-none d-flex align-items-center justify-content-around">
-                    <div class="me-4 d-sm-block d-none">
-                        <button class="btn btn-outline-secondary">All</button>
+   @*              <div class="d-lg-none d-flex align-items-center justify-content-around">
+                    <div class="btn me-4 d-sm-block d-none">
+                        <input class="form-check-input" hidden type="radio" value="All" name="relationshipType" id="allRadio">
+                        <label class="form-check-label" for="allRadio">
+                            All
+                        </label>
                     </div>
                     <div class="me-1 d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Patient" name="relationshipType" id="patientRadio">
                         <div class="rounded-circle mx-auto"
-                             style="height: 12px; width: 12px; background-color: rgb(15, 189, 64);"></div>
-                        <p class="my-auto ps-1" style="font-size: small;">Patients</p>
+                             style="height: 12px; width: 12px; background-color:rgb(15, 189, 64);"></div>
+                        <label class="form-check-label" for="patientRadio">
+                            Patient
+                        </label>
                     </div>
                     <div class="me-1 d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Family/Friend" name="relationshipType" id="familyRadio">
                         <div class="rounded-circle mx-auto"
                              style="height: 12px; width: 12px; background-color: rgb(212, 107, 21);"></div>
-                        <p class="my-auto ps-1" style="font-size: small;">Family/Friend</p>
+                        <label class="form-check-label" for="familyRadio">
+                            Family/Friend
+                        </label>
                     </div>
                     <div class="me-1 d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Business" name="relationshipType" id="businessRadio">
                         <div class="rounded-circle mx-auto"
                              style="height: 12px; width: 12px; background-color: rgb(203, 22, 134);"></div>
-                        <p class="my-auto ps-1" style="font-size: small;">Business</p>
+                        <label class="form-check-label" for="businessRadio">
+                            Business
+                        </label>
                     </div>
                     <div class="me-1 d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Concierge" name="relationshipType" id="conciergeRadio">
                         <div class="rounded-circle mx-auto"
                              style="height: 12px; width: 12px; background-color: rgb(65, 65, 232);"></div>
-                        <p class="my-auto ps-1" style="font-size: small;">Concierge</p>
+                        <label class="form-check-label" for="conciergeRadio">
+                            Concierge
+                        </label>
                     </div>
                     <div class="d-sm-flex align-items-center">
                         <div class="rounded-circle mx-auto"
                              style="height: 12px; width: 12px; background-color: rgb(129, 12, 129);"></div>
-                        <p class="my-auto ps-1" style="font-size: small;">VIP</p>
+                        <label class="form-check-label" for="vipRadio">
+                            VIP
+                        </label>
+                        
                     </div>
                 </div> *@
             </div>

@@ -48,14 +48,14 @@
                 <ul class="nav nav-underline mx-3">
 
                     <li class="nav-item">
-                        <a class="nav-link active text-info px-2 fw-medium" aria-current="page"
+                        <a class="nav-link px-2 fw-medium text-info active" aria-current="page"
                            asp-action="admindashboard" asp-controller="Admin">DashBoard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary px-2 fw-medium" href="#">Provider Location</a>
+                        <a class="nav-link px-2 fw-medium text-secondary" href="#">Provider Location</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary px-2 fw-medium" asp-action="AdminProfile" asp-controller="Admin">My Profile</a>
+                        <a class="nav-link px-2 fw-medium text-secondary" asp-action="AdminProfile" asp-controller="Admin">My Profile</a>
                     </li>
                     <li class="nav-item dropdown">
                         @* <a class="nav-link text-secondary px-2 fw-medium" href="#">Providers</a> *@
@@ -70,7 +70,7 @@
  *@
 
                         <div class="dropdown">
-                            <a role="button" class="nav-link text-secondary px-2 fw-medium" data-bs-toggle="dropdown">Providers</a>
+                            <a role="button" class="nav-link px-2 fw-medium text-secondary" data-bs-toggle="dropdown">Providers</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="ProviderMenu" asp-controller="Admin">Provider</a></li>
                                 <li><a role="button" class="dropdown-item" >Scheduling</a></li>
@@ -80,13 +80,13 @@
                         
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary px-2 fw-medium" href="#">Partners</a>
+                        <a class="nav-link px-2 fw-medium text-secondary" href="#">Partners</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary px-2 fw-medium" asp-action="AccountAccess" asp-controller="Admin">Access</a>
+                        <a class="nav-link px-2 fw-medium text-secondary" asp-action="AccountAccess" asp-controller="Admin">Access</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary px-2 fw-medium" href="#">Records</a>
+                        <a class="nav-link px-2 fw-medium text-secondary" href="#">Records</a>
                     </li>
                 </ul>
 
@@ -120,6 +120,11 @@
             </nav>
         </div>
 
+
+
+
+
+      @* Mobile view of header  *@
         <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
              aria-labelledby="staticBackdropLabel">
             <div class="offcanvas-header d-flex justify-content-end">
@@ -191,5 +196,35 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await Component.InvokeAsync("Notyf")
     @RenderSection("Scripts", required: false)
+
+
+    <script>
+        //tabs color design
+        document.addEventListener("DOMContentLoaded", function () {
+            const navLinks = document.querySelectorAll(".nav-link");
+
+            navLinks.forEach(function (navLink) {
+                navLink.addEventListener("click", function () {
+                    // Remove active class from all nav links
+                    navLinks.forEach(function (link) {
+                        link.classList.remove("active");
+                        link.style.color = ""; // Reset text color
+                        link.style.borderBottom = "none"; // Reset bottom border
+                    });
+
+                    // Add active class to the clicked nav link
+                    this.classList.add("active");
+                    
+                    // Add bottom border and change text color to "deepskyblue"
+                    this.style.borderBottom = "2px solid deepskyblue";
+                    this.style.color = "deepskyblue";
+                });
+            });
+
+
+        });
+
+       
+    </script>
 </body>
 </html>
