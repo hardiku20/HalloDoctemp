@@ -41,7 +41,7 @@
                                 <div class="form-floating input-info mb-3">
                                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                               style="height: 100px"></textarea>
-                                    <label for="floatingTextarea2" class="text-secondary">
+                                    <label for="floatingTextarea2" >
                                         Enter brief details of Symptoms
                                         (Optional)
                                     </label>
@@ -50,14 +50,14 @@
                             <div class="col-md-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName">
-                                    <label for="floatingInput" class="text-secondary">First Name</label>
+                                    <label for="floatingInput" >First Name</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.FirstName)</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName">
-                                    <label for="floatingInput" class="text-secondary">Last Name</label>
+                                    <label for="floatingInput" >Last Name</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.LastName)</p>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                 <div class="form-floating input-info">
                                     <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
                                            aria-describedby="basic-addon1" asp-for="DateofBirth">
-                                    <label for="floatingInputValue" class="text-secondary">Date of birth</label>
+                                    <label for="floatingInputValue" >Date of birth</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.DateofBirth)</p>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                 <div class="form-floating input-info">
                                     <input type="email" class="form-control" id="email"
                                            placeholder="name@example.com" asp-for="Email">
-                                    <label for="floatingInput" class="text-secondary">Email address</label>
+                                    <label for="floatingInput" >Email address</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.Email)</p>
                                 </div>
                             </div>
@@ -137,28 +137,28 @@
                             <div class="col-sm-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="Street" asp-for="Street">
-                                    <label for="floatingInput" class="text-secondary">Street</label>
+                                    <label for="floatingInput" >Street</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.Street)</p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City">
-                                    <label for="floatingInput" class="text-secondary">City</label>
+                                    <label for="floatingInput" >City</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.City)</p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State">
-                                    <label for="floatingInput" class="text-secondary">State</label>
+                                    <label for="floatingInput" >State</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.State)</p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput" placeholder="Zip Code" asp-for="ZipCode">
-                                    <label for="floatingInput" class="text-secondary">Zip Code</label>
+                                    <label for="floatingInput" >Zip Code</label>
                                     <p class="text-danger">@Html.ValidationMessageFor(x=>x.ZipCode)</p>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
                                 <div class="form-floating input-info">
                                     <input type="text" class="form-control" id="floatingInput"
                                            placeholder="Room #/Suite (Optional)">
-                                    <label for="floatingInput" class="text-secondary">Room #/Suite (Optional)</label>
+                                    <label for="floatingInput" >Room #/Suite (Optional)</label>
                                 </div>
                             </div>
                         </div>

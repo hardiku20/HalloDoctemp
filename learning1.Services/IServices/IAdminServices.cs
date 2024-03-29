@@ -39,5 +39,7 @@ namespace learning1.Services.IServices
         int LoginMethod(string email, string password);
         void SendlinktoPatient(AdminDashboardViewModel model);
         void CreatePatientRequest(CreateRequestViewModel model);
+        CreateAdminAccountViewModel GetRegionforAdmin();
+        AdminProfileViewModel GetAdminProfileData(int AdminId);
     }
 }

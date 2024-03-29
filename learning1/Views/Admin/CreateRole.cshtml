@@ -24,14 +24,19 @@
                 <h5 class="my-3">Details</h5>
                 <div class="col-md-6 mb-3">
                     <div class="form-floating input-info">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Role Name" disabled>
-                        <label for="floatingInput" class="text-secondary">Role Name</label>
+                        <input type="text" class="form-control" id="floatingInput" placeholder="Role Name">
+                        <label for="floatingInput">Role Name</label>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <div class="form-floating input-info">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Account type" disabled>
-                        <label for="floatingInput" class="text-secondary">Account type</label>
+                    <div class="form-floating select-info">
+                        <select class="form-select form-control shadow-none" id="floatingSelect" aria-label="Floating label select example">
+                            <option value="0">All</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Physician</option>  
+                            <option value="3">Patient</option>  
+                        </select>
+                        <label for="floatingSelect">Account Type</label>
                     </div>
                 </div>
                 <div class="col-md-12 mb-3">

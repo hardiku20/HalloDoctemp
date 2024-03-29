@@ -48,5 +48,7 @@ namespace learning1.Repositories.IRepositories
         int LoginMethodRepo(string email, string password);
         void SendlinkMail(AdminDashboardViewModel model);
         void CreateRequestRepo(CreateRequestViewModel model);
+        List<Region> GetRegionTable();
+        AdminProfileViewModel GetAdminProfileRepo(int adminId);
     }
 }

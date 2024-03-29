@@ -38,11 +38,10 @@ namespace learning1.Controllers
         [HttpPost]
         public IActionResult PlatformLogin(LoginViewModel model)
         {
-            int userId = _adminServices.LoginMethod(model.Email, model.Password);
-
-            if(userId!= -1)
+            int AdminId = _adminServices.LoginMethod(model.Email, model.Password);
+            if(AdminId!= -1)
             {
-                _httpcontextAccessor.HttpContext.Session.SetInt32("Id", userId);
+                _httpcontextAccessor.HttpContext.Session.SetInt32("Id", AdminId);
                 _notyf.Success("Login Successful");
                 return RedirectToAction("Admindashboard", "Admin");  
             }
@@ -276,9 +275,10 @@ namespace learning1.Controllers
         }
 
 
-        public IActionResult AdminProfile()
+        public IActionResult AdminProfile(int AdminId=1)
         {
-            return View();
+            var model = _adminServices.GetAdminProfileData(AdminId);
+            return View(model);
         }
 
 
@@ -362,9 +362,14 @@ namespace learning1.Controllers
 
         public IActionResult CreateAdminAccount()
         {
+          
             return View();
         }
 
+        
+
+
+      
 
     }
 }

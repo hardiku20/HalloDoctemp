@@ -239,8 +239,8 @@ namespace learning1.Services.Services
 
         public int LoginMethod(string email, string password)
         {
-            int UserId= _adminRepo.LoginMethodRepo(email, password);
-            return UserId;
+            int AdminId= _adminRepo.LoginMethodRepo(email, password);
+            return AdminId;
         }
 
         public void SendlinktoPatient(AdminDashboardViewModel model)
@@ -251,6 +251,24 @@ namespace learning1.Services.Services
         public void CreatePatientRequest(CreateRequestViewModel model)
         {
             _adminRepo.CreateRequestRepo(model);
+        }
+
+        public CreateAdminAccountViewModel GetRegionforAdmin()
+        {
+            var regions = _adminRepo.GetRegionTable();
+            CreateAdminAccountViewModel model = new CreateAdminAccountViewModel()
+            {
+                Region = regions,
+            };
+            return model;
+        }
+
+        public AdminProfileViewModel GetAdminProfileData(int AdminId)
+        {
+            var model = _adminRepo.GetAdminProfileRepo(AdminId);
+            return model;
+
+
         }
     }
 }

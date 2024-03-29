@@ -742,8 +742,8 @@ namespace learning1.Repositories.Repositories
             var temp = _context.AspNetUsers.Where(u => u.Email == email && u.PasswordHash == password).FirstOrDefault();
             if (temp != null)
             {
-                int userId = _context.Users.Where(u => u.AspNetUserId == temp.Id).Select(x => x.UserId).FirstOrDefault();
-                return userId;
+                int AdminId = _context.Admins.Where(a => a.AspNetUserId == temp.Id).Select(x => x.AdminId).FirstOrDefault();
+                return AdminId;
             }
             else
             {
@@ -856,6 +856,34 @@ namespace learning1.Repositories.Repositories
 
             _context.RequestClients.Add(requestClient);
             _context.SaveChanges();
+        }
+
+        public List<Region> GetRegionTable()
+        {
+            return _context.Regions.ToList();
+        }
+
+        public AdminProfileViewModel GetAdminProfileRepo(int adminId)
+        {
+           var region = GetRegionTable();
+           var model = _context.Admins.Where(x=>x.AdminId == adminId).Select(x=> new AdminProfileViewModel()
+           {
+               AdminId = adminId,
+               firstName = x.FirstName,
+               lastName = x.LastName,
+               Email = x.Email,
+               confirmEmail = x.Email,
+               Phone= x.Mobile,
+               Address1 = x.Address1,
+               Address2 = x.Address2,
+               City = x.City,
+               
+               Zip = x.Zip,
+               MailingPhone = x.AltPhone,
+               Region = region,
+           }).FirstOrDefault();
+
+            return model;
         }
     }
 }
