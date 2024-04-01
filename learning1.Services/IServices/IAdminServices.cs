@@ -1,4 +1,5 @@
-﻿using learning1.DBEntities.ViewModel;
+﻿using learning1.DBEntities.Models;
+using learning1.DBEntities.ViewModel;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace learning1.Services.IServices
         void IsClearCase(AdminDashboardViewModel model);
         AdminDashboardViewModel RenderActiveStateData(int status1,int status2,int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName,RequestType requestType);
+        AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName, DBEntities.ViewModel.RequestType requestType);
         AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderToCloseStateData(int status1,int status2,int status3, int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName);
@@ -41,5 +42,11 @@ namespace learning1.Services.IServices
         void CreatePatientRequest(CreateRequestViewModel model);
         CreateAdminAccountViewModel GetRegionforAdmin();
         AdminProfileViewModel GetAdminProfileData(int AdminId);
+        List<Menu> GetMenus(int accountType);
+        void CreateRoleByAccount(CreateRoleViewModel model);
+        AccountAccessViewModel GetAccountAccessTable();
+        CreateRoleViewModel GetDetailsByRoleId(int roleId);
+        //AccountAccessViewModel EditRoleById(int roleId);
+        //List<string> GetMenuList(int accountType);
     }
 }

@@ -345,13 +345,28 @@ namespace learning1.Controllers
 
         public IActionResult AccountAccess()
         {
-            return View();
+            var model = _adminServices.GetAccountAccessTable();
+            return View(model);
         }
 
 
-        public IActionResult CreateRole()
+
+
+
+        public IActionResult CreateRole(int RoleId)
         {
-            return View();
+            CreateRoleViewModel model = _adminServices.GetDetailsByRoleId(RoleId);
+
+
+
+            return View(model);
+        }
+
+        public IActionResult GetMenuByAccount(int AccountType) {
+            var MenuList = _adminServices.GetMenus(AccountType);
+            CreateRoleViewModel model= new CreateRoleViewModel();
+            model.menulist= MenuList;
+            return PartialView("_MenuList",model);
         }
 
 
@@ -367,9 +382,31 @@ namespace learning1.Controllers
         }
 
         
+        //public List<string> GetMenuByAccount(int AccountType)
+        //{
+        //    var Menulist = _adminServices.GetMenuList(AccountType);
+        //    return Menulist;
+        //}
 
 
-      
+        
+
+
+        [HttpPost]
+        public IActionResult CreateRole(CreateRoleViewModel model)
+        {
+            _adminServices.CreateRoleByAccount(model);
+            return RedirectToAction("AccountAccess");
+        }
+
+        //public IActionResult CreateRole(int RoleId)
+        //{
+        //    var model = _adminServices.EditRoleById(RoleId);
+        //    return View(model);
+        //}
+
+       
+
 
     }
 }

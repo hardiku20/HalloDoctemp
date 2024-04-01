@@ -12,9 +12,11 @@ using System.Threading.Tasks;
 using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq.Expressions;
+using System.Data;
 
 namespace learning1.Repositories.Repositories
 {
+
     public class AdminRepo : IAdminRepo
     {
         private readonly DbHallodocContext _context;
@@ -885,5 +887,112 @@ namespace learning1.Repositories.Repositories
 
             return model;
         }
+
+        public List<Menu> GetMenuRepo(int accountType)
+        {
+            var menu= _context.Menus.ToList();
+            if (accountType != 0)
+            {
+                menu = menu.Where(x => x.AccountType == accountType).ToList();
+            }
+            return menu;
+
+        }
+
+        public void CreateRoleRepo(CreateRoleViewModel model)
+        {
+            Role role = new Role()
+            {
+                Name = model.RoleName,
+                AccountType =short.Parse(model.AccountType),
+                CreatedBy="hardik",
+                CreatedDate=DateTime.Now,
+                IsDeleted=false
+
+           };
+
+            _context.Roles.Add(role);
+            _context.SaveChanges();
+
+            foreach (var item in model.SelectedMenus)
+            {
+                RoleMenu roleMenu = new RoleMenu() 
+                { 
+                         RoleId=role.RoleId,
+                         MenuId=item,
+                };
+                _context.RoleMenus.Add(roleMenu);
+            }
+            _context.SaveChanges();
+
+        }
+
+        public AccountAccessViewModel GetAccountAccessRepo()
+        {
+            AccountAccessViewModel model = new AccountAccessViewModel()
+            {
+                Roledata = _context.Roles.Where(x => x.IsDeleted == false).ToList(),
+                 
+            };
+
+            return model;
+            
+        }
+
+        public CreateRoleViewModel GetRoleDetailsRepo(int roleId)
+        {
+            if(roleId != 0)
+            {
+
+                Role role = _context.Roles.Where(x => x.RoleId == roleId).FirstOrDefault();
+
+
+
+
+                CreateRoleViewModel model = new CreateRoleViewModel()
+                {
+                    RoleId = roleId,
+                    AccountType = role.AccountType.ToString(),
+                    RoleName = role.Name,
+                    SelectedMenus = _context.RoleMenus.Where(x => x.RoleId == roleId).Select(x => x.MenuId).ToList(),
+                    menulist = _context.Menus.Where(x => x.AccountType == role.AccountType).ToList(),
+
+                };
+                return model;
+            }
+
+            else
+            {
+                CreateRoleViewModel model = new CreateRoleViewModel();
+
+
+                return model;
+            }
+            
+
+            
+
+
+
+        }
+
+        //public AccountAccessViewModel EditRoleRepo(int roleId)
+        //{
+        //   var model = _context.Roles.Where(x=>x.RoleId == roleId)
+        //        .Select(x=> new AccountAccessViewModel()
+        //   {
+        //        Name = x.Name,
+        //        RoleId = roleId,
+        //        AccountType = x.AccountType.ToString(),
+        //   }).FirstOrDefault();
+
+        //    return model;
+        //}
+
+        //public List<string> GetMenuListRepo(int accountType)
+        //{
+        //    var Menulist = _context.Menus.Where(x => x.AccountType == accountType).Select(x=>x.Name).ToList();
+        //    return Menulist;
+        //}
     }
 }

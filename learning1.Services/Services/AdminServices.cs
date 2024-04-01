@@ -270,5 +270,34 @@ namespace learning1.Services.Services
 
 
         }
+
+        public List<Menu> GetMenus(int accountType)
+        {
+            var Menus = _adminRepo.GetMenuRepo(accountType);
+            return Menus;
+        }
+
+        public void CreateRoleByAccount(CreateRoleViewModel model)
+        {
+            _adminRepo.CreateRoleRepo(model);
+
+        }
+
+        public AccountAccessViewModel GetAccountAccessTable()
+        {
+            var model = _adminRepo.GetAccountAccessRepo();
+            return model;
+        }
+
+        public CreateRoleViewModel GetDetailsByRoleId(int roleId)
+        {
+            return _adminRepo.GetRoleDetailsRepo(roleId);
+        }
+
+        //public AccountAccessViewModel EditRoleById(int roleId)
+        //{
+        //    var model = _adminRepo.EditRoleRepo(roleId);
+        //    return model;
+        //}
     }
 }

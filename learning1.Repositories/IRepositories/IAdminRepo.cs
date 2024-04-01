@@ -50,5 +50,11 @@ namespace learning1.Repositories.IRepositories
         void CreateRequestRepo(CreateRequestViewModel model);
         List<Region> GetRegionTable();
         AdminProfileViewModel GetAdminProfileRepo(int adminId);
+        List<Menu> GetMenuRepo(int accountType);
+        void CreateRoleRepo(CreateRoleViewModel model);
+        AccountAccessViewModel GetAccountAccessRepo();
+        CreateRoleViewModel GetRoleDetailsRepo(int roleId);
+        //AccountAccessViewModel EditRoleRepo(int roleId);
+        //List<string> GetMenuListRepo(int accountType);
     }
 }

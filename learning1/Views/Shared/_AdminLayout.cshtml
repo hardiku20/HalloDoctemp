@@ -57,7 +57,7 @@
                     <li class="nav-item">
                         <a class="nav-link px-2 fw-medium text-secondary" asp-action="AdminProfile" asp-controller="Admin">My Profile</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
                         @* <a class="nav-link text-secondary px-2 fw-medium" href="#">Providers</a> *@
                             @* <button class="nav-link btn dropdown-toggle text-secondary fw-medium px-2 rounded-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Provider
@@ -83,7 +83,13 @@
                         <a class="nav-link px-2 fw-medium text-secondary" href="#">Partners</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-2 fw-medium text-secondary" asp-action="AccountAccess" asp-controller="Admin">Access</a>
+                        <div class="dropdown">
+                            <a role="button" class="nav-link px-2 fw-medium text-secondary" data-bs-toggle="dropdown">Access</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a role="button" class="dropdown-item" asp-action="AccountAccess" asp-controller="Admin">Account Access</a></li>
+                                <li><a role="button" class="dropdown-item">User Access</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-2 fw-medium text-secondary" href="#">Records</a>

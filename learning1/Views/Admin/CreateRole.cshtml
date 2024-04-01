@@ -6,6 +6,8 @@
 }
 
 
+@model learning1.DBEntities.ViewModel.CreateRoleViewModel;
+
 @* Content of the Web-page *@
 <div class="container pb-4">
     <div class="d-flex justify-content-between align-items-center mt-4">
@@ -17,53 +19,35 @@
         </div>
     </div>
 
+    <form method="post" asp-action="CreateRole" asp-controller="Admin">
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-4">
-            <div class="row">
-                <h5 class="my-3">Details</h5>
-                <div class="col-md-6 mb-3">
-                    <div class="form-floating input-info">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="Role Name">
-                        <label for="floatingInput">Role Name</label>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="row">
+                    <h5 class="my-3">Details</h5>
+                    <input asp-for="RoleId" hidden/>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Role Name" asp-for="RoleName">
+                            <label for="floatingInput">Role Name</label>
+                            <p class="text-danger">@Html.ValidationMessageFor(x => x.RoleName)</p>
+                            @* <span asp-validation-for="RoleName" class="text-danger"></span> *@
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <div class="form-floating select-info">
-                        <select class="form-select form-control shadow-none" id="floatingSelect" aria-label="Floating label select example">
-                            <option value="0">All</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Physician</option>  
-                            <option value="3">Patient</option>  
-                        </select>
-                        <label for="floatingSelect">Account Type</label>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating select-info">
+                            <select class="form-select form-control shadow-none" id="AccountType" aria-label="Floating label select example" asp-for="AccountType">
+                                <option value="0">All</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Physician</option>
+                                <option value="3">Patient</option>
+                            </select>
+                            <label for="floatingSelect">Account Type</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-12 mb-3">
-                    <div class="d-flex gap-2">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                            <label class="form-check-label text-secondary" for="flexCheckChecked">
-                                Checked checkbox
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                            <label class="form-check-label text-secondary" for="flexCheckChecked">
-                                Checked checkbox
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                            <label class="form-check-label text-secondary" for="flexCheckChecked">
-                                Checked checkbox
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                            <label class="form-check-label text-secondary" for="flexCheckChecked">
-                                Checked checkbox
-                            </label>
+                    <div class="col-md-12 mb-3">
+                        <div class="d-flex flex-wrap gap-2" id="MenuList">
+                            @* Menu by Account Type displays here *@
                         </div>
                     </div>
                 </div>
@@ -75,7 +59,17 @@
             </div>
 
 
-           
+
         </div>
-    </div>
+    </form>
 </div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}
+<script src="~/js/AccessRole.js"></script>
