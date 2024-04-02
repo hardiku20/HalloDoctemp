@@ -9,6 +9,12 @@
     z-index: 999;
 }
 
+
+.select-focus select:focus {
+    border-color: rgb(36, 152, 152);
+    box-shadow: none;
+}
+
 .form-floating {
     box-shadow: none;
 }
@@ -31,6 +37,8 @@
     .form-floating select ~ label {
         color: rgb(108, 117, 125);
     }
+
+
 
     .form-floating select:focus {
         border-color: rgb(36, 152, 152);
@@ -60,6 +68,7 @@
     .form-floating.input-info textarea:focus ~ label {
         color: rgb(36, 191, 191);
     }
+
 
 .iti {
     width: 100% !important;

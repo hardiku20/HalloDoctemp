@@ -1,0 +1,57 @@
+﻿@{
+    Layout = "_AdminLayout";
+}
+
+
+
+@* Content of the Web-page *@
+<div class="container pb-4">
+    <div class="d-flex justify-content-between my-4">
+        <h4 class="">User Access</h4>
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="col-md-4 col-sm-6 p-2">
+                <div class="form-floating select-info">
+                    <select class="form-select form-control shadow-none" aria-label="Floating label select example">
+                        <option value="0">All</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Physician</option>
+                        <option value="3">Patient</option>
+                    </select>
+                    <label for="floatingSelect">Role Type</label>
+                </div>
+            </div>
+
+
+            <div class="">
+                <table class="table-responsive  table-hover w-100 px-2">
+                    <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+                        <td scope="col" class="py-3 ps-4">Account Type</td>
+                        <td scope="col" class="py-3">Account POC</td>
+                        <td scope="col" class="py-3">Phone</td>
+                        <td scope="col" class="py-3">Status</td>
+                        <td scope="col" class="py-3">Open Requests</td>
+                        <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+                    </tr>
+
+
+             
+                        <tr class="border-bottom border-secondary-subtle">
+                            <td class="ps-4 py-1">Admin</td>
+                            <td class="py-1">Test, Admin</td>
+                            <td class="py-1">934585930</td>
+                            <td class="py-1">Active</td>
+                            <td class="py-1">2015</td>
+                            <td class="d-flex justify-content-center py-1">
+                                <button type="submit" class="btn btn-outline-info text-info bg-white">Edit</button>
+                            </td>
+                        </tr>
+                   
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

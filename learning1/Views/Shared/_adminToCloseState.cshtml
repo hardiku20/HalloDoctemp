@@ -276,9 +276,11 @@
                                             style="font-size: small;" data-bs-toggle="modal"
                                        data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')">Clear Case</a>
                                 </div>
+                            </div>
+                            <div class="row mb-2">
                                 <div class="col-6">
                                     <a class="btn bg-success text-white rounded-pill w-100"
-                                       style="font-size: small;" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId"></a>
+                                       style="font-size: small;" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId">Encounter</a>
                                 </div>
                             </div>
                         </div>

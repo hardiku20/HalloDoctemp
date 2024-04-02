@@ -54,6 +54,7 @@ namespace learning1.Repositories.IRepositories
         void CreateRoleRepo(CreateRoleViewModel model);
         AccountAccessViewModel GetAccountAccessRepo();
         CreateRoleViewModel GetRoleDetailsRepo(int roleId);
+        void DeleteRoleRepo(int roleId);
         //AccountAccessViewModel EditRoleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);
     }

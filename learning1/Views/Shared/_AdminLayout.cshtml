@@ -73,7 +73,7 @@
                             <a role="button" class="nav-link px-2 fw-medium text-secondary" data-bs-toggle="dropdown">Providers</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="ProviderMenu" asp-controller="Admin">Provider</a></li>
-                                <li><a role="button" class="dropdown-item" >Scheduling</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="Scheduling" asp-controller="Admin">Scheduling</a></li>
                                 <li><a role="button" class="dropdown-item">Invoicing</a></li>
                             </ul>
                         </div>
@@ -87,7 +87,7 @@
                             <a role="button" class="nav-link px-2 fw-medium text-secondary" data-bs-toggle="dropdown">Access</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="AccountAccess" asp-controller="Admin">Account Access</a></li>
-                                <li><a role="button" class="dropdown-item">User Access</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="UserAccess" asp-controller="Admin">User Access</a></li>
                             </ul>
                         </div>
                     </li>
@@ -207,17 +207,18 @@
     <script>
         //tabs color design
         document.addEventListener("DOMContentLoaded", function () {
+            
             const navLinks = document.querySelectorAll(".nav-link");
 
             navLinks.forEach(function (navLink) {
                 navLink.addEventListener("click", function () {
+
                     // Remove active class from all nav links
                     navLinks.forEach(function (link) {
                         link.classList.remove("active");
                         link.style.color = ""; // Reset text color
                         link.style.borderBottom = "none"; // Reset bottom border
                     });
-
                     // Add active class to the clicked nav link
                     this.classList.add("active");
                     
@@ -226,8 +227,6 @@
                     this.style.color = "deepskyblue";
                 });
             });
-
-
         });
 
        

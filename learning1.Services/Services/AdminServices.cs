@@ -294,6 +294,11 @@ namespace learning1.Services.Services
             return _adminRepo.GetRoleDetailsRepo(roleId);
         }
 
+        public void DeleteRoleById(int roleId)
+        {
+            _adminRepo.DeleteRoleRepo(roleId);
+        }
+
         //public AccountAccessViewModel EditRoleById(int roleId)
         //{
         //    var model = _adminRepo.EditRoleRepo(roleId);

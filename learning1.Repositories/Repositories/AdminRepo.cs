@@ -868,7 +868,7 @@ namespace learning1.Repositories.Repositories
         public AdminProfileViewModel GetAdminProfileRepo(int adminId)
         {
            var region = GetRegionTable();
-           var model = _context.Admins.Where(x=>x.AdminId == adminId).Select(x=> new AdminProfileViewModel()
+           var model = _context.Admins.Include(x=>x.AdminRegions).Where(x=>x.AdminId == adminId).Select(x=> new AdminProfileViewModel()
            {
                AdminId = adminId,
                firstName = x.FirstName,
@@ -914,16 +914,19 @@ namespace learning1.Repositories.Repositories
             _context.Roles.Add(role);
             _context.SaveChanges();
 
-            foreach (var item in model.SelectedMenus)
+            if(role.AccountType != 3)
             {
-                RoleMenu roleMenu = new RoleMenu() 
-                { 
-                         RoleId=role.RoleId,
-                         MenuId=item,
-                };
-                _context.RoleMenus.Add(roleMenu);
+                foreach (var item in model.SelectedMenus)
+                {
+                    RoleMenu roleMenu = new RoleMenu()
+                    {
+                        RoleId = role.RoleId,
+                        MenuId = item,
+                    };
+                    _context.RoleMenus.Add(roleMenu);
+                }
+                _context.SaveChanges();
             }
-            _context.SaveChanges();
 
         }
 
@@ -976,6 +979,16 @@ namespace learning1.Repositories.Repositories
 
         }
 
+        public void DeleteRoleRepo(int roleId)
+        {
+            var role = _context.Roles.Where(x => x.RoleId == roleId).FirstOrDefault();
+            role.IsDeleted = true;
+
+            _context.Roles.Update(role);
+            _context.SaveChanges();
+
+        }
+
         //public AccountAccessViewModel EditRoleRepo(int roleId)
         //{
         //   var model = _context.Roles.Where(x=>x.RoleId == roleId)
@@ -994,5 +1007,16 @@ namespace learning1.Repositories.Repositories
         //    var Menulist = _context.Menus.Where(x => x.AccountType == accountType).Select(x=>x.Name).ToList();
         //    return Menulist;
         //}
+
+
+
+
+
+
+
+
+
+
+
     }
 }

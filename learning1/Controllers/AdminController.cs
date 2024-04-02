@@ -356,9 +356,6 @@ namespace learning1.Controllers
         public IActionResult CreateRole(int RoleId)
         {
             CreateRoleViewModel model = _adminServices.GetDetailsByRoleId(RoleId);
-
-
-
             return View(model);
         }
 
@@ -405,7 +402,22 @@ namespace learning1.Controllers
         //    return View(model);
         //}
 
-       
+       public IActionResult UserAccess()
+        {
+            return View();
+        }
+
+        public IActionResult DeleteRole(int RoleId)
+        {
+            _adminServices.DeleteRoleById(RoleId);
+            return RedirectToAction("AccountAccess");
+
+        }
+
+        public IActionResult Scheduling()
+        {
+            return View();
+        }
 
 
     }

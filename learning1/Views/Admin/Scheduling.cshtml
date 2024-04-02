@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+
+
+
+@* Content of the Web-page *@
+<div class="container pb-4">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h4 class="">Scheduling</h4>
+        <div class="d-flex justify-content-end">
+            <a asp-controller="Admin" asp-action="admindashboard"
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="d-md-flex justify-content-between align-items-center mb-4">
+       
+            <div class="select-focus col-md-2 col-6  mb-2">
+            <select class="form-select form-control shadow-none" aria-label="Floating label select example">
+                    <option value="0">All Regions</option>
+                    <option value="1">Admin</option>
+                    <option value="2">Physician</option>
+                    <option value="3">Patient</option>
+                </select>
+            </div>
+        
+            
+        
+        <div class="d-flex align-items-center gap-2 mb-2">
+            <a class="btn btn-info font-info text-decoration-none text-white bg-info ">Provider On call</a>
+            <a class="btn btn-info font-info text-decoration-none text-white bg-info">Shift For Review</a>
+            <a class="btn btn-info font-info text-decoration-none text-white bg-info">Add New Shift</a>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <h5 class="my-3">Monday, Jan 1, 2024</h5>
+        <div class="d-sm-flex align-items-center justify-content-between">
+            <div class="form-floating input-info mb-2">
+                <input type="text" class="form-control" id="floatingInput" placeholder="User Name" value="admin" disabled>
+                <label for="floatingInput">User Name (LastnameF)</label>
+            </div>
+            <div class="mb-2">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <a class="btn btn-info text-decoration-none bg-white text-info ">Day</a>
+                    <a class="btn btn-info text-decoration-none bg-white text-info">Week</a>
+                </div>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <a class="btn btn-info text-decoration-none bg-white text-info ">Day</a>
+                    <a class="btn btn-info text-decoration-none bg-white text-info">Week</a>
+                    <a class="btn btn-info text-decoration-none bg-white text-info">Month</a>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="col-md-4 col-sm-6 p-2">
+                <div class="form-floating select-info">
+                    <select class="form-select form-control shadow-none" aria-label="Floating label select example">
+                        <option value="0">All</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Physician</option>
+                        <option value="3">Patient</option>
+                    </select>
+                    <label for="floatingSelect">Role Type</label>
+                </div>
+            </div>
+
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+

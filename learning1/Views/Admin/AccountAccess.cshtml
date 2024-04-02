@@ -18,10 +18,10 @@
     <div class="card border-0 shadow-sm">
         <div class="card-body p-0">
             <div class="d-flex justify-content-end align-items-center mb-2 p-2">
-                    <a asp-action="CreateRole" asp-controller="Admin"
-                       class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
-                        Create Role
-                    </a>
+                <a asp-action="CreateRole" asp-controller="Admin"
+                    class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+                    Create Role
+                </a>
             </div>
 
 
@@ -34,7 +34,7 @@
                     </tr>
 
 
-                    @foreach(var items in Model.Roledata)
+                    @foreach (var items in Model.Roledata)
                     {
                         <tr class="border-bottom border-secondary-subtle">
                             <td class="ps-4 py-1">@items.Name</td>
@@ -50,8 +50,8 @@
                             }
                             <td class="py-1">@AccountTextMap[items.AccountType]</td>
                             <td class="d-flex justify-content-center gap-1 py-1">
-                                <a type="submit" class="btn btn-outline-info text-info bg-white" asp-action="CreateRole" asp-controller="Admin" asp-route-RoleId="@items.RoleId" >Edit</a>
-                                <button type="submit" class="btn btn-outline-info text-info bg-white">Delete</button>
+                                <a type="submit" class="btn btn-outline-info text-info bg-white" asp-action="CreateRole" asp-controller="Admin" asp-route-RoleId="@items.RoleId">Edit</a>
+                                <button type="submit" class="btn btn-outline-info text-info bg-white" onclick="DeleteRole(@items.RoleId)">Delete</button>
                             </td>
                         </tr>
                     }
@@ -60,3 +60,30 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    function DeleteRole(id) {
+        var response = confirm("Are you sure to delete the record?");
+        if (response) {
+
+            $.ajax({
+                method: "post",
+                url: '/Admin/DeleteRole',
+                data: {
+                    RoleId: id,
+                },
+                success: function () {
+
+
+                    window.location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+
+</script>

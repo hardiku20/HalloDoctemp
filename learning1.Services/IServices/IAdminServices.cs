@@ -46,6 +46,7 @@ namespace learning1.Services.IServices
         void CreateRoleByAccount(CreateRoleViewModel model);
         AccountAccessViewModel GetAccountAccessTable();
         CreateRoleViewModel GetDetailsByRoleId(int roleId);
+        void DeleteRoleById(int roleId);
         //AccountAccessViewModel EditRoleById(int roleId);
         //List<string> GetMenuList(int accountType);
     }
