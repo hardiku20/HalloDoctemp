@@ -47,6 +47,9 @@ namespace learning1.Services.IServices
         AccountAccessViewModel GetAccountAccessTable();
         CreateRoleViewModel GetDetailsByRoleId(int roleId);
         void DeleteRoleById(int roleId);
+        List<ShiftDetail> GetScheduleData();
+        List<Region> getRegionTableData();
+        List<ProviderMenuDetailsViewModel> GetPhysicianDataByRegion(int regionId);
         //AccountAccessViewModel EditRoleById(int roleId);
         //List<string> GetMenuList(int accountType);
     }

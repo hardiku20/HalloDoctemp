@@ -179,3 +179,35 @@
     margin: auto;
     margin-top: -12px
 }
+
+/*-------------------------------Full Calendar css-------------------------------------------------------*/
+
+.fc th {
+    color: white;
+    background-color: dimgray;
+}
+
+#calendar .fc-timeline-slot-cushion, .fc-col-header-cell-cushion {
+    text-decoration: none;
+    color: white;
+}
+
+.fc-daygrid-day-top {
+    background-color: #ffacf5;
+    justify-content: center;
+}
+
+.fc-daygrid-day-number {
+    text-decoration: none;
+    color: black;
+}
+/*.fc-daygrid-event-harness {
+    border-bottom: 1px solid
+}*/
+.fc-event-time, .fc-event-title {
+    color: black;
+}
+
+.fc-event {
+    margin-top: 1px !important;
+}

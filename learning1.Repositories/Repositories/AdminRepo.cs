@@ -989,6 +989,30 @@ namespace learning1.Repositories.Repositories
 
         }
 
+        public List<ShiftDetail> GetScheduleData()
+        {
+            try
+            {
+                return _context.ShiftDetails.Include(m => m.Shift).Where(m => m.IsDeleted == false).ToList();
+            }
+            catch { return new List<ShiftDetail> { }; }
+        }
+
+        public List<ProviderMenuDetailsViewModel> ProviderMenuTableDetails(int regionId)
+        {
+            var temp = _context.Physicians.Where(x => regionId == 0 || x.RegionId == regionId).
+               Select(x => new ProviderMenuDetailsViewModel
+               {
+                   PhysicianId = x.PhysicianId,
+                   //Role = (RoleName)x.RoleId,
+                   //Status = (PhysicianStatus)x.Status,
+                   //OnCallStatus = "Unavailable",
+                   Name = x.FirstName + " " + x.LastName,
+               }).ToList();
+
+            return temp;
+        }
+
         //public AccountAccessViewModel EditRoleRepo(int roleId)
         //{
         //   var model = _context.Roles.Where(x=>x.RoleId == roleId)

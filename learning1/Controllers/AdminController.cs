@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using learning1.DBEntities.Models;
 using learning1.DBEntities.ViewModel;
 using learning1.Services.IServices;
 using learning1.Services.Services;
@@ -88,7 +89,7 @@ namespace learning1.Controllers
             return RedirectToAction("ViewNotes",model);
         }
 
-        public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null,RequestType requestType=(RequestType)5)
+        public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null, learning1.DBEntities.ViewModel.RequestType requestType=(learning1.DBEntities.ViewModel.RequestType)5)
         {
             
             var model = _adminServices.RenderNewStateData(Status, Page, PageSize, patientName,requestType);
@@ -418,6 +419,49 @@ namespace learning1.Controllers
         {
             return View();
         }
+
+
+
+
+
+
+        public IActionResult GetProviderDetailsForSchedule(int RegionId)
+        {
+            List<ProviderMenuDetailsViewModel> model = _adminServices.GetPhysicianDataByRegion(RegionId);
+
+            List<ProviderDTO> list = model.Select(x => new ProviderDTO
+            {
+                Id = x.PhysicianId,
+                title = x.Name ?? "",
+                //imageUrl = "https://api.slingacademy.com/public/sample-photos/" + new Random().Next(0, 100) + ".jpeg"
+            }).ToList();
+            return Json(list);
+        }
+
+        public IActionResult GetScheduleData()
+        {
+            string[] color = { "#edacd2", "#a5cfa6" };
+            List<ShiftDetail> shiftDetails = _adminServices.GetScheduleData();
+
+            List<ShiftDTO> list = shiftDetails.Select(s => new ShiftDTO
+            {
+                resourceId = s.Shift.PhysicianId,
+                Id = s.ShiftDetailId,
+                title = "Event " + s.ShiftDetailId,
+                start = s.ShiftDate.ToString("yyyy-MM-dd") + s.StartTime.ToString("THH:mm:ss"),
+                end = s.ShiftDate.ToString("yyyy-MM-dd") + s.EndTime.ToString("THH:mm:ss"),
+                color = color[s.Status - 1]
+            }).ToList();
+
+            return Json(list);
+        }
+
+        public List<Region> GetRegions()
+        {
+            var regionsData = _adminServices.getRegionTableData();
+            return regionsData;
+        }
+
 
 
     }

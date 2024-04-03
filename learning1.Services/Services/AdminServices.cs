@@ -299,6 +299,24 @@ namespace learning1.Services.Services
             _adminRepo.DeleteRoleRepo(roleId);
         }
 
+        public List<ShiftDetail> GetScheduleData()
+        {
+            return _adminRepo.GetScheduleData();
+        }
+
+        public List<Region> getRegionTableData()
+        {
+            return _adminRepo.GetRegionTable();
+        }
+
+        public List<ProviderMenuDetailsViewModel> GetPhysicianDataByRegion(int regionId)
+        {
+            var tableData = _adminRepo.ProviderMenuTableDetails(regionId);
+
+
+            return tableData;
+        }
+
         //public AccountAccessViewModel EditRoleById(int roleId)
         //{
         //    var model = _adminRepo.EditRoleRepo(roleId);
