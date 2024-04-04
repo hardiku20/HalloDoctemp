@@ -97,7 +97,7 @@
                     @* <label for="floatingSelect" class="mx-2 text-secondary">Search Region</label> *@
                 </div>
                 <div class="">
-                    <a data-bs-target="#ContactProviderModal" data-bs-toggle="modal"
+                    <a asp-action="CreateProviderAccount" asp-controller="Admin"
                        class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
                         Create Provider Account
                     </a>
@@ -126,7 +126,7 @@
                         <td class="">UN Available</td>
                         <td class="">Pendinmg</td>
                         <td class="d-flex justify-content-center gap-1">
-                            <a class="btn btn-outline-info text-info bg-white">Contact</a>
+                            <a class="btn btn-outline-info text-info bg-white" data-bs-target="#ContactProviderModal" data-bs-toggle="modal">Contact</a>
                             <a class="btn btn-outline-info text-info bg-white" asp-action="EditPhysicianAccount" asp-controller="Admin">Edit</a>
                         </td>
                      </tr>

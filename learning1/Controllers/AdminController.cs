@@ -209,7 +209,7 @@ namespace learning1.Controllers
         {
 
             _adminServices.InsertOrderDetails(model);
-            _notyf.Success("Success Notification");
+            _notyf.Success("Order Placed");
             return RedirectToAction("admindashboard");
         }
 
@@ -368,6 +368,8 @@ namespace learning1.Controllers
         }
 
 
+
+
         public IActionResult CreateProviderAccount()
         {
             return View();
@@ -394,6 +396,7 @@ namespace learning1.Controllers
         public IActionResult CreateRole(CreateRoleViewModel model)
         {
             _adminServices.CreateRoleByAccount(model);
+            _notyf.Success("Role Created Successfully");
             return RedirectToAction("AccountAccess");
         }
 
@@ -415,9 +418,10 @@ namespace learning1.Controllers
 
         }
 
-        public IActionResult Scheduling()
+        public IActionResult Scheduling(SchedulingViewModel model)
         {
-            return View();
+
+            return View(model);
         }
 
 

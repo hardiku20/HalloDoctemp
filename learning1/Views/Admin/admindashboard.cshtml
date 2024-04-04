@@ -13,7 +13,7 @@
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form method="post" asp-action="CancelCase" asp-controller="Admin">
+            <form method="post" asp-action="CancelCase" asp-controller="Admin" class="needs-validation" novalidate>
 
                 <div class="modal-header bg-info">
                     <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Cancel Confirmation</h1>
@@ -25,21 +25,23 @@
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label text-secondary">Patient Name :<span class="text-info ps-2" id="Cancel-PatientName"></span></label>
                         <div class="my-4">
-                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" asp-for="ReasonForCancellation">
+                            <select class="form-select form-select-lg shadow-none" aria-label="Small select example" asp-for="ReasonForCancellation" required>
                                 <label selected">Reason for cancellation</label>
                                 @foreach (string items in Model.CancellationReason)
                                 {
                                     <option>@items</option>
                                 }
                             </select>
+                            <div class="invalid-feedback">Please select a reason for cancellation</div>
                         </div>
                         <div class="form-floating">
                             <textarea class="form-control"
                                       placeholder="Please provide a brief explanation for your cancelation"
-                                      id="floatingTextarea2" style="height: 100px" asp-for="CancelNotes"></textarea>
+                                      id="floatingTextarea2" style="height: 100px" asp-for="CancelNotes" required></textarea>
                             <label for="floatingTextarea2">
                                 Provide Additional Notes
                             </label>
+                            <div class="invalid-feedback">Please enter a description</div>
                         </div>
                     </div>
                 </div>
@@ -839,3 +841,15 @@
     });
 </script>
 
+<script>
+    // Prevent form submission if validation fails
+    $('form').submit(function (event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        $(this).addClass('was-validated');
+    });
+        });
+
+</script>
