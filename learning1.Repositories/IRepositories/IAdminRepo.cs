@@ -57,7 +57,9 @@ namespace learning1.Repositories.IRepositories
         void DeleteRoleRepo(int roleId);
         List<ShiftDetail> GetScheduleData();
         List<ProviderMenuDetailsViewModel> ProviderMenuTableDetails(int regionId);
-       
+        List<HealthProfessionalType> DisplayProfessionlist();
+        void AddBusinessRepo(AddBusinessViewModal modal);
+
         //AccountAccessViewModel EditRoleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);
     }

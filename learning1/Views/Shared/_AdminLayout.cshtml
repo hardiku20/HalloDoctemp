@@ -70,7 +70,7 @@
  *@
 
                         <div class="dropdown">
-                            <a role="button" class="nav-link px-2 fw-medium text-secondary" data-bs-toggle="dropdown">Providers</a>
+                            <a role="button" class="nav-link px-2 fw-medium text-secondary dropdown-toggle" data-bs-toggle="dropdown">Providers</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="ProviderMenu" asp-controller="Admin">Provider</a></li>
                                 <li><a role="button" class="dropdown-item" asp-action="Scheduling" asp-controller="Admin">Scheduling</a></li>
@@ -80,11 +80,11 @@
                         
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-2 fw-medium text-secondary" href="#">Partners</a>
+                        <a class="nav-link px-2 fw-medium text-secondary" asp-action="Vendors" asp-controller="Admin">Partners</a>
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <a role="button" class="nav-link px-2 fw-medium text-secondary" data-bs-toggle="dropdown">Access</a>
+                            <a role="button" class="nav-link px-2 fw-medium text-secondary dropdown-toggle" data-bs-toggle="dropdown">Access</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="AccountAccess" asp-controller="Admin">Account Access</a></li>
                                 <li><a role="button" class="dropdown-item" asp-action="UserAccess" asp-controller="Admin">User Access</a></li>
@@ -92,7 +92,16 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-2 fw-medium text-secondary" href="#">Records</a>
+                        <div class="dropdown">
+                            <a role="button" class="nav-link px-2 fw-medium text-secondary dropdown-toggle" data-bs-toggle="dropdown">Records</a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a role="button" class="dropdown-item">Search Records</a></li>
+                                <li><a role="button" class="dropdown-item">Email Logs</a></li>
+                                <li><a role="button" class="dropdown-item">SMS Logs</a></li>
+                                <li><a role="button" class="dropdown-item">Patient Records</a></li>
+                                <li><a role="button" class="dropdown-item">Blocked History</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
 

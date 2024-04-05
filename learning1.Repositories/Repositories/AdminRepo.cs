@@ -1013,6 +1013,31 @@ namespace learning1.Repositories.Repositories
             return temp;
         }
 
+        public List<HealthProfessionalType> DisplayProfessionlist()
+        {
+            return _context.HealthProfessionalTypes.ToList();
+        }
+
+        public void AddBusinessRepo(AddBusinessViewModal modal)
+        {
+            HealthProfessional healthProfessional = new HealthProfessional()
+            {
+                VendorName = modal.BusinessName,
+                Profession = modal.Profession,
+                FaxNumber =modal.FaxNumber,
+                PhoneNumber = modal.PhoneNumber,
+                Email = modal.Email,
+                BusinessContact = modal.BusinessContact,
+                State = modal.State,
+                City= modal.City,
+                Zip = modal.Zipcode,
+                CreatedDate = DateTime.Now,
+                Address = modal.Street,
+            };
+
+            _context.Add(healthProfessional);
+            _context.SaveChanges();
+        }
 
         //public AccountAccessViewModel EditRoleRepo(int roleId)
         //{

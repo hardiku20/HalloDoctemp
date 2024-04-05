@@ -50,7 +50,9 @@ namespace learning1.Services.IServices
         List<ShiftDetail> GetScheduleData();
         List<Region> getRegionTableData();
         List<ProviderMenuDetailsViewModel> GetPhysicianDataByRegion(int regionId);
-       
+        AddBusinessViewModal GetProfession();
+        void AddNewBusiness(AddBusinessViewModal modal);
+
         //AccountAccessViewModel EditRoleById(int roleId);
         //List<string> GetMenuList(int accountType);
     }

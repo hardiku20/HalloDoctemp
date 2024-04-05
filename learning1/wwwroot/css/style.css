@@ -76,7 +76,7 @@
 }
 
 .iti__country-list {
-    z-index: 999;
+    z-index: 999 !important;
     width: 600%;
 }
 

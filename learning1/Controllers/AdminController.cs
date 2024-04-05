@@ -467,6 +467,25 @@ namespace learning1.Controllers
         }
 
 
+        public IActionResult Vendors()
+        {
+            return View();
+        }
+
+
+        public IActionResult AddBusiness()
+        {
+            var model = _adminServices.GetProfession();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddBusiness(AddBusinessViewModal modal)
+        {
+            _adminServices.AddNewBusiness(modal);
+            return RedirectToAction("Vendors");
+        }
+
 
     }
 }

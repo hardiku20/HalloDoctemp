@@ -317,6 +317,21 @@ namespace learning1.Services.Services
             return tableData;
         }
 
+        public AddBusinessViewModal GetProfession()
+        {
+            var Profession = _adminRepo.DisplayProfessionlist();
+            AddBusinessViewModal model = new AddBusinessViewModal()
+            {
+                ProfessionalTypes = Profession,
+            };
+            return model;
+        }
+
+        public void AddNewBusiness(AddBusinessViewModal modal)
+        {
+            _adminRepo.AddBusinessRepo(modal);
+        }
+
 
         //public AccountAccessViewModel EditRoleById(int roleId)
         //{
