@@ -1033,11 +1033,84 @@ namespace learning1.Repositories.Repositories
                 Zip = modal.Zipcode,
                 CreatedDate = DateTime.Now,
                 Address = modal.Street,
+                IsDeleted = false,
             };
 
             _context.Add(healthProfessional);
             _context.SaveChanges();
         }
+
+     
+
+        public AddBusinessViewModal GetBusinessRepo(int vendorId)
+        {
+            var ProfessionType = _context.HealthProfessionalTypes.ToList();
+            var temp = _context.HealthProfessionals.Where(x => x.VendorId == vendorId)
+                .Select(x => new AddBusinessViewModal()
+                {
+                   VendorId = vendorId,
+                   BusinessName = x.VendorName,
+                   Profession = (int)x.Profession,
+                   FaxNumber = x.FaxNumber,
+                   PhoneNumber = x.PhoneNumber,
+                   Email = x.Email,
+                   BusinessContact = x.BusinessContact,
+                   Street = x.Address,
+                   City = x.City,
+                   State = x.State,
+                   Zipcode = x.Zip,
+                   ProfessionalTypes = ProfessionType,
+
+                }).FirstOrDefault();
+            return temp;
+        }
+
+        public void UpdateBusinessRepo(AddBusinessViewModal modal)
+        {
+            HealthProfessional healthProfessional = _context.HealthProfessionals.Where(x=>x.VendorId == modal.VendorId).FirstOrDefault();
+            healthProfessional.Profession = modal.Profession;
+            healthProfessional.VendorName = modal.BusinessName;
+            healthProfessional.FaxNumber = modal.FaxNumber;
+            healthProfessional.PhoneNumber= modal.PhoneNumber;
+            healthProfessional.Email = modal.Email;
+            healthProfessional.BusinessContact = modal.BusinessContact;
+            healthProfessional.Address = modal.Street;
+            healthProfessional.City= modal.City;
+            healthProfessional.State = modal.State;
+            healthProfessional.Zip= modal.Zipcode;
+            healthProfessional.ModifiedDate = DateTime.Now;
+
+
+            _context.HealthProfessionals.Update(healthProfessional);
+            _context.SaveChanges();
+        }
+
+        public void DeleteBusinessRepo(int vendorId)
+        {
+            HealthProfessional healthProfessional = _context.HealthProfessionals.Where(x => x.VendorId == vendorId).FirstOrDefault();
+            healthProfessional.IsDeleted= true;
+
+            _context.HealthProfessionals.Update(healthProfessional);
+            _context.SaveChanges(); 
+        }
+
+        public VendorViewModel GetVendorRepo(int professionId, string vendorName)
+        {
+            var ProfessionType = _context.HealthProfessionalTypes.ToList();
+            var healthProfessionals = _context.HealthProfessionals.Where(x => x.IsDeleted == false).ToList();
+            VendorViewModel modal = new VendorViewModel()
+            {
+                healthProfessionals = healthProfessionals,
+                ProfessionalTypes = ProfessionType,
+            };
+            return modal;
+        }
+
+
+
+
+
+
 
         //public AccountAccessViewModel EditRoleRepo(int roleId)
         //{
@@ -1057,16 +1130,5 @@ namespace learning1.Repositories.Repositories
         //    var Menulist = _context.Menus.Where(x => x.AccountType == accountType).Select(x=>x.Name).ToList();
         //    return Menulist;
         //}
-
-
-
-
-
-
-
-
-
-
-
     }
 }

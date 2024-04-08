@@ -52,6 +52,13 @@ namespace learning1.Services.IServices
         List<ProviderMenuDetailsViewModel> GetPhysicianDataByRegion(int regionId);
         AddBusinessViewModal GetProfession();
         void AddNewBusiness(AddBusinessViewModal modal);
+        
+        AddBusinessViewModal GetBusinessByVendorId(int vendorId);
+        void UpdateBusiness(AddBusinessViewModal modal);
+        void DeleteBusinessByVendor(int vendorId);
+        VendorViewModel GetVendorsDetails(int professionId, string vendorName);
+
+
 
         //AccountAccessViewModel EditRoleById(int roleId);
         //List<string> GetMenuList(int accountType);

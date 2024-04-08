@@ -1,0 +1,82 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@{
+    Layout = null;
+}
+
+@model learning1.DBEntities.ViewModel.VendorViewModel;
+
+<div class="d-block">
+
+    <table class="table-responsive w-100">
+        <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+            <td scope="col" class="py-3 ps-4">Profession</td>
+            <td scope="col" class="py-3">Business Name</td>
+            <td scope="col" class="py-3">Email</td>
+            <td scope="col" class="py-3">Fax Number</td>
+            <td scope="col" class="py-3">Phone Number</td>
+            <td scope="col" class="py-3">Business Contact</td>
+            <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+        </tr>
+
+
+
+        @foreach (var items in Model.healthProfessionals)
+        {
+            <tr class="border-bottom border-secondary-subtle">
+                @{
+                    Dictionary<int?, string> ProfessionTextMap = new Dictionary<int?, string>
+            {
+            { 1, "Cardiology" },
+            { 2, "Wound Care Nursing" },
+            { 3, "Pharmacy" },
+            { 4, "ENT" },
+            { 5, "Dentist" },
+            { 6, "Imaging - XRAY, CT, MRI" },
+            // Add more mappings as needed
+            };
+                }
+                <td class="ps-4 py-1">@ProfessionTextMap[items.Profession]</td>
+                <td class="py-1">@items.VendorName</td>
+                <td class="py-1">@items.Email</td>
+                <td class="py-1">@items.FaxNumber</td>
+                <td class="py-1">@items.PhoneNumber</td>
+                <td class="py-1">@items.BusinessContact</td>
+                <td class="d-flex justify-content-center py-1 gap-1">
+                    <a type="submit" class="btn btn-outline-info text-info bg-white" asp-action="EditBusiness" asp-controller="Admin" asp-route-VendorId=@items.VendorId>Edit</a>
+                    <button type="submit" class="btn btn-outline-info text-info bg-white" onclick="DeleteBusiness(@items.VendorId)">Delete</button>
+                </td>
+            </tr>
+
+        }
+
+    </table>
+
+</div>
+
+
+<script>
+    function DeleteBusiness(id) {
+        var response = confirm("Confirm, To Delete Business");
+        if (response) {
+            $.ajax({
+                method: "post",
+                url: "/Admin/DeleteBusiness",
+                data: {
+                    VendorId: id,
+                },
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+
+</script>

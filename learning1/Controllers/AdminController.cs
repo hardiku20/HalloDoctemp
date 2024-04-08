@@ -377,9 +377,11 @@ namespace learning1.Controllers
 
         public IActionResult CreateAdminAccount()
         {
-          
-            return View();
+            var modal = _adminServices.GetRegionforAdmin();
+            return View(modal);
         }
+
+
 
         
         //public List<string> GetMenuByAccount(int AccountType)
@@ -467,10 +469,19 @@ namespace learning1.Controllers
         }
 
 
-        public IActionResult Vendors()
+        public IActionResult Vendors(int ProfessionId, string VendorName = null)
         {
-            return View();
+            var model = _adminServices.GetVendorsDetails(ProfessionId, VendorName);
+            return View(model);
         }
+
+
+        public IActionResult RenderVendorTable(int ProfessionId, string VendorName = null)
+        {
+            var model = _adminServices.GetVendorsDetails(ProfessionId,VendorName);
+            return View("_VendorPartialView",model);
+        }
+
 
 
         public IActionResult AddBusiness()
@@ -483,9 +494,71 @@ namespace learning1.Controllers
         public IActionResult AddBusiness(AddBusinessViewModal modal)
         {
             _adminServices.AddNewBusiness(modal);
+            _notyf.Success("Vendor Added");
             return RedirectToAction("Vendors");
         }
 
+
+        public IActionResult EditBusiness(int VendorId)
+        {
+            var model = _adminServices.GetBusinessByVendorId(VendorId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditBusiness(AddBusinessViewModal modal)
+        {
+            _adminServices.UpdateBusiness(modal);
+            _notyf.Success("Edit Successful!!");
+            return RedirectToAction("Vendors");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteBusiness(int VendorId)
+        {
+            _adminServices.DeleteBusinessByVendor(VendorId);
+            _notyf.Success("Record Deleted");
+            return RedirectToAction("Vendors");
+        }
+
+
+        public IActionResult PatientHistory()
+        {
+            return View();
+        }
+
+
+        public IActionResult PatientRecordExplore()
+        {
+            return View();
+        }
+
+        public IActionResult SearchRecord()
+        {
+            return View();
+        }
+
+        public IActionResult EmailLogs()
+        {
+            return View();
+        }
+
+
+        public IActionResult SMSLogs()
+        {
+            return View();
+        }
+
+
+        public IActionResult BlockHistory()
+        {
+            return View();
+        }
+
+        public IActionResult CancelHistory()
+        {
+            return View();
+        }
 
     }
 }

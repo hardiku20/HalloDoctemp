@@ -1,0 +1,148 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+
+
+
+
+
+@* Content of the Web-page *@
+<div class="container-fluid p-4">
+    <div class="d-flex justify-content-between my-4">
+        <h4 class="">Patient Record</h4>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-info text-white d-flex align-items-center p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-reply-all-fill" viewBox="0 0 16 16" style="transform: scale(-1, 1);">
+                    <path d="M8.021 11.9 3.453 8.62a.72.72 0 0 1 0-1.238L8.021 4.1a.716.716 0 0 1 1.079.619V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
+                </svg>
+                <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Export Data To Excel</p>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="container-fluid bg-white border-0 shadow-sm py-3">
+        <div class="row mb-2">
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating select-info">
+                    <select class="form-select form-control shadow-none" aria-label="Floating label select example">
+                        <option value="0">All</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Physician</option>
+                        <option value="3">Patient</option>
+                    </select>
+                    <label for="floatingSelect">Select Request Status</label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating input-info">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Patient Name">
+                    <label for="floatingInput">Patient Name</label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating select-info">
+                    <select class="form-select form-control shadow-none" aria-label="Floating label select example">
+                        <option value="0">All</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Physician</option>
+                        <option value="3">Patient</option>
+                    </select>
+                    <label for="floatingSelect">Select Request Type</label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating input-info">
+                    <input type="date" class="form-control" id="floatingInput" placeholder="From Date Of Service">
+                    <label for="floatingInput">From Date Of Service</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row mb-2">
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating input-info">
+                    <input type="date" class="form-control" id="floatingInput" placeholder="To Date Of Service">
+                    <label for="floatingInput">To Date Of Service</label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating input-info">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Provider Name">
+                    <label for="floatingInput">Provider Name</label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating input-info">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="Email">
+                    <label for="floatingInput">Email</label>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-2">
+                <div class="form-floating input-info">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Phone Number">
+                    <label for="floatingInput">Phone Number</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="d-flex justify-content-end gap-2 mb-3">
+            <button type="submit" class="btn btn-outline-info bg-white text-info">Clear</button>
+            <button type="submit" class="btn btn-info text-white">Search</button>
+        </div>
+
+
+
+        <div class="container-fluid p-0">
+            <table class="table-responsive table-hover w-100">
+                <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+                    <td scope="col" class="py-3 ps-4">Patient Name</td>
+                    <td scope="col" class="py-3">Requester</td>
+                    <td scope="col" class="py-3">Date Of Service</td>
+                    <td scope="col" class="py-3">Close Case Date</td>
+                    <td scope="col" class="py-3">Email</td>
+                    <td scope="col" class="py-3">Phone Number</td>
+                    <td scope="col" class="py-3">Address</td>
+                    <td scope="col" class="py-3">Zip</td>
+                    <td scope="col" class="py-3">Requested Status</td>
+                    <td scope="col" class="py-3">Physician</td>
+                    <td scope="col" class="py-3">Physician Note</td>
+                    <td scope="col" class="py-3">Cancelled By Provider Note</td>
+                    <td scope="col" class="py-3">Admin Note</td>
+                    <td scope="col" class="py-3">Patient Note</td>
+                    <td scope="col" class="py-3 d-flex justify-content-center">Delete Permanently</td>
+                </tr>
+
+
+
+                <tr class="border-bottom border-secondary-subtle">
+                    <td class="ps-4 py-3">Admin</td>
+                    <td class="py-3">Patient</td>
+                    <td class="py-3">Oct 10, 2023</td>
+                    <td class="py-3">Dec 10, 2023</td>
+                    <td class="py-3">admin@gmail.com</td>
+                    <td class="py-3">939378504362</td>
+                    <td class="py-3">123,abc sdfdso</td>
+                    <td class="py-3">93937850</td>
+                    <td class="py-3">Closed</td>
+                    <td class="py-3">-</td>
+                    <td class="py-3">-</td>
+                    <td class="py-3">-</td>
+                    <td class="py-3">-</td>
+                    <td class="py-3">-</td>
+                    <td class="d-flex justify-content-center py-3">
+                        <a class="btn btn-outline-info text-info bg-white">Delete</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

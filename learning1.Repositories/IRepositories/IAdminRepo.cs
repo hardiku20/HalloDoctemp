@@ -59,6 +59,10 @@ namespace learning1.Repositories.IRepositories
         List<ProviderMenuDetailsViewModel> ProviderMenuTableDetails(int regionId);
         List<HealthProfessionalType> DisplayProfessionlist();
         void AddBusinessRepo(AddBusinessViewModal modal);
+        AddBusinessViewModal GetBusinessRepo(int vendorId);
+        void UpdateBusinessRepo(AddBusinessViewModal modal);
+        void DeleteBusinessRepo(int vendorId);
+        VendorViewModel GetVendorRepo(int professionId, string vendorName);
 
         //AccountAccessViewModel EditRoleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);

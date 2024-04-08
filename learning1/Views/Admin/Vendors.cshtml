@@ -5,7 +5,7 @@
     Layout = "_AdminLayout";
 }
 
-
+@model learning1.DBEntities.ViewModel.VendorViewModel;
 
 
 @* Content of the Web-page *@
@@ -20,33 +20,42 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-sm-6 p-2">
-                        <div class="form-floating select-info">
-                            <select class="form-select form-control shadow-none" aria-label="Floating label select example">
-                                <option value="0">All</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Physician</option>
-                                <option value="3">Patient</option>
-                            </select>
-                            <label for="floatingSelect">Role Type</label>
+                        <div class="input-group border rounded-0 form-control">
+                            <div class="input-group-append">
+                                <button class="btn text-secondary border border-0 bg-white" type="submit">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control border-0  shadow-none" placeholder="Search Vendors" id="SearchVendorName">
                         </div>
+
                     </div>
                     <div class="col-sm-6 p-2">
-                        <div class="form-floating select-info">
-                            <select class="form-select form-control shadow-none" aria-label="Floating label select example">
-                                <option value="0">All</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Physician</option>
-                                <option value="3">Patient</option>
+                        <div class="input-group border rounded-0 form-control">
+                            <div class="input-group-append">
+                                <button class="btn text-secondary border border-0 bg-white" type="button">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+
+                            <select class="form-select border-0 shadow-none" aria-label="Floating label select example" id="SelectedProfession">
+                                <option>All</option>
+                                @foreach (var items in Model.ProfessionalTypes)
+                                {
+                                    <option value=@items.HealthProfessionalId>@items.ProfessionName</option>
+                                }
                             </select>
-                            <label for="floatingSelect">Role Type</label>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
             <div class="col-md-6 d-flex justify-content-end align-items-center">
                 <a class="btn btn-outline-info text-info bg-white d-flex align-items-center p-2" asp-action="AddBusiness" asp-controller="Admin">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                     </svg>
                     <p class="d-none d-sm-flex mb-0 py-auto">Add Business</p>
                 </a>
@@ -54,35 +63,17 @@
         </div>
 
 
-        <div class="">
-            <table class="table-responsive table-hover w-100">
-                <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
-                    <td scope="col" class="py-3 ps-4">Profession</td>
-                    <td scope="col" class="py-3">Business Name</td>
-                    <td scope="col" class="py-3">Email</td>
-                    <td scope="col" class="py-3">Fax Number</td>
-                    <td scope="col" class="py-3">Phone Number</td>
-                    <td scope="col" class="py-3">Business Contact</td>
-                    <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
-                </tr>
 
 
 
-                <tr class="border-bottom border-secondary-subtle">
-                    <td class="ps-4 py-1">Admin</td>
-                    <td class="py-1">Test, Admin</td>
-                    <td class="py-1">admin@gmail.com</td>
-                    <td class="py-1">93930</td>
-                    <td class="py-1">9056795076</td>
-                    <td class="py-1">4564444437</td>
-                    <td class="d-flex justify-content-center py-1 gap-1">
-                        <button type="submit" class="btn btn-outline-info text-info bg-white">Edit</button>
-                        <button type="submit" class="btn btn-outline-info text-info bg-white">Delete</button>
-                    </td>
-                </tr>
-
-            </table>
+        <div id="Vendors_table">
+            @* Render Table here *@
         </div>
+
 
     </div>
 </div>
+
+
+
+<script src="/js/Vendor.js"></script>

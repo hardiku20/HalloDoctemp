@@ -10,6 +10,9 @@ namespace learning1.DBEntities.ViewModel
 {
     public class AddBusinessViewModal
     {
+
+
+        public int VendorId { get; set; }
         [Required]
         public string BusinessName {  get; set; }
         [Required]

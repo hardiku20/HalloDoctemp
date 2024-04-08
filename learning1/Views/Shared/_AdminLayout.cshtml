@@ -88,6 +88,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="AccountAccess" asp-controller="Admin">Account Access</a></li>
                                 <li><a role="button" class="dropdown-item" asp-action="UserAccess" asp-controller="Admin">User Access</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="CreateAdminAccount" asp-controller="Admin">Create Admin</a></li>
                             </ul>
                         </div>
                     </li>
@@ -95,11 +96,11 @@
                         <div class="dropdown">
                             <a role="button" class="nav-link px-2 fw-medium text-secondary dropdown-toggle" data-bs-toggle="dropdown">Records</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a role="button" class="dropdown-item">Search Records</a></li>
-                                <li><a role="button" class="dropdown-item">Email Logs</a></li>
-                                <li><a role="button" class="dropdown-item">SMS Logs</a></li>
-                                <li><a role="button" class="dropdown-item">Patient Records</a></li>
-                                <li><a role="button" class="dropdown-item">Blocked History</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="SearchRecord" asp-controller="Admin">Search Records</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="EmailLogs" asp-controller="Admin">Email Logs</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="SMSLogs" asp-controller="Admin">SMS Logs</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="PatientHistory" asp-controller="Admin">Patient Records</a></li>
+                                <li><a role="button" class="dropdown-item" asp-action="BlockHistory" asp-controller="Admin">Block History</a></li>
                             </ul>
                         </div>
                     </li>

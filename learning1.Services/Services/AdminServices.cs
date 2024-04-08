@@ -332,6 +332,30 @@ namespace learning1.Services.Services
             _adminRepo.AddBusinessRepo(modal);
         }
 
+      
+
+        public AddBusinessViewModal GetBusinessByVendorId(int vendorId)
+        {
+            var model = _adminRepo.GetBusinessRepo(vendorId);
+            return model;
+        }
+
+        public void UpdateBusiness(AddBusinessViewModal modal)
+        {
+            _adminRepo.UpdateBusinessRepo(modal);
+        }
+
+        public void DeleteBusinessByVendor(int vendorId)
+        {
+            _adminRepo.DeleteBusinessRepo(vendorId);
+        }
+
+        public VendorViewModel GetVendorsDetails(int professionId, string vendorName)
+        {
+            var modal = _adminRepo.GetVendorRepo(professionId,vendorName);
+            return modal;
+        }
+
 
         //public AccountAccessViewModel EditRoleById(int roleId)
         //{
