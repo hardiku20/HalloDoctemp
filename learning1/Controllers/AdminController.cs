@@ -360,6 +360,13 @@ namespace learning1.Controllers
             return View(model);
         }
 
+
+        public IActionResult EditRole(int RoleId)
+        {
+            CreateRoleViewModel model = _adminServices.GetDetailsByRoleId(RoleId);  
+            return PartialView("_MenuList", model);
+        }
+
         public IActionResult GetMenuByAccount(int AccountType) {
             var MenuList = _adminServices.GetMenus(AccountType);
             CreateRoleViewModel model= new CreateRoleViewModel();
@@ -374,6 +381,7 @@ namespace learning1.Controllers
         {
             return View();
         }
+
 
         public IActionResult CreateAdminAccount()
         {

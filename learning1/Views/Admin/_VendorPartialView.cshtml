@@ -9,7 +9,7 @@
 
 @model learning1.DBEntities.ViewModel.VendorViewModel;
 
-<div class="d-block">
+<div class="d-md-block d-none overflow-x-auto">
 
     <table class="table-responsive w-100">
         <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
@@ -24,7 +24,7 @@
 
 
 
-        @foreach (var items in Model.healthProfessionals)
+        @foreach (var items in Model.VendorTableViewModals)
         {
             <tr class="border-bottom border-secondary-subtle">
                 @{
@@ -40,7 +40,7 @@
             };
                 }
                 <td class="ps-4 py-1">@ProfessionTextMap[items.Profession]</td>
-                <td class="py-1">@items.VendorName</td>
+                <td class="py-1">@items.BusinessName</td>
                 <td class="py-1">@items.Email</td>
                 <td class="py-1">@items.FaxNumber</td>
                 <td class="py-1">@items.PhoneNumber</td>
@@ -55,6 +55,79 @@
 
     </table>
 
+</div>
+
+
+
+<div class="d-md-none">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+            @foreach (var items in Model.VendorTableViewModals)
+            {
+        <div class="accordion-item bg-primary-subtle border border-bottom border-secondary-subtle">
+
+
+                <h2 class="accordion-header border-0">
+                    <div class="accordion-button collapsed bg-primary-subtle" type="button"
+                         data-bs-toggle="collapse" data-bs-target="#flush-@items.VendorId" aria-expanded="false"
+                         aria-controls="flush-@items.VendorId">
+                        <div class="container-fluid">
+                            @items.BusinessName
+                        </div>
+                    </div>
+                </h2>
+
+
+
+                <div id="flush-@items.VendorId" class="accordion-collapse collapse"
+                     data-bs-parent="#accordionFlushExample">
+
+                   
+                    <div class="accordion-body mt-2">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <div class="">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <label for="" class="text-secondary">Email:</label>
+                            <span>@items.Email</span>
+                        </div>
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <div class="">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <label for="" class="text-secondary">Fax:</label>
+                            <span>@items.FaxNumber</span>
+                        </div>
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <div class="">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <label for="" class="text-secondary">Phone Number:</label>
+                            <span>@items.PhoneNumber</span>
+                        </div>
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <div class="">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <label for="" class="text-secondary">Business Contact:</label>
+                            <span>@items.BusinessContact</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end gap-2">
+                            <a type="submit" class="btn btn-outline-info text-info bg-white" asp-action="EditBusiness" asp-controller="Admin" asp-route-VendorId=@items.VendorId>Edit</a>
+                            <button type="submit" class="btn btn-outline-info text-info bg-white" onclick="DeleteBusiness(@items.VendorId)">Delete</button>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+        </div>
+            }
+    </div>
 </div>
 
 

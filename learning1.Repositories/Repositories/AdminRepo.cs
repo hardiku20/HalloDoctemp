@@ -13,6 +13,7 @@ using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq.Expressions;
 using System.Data;
+using static learning1.DBEntities.ViewModel.VendorViewModel;
 
 namespace learning1.Repositories.Repositories
 {
@@ -352,6 +353,7 @@ namespace learning1.Repositories.Repositories
 
 
 
+
         public AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
@@ -390,6 +392,8 @@ namespace learning1.Repositories.Repositories
             };
             return model;
         }
+
+
 
         public AdminDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName)
         {
@@ -949,9 +953,6 @@ namespace learning1.Repositories.Repositories
 
                 Role role = _context.Roles.Where(x => x.RoleId == roleId).FirstOrDefault();
 
-
-
-
                 CreateRoleViewModel model = new CreateRoleViewModel()
                 {
                     RoleId = roleId,
@@ -1089,6 +1090,7 @@ namespace learning1.Repositories.Repositories
         {
             HealthProfessional healthProfessional = _context.HealthProfessionals.Where(x => x.VendorId == vendorId).FirstOrDefault();
             healthProfessional.IsDeleted= true;
+            healthProfessional.ModifiedDate = DateTime.Now;
 
             _context.HealthProfessionals.Update(healthProfessional);
             _context.SaveChanges(); 
@@ -1096,14 +1098,60 @@ namespace learning1.Repositories.Repositories
 
         public VendorViewModel GetVendorRepo(int professionId, string vendorName)
         {
+
+            Expression<Func<HealthProfessional, bool>> predicate;
+
+            if(!string.IsNullOrEmpty(vendorName) && professionId !=0)
+            {
+                predicate = x => ((x.VendorName.ToLower().Contains(vendorName.Trim().ToLower())) && (x.Profession == professionId)) && (x.IsDeleted == false);
+            }
+            else if(!string.IsNullOrEmpty(vendorName))
+            {
+                predicate = x => ((x.VendorName.ToLower().Contains(vendorName.Trim().ToLower()))) && (x.IsDeleted == false);
+            }
+            else if(professionId != 0)
+            {
+                predicate = x => (x.Profession == professionId) && (x.IsDeleted == false);
+            }
+            else
+            {
+                predicate = x => (x.IsDeleted == false);
+            }
+
             var ProfessionType = _context.HealthProfessionalTypes.ToList();
-            var healthProfessionals = _context.HealthProfessionals.Where(x => x.IsDeleted == false).ToList();
+            var healthProfessionals = _context.HealthProfessionals.Where(predicate)
+                .Select(x => new VendorTableViewModal()
+                { 
+                  VendorId = x.VendorId,
+                  Profession = (int)x.Profession,
+                  BusinessName = x.VendorName,
+                  Email = x.Email,
+                  FaxNumber=x.FaxNumber,
+                  PhoneNumber = x.PhoneNumber,
+                  BusinessContact = x.BusinessContact,
+                }).ToList();
             VendorViewModel modal = new VendorViewModel()
             {
-                healthProfessionals = healthProfessionals,
+                VendorTableViewModals = healthProfessionals,
                 ProfessionalTypes = ProfessionType,
             };
             return modal;
+
+
+
+            //Expression<Func<Request, bool>> predicate;
+            //var Count = SetCount();
+
+            //if (!string.IsNullOrEmpty(patientName))
+            //{
+            //    //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+            //    predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+            //}
+
+            //else
+            //{
+            //    predicate = x => (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+            //}
         }
 
 

@@ -50,7 +50,7 @@
                             }
                             <td class="py-1">@AccountTextMap[items.AccountType]</td>
                             <td class="d-flex justify-content-center gap-1 py-1">
-                                <a type="submit" class="btn btn-outline-info text-info bg-white" asp-action="CreateRole" asp-controller="Admin" asp-route-RoleId="@items.RoleId">Edit</a>
+                                <a type="submit" class="btn btn-outline-info text-info bg-white" onclick="EditRole(@items.RoleId)">Edit</a>
                                 <button type="submit" class="btn btn-outline-info text-info bg-white" onclick="DeleteRole(@items.RoleId)">Delete</button>
                             </td>
                         </tr>
@@ -83,6 +83,23 @@
         }
     }
 
+
+    function EditRole(id) {
+            $.ajax({
+                method: "get",
+                url: '/Admin/EditRole',
+                data: {
+                    RoleId: id,
+                },
+                success: function (result) {
+                    $("#MenuList").html(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+       
+    }
 
 
     // document.addEventListener("DOMContentLoaded", function () { 
