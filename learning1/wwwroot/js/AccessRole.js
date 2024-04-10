@@ -1,9 +1,27 @@
-﻿$("#AccountType").on("change", function () {
+﻿$(document).ready(function () {
+    debugger;
+    $.ajax({
+        method: "get",
+        url: "/admin/GetMenuByAccount",
+        data: {
+            AccountType: 0,
+        },
+        success: function (result) {
+            $("#MenuList").html(result);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+
+    })
+})
+
+$("#AccountType").on("change", function () {
     var AccountType = this.value;
 
     $.ajax({
         method: "get",
-        url: "GetMenuByAccount",
+        url: "/admin/GetMenuByAccount",
         data: {
             AccountType: AccountType,
         },
@@ -16,5 +34,3 @@
 
     });
 }); 
-
-

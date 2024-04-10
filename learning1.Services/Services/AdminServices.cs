@@ -356,6 +356,12 @@ namespace learning1.Services.Services
             return modal;
         }
 
+        public RecordsViewModel GetPatientHistory(string firstname,string lastname, string email, string phonenumber)
+        {
+            var modal = _adminRepo.PatientHistoryRepo(firstname,lastname,email,phonenumber);
+            return modal;
+        }
+
 
         //public AccountAccessViewModel EditRoleById(int roleId)
         //{

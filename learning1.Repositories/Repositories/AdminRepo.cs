@@ -1154,6 +1154,34 @@ namespace learning1.Repositories.Repositories
             //}
         }
 
+        public RecordsViewModel PatientHistoryRepo(string firstname,string lastname , string email,string phonenumber)
+        {
+            var users = _context.Users
+                .Where(x => (firstname == null || x.FirstName.ToLower().Contains(firstname.Trim().ToLower())) &&
+                (lastname == null || x.LastName.ToLower().Contains(lastname.Trim().ToLower())) &&
+                (email == null || x.Email.ToLower().Contains(email.Trim().ToLower())) &&
+                (phonenumber == null || x.Mobile.ToLower().Contains(phonenumber.Trim().ToLower())))
+                .Select(x=> new DBEntities.ViewModel.RecordsViewModel.PatientHistory()
+                {
+                    UserId = x.UserId,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Email = x.Email,
+                    PhoneNumber = x.Mobile,
+                    Address = x.Street + " " + x.City + " " + x.State + " "+ x.ZipCode,
+                }).ToList();
+
+            RecordsViewModel model = new RecordsViewModel()
+            {
+                patientHistory = users,
+            };
+
+
+
+
+            return model;
+        }
+
 
 
 

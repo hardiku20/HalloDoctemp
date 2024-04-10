@@ -59,14 +59,14 @@
 
 
 
+
 <div class="d-md-none">
     <div class="accordion accordion-flush" id="accordionFlushExample">
             @foreach (var items in Model.VendorTableViewModals)
             {
-        <div class="accordion-item bg-primary-subtle border border-bottom border-secondary-subtle">
+        <div class="accordion-item border border-start-0 border-end-0 border-secondary-subtle">
 
-
-                <h2 class="accordion-header border-0">
+                <h2 class="accordion-header border-0 shadow">
                     <div class="accordion-button collapsed bg-primary-subtle" type="button"
                          data-bs-toggle="collapse" data-bs-target="#flush-@items.VendorId" aria-expanded="false"
                          aria-controls="flush-@items.VendorId">
@@ -76,37 +76,35 @@
                     </div>
                 </h2>
 
-
-
                 <div id="flush-@items.VendorId" class="accordion-collapse collapse"
                      data-bs-parent="#accordionFlushExample">
 
                    
-                    <div class="accordion-body mt-2">
+                    <div class="accordion-body mt-2 vstack gap-2">
                         <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <div class="">
-                                <i class="bi bi-envelope"></i>
+                            <div class ="rounded-circle border border-info">
+                                <i class="bi bi-envelope text-info m-1"></i>
                             </div>
                             <label for="" class="text-secondary">Email:</label>
                             <span>@items.Email</span>
                         </div>
                         <div class="d-flex align-items-center flex-wrap gap-2">
-                            <div class="">
-                                <i class="bi bi-telephone"></i>
+                            <div class="rounded-circle border border-info">
+                                <i class="bi bi-telephone text-info m-1"></i>
                             </div>
                             <label for="" class="text-secondary">Fax:</label>
                             <span>@items.FaxNumber</span>
                         </div>
                         <div class="d-flex align-items-center flex-wrap gap-2">
-                            <div class="">
-                                <i class="bi bi-telephone"></i>
+                            <div class="rounded-circle border border-info">
+                                <i class="bi bi-telephone text-info m-1"></i>
                             </div>
                             <label for="" class="text-secondary">Phone Number:</label>
                             <span>@items.PhoneNumber</span>
                         </div>
                         <div class="d-flex align-items-center flex-wrap gap-2">
-                            <div class="">
-                                <i class="bi bi-envelope"></i>
+                            <div class="rounded-circle border border-info">
+                                <i class="bi bi-envelope text-info m-1"></i>
                             </div>
                             <label for="" class="text-secondary">Business Contact:</label>
                             <span>@items.BusinessContact</span>
@@ -115,16 +113,8 @@
                             <a type="submit" class="btn btn-outline-info text-info bg-white" asp-action="EditBusiness" asp-controller="Admin" asp-route-VendorId=@items.VendorId>Edit</a>
                             <button type="submit" class="btn btn-outline-info text-info bg-white" onclick="DeleteBusiness(@items.VendorId)">Delete</button>
                         </div>
-
                     </div>
                 </div>
-
-
-
-
-
-
-
         </div>
             }
     </div>

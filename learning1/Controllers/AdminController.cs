@@ -536,6 +536,12 @@ namespace learning1.Controllers
         }
 
 
+        public IActionResult RendorPatientHistoryPartialView(string firstname = null, string lastname = null , string email = null, string phoneNumber = null)
+        {
+            var model = _adminServices.GetPatientHistory(firstname, lastname, email, phoneNumber);
+            return PartialView("_PatientHistoryPartialView",model);
+        }
+
         public IActionResult PatientRecordExplore()
         {
             return View();

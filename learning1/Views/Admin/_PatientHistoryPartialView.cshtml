@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+
+@{
+    Layout = null;
+}
+
+
+@model learning1.DBEntities.ViewModel.RecordsViewModel;
+
+
+<div class="d-md-block d-none overflow-x-auto">
+    <table class="table-responsive w-100">
+        <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+            <td scope="col" class="py-3 ps-4">First Name</td>
+            <td scope="col" class="py-3">Last Name</td>
+            <td scope="col" class="py-3">Email</td>
+            <td scope="col" class="py-3">Phone Number</td>
+            <td scope="col" class="py-3">Address</td>
+            <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+        </tr>
+
+        @foreach(var items in Model.patientHistory)
+        {
+            <tr class="border-bottom border-secondary-subtle">
+                <td class="ps-4 py-1">@items.FirstName</td>
+                <td class="py-1">@items.LastName</td>
+                <td class="py-1">@items.Email</td>
+                <td class="py-1">@items.PhoneNumber</td>
+                <td class="py-1">@items.Address</td>
+                <td class="d-flex justify-content-center py-1">
+                    <a class="btn btn-outline-info text-info bg-white" asp-action="PatientRecordExplore" asp-controller="Admin">Explore</a>
+                </td>
+            </tr>
+        }
+
+     
+    </table>
+</div>
+
+
+
+
+<div class="d-md-none">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        @foreach (var items in Model.patientHistory)
+        {
+            <div class="accordion-item border border-start-0 border-end-0 border-secondary-subtle">
+
+                <h2 class="accordion-header border-0 shadow">
+                    <div class="accordion-button collapsed bg-primary-subtle" type="button"
+                         data-bs-toggle="collapse" data-bs-target="#flush-@items.UserId" aria-expanded="false"
+                         aria-controls="flush-@items.UserId">
+                        <div class="container-fluid">
+                            <p>@items.FirstName @items.LastName</p>
+                            <p>@items.PhoneNumber</p>
+                        </div>
+                    </div>
+                </h2>
+
+                <div id="flush-@items.UserId" class="accordion-collapse collapse"
+                     data-bs-parent="#accordionFlushExample">
+
+
+                    <div class="accordion-body mt-2 vstack gap-1">
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <div class="rounded-circle border border-info">
+                                <i class="bi bi-envelope text-info m-2"></i>
+                            </div>
+                            <label for="" class="text-secondary">Email:</label>
+                            <span>@items.Email</span>
+                        </div>
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            <div class="rounded-circle border border-info">
+                                <i class="bi bi-telephone text-info m-2"></i>
+                            </div>
+                            <label for="" class="text-secondary">Phone Number:</label>
+                            <span>@items.PhoneNumber</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end">
+                            <a class="btn btn-outline-info text-info bg-white" asp-action="PatientRecordExplore" asp-controller="Admin">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

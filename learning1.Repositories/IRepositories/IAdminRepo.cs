@@ -63,6 +63,7 @@ namespace learning1.Repositories.IRepositories
         void UpdateBusinessRepo(AddBusinessViewModal modal);
         void DeleteBusinessRepo(int vendorId);
         VendorViewModel GetVendorRepo(int professionId, string vendorName);
+        RecordsViewModel PatientHistoryRepo(string firstname,string lastname,string email,string phonenumber);
 
         //AccountAccessViewModel EditRoleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);
