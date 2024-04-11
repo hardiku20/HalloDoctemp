@@ -542,14 +542,23 @@ namespace learning1.Controllers
             return PartialView("_PatientHistoryPartialView",model);
         }
 
-        public IActionResult PatientRecordExplore()
+        public IActionResult PatientRecordExplore(int UserId)
         {
-            return View();
+            var model = _adminServices.GetPatientExplore(UserId);
+            return View(model);
         }
+
 
         public IActionResult SearchRecord()
         {
             return View();
+        }
+
+        public IActionResult RendorSearchHistoryPartialView()
+        {
+            var model = _adminServices.GetSearchData();
+            return PartialView("_SearchRecordPartialView",model);
+
         }
 
         public IActionResult EmailLogs()

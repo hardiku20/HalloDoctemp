@@ -33,7 +33,7 @@
                 <td class="py-1">@items.PhoneNumber</td>
                 <td class="py-1">@items.Address</td>
                 <td class="d-flex justify-content-center py-1">
-                    <a class="btn btn-outline-info text-info bg-white" asp-action="PatientRecordExplore" asp-controller="Admin">Explore</a>
+                    <a class="btn btn-outline-info text-info bg-white" asp-action="PatientRecordExplore" asp-controller="Admin" asp-route-UserId="@items.UserId">Explore</a>
                 </td>
             </tr>
         }

@@ -56,7 +56,7 @@ let changeView = (type) => calendar.changeView(type);
 
 var region = "<option value=\"0\" selected>All Regions</option>";
 $.ajax({
-    url: `/Admin/GetRegion`,
+    url: `/Admin/GetRegions`,
     type: "GET",
     success: function (data) {
         $.each(data, function (i, obj) {

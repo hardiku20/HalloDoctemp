@@ -64,6 +64,8 @@ namespace learning1.Repositories.IRepositories
         void DeleteBusinessRepo(int vendorId);
         VendorViewModel GetVendorRepo(int professionId, string vendorName);
         RecordsViewModel PatientHistoryRepo(string firstname,string lastname,string email,string phonenumber);
+        RecordsViewModel PatientExploreRepo(int userId);
+        RecordsViewModel SearchDataRepo();
 
         //AccountAccessViewModel EditRoleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);

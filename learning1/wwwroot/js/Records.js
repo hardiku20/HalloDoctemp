@@ -14,7 +14,6 @@ $(document).ready(function () {
             console.log(error);
         }
     })
- 
 })
 
 
@@ -62,3 +61,5 @@ $("#clear_btn").click(function () {
     })
 
 })
+
+

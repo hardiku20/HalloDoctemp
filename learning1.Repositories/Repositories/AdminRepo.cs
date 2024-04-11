@@ -1182,6 +1182,55 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
+        public RecordsViewModel PatientExploreRepo(int userId)
+        {
+            var Exploredata = _context.Requests.Include(x => x.User).Include(x => x.RequestClients).Include(x => x.Physician)
+                .Where(x => x.UserId == userId).Select(x => new RecordsViewModel.PatientRecords()
+                {
+                    Client = x.RequestClients.FirstOrDefault().FirstName + " " + x.RequestClients.FirstOrDefault().LastName,
+                    CreatedDate = x.CreatedDate,
+                    ConfirmationNumber = x.ConfirmationNumber,
+                    ProviderName = x.Physician.FirstName + " " + x.Physician.LastName,
+                    Status = x.Status,
+                    requestId = x.RequestId,
+                }).ToList();
+
+
+            RecordsViewModel model = new RecordsViewModel()
+            {
+                patientRecords = Exploredata,
+            };
+
+            return model;
+        }
+
+        public RecordsViewModel SearchDataRepo()
+        {
+            var SearchData = _context.Requests.Include(x => x.RequestClients).Include(x => x.Physician).Include(x => x.RequestNotes)
+                .Select(x => new RecordsViewModel.SearchRecords()
+                {
+                    PatientName = x.RequestClients.FirstOrDefault().FirstName + " " + x.RequestClients.FirstOrDefault().LastName,
+                    Requester = x.LastName,
+                    Email = x.RequestClients.FirstOrDefault().Email,
+                    PhoneNumber = x.RequestClients.FirstOrDefault().PhoneNumber,
+                    Address = x.RequestClients.FirstOrDefault().Street + " " + x.RequestClients.FirstOrDefault().City + " " + x.RequestClients.FirstOrDefault().State + " " + x.RequestClients.FirstOrDefault().ZipCode,
+                    Zipcode = x.RequestClients.FirstOrDefault().ZipCode,
+                    RequestStatus = x.Status,
+                    Physician = x.Physician.FirstName + " " + x.Physician.LastName,
+                    PhysicianNote = x.RequestNotes.FirstOrDefault().PhysicianNotes,
+                    AdminNote = x.RequestNotes.FirstOrDefault().AdminNotes,
+                    RequestId = x.RequestId,
+                }).ToList();
+
+
+            RecordsViewModel model = new RecordsViewModel()
+            {
+                searchRecords = SearchData,
+            };
+
+            return model;
+        }
+
 
 
 

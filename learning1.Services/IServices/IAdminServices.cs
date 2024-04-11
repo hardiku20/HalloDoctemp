@@ -58,6 +58,8 @@ namespace learning1.Services.IServices
         void DeleteBusinessByVendor(int vendorId);
         VendorViewModel GetVendorsDetails(int professionId, string vendorName);
         RecordsViewModel GetPatientHistory(string firstname, string lastname, string email, string phonenumber);
+        RecordsViewModel GetPatientExplore(int userId);
+        RecordsViewModel GetSearchData();
 
 
 

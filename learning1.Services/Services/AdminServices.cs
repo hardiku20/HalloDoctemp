@@ -352,14 +352,26 @@ namespace learning1.Services.Services
 
         public VendorViewModel GetVendorsDetails(int professionId, string vendorName)
         {
-            var modal = _adminRepo.GetVendorRepo(professionId,vendorName);
-            return modal;
+            var model = _adminRepo.GetVendorRepo(professionId,vendorName);
+            return model;
         }
 
         public RecordsViewModel GetPatientHistory(string firstname,string lastname, string email, string phonenumber)
         {
-            var modal = _adminRepo.PatientHistoryRepo(firstname,lastname,email,phonenumber);
-            return modal;
+            var model = _adminRepo.PatientHistoryRepo(firstname,lastname,email,phonenumber);
+            return model;
+        }
+
+        public RecordsViewModel GetPatientExplore(int userId)
+        {
+            var model = _adminRepo.PatientExploreRepo(userId);
+            return model;
+        }
+
+        public RecordsViewModel GetSearchData()
+        {
+            var model = _adminRepo.SearchDataRepo();
+            return model;
         }
 
 
