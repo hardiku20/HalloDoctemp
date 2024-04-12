@@ -89,10 +89,10 @@ namespace learning1.Controllers
             return RedirectToAction("ViewNotes",model);
         }
 
-        public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null, learning1.DBEntities.ViewModel.RequestType requestType=(learning1.DBEntities.ViewModel.RequestType)5)
+        public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType=(learning1.DBEntities.ViewModel.RequestType)5)
         {
             
-            var model = _adminServices.RenderNewStateData(Status, Page, PageSize, patientName,requestType);
+            var model = _adminServices.RenderNewStateData(Status, Page, PageSize, patientName, regionName,requestType);
             return PartialView("_adminNewState", model);
         }
 

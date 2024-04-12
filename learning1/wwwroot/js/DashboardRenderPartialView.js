@@ -295,7 +295,7 @@
 
 
     $("#regionSelector").change(function () {
-        /*debugger;*/
+        /**/
         console.log(this);
         var region = this.value;
         $.ajax({
@@ -325,7 +325,7 @@
 
     $("#professionSelector").change(function () {
         console.log(this);
-        //debugger;
+        //
         var Profession = this.value;
         $.ajax({
             
@@ -354,7 +354,7 @@
 
     $("#businessSelector").change(function () {
         console.log(this);
-        debugger;
+        
         var Business = this.value;
         $.ajax({
             method: 'GET',

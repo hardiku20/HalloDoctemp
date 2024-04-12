@@ -1,5 +1,5 @@
 ﻿$(".SendAgreement").click(function () {
-    debugger;
+    
     var reqId = $("#Agreement-RequestId").val();
     $.ajax({
         method: 'GET',

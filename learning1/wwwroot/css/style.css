@@ -211,3 +211,19 @@
 .fc-event {
     margin-top: 1px !important;
 }
+
+
+
+
+
+
+
+
+
+
+/*accordian btn hide*/
+
+.accordion-button::after {
+    /* hide the default chevron */
+    content: none;
+}

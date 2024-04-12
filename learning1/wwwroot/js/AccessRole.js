@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    debugger;
+    
     $.ajax({
         method: "get",
         url: "/admin/GetMenuByAccount",

@@ -354,14 +354,26 @@ namespace learning1.Repositories.Repositories
 
 
 
-        public AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName, DBEntities.ViewModel.RequestType requestType)
+        public AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
             var Count = SetCount();
 
-            if (!string.IsNullOrEmpty(patientName)) {
+            if (!string.IsNullOrEmpty(patientName) && !string.IsNullOrEmpty(regionName)) {
+                //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+            }
+
+            else if (!string.IsNullOrEmpty(patientName))
+            {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
                 predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+            }
+
+            else if (!string.IsNullOrEmpty(regionName))
+            {
+                //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
+                predicate = x => (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else

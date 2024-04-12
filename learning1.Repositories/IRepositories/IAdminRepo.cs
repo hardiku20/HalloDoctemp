@@ -34,7 +34,7 @@ namespace learning1.Repositories.IRepositories
         ViewNotesViewModel GetViewNotesRepo(int requestId);
         void OrderDetailRepo(SendOrderViewModel model);
         AdminDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName, DBEntities.ViewModel.RequestType requestType);
+        AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         AdminDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderToActiveState(int status1,int status2, int page, int pageSize, string patientName);
         AdminDashboardViewModel RenderToCloseState(int status1, int status2,int status3, int page, int pageSize, string patientName);

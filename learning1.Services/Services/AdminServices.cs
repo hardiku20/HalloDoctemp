@@ -187,9 +187,9 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName, DBEntities.ViewModel.RequestType requestType)
+        public AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderNewState(status, page, pageSize, patientName,requestType);
+            var model = _adminRepo.RenderNewState(status, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
