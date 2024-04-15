@@ -30,6 +30,7 @@ namespace learning1.DBEntities.ViewModel
         [Compare("Password", ErrorMessage ="Passwords must match")]
         public string? ConfirmPassword { get; set;}
         public IFormFile formFile { get; set; }
+        public string RequestNotes { get; set; }
 
     }
 }

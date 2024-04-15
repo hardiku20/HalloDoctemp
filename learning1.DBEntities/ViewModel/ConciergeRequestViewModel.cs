@@ -25,5 +25,6 @@ namespace learning1.DBEntities.ViewModel
         public string City { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
+        public string RequestNotes { get; set; }
     }
 }

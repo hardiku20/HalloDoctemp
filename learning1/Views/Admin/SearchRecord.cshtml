@@ -26,79 +26,81 @@
 
 
     <div class="container-fluid bg-white border-0 shadow-sm py-3 p-0">
-        <div class="row mb-2 p-2">
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating select-info">
-                    <select class="form-select form-control shadow-none" aria-label="Floating label select example">
-                        <option value="0">All</option>
-                        <option value="1">Admin</option>
-                        <option value="2">Physician</option>
-                        <option value="3">Patient</option>
-                    </select>
-                    <label for="floatingSelect">Select Request Status</label>
+        <form>
+            <div class="row mb-2 p-2">
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating select-info">
+                        <select class="form-select form-control shadow-none" aria-label="Floating label select example">
+                            <option value="0">All</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Physician</option>
+                            <option value="3">Patient</option>
+                        </select>
+                        <label for="floatingSelect">Select Request Status</label>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating input-info">
+                        <input type="text" class="form-control" id="patientName" placeholder="Patient Name">
+                        <label for="floatingInput">Patient Name</label>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating select-info">
+                        <select class="form-select form-control shadow-none" aria-label="Floating label select example">
+                            <option value="0">All</option>
+                            <option value="1">Admin</option>
+                            <option value="2">Physician</option>
+                            <option value="3">Patient</option>
+                        </select>
+                        <label for="floatingSelect">Select Request Type</label>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating input-info">
+                        <input type="date" class="form-control" id="floatingInput" placeholder="From Date Of Service">
+                        <label for="floatingInput">From Date Of Service</label>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating input-info">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Patient Name">
-                    <label for="floatingInput">Patient Name</label>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating select-info">
-                    <select class="form-select form-control shadow-none" aria-label="Floating label select example">
-                        <option value="0">All</option>
-                        <option value="1">Admin</option>
-                        <option value="2">Physician</option>
-                        <option value="3">Patient</option>
-                    </select>
-                    <label for="floatingSelect">Select Request Type</label>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating input-info">
-                    <input type="date" class="form-control" id="floatingInput" placeholder="From Date Of Service">
-                    <label for="floatingInput">From Date Of Service</label>
-                </div>
-            </div>
-        </div>
 
 
 
-        <div class="row mb-2 p-2">
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating input-info">
-                    <input type="date" class="form-control" id="floatingInput" placeholder="To Date Of Service">
-                    <label for="floatingInput">To Date Of Service</label>
+            <div class="row mb-2 p-2">
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating input-info">
+                        <input type="date" class="form-control" id="floatingInput" placeholder="To Date Of Service">
+                        <label for="floatingInput">To Date Of Service</label>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating input-info">
+                        <input type="text" class="form-control" id="providerName" placeholder="Provider Name">
+                        <label for="floatingInput">Provider Name</label>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating input-info">
+                        <input type="email" class="form-control" id="Email" placeholder="Email">
+                        <label for="floatingInput">Email</label>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-2">
+                    <div class="form-floating input-info">
+                        <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number">
+                        <label for="floatingInput">Phone Number</label>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating input-info">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Provider Name">
-                    <label for="floatingInput">Provider Name</label>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating input-info">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="Email">
-                    <label for="floatingInput">Email</label>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-2">
-                <div class="form-floating input-info">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="Phone Number">
-                    <label for="floatingInput">Phone Number</label>
-                </div>
-            </div>
-        </div>
 
 
 
-        <div class="d-flex justify-content-end gap-2 mb-3 p-2">
-            <button type="submit" class="btn btn-outline-info bg-white text-info">Clear</button>
-            <button type="submit" class="btn btn-info text-white">Search</button>
-        </div>
+            <div class="d-flex justify-content-end gap-2 mb-3 p-2">
+                <button type="reset" class="btn btn-outline-info bg-white text-info" id="clear_btn">Clear</button>
+                <button type="button" class="btn btn-info text-white" id="SearchRecords">Search</button>
+            </div>
 
+        </form>
 
 
         <div id="Searchrecord_table">
@@ -129,5 +131,51 @@
             }
         })
     })
+
+    $("#SearchRecords").click(function () {
+        var patientName = $("#patientName").val();
+        var providerName = $("#providerName").val();
+        var email = $("#Email").val();
+        var phonenumber = $("#phoneNumber").val();
+        $.ajax({
+            type: "GET",
+            url: "/admin/RendorSearchHistoryPartialView",
+            data: {
+                patientName: patientName,
+                providerName: providerName,
+                email: email,
+                phoneNumber: phonenumber,
+            },
+            success: function (result) {
+                console.log(result);
+                $("#Searchrecord_table").html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+
+        })
+
+    })
+
+    $("#clear_btn").click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/admin/RendorSearchHistoryPartialView",
+            data: {
+
+            },
+            success: function (result) {
+                console.log(result);
+                $("#Searchrecord_table").html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+
+        })
+
+    })
+
 
 </script>

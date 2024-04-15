@@ -66,7 +66,7 @@
                     }
                 </td>
                 <td class="text-white py-3">@items.Address</td>
-                <td class="text-white py-3"> - </td>
+                <td class="text-white py-3">@items.RequestNotes</td>
                 <td class=" ">
                     <div class="d-flex align-items-center">
                         <button type="button" class="btn btn-sm border border-white text-white me-2">
@@ -107,6 +107,48 @@
 
 
     </table>
+
+
+
+
+    @{
+        double d = (double)Model.RequestCount?.ToCloseStateCount / 4;
+        double pages = Math.Ceiling(d);
+    }
+    <div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
+
+
+        <span class="d-flex justify-content-start fs-5">
+            Showing 4 of @Model.RequestCount?.ToCloseStateCount Entries
+        </span>
+        <nav aria-label="Page navigation example d-flex justify-content-between">
+            <ul class="pagination">
+                @* <li class="page-item page-item-story d-flex" id="1-newState">
+                <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true"> << </span>
+                </a>
+                </li> *@
+                <li class="page-item page-item-story d-flex" id="previousPage-tocloseState">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">Previous</span>
+                    </a>
+                </li>
+
+                @for (int j = 1; j <= @pages; j++)
+                {
+                    <li class="page-item page-item-story" id="@j-tocloseState"><a class="page-link">@j</a></li>
+                }
+                <li class="page-item page-item-story d-flex" id="nextPage-tocloseState" data-TotalPages=@pages>
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <script src="/js/Pagination.js"></script>
     
 </div>
 
@@ -264,43 +306,3 @@
 
 
 
-
-
-@{
-    double d = (double)Model.RequestCount?.ToCloseStateCount / 4;
-    double pages = Math.Ceiling(d);
-}
-<div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
-
-
-    <span class="d-flex justify-content-start fs-5">
-        Showing 4 of @Model.RequestCount?.ToCloseStateCount Entries
-    </span>
-    <nav aria-label="Page navigation example d-flex justify-content-between">
-        <ul class="pagination">
-            @* <li class="page-item page-item-story d-flex" id="1-newState">
-            <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true"> << </span>
-            </a>
-            </li> *@
-            <li class="page-item page-item-story d-flex" id="previousPage-tocloseState">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">Previous</span>
-                </a>
-            </li>
-
-            @for (int j = 1; j <= @pages; j++)
-            {
-                <li class="page-item page-item-story" id="@j-tocloseState"><a class="page-link">@j</a></li>
-            }
-            <li class="page-item page-item-story d-flex" id="nextPage-tocloseState" data-TotalPages=@pages>
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">Next</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-
-<script src="/js/Pagination.js"></script>

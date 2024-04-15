@@ -18,6 +18,8 @@ namespace learning1.DBEntities.ViewModel
 
         public List<SearchRecords> searchRecords { get; set; }
 
+        public List<BlockRecords> blockRecords { get; set; }
+
 
 
         public class PatientHistory
@@ -70,7 +72,21 @@ namespace learning1.DBEntities.ViewModel
             public int? RequestId  { get; set;}
         }
 
-       
+
+        public class BlockRecords
+        {
+            public string? PatientName { get; set; }
+            public string? Email { get; set; }
+            public string? PhoneNumber { get; set; }
+            public string? createdDate { get; set; }
+            public string? Notes { get;set;}
+
+          public bool? isActive { get; set; }
+            public int RequestId {  get; set;}
+            public int BlockRequestId {  get; set; }
+           
+        }
+
 
 
 

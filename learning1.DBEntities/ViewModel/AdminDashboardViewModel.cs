@@ -54,6 +54,7 @@ namespace learning1.DBEntities.ViewModel
         public string? Requester {  get; set; }
         public string? Email { get; set; }
         public int? Status { get; set; }
+        public string? RequestNotes { get; set; }
         public RequestType? RequestType { get; set; }
 
    

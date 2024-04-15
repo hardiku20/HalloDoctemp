@@ -61,6 +61,8 @@ public partial class Request
 
     public int? CaseTagId { get; set; }
 
+    public virtual ICollection<BlockRequest> BlockRequests { get; set; } = new List<BlockRequest>();
+
     public virtual CaseTag? CaseTag { get; set; }
 
     public virtual ICollection<EncounterForm> EncounterForms { get; set; } = new List<EncounterForm>();

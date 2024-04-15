@@ -5,6 +5,7 @@
     Layout = "_AdminLayout";
 }
 
+
 @model learning1.DBEntities.ViewModel.CreateAdminAccountViewModel;
 
 
@@ -24,25 +25,25 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form action="" class="form-floating">
+            <form class="form-floating">
                 <div class="row">
                     <h5 class="my-3">Account Information</h5>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" value="admin" disabled>
-                            <label for="floatingInput" >User Name (LastnameF)</label>
+                            <input type="text" class="form-control" id="Username" placeholder="User Name" disabled>
+                            <label for="floatingInput">User Name (LastnameF)</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Password">
-                            <label for="floatingInput" >Password</label>
+                            <label for="floatingInput">Password</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Role">
-                            <label for="floatingInput" >Role</label>
+                            <label for="floatingInput">Role</label>
                         </div>
                     </div>
                 </div>
@@ -51,26 +52,26 @@
                     <h5 class="my-3">Administration Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name">
-                            <label for="floatingInput" >First Name</label>
+                            <input type="text" class="form-control" id="FirstName" placeholder="First Name">
+                            <label for="floatingInput">First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name">
-                            <label for="floatingInput" >Last Name</label>
+                            <input type="text" class="form-control" id="LastName" placeholder="Last Name">
+                            <label for="floatingInput">Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="email" class="form-control" id="floatingInput" placeholder="Email">
-                            <label for="floatingInput" >Email</label>
+                            <label for="floatingInput">Email</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="email" class="form-control" id="floatingInput" placeholder="Confirm Email">
-                            <label for="floatingInput" >Confirm Email</label>
+                            <label for="floatingInput">Confirm Email</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
@@ -81,21 +82,9 @@
                     </div>
                     <div class="col-md-6 mb-3 form-check-group">
                         <div class="d-flex gap-1 align-items-center flex-wrap">
-                            @for (int i = 0; i < Model.Region.Count; i++)
-                            {
-                                <div class="form-check">
-                                    <input class="form-check-input Change1"
-                                           type="checkbox"
-                                           value="@Model.Region[i].RegionId"
-                                           id="checkbox@(i)"
-                                           name="checkbox_group"
-                                           onchange="AddSelectedRegion()">
-                                    <label class="form-check-label text-secondary" for="checkbox@(i)">@Model.Region[i].Name</label>
-                                </div>
-                            }
                         </div>
                     </div>
-                    <input type="text" id="selectedRegionsList">
+
                 </div>
 
                 <div class="row">
@@ -103,31 +92,31 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Address">
-                            <label for="floatingInput" >Address 1</label>
+                            <label for="floatingInput">Address 1</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Address">
-                            <label for="floatingInput" >Address 2</label>
+                            <label for="floatingInput">Address 2</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="City">
-                            <label for="floatingInput" >City</label>
+                            <label for="floatingInput">City</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="State">
-                            <label for="floatingInput" >State</label>
+                            <label for="floatingInput">State</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Zip">
-                            <label for="floatingInput" >Zip</label>
+                            <label for="floatingInput">Zip</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
@@ -162,13 +151,26 @@
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
-</script>
-<script>
-    function AddSelectedRegion() {
-        var selectedRegions = []; // Clear any previous selections
-        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-            selectedRegions.push(parseInt(checkbox.value));
-        });
-        $('#selectedRegionsList').val(selectedRegions.join(','));
-    }
+
+
+
+    $('#FirstName').on('change', function () {
+        if ($("#FirstName").val() == "" || $("#LastName").val() == "") {
+            $('#Username').val("");
+        }
+        else {
+            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+        }
+    });
+
+
+    $("#LastName").on("change", function () {
+
+        if ($("#FirstName").val() == "" || $("#LastName").val() == "") {
+            $('#Username').val("");
+        }
+        else {
+            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+        }
+    });
 </script>

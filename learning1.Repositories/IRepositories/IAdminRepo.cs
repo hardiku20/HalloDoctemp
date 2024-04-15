@@ -33,12 +33,12 @@ namespace learning1.Repositories.IRepositories
         List<string> GetPhysicianByRegionName(string regionName);
         ViewNotesViewModel GetViewNotesRepo(int requestId);
         void OrderDetailRepo(SendOrderViewModel model);
-        AdminDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         AdminDashboardViewModel RenderNewState(int status,int page,int pageSize,string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
-        AdminDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderToActiveState(int status1,int status2, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderToCloseState(int status1, int status2,int status3, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderUnpaidState(int status, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        AdminDashboardViewModel RenderToActiveState(int status1,int status2, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        AdminDashboardViewModel RenderToCloseState(int status1, int status2,int status3, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        AdminDashboardViewModel RenderUnpaidState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         void SetViewNotes(ViewNotesViewModel model, int requestId);
         void TransferCaseRepo(AdminDashboardViewModel model, int requestId);
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
@@ -65,7 +65,9 @@ namespace learning1.Repositories.IRepositories
         VendorViewModel GetVendorRepo(int professionId, string vendorName);
         RecordsViewModel PatientHistoryRepo(string firstname,string lastname,string email,string phonenumber);
         RecordsViewModel PatientExploreRepo(int userId);
-        RecordsViewModel SearchDataRepo();
+        RecordsViewModel SearchDataRepo(string patientName, string providerName, string email, string phoneNumber);
+        UserAccessViewModel GetUserAccessRepo();
+        RecordsViewModel BlockDataRepo(string name, string date, string email, string phoneNumber);
 
         //AccountAccessViewModel EditRoleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);

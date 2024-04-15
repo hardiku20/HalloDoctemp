@@ -191,7 +191,11 @@ public partial class DbHallodocContext : DbContext
             entity.Property(e => e.ModifiedDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.PhoneNumber).HasMaxLength(50);
             entity.Property(e => e.Reason).HasColumnType("character varying");
-            entity.Property(e => e.RequestId).HasMaxLength(50);
+
+            entity.HasOne(d => d.Request).WithMany(p => p.BlockRequests)
+                .HasForeignKey(d => d.RequestId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("BlockRequests_RequestId_fkey");
         });
 
         modelBuilder.Entity<Business>(entity =>

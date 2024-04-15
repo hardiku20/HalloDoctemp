@@ -89,7 +89,7 @@ public partial class DbHallodocContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=Db_hallodoc ;Username=postgres;Password=tatva123");
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=Db_hallodoc;Username=postgres;Password=tatva123");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -191,7 +191,11 @@ public partial class DbHallodocContext : DbContext
             entity.Property(e => e.ModifiedDate).HasColumnType("timestamp without time zone");
             entity.Property(e => e.PhoneNumber).HasMaxLength(50);
             entity.Property(e => e.Reason).HasColumnType("character varying");
-            entity.Property(e => e.RequestId).HasMaxLength(50);
+
+            entity.HasOne(d => d.Request).WithMany(p => p.BlockRequests)
+                .HasForeignKey(d => d.RequestId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("BlockRequests_RequestId_fkey");
         });
 
         modelBuilder.Entity<Business>(entity =>

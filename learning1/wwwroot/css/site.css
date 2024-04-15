@@ -1,18 +1,66 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+html[data-bs-theme="dark"] nav.header {
+    background-color: rgb(42, 50, 56) !important;
+}
+
+html[data-bs-theme="dark"] .text-testing {
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .modal-dark {
+    color: #212529 !important;
+}
+
+html[data-bs-theme="dark"] .dark-mode1 {
+    background-color: rgb(42, 50, 56) !important;
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .dark-mode2 {
+    background-color: rgb(42, 50, 56) !important;
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .new {
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .Pending {
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .Active {
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .Conclude {
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .ToClose {
+    color: white !important;
+}
+
+html[data-bs-theme="dark"] .Unpaid {
+    color: white !important;
+}
+
+

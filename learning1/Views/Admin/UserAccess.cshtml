@@ -26,32 +26,33 @@
             </div>
 
 
-            <div class="">
-                <table class="table-responsive  table-hover w-100 px-2">
-                    <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
-                        <td scope="col" class="py-3 ps-4">Account Type</td>
-                        <td scope="col" class="py-3">Account POC</td>
-                        <td scope="col" class="py-3">Phone</td>
-                        <td scope="col" class="py-3">Status</td>
-                        <td scope="col" class="py-3">Open Requests</td>
-                        <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
-                    </tr>
-
-
-             
-                        <tr class="border-bottom border-secondary-subtle">
-                            <td class="ps-4 py-1">Admin</td>
-                            <td class="py-1">Test, Admin</td>
-                            <td class="py-1">934585930</td>
-                            <td class="py-1">Active</td>
-                            <td class="py-1">2015</td>
-                            <td class="d-flex justify-content-center py-1">
-                                <button type="submit" class="btn btn-outline-info text-info bg-white">Edit</button>
-                            </td>
-                        </tr>
-                   
-                </table>
+            <div class="UserAccess_table">
+                @* table here *@
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            method: "get",
+            url: "/admin/GetUserAccessDetails",
+            data: {
+                
+            },
+            success: function (result) {
+                $("#UserAccess_table").html(result);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+
+        })
+    })
+</script>

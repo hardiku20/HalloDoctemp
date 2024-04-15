@@ -175,15 +175,15 @@ namespace learning1.Services.Services
 
         //}
 
-        public AdminDashboardViewModel RenderActiveStateData(int status1, int status2 ,int page, int pageSize, string patientName)
+        public AdminDashboardViewModel RenderActiveStateData(int status1, int status2 , int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderToActiveState(status1, status2 ,page, pageSize, patientName);
+            var model = _adminRepo.RenderToActiveState(status1, status2, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
-        public AdminDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName)
+        public AdminDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderConcludeState(status, page, pageSize, patientName);
+            var model = _adminRepo.RenderConcludeState(status, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
@@ -193,21 +193,21 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName)
+        public AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderPendingState(status, page, pageSize, patientName);
+            var model = _adminRepo.RenderPendingState(status, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
-        public AdminDashboardViewModel RenderToCloseStateData(int status1,int status2, int status3, int page, int pageSize, string patientName)
+        public AdminDashboardViewModel RenderToCloseStateData(int status1,int status2, int status3, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderToCloseState(status1 , status2,status3, page, pageSize, patientName);
+            var model = _adminRepo.RenderToCloseState(status1 , status2,status3, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
-        public AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName)
+        public AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderUnpaidState(status, page, pageSize, patientName);
+            var model = _adminRepo.RenderUnpaidState(status, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
@@ -368,9 +368,22 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public RecordsViewModel GetSearchData()
+        public RecordsViewModel GetSearchData(string patientName, string providerName, string email, string phoneNumber)
         {
-            var model = _adminRepo.SearchDataRepo();
+            var model = _adminRepo.SearchDataRepo(patientName, providerName , email ,phoneNumber);
+            return model;
+        }
+
+        public UserAccessViewModel GetUserAccessdetail()
+        {
+            var model = _adminRepo.GetUserAccessRepo();  
+            return model;
+
+        }
+
+        public RecordsViewModel GetBlockRecords(string name, string date, string email, string phoneNumber)
+        {
+            var model = _adminRepo.BlockDataRepo(name,date,email,phoneNumber);
             return model;
         }
 

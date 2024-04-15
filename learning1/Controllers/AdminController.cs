@@ -98,31 +98,31 @@ namespace learning1.Controllers
 
 
 
-        public IActionResult RenderPendingPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null)
+        public IActionResult RenderPendingPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _adminServices.RenderPendingStateData(Status, Page, PageSize, patientName);
+            var model = _adminServices.RenderPendingStateData(Status, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_adminPendingState", model);
         }
 
-        public IActionResult RenderActivePartialView(int status1, int status2,int Page = 1, int PageSize = 4, string patientName = null)
+        public IActionResult RenderActivePartialView(int status1, int status2, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _adminServices.RenderActiveStateData(status1,status2,Page,PageSize,patientName);
+            var model = _adminServices.RenderActiveStateData(status1,status2, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_adminActiveState", model);
         }
-        public IActionResult RenderConcludePartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null)
+        public IActionResult RenderConcludePartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _adminServices.RenderConcludeStateData(Status, Page, PageSize, patientName);
+            var model = _adminServices.RenderConcludeStateData(Status, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_adminConcludeState", model);
         }
 
-        public IActionResult RenderToClosePartialView(int status1, int status2, int status3,int Page = 1, int PageSize = 4, string patientName = null)
+        public IActionResult RenderToClosePartialView(int status1, int status2, int status3, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _adminServices.RenderToCloseStateData(status1,status2,status3, Page, PageSize, patientName);
+            var model = _adminServices.RenderToCloseStateData(status1,status2,status3, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_adminToCloseState", model);
         }
-        public IActionResult RenderUnpaidPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null)
+        public IActionResult RenderUnpaidPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _adminServices.RenderUnpaidStateData(Status, Page, PageSize, patientName);
+            var model = _adminServices.RenderUnpaidStateData(Status, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_adminUnpaidState", model);
         }
 
@@ -421,6 +421,13 @@ namespace learning1.Controllers
             return View();
         }
 
+
+        public IActionResult GetUserAccessDetails()
+        {
+            var model = _adminServices.GetUserAccessdetail();
+            return PartialView("_UserAccessPartialView", model);
+        }
+
         public IActionResult DeleteRole(int RoleId)
         {
             _adminServices.DeleteRoleById(RoleId);
@@ -554,9 +561,9 @@ namespace learning1.Controllers
             return View();
         }
 
-        public IActionResult RendorSearchHistoryPartialView()
+        public IActionResult RendorSearchHistoryPartialView(string PatientName = null, string ProviderName =null, string Email = null,string PhoneNumber = null)
         {
-            var model = _adminServices.GetSearchData();
+            var model = _adminServices.GetSearchData(PatientName,ProviderName,Email,PhoneNumber);
             return PartialView("_SearchRecordPartialView",model);
 
         }
@@ -576,6 +583,12 @@ namespace learning1.Controllers
         public IActionResult BlockHistory()
         {
             return View();
+        }
+
+        public IActionResult RendorBlockHistoryPartialView(string Name = null , string date = null ,string Email = null , string phoneNumber = null)
+        {
+            var model = _adminServices.GetBlockRecords(Name, date, Email, phoneNumber);
+            return PartialView("_BlockRecordPartialView",model);
         }
 
         public IActionResult CancelHistory()

@@ -27,12 +27,12 @@ namespace learning1.Services.IServices
         void InsertOrderDetails(SendOrderViewModel model);
         void InsertviewUploads(ViewUploadViewModel model, int requestId);
         void IsClearCase(AdminDashboardViewModel model);
-        AdminDashboardViewModel RenderActiveStateData(int status1,int status2,int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderActiveStateData(int status1,int status2, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        AdminDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
-        AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderToCloseStateData(int status1,int status2,int status3, int page, int pageSize, string patientName);
-        AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName);
+        AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        AdminDashboardViewModel RenderToCloseStateData(int status1,int status2,int status3, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         void SetViewNotesData(ViewNotesViewModel model, int requestId);
         AdminDashboardViewModel ListToExportAllData();
         void SendAgreement(int requestId);
@@ -59,7 +59,9 @@ namespace learning1.Services.IServices
         VendorViewModel GetVendorsDetails(int professionId, string vendorName);
         RecordsViewModel GetPatientHistory(string firstname, string lastname, string email, string phonenumber);
         RecordsViewModel GetPatientExplore(int userId);
-        RecordsViewModel GetSearchData();
+        RecordsViewModel GetSearchData(string patientName, string providerName, string email, string phoneNumber);
+        UserAccessViewModel GetUserAccessdetail();
+        RecordsViewModel GetBlockRecords(string name, string date, string email, string phoneNumber);
 
 
 

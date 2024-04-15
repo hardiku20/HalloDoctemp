@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+
+@model learning1.DBEntities.ViewModel.UserAccessViewModel;
+
+
+<table class="table-responsive  table-hover w-100 px-2">
+    <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+        <td scope="col" class="py-3 ps-4">Account Type</td>
+        <td scope="col" class="py-3">Account POC</td>
+        <td scope="col" class="py-3">Phone</td>
+        <td scope="col" class="py-3">Status</td>
+        <td scope="col" class="py-3">Open Requests</td>
+        <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+    </tr>
+
+
+
+    <tr class="border-bottom border-secondary-subtle">
+        <td class="ps-4 py-1">Admin</td>
+        <td class="py-1">Test, Admin</td>
+        <td class="py-1">934585930</td>
+        <td class="py-1">Active</td>
+        <td class="py-1">2015</td>
+        <td class="d-flex justify-content-center py-1">
+            <button type="submit" class="btn btn-outline-info text-info bg-white">Edit</button>
+        </td>
+    </tr>
+
+</table>

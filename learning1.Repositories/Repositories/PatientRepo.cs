@@ -99,7 +99,8 @@ namespace learning1.Repositories.Repositories
                 City = model.City,
                 Street = model.Street,
                 ZipCode = model.ZipCode,
-                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode,
+                Notes = model.RequestNotes,
             };
 
             _context.RequestClients.Add(requestClient);
@@ -190,7 +191,8 @@ namespace learning1.Repositories.Repositories
                 City = model.City,
                 Street = model.Street,
                 ZipCode = model.ZipCode,
-                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode,
+                Notes = model.RequestNotes,
             };
 
             _context.RequestClients.Add(requestClient);
@@ -277,7 +279,8 @@ namespace learning1.Repositories.Repositories
                 City = model.City,
                 Street = model.Street,
                 ZipCode = model.ZipCode,
-                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode
+                Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode,
+                Notes = model.RequestNotes,
             };
 
             _context.RequestClients.Add(requestClient);
@@ -665,6 +668,7 @@ namespace learning1.Repositories.Repositories
                 Street = model.Street,
                 ZipCode = model.ZipCode,
                 Address = model.Street + ", " + model.City + ", " + model.State + "- " + model.ZipCode,
+                Notes = model.RequestNotes,
             };
 
             _context.RequestClients.Add(requestClient);

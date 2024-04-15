@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+@model learning1.DBEntities.ViewModel.RecordsViewModel;
+
+<table class="table-responsive table-hover w-100">
+    <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+        <td scope="col" class="py-3 ps-4">Patient Name</td>
+        <td scope="col" class="py-3">Phone Number</td>
+        <td scope="col" class="py-3">Email</td>
+        <td scope="col" class="py-3">Created Date</td>
+        <td scope="col" class="py-3">Notes</td>
+        <td scope="col" class="py-3">is Active</td>
+        <td scope="col" class="py-3 d-flex justify-content-center">Action</td>
+    </tr>
+
+
+
+    @foreach(var items in Model.blockRecords)
+    {
+        <tr class="border-bottom border-secondary-subtle">
+            <td class="ps-4 py-1">@items.PatientName</td>
+            <td class="py-1">@items.PhoneNumber</td>
+            <td class="py-1">@items.Email</td>
+            <td class="py-1">@items.createdDate</td>
+            <td class="py-1">@items.Notes</td>
+            <td class="py-1"></td>
+            <td class="d-flex justify-content-center py-1">
+                <a class="btn btn-outline-info text-info bg-white btn-sm">Unblock</a>
+            </td>
+        </tr>
+    }
+
+
+
+</table>

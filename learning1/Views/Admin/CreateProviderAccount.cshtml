@@ -29,7 +29,7 @@
                     <h5 class="my-3">Account Information</h5>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" value="admin" disabled>
+                            <input type="text" class="form-control" id="Username" placeholder="User Name" disabled>
                             <label for="floatingInput" >User Name (LastnameF)</label>
                         </div>
                     </div>
@@ -51,13 +51,13 @@
                     <h5 class="my-3">Administration Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name">
+                            <input type="text" class="form-control" id="FirstName" placeholder="First Name">
                             <label for="floatingInput" >First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name">
+                            <input type="text" class="form-control" id="LastName" placeholder="Last Name">
                             <label for="floatingInput" >Last Name</label>
                         </div>
                     </div>
@@ -253,5 +253,30 @@
     const phoneInput2 = window.intlTelInput(phoneInputField2, {
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+
+
+
+
+
+
+    $('#FirstName').on('change', function () {
+        if ($("#FirstName").val() == "" || $("#LastName").val() == "") {
+            $('#Username').val("");
+        }
+        else {
+            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+        }
+    });
+
+
+    $("#LastName").on("change", function () {
+
+        if ($("#FirstName").val() == "" || $("#LastName").val() == "") {
+            $('#Username').val("");
+        }
+        else {
+            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+        }
     });
 </script>
