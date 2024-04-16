@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+@model learning1.DBEntities.ViewModel.ProviderMenuViewModel;
+<div>
+    <table class="table-responsive w-100">
+        <tr class="border border-bottom border-white bg-secondary-subtle">
+            <td scope="col" class="py-3 d-flex justify-content-center">Stop Notification</td>
+            <td scope="col" class="py-3 ">Provider Name</td>
+            <td scope="col" class="py-3">Role</td>
+            <td scope="col" class="py-3">On Call Status</td>
+            <td scope="col" class="py-3">Status</td>
+            <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+        </tr>
+
+
+        @foreach(var items in Model.Details)
+        {
+            <tr class="border-bottom border-secondary-subtle">
+                <td class="form-check d-flex justify-content-center py-1">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                </td>
+                <td class="py-1">@items.Name</td>
+                <td class="py-1">Admin</td>
+                <td class="py-1">@items.OnCallStatus</td>
+                <td class="py-1">@items.Status</td>
+                <td class="d-flex justify-content-center gap-1 py-1">
+                    <a class="btn btn-outline-info text-info bg-white" data-bs-target="#ContactProviderModal" data-bs-toggle="modal">Contact</a>
+                    <a class="btn btn-outline-info text-info bg-white" asp-action="EditPhysicianAccount" asp-controller="Admin">Edit</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -45,7 +45,6 @@ namespace learning1.Services.IServices
         List<Menu> GetMenus(int accountType);
         void CreateRoleByAccount(CreateRoleViewModel model);
         AccountAccessViewModel GetAccountAccessTable();
-        CreateRoleViewModel GetDetailsByRoleId(int roleId);
         void DeleteRoleById(int roleId);
         List<ShiftDetail> GetScheduleData();
         List<Region> getRegionTableData();
@@ -62,6 +61,13 @@ namespace learning1.Services.IServices
         RecordsViewModel GetSearchData(string patientName, string providerName, string email, string phoneNumber);
         UserAccessViewModel GetUserAccessdetail();
         RecordsViewModel GetBlockRecords(string name, string date, string email, string phoneNumber);
+        CreateRoleViewModel GetDetailsByRoleId();
+        CreateProviderAccountViewModel GetRegionforProvider();
+        ProviderMenuViewModel GetRegionsforProvider();
+        ProviderMenuViewModel GetProvidersdetails();
+        CreateProviderAccountViewModel GetRegionsforPhysician();
+
+
 
 
 

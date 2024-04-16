@@ -267,49 +267,30 @@
     </script> 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     <script>
-        // tabs color design
         document.addEventListener("DOMContentLoaded", function () {
-            
             const navLinks = document.querySelectorAll(".nav-link");
 
-            navLinks.forEach(function (navLink) {
-                navLink.addEventListener("click", function () {
-
-                    // Remove active class from all nav links
-                    navLinks.forEach(function (link) {
-                        link.classList.remove("active");
-                        link.style.color = ""; // Reset text color
-                        link.style.borderBottom = "none"; // Reset bottom border
-                    });
-                    // Add active class to the clicked nav link
+            navLinks.forEach(link => {
+                link.addEventListener("click", function () {
+                    navLinks.forEach(otherLink => otherLink.classList.remove("active"));
                     this.classList.add("active");
-                    
-                    // Add bottom border and change text color to "deepskyblue"
-                    this.style.borderBottom = "2px solid deepskyblue";
-                    this.style.color = "deepskyblue";
                 });
             });
         });
 
-
-
-
-
-
-       
     </script>
+
+
+
+
+
+
+
+
+
+
+
+    
 </body>
 </html>

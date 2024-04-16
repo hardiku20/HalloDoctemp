@@ -332,15 +332,39 @@ namespace learning1.Controllers
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         public IActionResult ProviderMenu()
         {
-            return View();
+
+            var modal = _adminServices.GetRegionsforProvider();
+            return View(modal);
         }
+
+        public IActionResult GetProviderTable()
+        {
+            var modal = _adminServices.GetProvidersdetails();
+            return PartialView("_ProviderMenuPartialView",modal);
+        }
+
+
 
 
         public IActionResult EditPhysicianAccount()
         {
-            return View();
+
+            var modal = _adminServices.GetRegionsforPhysician();
+            return View(modal);
         }
 
 
@@ -354,53 +378,19 @@ namespace learning1.Controllers
 
 
 
-        public IActionResult CreateRole(int RoleId)
+        public IActionResult CreateRole()
         {
-            CreateRoleViewModel model = _adminServices.GetDetailsByRoleId(RoleId);
+            CreateRoleViewModel model = _adminServices.GetDetailsByRoleId();
             return View(model);
         }
 
-
-        public IActionResult EditRole(int RoleId)
+        public IActionResult GetMenuByAccount(int AccountType)
         {
-            CreateRoleViewModel model = _adminServices.GetDetailsByRoleId(RoleId);  
+            var MenuList = _adminServices.GetMenus(AccountType);
+            CreateRoleViewModel model = new CreateRoleViewModel();
+            model.menulist = MenuList;
             return PartialView("_MenuList", model);
         }
-
-        public IActionResult GetMenuByAccount(int AccountType) {
-            var MenuList = _adminServices.GetMenus(AccountType);
-            CreateRoleViewModel model= new CreateRoleViewModel();
-            model.menulist= MenuList;
-            return PartialView("_MenuList",model);
-        }
-
-
-
-
-        public IActionResult CreateProviderAccount()
-        {
-            return View();
-        }
-
-
-        public IActionResult CreateAdminAccount()
-        {
-            var modal = _adminServices.GetRegionforAdmin();
-            return View(modal);
-        }
-
-
-
-        
-        //public List<string> GetMenuByAccount(int AccountType)
-        //{
-        //    var Menulist = _adminServices.GetMenuList(AccountType);
-        //    return Menulist;
-        //}
-
-
-        
-
 
         [HttpPost]
         public IActionResult CreateRole(CreateRoleViewModel model)
@@ -410,11 +400,27 @@ namespace learning1.Controllers
             return RedirectToAction("AccountAccess");
         }
 
-        //public IActionResult CreateRole(int RoleId)
-        //{
-        //    var model = _adminServices.EditRoleById(RoleId);
-        //    return View(model);
-        //}
+        public IActionResult DeleteRole(int RoleId)
+        {
+            _adminServices.DeleteRoleById(RoleId);
+            return RedirectToAction("AccountAccess");
+
+        }
+
+        public IActionResult CreateProviderAccount()
+        {
+            var modal = _adminServices.GetRegionforProvider();
+            return View(modal);
+        }
+
+
+        public IActionResult CreateAdminAccount()
+        {
+            var modal = _adminServices.GetRegionforAdmin();
+            return View(modal);
+        }
+
+   
 
        public IActionResult UserAccess()
         {
@@ -428,12 +434,7 @@ namespace learning1.Controllers
             return PartialView("_UserAccessPartialView", model);
         }
 
-        public IActionResult DeleteRole(int RoleId)
-        {
-            _adminServices.DeleteRoleById(RoleId);
-            return RedirectToAction("AccountAccess");
 
-        }
 
         public IActionResult Scheduling(SchedulingViewModel model)
         {

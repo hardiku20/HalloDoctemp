@@ -10,7 +10,7 @@
 
 @foreach(var  menu in Model.menulist){
     
-<div class="form-check">
+<div class="form-check w-25">
     <input class="form-check-input" type="checkbox"  name="SelectedMenus" value=@menu.MenuId id="flexCheckChecked" 
         @if(Model.SelectedMenus != null)
         {

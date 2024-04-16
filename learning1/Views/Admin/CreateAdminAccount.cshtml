@@ -82,6 +82,18 @@
                     </div>
                     <div class="col-md-6 mb-3 form-check-group">
                         <div class="d-flex gap-1 align-items-center flex-wrap">
+                            @for (int i = 0; i < Model.Region.Count; i++)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input Change1"
+                                           type="checkbox"
+                                           value="@Model.Region[i].RegionId"
+                                           id="checkbox@(i)"
+                                           name="checkbox_group"
+                                           onchange="AddSelectedRegion()">
+                                    <label class="form-check-label text-secondary" for="checkbox@(i)">@Model.Region[i].Name</label>
+                                </div>
+                            }
                         </div>
                     </div>
 

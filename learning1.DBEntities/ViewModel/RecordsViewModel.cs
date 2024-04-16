@@ -82,8 +82,8 @@ namespace learning1.DBEntities.ViewModel
             public string? Notes { get;set;}
 
           public bool? isActive { get; set; }
-            public int RequestId {  get; set;}
-            public int BlockRequestId {  get; set; }
+            public int? RequestId {  get; set;}
+            public int? BlockRequestId {  get; set; }
            
         }
 

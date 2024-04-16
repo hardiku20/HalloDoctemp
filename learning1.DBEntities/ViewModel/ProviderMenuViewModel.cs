@@ -20,11 +20,17 @@ namespace learning1.DBEntities.ViewModel
 public class ProviderMenuDetailsViewModel
 {
     public int PhysicianId { get; set; }
-    public RoleName Role { get; set; }
-    public string OnCallStatus { get; set; }
+    public string? firstName {  get; set; }
+    public string? lastName { get; set; }
+    public string? Name { get; set; }
 
-    public PhysicianStatus Status { get; set; }
-    public string Name { get; set; }
+    public bool? Notification { get; set; }
+    public RoleName Role { get; set; }
+    public string? OnCallStatus { get; set; }
+
+    public PhysicianStatus? Status { get; set; }
+    public string? Message {  get; set; }
+    
 }
 
 public enum RoleName

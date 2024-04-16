@@ -17,6 +17,7 @@
 
         <tr class="border border-bottom border-white bg-secondary-subtle">
             <td scope="col" class="py-3 ps-4">Name</td>
+            <td scope="col" class="py-3 "></td>
             <td scope="col" class="py-3 ">Date of Birth</td>
             <td scope="col" class="py-3">Requestor</td>
             <td scope="col" class="py-3">Physician Name</td>
@@ -53,8 +54,9 @@
             <tr class=" border border-bottom border-white" style="background-color:@bgcolor">
 
                 <td class="text-white py-5">@items.Name</td>
+                <td class="text-white p-3"><i class="bi bi-chat-left-text"></i></td>
                 <td class="text-white py-3">
-                    <img src="~/assets/images/envelope.svg" class="p-1 border "> -
+                    -
                 </td>
                 <td class="text-white py-3 ">@items.RequestType @items.Requester</td>
                 <td class="text-white py-3">physician name</td>
@@ -114,49 +116,7 @@
             </tr>
         }
     </table>
-        @{
-            double d = (double)Model.RequestCount?.PendingStateCount / 4;
-            double pages = Math.Ceiling(d);
-        }
-    <div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
-
-
-        <span class="d-flex justify-content-start fs-5">
-            Showing 4 of @Model.RequestCount?.PendingStateCount Entries
-        </span>
-        <nav aria-label="Page navigation example d-flex justify-content-between">
-            <ul class="pagination">
-                @* <li class="page-item page-item-story d-flex" id="1-newState">
-                <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true"> << </span>
-                </a>
-                </li> *@
-                <li class="page-item page-item-story d-flex" id="previousPage-pendingState">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">Previous</span>
-                    </a>
-                </li>
-
-                @for (int j = 1; j <= @pages; j++)
-                {
-                    <li class="page-item page-item-story" id="@j-pendingState"><a class="page-link">@j</a></li>
-                }
-                <li class="page-item page-item-story d-flex" id="nextPage-pendingState" data-TotalPages=@pages>
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">Next</span>
-                    </a>
-                </li>
-                @* <li class="page-item page-item-story d-flex" id="@pages-newState">
-                <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true"> >> </span>
-                </a>
-                </li> *@
-            </ul>
-        </nav>
-
-
-
-    </div>
+      
 </div>
 
 
@@ -300,6 +260,52 @@
             }
         </div>
     </div>
+</div>
+
+
+
+@{
+    double d = (double)Model.RequestCount?.PendingStateCount / 4;
+    double pages = Math.Ceiling(d);
+}
+<div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
+
+
+    <span class="d-flex justify-content-start fs-5">
+        Showing 4 of @Model.RequestCount?.PendingStateCount Entries
+    </span>
+    <nav aria-label="Page navigation example d-flex justify-content-between">
+        <ul class="pagination">
+            @* <li class="page-item page-item-story d-flex" id="1-newState">
+            <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true"> << </span>
+            </a>
+            </li> *@
+            <li class="page-item page-item-story d-flex" id="previousPage-pendingState">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                </a>
+            </li>
+
+            @for (int j = 1; j <= @pages; j++)
+            {
+                <li class="page-item page-item-story" id="@j-pendingState"><a class="page-link">@j</a></li>
+            }
+            <li class="page-item page-item-story d-flex" id="nextPage-pendingState" data-TotalPages=@pages>
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">Next</span>
+                </a>
+            </li>
+            @* <li class="page-item page-item-story d-flex" id="@pages-newState">
+            <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true"> >> </span>
+            </a>
+            </li> *@
+        </ul>
+    </nav>
+
+
+
 </div>
 
 <script src="/js/Pagination.js"></script>

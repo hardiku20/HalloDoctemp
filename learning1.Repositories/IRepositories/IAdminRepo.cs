@@ -68,6 +68,9 @@ namespace learning1.Repositories.IRepositories
         RecordsViewModel SearchDataRepo(string patientName, string providerName, string email, string phoneNumber);
         UserAccessViewModel GetUserAccessRepo();
         RecordsViewModel BlockDataRepo(string name, string date, string email, string phoneNumber);
+        CreateRoleViewModel GetRoleDetailsRepo();
+        ProviderMenuViewModel GetProviderRepo();
+
 
         //AccountAccessViewModel EditRoleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);

@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Linq.Expressions;
 using System.Data;
 using static learning1.DBEntities.ViewModel.VendorViewModel;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using System.Collections;
 
 namespace learning1.Repositories.Repositories
 {
@@ -1043,10 +1045,7 @@ namespace learning1.Repositories.Repositories
         }
 
         public CreateRoleViewModel GetRoleDetailsRepo(int roleId)
-        {
-            if (roleId != 0)
-            {
-
+        {          
                 Role role = _context.Roles.Where(x => x.RoleId == roleId).FirstOrDefault();
 
                 CreateRoleViewModel model = new CreateRoleViewModel()
@@ -1059,21 +1058,6 @@ namespace learning1.Repositories.Repositories
 
                 };
                 return model;
-            }
-
-            else
-            {
-                CreateRoleViewModel model = new CreateRoleViewModel();
-
-
-                return model;
-            }
-
-
-
-
-
-
         }
 
         public void DeleteRoleRepo(int roleId)
@@ -1331,9 +1315,8 @@ namespace learning1.Repositories.Repositories
 
         public UserAccessViewModel GetUserAccessRepo()
         {
-            //var data = _context.AspNetUsers.Where(x => x.UserName != null).Include(x => x.AspNetUserRoles).Include(x => x.Admins).Include(x => x.Admins)
-            //                 .Where(x => x.Physicians.FirstOrDefault().Isdeleted == null && x.Admins.FirstOrDefault().Isdeleted == null
-            //                 && (x.Aspnetuserroles.FirstOrDefault().Roleid == 1 || x.Aspnetuserroles.FirstOrDefault().Roleid == 3))
+            var data = _context.AspNetUsers.Where(x => x.UserName != null)
+                .Include(x => x.AspNetUserRoles).Include(x => x.AdminAspNetUsers).Include(x => x.PhysicianAspNetUsers);
 
 
             return new();
@@ -1349,36 +1332,79 @@ namespace learning1.Repositories.Repositories
 
 
 
+        public RecordsViewModel BlockDataRepo(string name, string date, string email, string phoneNumber)
+        {
+            var blockRecords = _context.Requests.Include(x => x.RequestClients).Include(x => x.BlockRequests)
+                .Where(x => (x.Status == 11) &&(name == null || x.RequestClients.FirstOrDefault().FirstName.ToLower().Contains(name.Trim().ToLower())
+                || x.RequestClients.FirstOrDefault().LastName.ToLower().Contains(name.Trim().ToLower())
+                && (email == null || x.BlockRequests.FirstOrDefault().Email.ToLower().Contains(email.Trim().ToLower()))
+                && (phoneNumber == null || x.BlockRequests.FirstOrDefault().PhoneNumber.ToLower().Contains(phoneNumber.Trim().ToLower()))))
+                .Select(x => new RecordsViewModel.BlockRecords()
+                {
+                    PatientName = x.RequestClients.FirstOrDefault().FirstName + " " + x.RequestClients.FirstOrDefault().LastName,
+                    PhoneNumber = x.BlockRequests.FirstOrDefault().PhoneNumber,
+                    Email = x.BlockRequests.FirstOrDefault().Email,
+                    createdDate = x.BlockRequests.FirstOrDefault().CreatedDate.ToString(),
+                    Notes = x.BlockRequests.FirstOrDefault().Reason,
+                    isActive = x.BlockRequests.FirstOrDefault().IsActive,
+                    RequestId = x.RequestId,
+                    BlockRequestId = x.BlockRequests.FirstOrDefault().BlockRequestId,
+
+                }).ToList();
+
+            RecordsViewModel model = new RecordsViewModel()
+            {
+                blockRecords = blockRecords,
+            };
+            return model;
+        }
+
+        public CreateRoleViewModel GetRoleDetailsRepo()
+        {
+            CreateRoleViewModel model = new CreateRoleViewModel();
+            return model;
+        }
+
+        public ProviderMenuViewModel GetProviderRepo()
+        {
+            var provider = _context.Physicians.Include(x=>x.PhysicianNotifications).Where(x => x.IsDeleted != true)
+                .Select(x=> new ProviderMenuDetailsViewModel()
+                {
+                    PhysicianId = x.PhysicianId,
+                    Name = x.FirstName + " " + x.LastName,
+                    Status = (PhysicianStatus)x.Status ,
+                    OnCallStatus = "Unavailable",
+
+                }).ToList();
+                
+                //from phy in _context.Physicians
+                //           join role in _context.Roles on phy.RoleId equals role.RoleId
+                //           join phyNotification in _context.PhysicianNotifications on phy.PhysicianId equals phyNotification.PhysicianId
+                //           where phy.IsDeleted != true
+                //           orderby phy.PhysicianId
+                //           select new ProviderMenuDetailsViewModel
+                //           {
+                //               PhysicianId = phy.PhysicianId,
+                //               firstName = phy.FirstName,
+                //               lastName = phy.LastName,
+                //               Status = (PhysicianStatus)phy.Status,
+                //               Role = (RoleName)role.RoleId,
+                //              
+                //           };
+
+            ProviderMenuViewModel model = new ProviderMenuViewModel()
+            {
+                Details = provider,
+            };
+            return model;
+        }
 
 
 
-        ///checkkk hereee
-        //public RecordsViewModel BlockDataRepo(string name, string date, string email, string phoneNumber)
-        //{
-        //    var blockRecords = _context.Requests.Include(x => x.RequestClients).Include(x => x.BlockRequests)
-        //        .Where(x => (name == null || x.RequestClients.FirstOrDefault().FirstName.ToLower().Contains(name.Trim().ToLower())
-        //        && x.RequestClients.FirstOrDefault().LastName.ToLower().Contains(name.Trim().ToLower())
-        //        && x.BlockRequests.FirstOrDefault().Email.ToLower().Contains(email.Trim().ToLower())
-        //        && x.BlockRequests.FirstOrDefault().PhoneNumber.ToLower().Contains(phoneNumber.Trim().ToLower())))
-        //        .Select(x => new RecordsViewModel.BlockRecords()
-        //        {
-        //            PatientName = x.RequestClients.FirstOrDefault().FirstName + " " + x.RequestClients.FirstOrDefault().LastName,
-        //            PhoneNumber = x.BlockRequests.FirstOrDefault().PhoneNumber,
-        //            Email = x.BlockRequests.FirstOrDefault().Email,
-        //            createdDate = x.BlockRequests.FirstOrDefault().CreatedDate.ToString(),
-        //            Notes= x.BlockRequests.FirstOrDefault().Reason,
-        //            isActive = x.BlockRequests.FirstOrDefault().IsActive,
-        //            RequestId = x.RequestId,
-        //            BlockRequestId = x.BlockRequests.FirstOrDefault().BlockRequestId,
 
-        //        }).ToList();
 
-        //    RecordsViewModel model = new RecordsViewModel()
-        //    {
-        //        blockRecords = blockRecords,
-        //    };
-        //    return model;
-        //}
+
+
 
 
 

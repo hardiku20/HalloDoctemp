@@ -280,7 +280,6 @@ namespace learning1.Services.Services
         public void CreateRoleByAccount(CreateRoleViewModel model)
         {
             _adminRepo.CreateRoleRepo(model);
-
         }
 
         public AccountAccessViewModel GetAccountAccessTable()
@@ -387,11 +386,47 @@ namespace learning1.Services.Services
             return model;
         }
 
+        public CreateRoleViewModel GetDetailsByRoleId()
+        {
+            return _adminRepo.GetRoleDetailsRepo();
+        }
 
-        //public AccountAccessViewModel EditRoleById(int roleId)
-        //{
-        //    var model = _adminRepo.EditRoleRepo(roleId);
-        //    return model;
-        //}
+        public CreateProviderAccountViewModel GetRegionforProvider()
+        {
+            var regions = _adminRepo.GetRegionTable();
+            CreateProviderAccountViewModel model = new CreateProviderAccountViewModel()
+            {
+                Region = regions,
+            };
+            return model;
+        }
+
+        public ProviderMenuViewModel GetRegionsforProvider()
+        {
+            var regions = _adminRepo.GetRegionTable();
+            ProviderMenuViewModel model = new ProviderMenuViewModel()
+            {
+                RegionList = regions,
+            };
+            return model;
+        }
+
+        public ProviderMenuViewModel GetProvidersdetails()
+        {
+            var modal = _adminRepo.GetProviderRepo();
+            return modal;
+
+        }
+
+        public CreateProviderAccountViewModel GetRegionsforPhysician()
+        {
+            var regions = _adminRepo.GetRegionTable();
+            CreateProviderAccountViewModel model = new CreateProviderAccountViewModel()
+            {
+                Region = regions,
+            };
+            return model;
+
+        }
     }
 }

@@ -37,14 +37,14 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-floating select-info">
                             <select class="form-select form-control shadow-none" aria-label="Floating label select example" id="Profession" asp-for="Profession" required>
-                                <option value="0">Select Profession</option>
+                                <option value="">Select Profession</option>
                                 @foreach (var items in Model.ProfessionalTypes)
                                 {
                                     <option value=@items.HealthProfessionalId>@items.ProfessionName</option>
                                 }
                             </select>
                             <label for="floatingSelect">Profession</label>
-                           
+                            <div class="invalid-feedback">Please select a profession.</div>
                         </div>
                     </div>
 

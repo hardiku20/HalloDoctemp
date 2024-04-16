@@ -5,7 +5,7 @@
     Layout = "_AdminLayout";
 }
 
-
+@model learning1.DBEntities.ViewModel.ProviderMenuViewModel;
 <!-- Modal for Contact your provider-->
 <div class="modal fade" id="ContactProviderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
      style="display: none;">
@@ -77,26 +77,32 @@
 @* Content of the Web-page *@
 <div class="container pb-4">
     <div class="d-flex justify-content-between my-4">
-        <h4 class="">Provider Information</h4>      
+        <h4 class="">Provider Information</h4>
     </div>
 
 
     <div class="card border-0 shadow-sm">
         <div class="card-body p-0">
-            <div class="d-flex justify-content-between align-items-center mb-2 p-2">
-                <div class="input-group border me-2 rounded-0 form-control w-25">
-                    <div class="input-group-append">
-                        <button class="btn text-secondary border border-0 bg-white" type="button">
-                            <i class="bi bi-search"></i>
-                        </button>
+            <div class="d-sm-flex justify-content-between align-items-center mb-2 p-2">
+                <div class="col-md-3 p-2">
+                    <div class="input-group border rounded-0 form-control">
+                        <div class="input-group-append">
+                            <button class="btn text-secondary border border-0 bg-white" type="button">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+
+                        <select class="form-select border-0 shadow-none" aria-label="Floating label select example">
+                            <option>All Regions</option>
+
+                            @foreach (var items in Model.RegionList)
+                            {
+                                <option value=@items.RegionId>@items.Name</option>
+                            }
+                        </select>
                     </div>
-                    <select class="form-select border-0 shadow-none" id="" aria-label="Floating label select example">
-                        <option selected class="">All</option>
-                      
-                    </select>
-                    @* <label for="floatingSelect" class="mx-2 text-secondary">Search Region</label> *@
                 </div>
-                <div class="">
+                <div class="d-flex justify-content-end p-2">
                     <a asp-action="CreateProviderAccount" asp-controller="Admin"
                        class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white">
                         Create Provider Account
@@ -105,41 +111,34 @@
             </div>
 
 
-            <div class="">
-                <table class="table-responsive w-100"> 
-                    <tr class="border border-bottom border-white bg-secondary-subtle">
-                        <td scope="col" class="py-3 d-flex justify-content-center">Stop Notification</td>
-                        <td scope="col" class="py-3 ">Provider Name</td>
-                        <td scope="col" class="py-3">Role</td>
-                        <td scope="col" class="py-3">On Call Status</td>
-                        <td scope="col" class="py-3">Status</td>
-                        <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
-                    </tr>
+            <div id="Provider_table">
 
-
-                    <tr class=" border border-bottom border-white">
-                        <td class="form-check d-flex justify-content-center">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        </td>
-                        <td class="">providdedsfri</td>
-                        <td class="">ROlemf</td>
-                        <td class="">UN Available</td>
-                        <td class="">Pendinmg</td>
-                        <td class="d-flex justify-content-center gap-1">
-                            <a class="btn btn-outline-info text-info bg-white" data-bs-target="#ContactProviderModal" data-bs-toggle="modal">Contact</a>
-                            <a class="btn btn-outline-info text-info bg-white" asp-action="EditPhysicianAccount" asp-controller="Admin">Edit</a>
-                        </td>
-                     </tr>
-                </table>
+                @* teble render here *@
             </div>
-
-
-
-
-
         </div>
     </div>
 </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/admin/GetProviderTable",
+            data: {
+
+            },
+
+            success: function (result) {
+                console.log(result);
+                $("#Provider_table").html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        })
+    })
+</script>
