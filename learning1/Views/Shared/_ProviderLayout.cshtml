@@ -13,8 +13,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
-    
-
 </head>
 @* <body onload="checkMode()" class="bg-light dark-mode1">  *@
 <body class="bg-light dark-mode1">
@@ -51,63 +49,25 @@
                 <ul class="nav nav-underline mx-3">
 
                     <li class="nav-item">
-                        <a class="nav-link px-2 fw-medium text-info active" aria-current="page"
-                           asp-action="admindashboard" asp-controller="Admin">DashBoard</a>
+                        <a class="nav-link px-2 fw-medium text-info active" aria-current="page">DashBoard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-2 fw-medium text-secondary" href="#">Provider Location</a>
+                        <a class="nav-link px-2 fw-medium text-secondary" href="#">Invoicing</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-2 fw-medium text-secondary" asp-action="AdminProfile" asp-controller="Admin">My Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        @* <a class="nav-link text-secondary px-2 fw-medium" href="#">Providers</a> *@
-                            @* <button class="nav-link btn dropdown-toggle text-secondary fw-medium px-2 rounded-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Provider
-                            </button>
-                            <ul class="dropdown-menu border-0 rounded-0 shadow-lg">
-                                <li><a class="dropdown-item" >Provider</a></li>
-                                <li><a class="dropdown-item" href="#">Scheduling</a></li>
-                                <li><a class="dropdown-item" href="#">Invoicing</a></li>
-                            </ul>
- *@
-
                         <div class="dropdown">
-                            <a role="button" class="nav-link px-2 fw-medium text-secondary dropdown-toggle" data-bs-toggle="dropdown">Providers</a>
+                            <a role="button" class="nav-link px-2 fw-medium text-secondary" data-bs-toggle="dropdown">My Schedule</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="ProviderMenu" asp-controller="Admin">Provider</a></li>
                                 <li><a role="button" class="dropdown-item" asp-action="Scheduling" asp-controller="Admin">Scheduling</a></li>
                                 <li><a role="button" class="dropdown-item">Invoicing</a></li>
                             </ul>
                         </div>
-                        
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-2 fw-medium text-secondary" asp-action="Vendors" asp-controller="Admin">Partners</a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <a role="button" class="nav-link px-2 fw-medium text-secondary dropdown-toggle" data-bs-toggle="dropdown">Access</a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a role="button" class="dropdown-item" asp-action="AccountAccess" asp-controller="Admin">Account Access</a></li>
-                                <li><a role="button" class="dropdown-item" asp-action="UserAccess" asp-controller="Admin">User Access</a></li>
-                                <li><a role="button" class="dropdown-item" asp-action="CreateAdminAccount" asp-controller="Admin">Create Admin</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <a role="button" class="nav-link px-2 fw-medium text-secondary dropdown-toggle" data-bs-toggle="dropdown">Records</a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a role="button" class="dropdown-item" asp-action="SearchRecord" asp-controller="Admin">Search Records</a></li>
-                                <li><a role="button" class="dropdown-item" asp-action="EmailLogs" asp-controller="Admin">Email Logs</a></li>
-                                <li><a role="button" class="dropdown-item" asp-action="SMSLogs" asp-controller="Admin">SMS Logs</a></li>
-                                <li><a role="button" class="dropdown-item" asp-action="PatientHistory" asp-controller="Admin">Patient Records</a></li>
-                                <li><a role="button" class="dropdown-item" asp-action="BlockHistory" asp-controller="Admin">Block History</a></li>
-                                <li><a role="button" class="dropdown-item" asp-action="CancelHistory" asp-controller="Admin">Cancel History</a></li>
-                            </ul>
-                        </div>
-                    </li>
+                        <a class="nav-link px-2 fw-medium text-secondary">My Profile</a>
+                    </li>                                  
                 </ul>
 
             </div>
@@ -144,7 +104,7 @@
 
 
 
-      @* Mobile view of header  *@
+        @* Mobile view of header  *@
         <div class="offcanvas offcanvas-start w-50" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
              aria-labelledby="staticBackdropLabel">
             <div class="offcanvas-header d-flex justify-content-end">
@@ -154,45 +114,29 @@
                 <ul class="nav d-block">
 
                     <li class="nav-item bg-danger-subtle">
-                        <a class="nav-link active text-danger" aria-current="page"
-                           href="PatientDashboard.html">DashBoard</a>
+                        <a class="nav-link active text-danger" aria-current="page">DashBoard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary" href="#">Provider Location</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="#">My Profile</a>
+                        <a class="nav-link text-secondary" href="#">Invoicing</a>
                     </li>
                     <li class="nav-item dropdown">
-                       @*  <a class="nav-link text-secondary" href="#">Providers</a> *@
                         <div class="dropdown">
-                            <a role="button" class="nav-link text-secondary px-2 fw-medium" data-bs-toggle="dropdown">Providers</a>
+                            <a role="button" class="nav-link text-secondary px-2 fw-medium" data-bs-toggle="dropdown">My Schedule</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a role="button" class="dropdown-item" asp-action="ProviderMenu" asp-controller="Admin">Provider</a></li>
                                 <li><a role="button" class="dropdown-item">Scheduling</a></li>
                                 <li><a role="button" class="dropdown-item">Invoicing</a></li>
                             </ul>
                         </div>
-                     
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-secondary" href="#">Partners</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" asp-action="AccountAccess" asp-controller="Admin">Access</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-secondary" href="#">Records</a>
+                        <a class="nav-link text-secondary" href="#">My Profile</a>
                     </li>
                 </ul>
 
             </div>
         </div>
-
-
-
-
-
     </header>
 
 
@@ -215,7 +159,7 @@
     &copy; 2024 - learning1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
     </footer> *@
- @*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script> *@
     @* @await RenderSectionAsync("Scripts", required: false) *@
@@ -264,33 +208,6 @@
             }
         }
 
-    </script> 
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const navLinks = document.querySelectorAll(".nav-link");
-
-            navLinks.forEach(link => {
-                link.addEventListener("click", function () {
-                    navLinks.forEach(otherLink => otherLink.classList.remove("active"));
-                    this.classList.add("active");
-                });
-            });
-        });
-
     </script>
-
-
-
-
-
-
-
-
-
-
-
-    
 </body>
 </html>

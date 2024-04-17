@@ -3,7 +3,14 @@
 *@
 @{
 }
-@model learning1.DBEntities.ViewModel.AdminDashboardViewModel;
+
+@model learning1.DBEntities.ViewModel.ProviderDashboardViewModel;
+
+
+
+
+
+
 <div class="d-md-block d-none overflow-x-auto">
     <table class="table-responsive w-100">
 
@@ -48,7 +55,9 @@
 
                 <td class="text-white py-5 ps-4">@items.Name</td>
                 <td class="text-white p-3"><i class="bi bi-chat-left-text"></i></td>
-                <td class="text-white py-3">-</td>
+                <td class="text-white py-3">
+                    -
+                </td>
                 <td class="text-white py-3 ">@items.RequestType @items.Requester</td>
                 <td class="text-white py-3">physician name</td>
                 <td class="text-white py-3">12/12/2012</td>
@@ -65,8 +74,8 @@
                     }
                 </td>
                 <td class="text-white py-3">@items.Address</td>
-                <td class="text-white py-3">@items.RequestNotes</td>
-                <td class=" ">
+                <td class="text-white py-3"> @items.RequestNotes </td>
+                <td class="">
                     <div class="d-flex align-items-center">
                         <button type="button" class="btn btn-sm border border-white text-white me-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person me-1" viewBox="0 0 16 16">
@@ -89,20 +98,26 @@
                             <li><a class="dropdown-item d-flex" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
                             <li><a class="dropdown-item d-flex" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-journal-text me-2"></i>View Uploads</a></li>
                             <li><a class="dropdown-item d-flex" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
-                            <li><a class="dropdown-item d-flex" asp-action="SendOrders" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-list-task me-2"></i>Orders</a></li>
-                            <li><a class="dropdown-item d-flex" href="#"><i class="bi bi-file-text me-2"></i>Doctors Note</a></li>
-                            <li><a class="dropdown-item d-flex" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-files me-2"></i>Encounter</a></li>
+                            <li>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal"
+                                   data-bs-target="#TransferCaseModal" data-bs-whatever="" onclick="onTransfer('@items.Name','@items.RequestId')"><i class="bi bi-file-earmark-code me-2"></i>Transfer</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal"
+                                   data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')"><i class="bi bi-x-circle  me-2"></i>Clear Case</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal" id="SendAgreement"
+                                   data-bs-target="#SendAgreementModal" data-bs-whatever="" onclick="onSendAgreement('@items.Name','@items.RequestId','@items.Email','@items.PhoneNumber')"><i class="bi bi-file-text me-2"></i>Send Agreement</a>
+                            </li>
                         </ul>
                     </div>
                 </td>
             </tr>
         }
-
-
     </table>
-    
-</div>
 
+</div>
 
 
 <div class="d-md-none">
@@ -110,8 +125,6 @@
         <div class="accordion-item">
             @foreach (var items in Model.TableViewModel)
             {
-
-
                 var bgcolor = "";
                 if (@items.RequestType.ToString() == "Family")
                 {
@@ -210,28 +223,35 @@
                         <div>
                             <div class="row mb-2 ">
                                 <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Uploads</a>
+                                    <a class="btn bg-success text-white rounded-pill w-100" style="font-size: small;" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Uploads</a>
                                 </div>
                                 <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Notes</a>
+                                    <a class="btn bg-success text-white rounded-pill w-100" style="font-size: small;" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">View Notes</a>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" asp-action="SendOrders" asp-controller="Admin" asp-route-requestId="@items.RequestId">Orders</a>
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">
+                                        View Notes
+                                    </a>
                                 </div>
                                 <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" href="#">Doctors Note</a>
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" data-bs-toggle="modal"
+                                       data-bs-target="#TransferCaseModal" data-bs-whatever="" onclick="onTransfer('@items.Name','@items.RequestId')">Transfer</a>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-files me-2"></i>Encounter</a>
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" data-bs-toggle="modal"
+                                       data-bs-target="#ClearCaseModal" data-bs-whatever="" onclick="onClear('@items.Name','@items.RequestId')">Clear Case</a>
+                                </div>
+                                <div class="col-6">
+                                    <a class="btn bg-success text-white rounded-pill w-100"
+                                       style="font-size: small;" data-bs-toggle="modal"
+                                       data-bs-target="#SendAgreementModal" data-bs-whatever="" onclick="onSendAgreement('@items.Name','@items.RequestId','@items.Email','@items.PhoneNumber')">Send Agreement</a>
                                 </div>
                             </div>
                         </div>
@@ -244,16 +264,15 @@
 
 
 
-
 @{
-    double d = (double)Model.RequestCount?.ActiveStateCount / 4;
+    double d = (double)Model.RequestCount?.PendingStateCount / 4;
     double pages = Math.Ceiling(d);
 }
 <div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
 
 
     <span class="d-flex justify-content-start fs-5">
-        Showing 4 of @Model.RequestCount?.ActiveStateCount Entries
+        Showing 4 of @Model.RequestCount?.PendingStateCount Entries
     </span>
     <nav aria-label="Page navigation example d-flex justify-content-between">
         <ul class="pagination">
@@ -262,7 +281,7 @@
             <span aria-hidden="true"> << </span>
             </a>
             </li> *@
-            <li class="page-item page-item-story d-flex" id="previousPage-activeState">
+            <li class="page-item page-item-story d-flex" id="previousPage-pendingState">
                 <a class="page-link" href="#" aria-label="Previous">
                     <span aria-hidden="true">Previous</span>
                 </a>
@@ -270,9 +289,9 @@
 
             @for (int j = 1; j <= @pages; j++)
             {
-                <li class="page-item page-item-story" id="@j-activeState"><a class="page-link">@j</a></li>
+                <li class="page-item page-item-story" id="@j-pendingState"><a class="page-link">@j</a></li>
             }
-            <li class="page-item page-item-story d-flex" id="nextPage-activeState" data-TotalPages=@pages>
+            <li class="page-item page-item-story d-flex" id="nextPage-pendingState" data-TotalPages=@pages>
                 <a class="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">Next</span>
                 </a>

@@ -20,6 +20,8 @@ builder.Services.AddScoped<IPatientRepo, PatientRepo>();
 builder.Services.AddScoped<IPatientServices, PatientServices>();
 builder.Services.AddScoped<IAdminServices, AdminServices>();
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();
+builder.Services.AddScoped<IProviderServices, ProviderServices>();
+builder.Services.AddScoped<IProviderRepo, ProviderRepo>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
 

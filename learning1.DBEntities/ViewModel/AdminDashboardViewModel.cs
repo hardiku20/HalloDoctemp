@@ -14,7 +14,6 @@ namespace learning1.DBEntities.ViewModel
         public string? firstName { get; set; }
         public string? lastName { get; set; }
         public string? PatientPhone { get; set; }
-
         public string? PatientEmail {  get; set; }
         public DateTime RequestedDate { get; set; }
         public List<AdminTableViewModel> TableViewModel { get; set; }

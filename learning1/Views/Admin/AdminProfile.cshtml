@@ -29,26 +29,26 @@
                     <h5 class="my-3">Account Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" asp-for="userName" disabled>
                             <label for="floatingInput" >User Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Password" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Password" asp-for="password" disabled>
                             <label for="floatingInput" >Password</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" disabled>
-                            <label for="floatingInput" >Last Name</label>
+                            <label for="floatingInput" >Status</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Role" disabled>
-                            <label for="floatingInput" >Last Name</label>
+                            <label for="floatingInput" >Role</label>
                         </div>
                     </div>
                 </div>
@@ -90,23 +90,17 @@
                                    id="phone1" asp-for="Phone" disabled>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3 form-check-group">
+                    <div class="col-md-12 mb-3 form-check-group">
                         <div class="d-flex gap-1 align-items-center flex-wrap">
-                            @for (int i = 0; i < Model.Region.Count; i++)
+                            @foreach (var region in Model.Region)
                             {
-                                <div class="form-check">
-                                    <input class="form-check-input Change1"
-                                           type="checkbox"
-                                           value="@Model.Region[i].RegionId"
-                                           id="checkbox@(i)"
-                                           name="checkbox_group"
-                                           onchange="AddSelectedRegion()" disabled>
-                                    <label class="form-check-label text-secondary" for="checkbox@(i)">@Model.Region[i].Name</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input text-info" type="checkbox" name="AdminRegions" id="inlineCheckbox1" value="@region.RegionId" disabled @(Model.AdminRegions.Contains(region.RegionId) ? "checked" : " ")>
+                                    <label class="form-check-label text-secondary" for="inlineCheckbox1">@region.Name</label>
                                 </div>
                             }
                         </div>
                     </div>
-                    <input type="text" id="selectedRegionsList" hidden>
                 </div>
 
                 <div class="d-flex justify-content-end">

@@ -70,6 +70,8 @@ namespace learning1.Repositories.IRepositories
         RecordsViewModel BlockDataRepo(string name, string date, string email, string phoneNumber);
         CreateRoleViewModel GetRoleDetailsRepo();
         ProviderMenuViewModel GetProviderRepo();
+        void CreateAdminRepo(CreateAdminAccountViewModel model);
+        void CreateNewStateData(SchedulingViewModel model);
 
 
         //AccountAccessViewModel EditRoleRepo(int roleId);

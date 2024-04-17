@@ -24,9 +24,14 @@ namespace learning1.DBEntities.ViewModel
         public string ? City {  get; set; }
         public string? State { get; set; }
         public string? Zip { get; set;}
+         
+
+        public int? regionId {  get; set; }
 
         public string? MailingPhone {  get; set; }
 
         public List<Region>? Region { get; set; }
+
+        public List<int> AdminRegions { get; set; }
     }
 }

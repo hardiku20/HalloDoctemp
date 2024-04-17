@@ -276,7 +276,7 @@ namespace learning1.Controllers
         }
 
 
-        public IActionResult AdminProfile(int AdminId=1)
+        public IActionResult AdminProfile(int AdminId=4)
         {
             var model = _adminServices.GetAdminProfileData(AdminId);
             return View(model);
@@ -420,6 +420,12 @@ namespace learning1.Controllers
             return View(modal);
         }
 
+        [HttpPost]
+        public IActionResult CreateAdminAccount(CreateAdminAccountViewModel model)
+        {
+            _adminServices.CreateAdmin(model);
+            return RedirectToAction("admindashboard");
+        }
    
 
        public IActionResult UserAccess()
@@ -436,15 +442,19 @@ namespace learning1.Controllers
 
 
 
-        public IActionResult Scheduling(SchedulingViewModel model)
+        public IActionResult Scheduling()
         {
-
+            var model = _adminServices.GetRegionsforShift();
             return View(model);
         }
 
 
 
-
+        public IActionResult CreateNewShift(SchedulingViewModel model)
+        {
+            _adminServices.CreateNewShift(model);
+            return RedirectToAction("Scheduling");
+        }
 
 
         public IActionResult GetProviderDetailsForSchedule(int RegionId)

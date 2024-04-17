@@ -269,37 +269,52 @@ namespace learning1.Repositories.Repositories
 
         public ViewNotesViewModel GetViewNotesRepo(int requestId)
         {
-            var requestStatus = _context.RequestStatusLogs.FirstOrDefault(r => r.RequestId == requestId);
-            var requestNotes = _context.RequestNotes.Where(r => r.RequestId == requestId).Select(r => new { r.RequestId, r.AdminNotes, r.PhysicianNotes }).ToList();
+            
+            var requestNotes = _context.RequestNotes.Where(r => r.RequestId == requestId).OrderBy(x => x.RequestId).LastOrDefault();
+            var requestStatus = _context.RequestStatusLogs.Where(r => r.RequestId == requestId).OrderBy(x => x.RequestId).LastOrDefault();
+           
 
-
-            if (requestStatus?.PhysicianId != null)
+            ViewNotesViewModel model = new ViewNotesViewModel()
             {
-                var physicianName = _context.Physicians.Find(requestStatus.PhysicianId);
+                RequestId = requestId,
+                TransferNotes= requestStatus.Notes == null ? "No available Notes" : requestStatus.Notes,
+                CreatedDate = requestStatus.CreatedDate ,
+               
+                AdminNotes = requestNotes.AdminNotes == null ? "No available Notes" : requestNotes.AdminNotes,
+                PhysicianNotes = requestNotes.PhysicianNotes == null ? "No available Notes" : requestNotes.PhysicianNotes,
+            };
 
-                var model = new ViewNotesViewModel
-                {
-                    RequestId = requestId,
-                    TransferNotes = requestStatus.Notes,
-                    PhysicianName = physicianName.FirstName + " " + physicianName.LastName,
-                    CreatedDate = requestStatus.CreatedDate,
-                    PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
-                    AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
-                };
-                return model;
-            }
-            else
-            {
-                var model = new ViewNotesViewModel
-                {
-                    RequestId = requestId,
-                    //TransferNotes = requestStatus.Notes,
-                    //CreatedDate = requestStatus.CreatedDate,
-                    PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
-                    AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
-                };
-                return model;
-            }
+            return model;
+
+
+
+            //if (requestStatus?.PhysicianId != null)
+            //{
+            //    var physicianName = _context.Physicians.Find(requestStatus.PhysicianId);
+
+            //    var model = new ViewNotesViewModel
+            //    {
+            //        RequestId = requestId,
+            //        TransferNotes = requestStatus.Notes,
+            //        PhysicianName = physicianName.FirstName + " " + physicianName.LastName,
+            //        CreatedDate = requestStatus.CreatedDate,
+            //        PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
+            //        AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
+            //    };
+            //    return model;
+            //}
+            //else
+            //{
+            //    var model = new ViewNotesViewModel
+            //    {
+            //        RequestId = requestId,
+            //        //TransferNotes = requestStatus.Notes,
+            //        //CreatedDate = requestStatus.CreatedDate,
+            //        PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
+            //        AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
+            //    };
+            //    return model;
+            //}
         }
 
         public void OrderDetailRepo(SendOrderViewModel model)
@@ -467,7 +482,7 @@ namespace learning1.Repositories.Repositories
             {
                 predicate = x => (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
-            var tempmodel = _context.Requests.Include(x => x.RequestClients).Include(x=>x.RequestStatusLogs).Where(predicate).
+            var tempmodel = _context.Requests.Include(x => x.RequestClients).Include(x => x.RequestStatusLogs).Where(predicate).
             Select(x => new AdminTableViewModel()
             {
                 RequestId = x.RequestId,
@@ -970,9 +985,11 @@ namespace learning1.Repositories.Repositories
         public AdminProfileViewModel GetAdminProfileRepo(int adminId)
         {
             var region = GetRegionTable();
-            var model = _context.Admins.Include(x => x.AdminRegions).Where(x => x.AdminId == adminId).Select(x => new AdminProfileViewModel()
+            var model = _context.Admins.Include(x => x.AdminRegions).Include(x=> x.AspNetUser).Where(x => x.AdminId == adminId).Select(x => new AdminProfileViewModel()
             {
                 AdminId = adminId,
+                userName = x.AspNetUser.UserName,
+                password = x.AspNetUser.PasswordHash,
                 firstName = x.FirstName,
                 lastName = x.LastName,
                 Email = x.Email,
@@ -981,10 +998,10 @@ namespace learning1.Repositories.Repositories
                 Address1 = x.Address1,
                 Address2 = x.Address2,
                 City = x.City,
-
                 Zip = x.Zip,
                 MailingPhone = x.AltPhone,
                 Region = region,
+                AdminRegions = _context.AdminRegions.Where(x => x.AdminId == adminId).Select(b => b.RegionId).ToList(),
             }).FirstOrDefault();
 
             return model;
@@ -1045,19 +1062,19 @@ namespace learning1.Repositories.Repositories
         }
 
         public CreateRoleViewModel GetRoleDetailsRepo(int roleId)
-        {          
-                Role role = _context.Roles.Where(x => x.RoleId == roleId).FirstOrDefault();
+        {
+            Role role = _context.Roles.Where(x => x.RoleId == roleId).FirstOrDefault();
 
-                CreateRoleViewModel model = new CreateRoleViewModel()
-                {
-                    RoleId = roleId,
-                    AccountType = role.AccountType.ToString(),
-                    RoleName = role.Name,
-                    SelectedMenus = _context.RoleMenus.Where(x => x.RoleId == roleId).Select(x => x.MenuId).ToList(),
-                    menulist = _context.Menus.Where(x => x.AccountType == role.AccountType).ToList(),
+            CreateRoleViewModel model = new CreateRoleViewModel()
+            {
+                RoleId = roleId,
+                AccountType = role.AccountType.ToString(),
+                RoleName = role.Name,
+                SelectedMenus = _context.RoleMenus.Where(x => x.RoleId == roleId).Select(x => x.MenuId).ToList(),
+                menulist = _context.Menus.Where(x => x.AccountType == role.AccountType).ToList(),
 
-                };
-                return model;
+            };
+            return model;
         }
 
         public void DeleteRoleRepo(int roleId)
@@ -1287,7 +1304,7 @@ namespace learning1.Repositories.Repositories
         public RecordsViewModel SearchDataRepo(string patientName, string providerName, string email, string phoneNumber)
         {
             var SearchData = _context.Requests.Include(x => x.RequestClients).Include(x => x.Physician).Include(x => x.RequestNotes)
-                .Where(x => (patientName == null || x.RequestClients.FirstOrDefault().FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.RequestClients.FirstOrDefault().LastName.ToLower().Contains(patientName.Trim().ToLower())) && (providerName == null || x.Physician.FirstName.ToLower().Contains(providerName.Trim().ToLower()) || x.Physician.LastName.ToLower().Contains(patientName.Trim().ToLower()))  && 
+                .Where(x => (patientName == null || x.RequestClients.FirstOrDefault().FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.RequestClients.FirstOrDefault().LastName.ToLower().Contains(patientName.Trim().ToLower())) && (providerName == null || x.Physician.FirstName.ToLower().Contains(providerName.Trim().ToLower()) || x.Physician.LastName.ToLower().Contains(patientName.Trim().ToLower())) &&
                 (email == null || x.RequestClients.FirstOrDefault().Email.ToLower().Contains(email.Trim().ToLower())) && (phoneNumber == null || x.RequestClients.FirstOrDefault().PhoneNumber.Contains(phoneNumber.Trim())))
                 .Select(x => new RecordsViewModel.SearchRecords()
                 {
@@ -1335,7 +1352,7 @@ namespace learning1.Repositories.Repositories
         public RecordsViewModel BlockDataRepo(string name, string date, string email, string phoneNumber)
         {
             var blockRecords = _context.Requests.Include(x => x.RequestClients).Include(x => x.BlockRequests)
-                .Where(x => (x.Status == 11) &&(name == null || x.RequestClients.FirstOrDefault().FirstName.ToLower().Contains(name.Trim().ToLower())
+                .Where(x => (x.Status == 11) && (name == null || x.RequestClients.FirstOrDefault().FirstName.ToLower().Contains(name.Trim().ToLower())
                 || x.RequestClients.FirstOrDefault().LastName.ToLower().Contains(name.Trim().ToLower())
                 && (email == null || x.BlockRequests.FirstOrDefault().Email.ToLower().Contains(email.Trim().ToLower()))
                 && (phoneNumber == null || x.BlockRequests.FirstOrDefault().PhoneNumber.ToLower().Contains(phoneNumber.Trim().ToLower()))))
@@ -1367,36 +1384,208 @@ namespace learning1.Repositories.Repositories
 
         public ProviderMenuViewModel GetProviderRepo()
         {
-            var provider = _context.Physicians.Include(x=>x.PhysicianNotifications).Where(x => x.IsDeleted != true)
-                .Select(x=> new ProviderMenuDetailsViewModel()
+            var provider = _context.Physicians.Include(x => x.PhysicianNotifications).Where(x => x.IsDeleted != true)
+                .Select(x => new ProviderMenuDetailsViewModel()
                 {
                     PhysicianId = x.PhysicianId,
                     Name = x.FirstName + " " + x.LastName,
-                    Status = (PhysicianStatus)x.Status ,
+                    Status = (PhysicianStatus)x.Status,
                     OnCallStatus = "Unavailable",
 
                 }).ToList();
-                
-                //from phy in _context.Physicians
-                //           join role in _context.Roles on phy.RoleId equals role.RoleId
-                //           join phyNotification in _context.PhysicianNotifications on phy.PhysicianId equals phyNotification.PhysicianId
-                //           where phy.IsDeleted != true
-                //           orderby phy.PhysicianId
-                //           select new ProviderMenuDetailsViewModel
-                //           {
-                //               PhysicianId = phy.PhysicianId,
-                //               firstName = phy.FirstName,
-                //               lastName = phy.LastName,
-                //               Status = (PhysicianStatus)phy.Status,
-                //               Role = (RoleName)role.RoleId,
-                //              
-                //           };
+
+            //from phy in _context.Physicians
+            //           join role in _context.Roles on phy.RoleId equals role.RoleId
+            //           join phyNotification in _context.PhysicianNotifications on phy.PhysicianId equals phyNotification.PhysicianId
+            //           where phy.IsDeleted != true
+            //           orderby phy.PhysicianId
+            //           select new ProviderMenuDetailsViewModel
+            //           {
+            //               PhysicianId = phy.PhysicianId,
+            //               firstName = phy.FirstName,
+            //               lastName = phy.LastName,
+            //               Status = (PhysicianStatus)phy.Status,
+            //               Role = (RoleName)role.RoleId,
+            //              
+            //           };
 
             ProviderMenuViewModel model = new ProviderMenuViewModel()
             {
                 Details = provider,
             };
             return model;
+        }
+
+        public void CreateAdminRepo(CreateAdminAccountViewModel model)
+        {
+            AspNetUser aspNetUser = new AspNetUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = model.Email,
+                PasswordHash = model.Password,
+                UserName = model.UserName,
+                CreatedDate = DateTime.Now,
+                PhoneNumber = model.Phone,
+            };
+
+            _context.AspNetUsers.Add(aspNetUser);
+
+            AspNetUserRole userRole = new AspNetUserRole()
+            {
+                UserId = aspNetUser.Id,
+                RoleId = 1.ToString(),
+            };
+
+            _context.AspNetUserRoles.Add(userRole);
+
+            Admin admin = new Admin()
+            {
+                AspNetUserId = aspNetUser.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Mobile = model.Phone,
+                Address1 = model.Address1,
+                Address2 = model.Address2,
+                City = model.City,
+                RegionId = model.regionId,
+                Zip = model.Zip,
+                AltPhone = model.MailingPhone,
+                CreatedBy = "admin",
+                CreatedDate = DateTime.Now,
+                Status = 2,
+                IsDeleted = new BitArray(new bool[] { false }),
+                RoleId = 1,    /////////PLEASE CHANGE
+            };
+            _context.Admins.Add(admin);
+            _context.SaveChanges();
+
+            List<AdminRegion> adminRegions = new List<AdminRegion>();
+            foreach (var items in model.AdminRegions)
+            {
+                adminRegions.Add(new AdminRegion() { AdminId = admin.AdminId, RegionId = items });
+            };
+            _context.AdminRegions.AddRange(adminRegions);
+            _context.SaveChanges();
+
+        }
+
+        public void CreateNewStateData(SchedulingViewModel model)
+        {
+            int PhysicianId = _context.Physicians.Where(x => x.FirstName == model.PhysicianName).Select(x => x.PhysicianId).FirstOrDefault();
+
+            //DateTime combinedDate = new DateTime(year, month, date); // Combine year, month, and date
+            var date = model.ShiftDate;
+            DateTime shiftDate = date.ToDateTime(TimeOnly.MinValue); // Convert to DateOnly
+
+            //Can also pass in Select but the list of physicians was not apearing in modal when tried to do so
+            var regionId = _context.Regions.Where(x => x.Name == model.regionSelector).Select(x => x.RegionId).FirstOrDefault();
+
+            var adminId = "ee0d64b2-e209-4f9f-b315-99221836598a";
+            Shift shift = new()
+            {
+                PhysicianId = PhysicianId,
+                StartDate = (DateOnly)model.ShiftDate, //same ???????
+                IsRepeat = model.IsRepeat,
+                //WeekDays -- character -- no. of week days???? 
+                RepeatUpto = model.RepeatEnd,
+                //CreatedBy = vmodel.AdminId.ToString(),
+                CreatedBy = adminId,
+
+                CreatedDate = DateTime.Now
+            };
+
+            _context.Add(shift);
+            _context.SaveChanges();
+
+            if (model.IsRepeat)
+            {
+
+                List<DateOnly> days = new();
+                days.Add(model.ShiftDate);
+
+                var dayListString = model.SelectedDays;
+                var daylist = dayListString.Split(',').Select(int.Parse).ToList();
+
+                for (var i = 0; i < model.RepeatEnd; i++)
+                {
+                    for (int j = 0; j < daylist.Count; j++)
+                    {
+
+                        int temp;
+                        switch (daylist[j])
+                        {
+                            case 1:
+                                temp = (int)DayOfWeek.Sunday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                break;
+                            case 2:
+                                temp = (int)DayOfWeek.Monday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                break;
+                            case 3:
+                                temp = (int)DayOfWeek.Tuesday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                break;
+                            case 4:
+                                temp = (int)DayOfWeek.Wednesday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                break;
+                            case 5:
+                                temp = (int)DayOfWeek.Thursday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                break;
+                            case 6:
+                                temp = (int)DayOfWeek.Friday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                break;
+                            default:
+                                temp = (int)DayOfWeek.Saturday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                break;
+                        }
+                        if (temp <= 0)
+                        {
+                            temp += 7;
+                        }
+                        days.Add(days.Last().AddDays(temp));
+                    }
+
+                }
+
+                foreach (var day in days)
+                {
+                    DateTime dayy = day.ToDateTime(TimeOnly.FromTimeSpan(DateTime.Now.TimeOfDay));
+
+                    ShiftDetail shiftDetail1 = new()
+                    {
+                        ShiftId = shift.ShiftId,
+                        ShiftDate = dayy,
+                        StartTime = model.StartTime.Value,
+                        EndTime = model.EndTime.Value,
+                        IsDeleted = false,
+                        RegionId = regionId,
+                        Status = 1
+                        //Status
+
+                    };
+
+                    //ShiftDetail.Add(shiftDetail1);
+                    _context.Add(shiftDetail1);
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                ShiftDetail shiftDetail = new()
+                {
+                    ShiftId = shift.ShiftId,
+                    ShiftDate = shiftDate,
+                    StartTime = model.StartTime.Value,
+                    EndTime = model.EndTime.Value,
+                    IsDeleted = false,
+                    RegionId = regionId,
+                    Status = 1
+                    //Status
+
+                };
+
+                _context.Add(shiftDetail);
+                _context.SaveChanges();
+            }
         }
 
 

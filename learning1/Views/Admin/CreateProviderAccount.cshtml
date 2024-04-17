@@ -85,7 +85,7 @@
                             <label for="floatingInput" >NPI Number</label>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3 form-check-group">
+                    <div class="col-md-12 mb-3 form-check-group">
                         <div class="d-flex gap-2 align-items-center flex-wrap">
                             @for (int i = 0; i < Model.Region.Count; i++)
                             {
@@ -251,7 +251,7 @@
             $('#Username').val("");
         }
         else {
-            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+            $('#Username').val($("#LastName").val() + "_" + $("#FirstName").val());
         }
     });
 
@@ -262,7 +262,7 @@
             $('#Username').val("");
         }
         else {
-            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+            $('#Username').val($("#LastName").val() + "_" + $("#FirstName").val());
         }
     });
 </script>

@@ -428,5 +428,25 @@ namespace learning1.Services.Services
             return model;
 
         }
+
+        public void CreateAdmin(CreateAdminAccountViewModel model)
+        {
+            _adminRepo.CreateAdminRepo(model);
+        }
+
+        public SchedulingViewModel GetRegionsforShift()
+        {
+            var regions = _adminRepo.GetRegionTable();
+            SchedulingViewModel model = new SchedulingViewModel()
+            {
+                RegionList = regions,
+            };
+            return model;
+        }
+
+        public void CreateNewShift(SchedulingViewModel model)
+        {
+            _adminRepo.CreateNewStateData(model);
+        }
     }
 }

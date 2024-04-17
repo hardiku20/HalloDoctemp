@@ -31,6 +31,7 @@ function GetCalendar(RegionId) {
         //    const img = document.createElement('img');
         //    img.src = resourceObj.resource.extendedProps.imageUrl || "/images/doc-ico.png";
         //    img.style.maxHeight = '40px';
+        //    img.style.margin = '2px';
         //    resourceObj.el.querySelector('.fc-datagrid-cell-main').appendChild(img);
         //},
         resources: "/Admin/GetProviderDetailsForSchedule?RegionId=" + RegionId,
@@ -65,13 +66,15 @@ $.ajax({
         $("#Region").html(region);
     }
 })
-// $("#Region").on("change", function () {
-//     var RegionId = $(this).val();
-//     GetCalendar(RegionId);
-//    console.log("onchange func of region")
-// })
 
-document.getElementById("SelectedRegion").addEventListener("change", function () {
+
+ $("#Region").on("change", function () {
+     var RegionId = $(this).val();
+     GetCalendar(RegionId);
+    console.log("onchange func of region")
+ })
+
+document.getElementById("regionSelector").addEventListener("change", function () {
     var RegionId = this.value;
     GetCalendar(RegionId);
 
@@ -94,3 +97,100 @@ function ViewShift(ShiftDetailId) {
     })
 
 }
+
+
+
+
+
+
+
+//$('#regionSelector').change(function () {
+
+//    let regionName = this.value;
+
+//    var selectedRegion = this.value;
+//    console.log(selectedRegion);
+
+//        $.ajax({
+//            type: 'GET',
+//            url: "/Admin/GetPhysicianByRegionName",
+//            data: {
+//                region: regionName,
+
+//            },
+//            success: function (result) {
+//                console.log(result);
+//                let str = ""
+//                for (let index = -1; index < result.length; index++) {
+//                    const value = result[index]; // Extract the string value
+//                    if (index == -1) {
+//                        str += `<option selected class="text-secondary fs-6" value = "Select Physician">Select Physician </option>`;
+//                    }
+//                    else {
+//                        str += `<option value="${value}">${value}</option>`;
+//                    }
+
+//                }
+//                $("#physicianSelector").html(str);
+//            },
+//            error: function (error) {
+
+//            },
+
+//        });
+//    }
+
+//});
+
+
+$("#regionSelector").change(function () {
+    /**/
+    console.log(this);
+    var region = this.value;
+    var selectedRegion = this.value;
+    $.ajax({
+        method: 'GET',
+        url: '/Admin/GetPhysicianByRegionName',
+        data: {
+            regionName: region,
+        },
+        success: function (result) {
+            let str = ""
+            for (let index = 0; index < result.length; index++) {
+                const value = result[index]; // Extract the string value
+                str += `<option value="${value}">${value}</option>`;
+            }
+            $("#physicianSelector").html(str);
+        },
+
+        error: function (xhr, status, error) {
+            console.log(error);
+
+        }
+    })
+
+})
+
+//$(".checkbox-wrapper input").on('change', function () {
+//    var selectedDays = []; // Clear any previous selections
+//    document.querySelectorAll('input[type="checkbox"]:checked:not(#flexSwitchCheckChecked)')
+//        .forEach(checkbox => {
+//            selectedDays.push(parseInt(checkbox.value));
+//        });
+
+//    $('#HiddenDays').val(selectedDays.join(','));
+//});
+
+
+//toggleButton.checked = false;
+//let isRepeatChecked = false;
+//$(".checkbox-wrapper input").attr("disabled", true)
+
+//toggleButton.addEventListener("click", function () {
+//    isRepeatChecked = !isRepeatChecked; // Toggle the checked state [if checked => unchecked else unchecked => checked]
+//    //repeatDiv.style.display = isRepeatChecked ? "block" : "none";
+//    if (toggleButton.checked) {
+//        $(".checkbox-wrapper input").attr("disabled", false)
+//    }
+//    else $(".checkbox-wrapper input").attr("disabled", true)
+//});

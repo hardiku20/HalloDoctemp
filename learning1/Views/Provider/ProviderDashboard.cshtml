@@ -1,0 +1,344 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_ProviderLayout";
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+
+@model learning1.DBEntities.ViewModel.ProviderDashboardViewModel;
+
+
+
+
+<!-- Modal for Send Link -->
+<div class="modal fade" id="SendLinkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send mail to patient for submitting request</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" placeholder="FirstName">
+                        <label for="floatingInput">First Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" placeholder="LastName">
+                        <label for="floatingInput">Last Name</label>
+                    </div>
+                    <div class="form-floating input-info w-100 me-2 mb-3">
+                        <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                               id="phone">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Content of the web-page -->
+<div class="container-fluid ">
+
+    <div class="row px-3 mt-5">
+        <div class="col-lg-2 col-sm-4 col-6 align-items-start px-1 mb-2">
+            <button id="newbtn" class="states-btn w-100 rounded newState">
+                <div class="d-flex my-2">
+                    <img src="/assets/images/new.svg" id="newState" class="icon-size hide pe-1 d-none d-md-block">
+                    <img src="/assets/images/new_active.png" id="newState-active" class="icon-size pe-1 d-none">
+                    <h6 class="my-auto">NEW</h6>
+                </div>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.NewStateCount</p>
+            </button>
+            <img src="/assets/images/caret-down-new-fill.svg" alt="" id="newState-img" class="caret d-none z-2" />
+        </div>
+        <div class="col-lg-2 col-sm-4 col-6 px-1 mb-2">
+            <button id="pendingbtn" class="states-btn w-100 rounded pendingState">
+                <div class="d-flex my-2">
+                    <img src="/assets/images/pending.svg" id="pendingState" class="icon-size pe-1 d-none d-md-block">
+                    <img src="/assets/images/pending_active.png" id="pendingState-active" class="icon-size pe-1  d-none">
+                    <h6 class="my-auto">PENDING</h6>
+                </div>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.PendingStateCount</p>
+            </button>
+            <img src="/assets/images/caret-down-pending-fill.svg" alt="" id="pendingState-img" class="caret d-none z-2">
+        </div>
+        <div class="col-lg-2 col-sm-4 col-6 px-1 mb-2">
+            <button id="activebtn" class="states-btn w-100 rounded activeState">
+                <div class="d-flex my-2">
+                    <img src="/assets/images/active.svg" id="activeState" class="icon-size pe-1 d-none d-md-block">
+                    <img src="/assets/images/active_active.png" id="activeState-active" class="icon-size hide pe-1 d-none">
+                    <h6 class="my-auto">ACTIVE</h6>
+                </div>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.ActiveStateCount</p>
+            </button>
+            <img src="/assets/images/caret-down-active-fill.svg" alt="" id="activeState-img" class="caret d-none z-2">
+        </div>
+        <div class="col-lg-2 col-sm-4 col-6 px-1 mb-2">
+            <button id="concludebtn" class="states-btn w-100 rounded concludeState">
+                <div class="d-flex my-2">
+                    <img src="/assets/images/conclude.svg" id="concludeState" class="icon-size pe-1 d-none d-md-block">
+                    <img src="/assets/images/conclude_active.png" id="concludeState-active" class="icon-size hide pe-1 d-none">
+                    <h6 class="my-auto">CONCLUDE</h6>
+                </div>
+                <p class="h3 d-flex justify-content-start">@Model?.RequestCount.ConcludeStateCount</p>
+            </button>
+            <img src="/assets/images/caret-down-conclude-fill.svg" alt="" id="concludeState-img" class="caret d-none z-2">
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid px-3 mt-3">
+    <div class="d-flex justify-content-between mb-2">
+        <div class="d-sm-flex d-none">
+            <h4 class="">Patients 
+                <span class="text-primary fs-6" id="States-text"></span>
+                </h4>
+        </div>
+        <div class="d-sm-none d-flex pt-2 me-1">
+            <h6 class="">Patients <span class="text-primary" style="font-size:small;" id="States-text"></span></h6>
+        </div>
+
+        <div class="d-flex gap-2">
+            <div>
+                <button class="btn btn-info text-white d-flex align-items-center p-2 dark-mode1" data-bs-toggle="modal"
+                        data-bs-target="#SendLinkModal" data-bs-whatever="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                        <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                    </svg>
+                    <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Send Link</p>
+                </button>
+
+            </div>
+            <div class="">
+                <a class="btn btn-info text-white d-flex align-items-center p-2 dark-mode1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                        <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                        <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+                    </svg>
+                    <p class="d-none d-lg-flex ps-2 mb-0 py-auto">Create Request</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="container-fluid px-3">
+
+    <form action="" role="" class=" ">
+        <div class="row m-0 p-2 bg-white">
+            <div class="col-lg-2 col-md-4 d-md-flex d-block">
+
+                <div class="input-group border me-2 rounded-0 mb-2 form-control">
+                    <div class="input-group-append">
+                        <button class="btn text-secondary border border-0 bg-white" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control border-0  shadow-none" placeholder="Search Patients" id="searchInput">
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="col-lg-10 col-md-8 pt-2">
+                <div class="d-lg-flex d-none justify-content-end align-items-center gap-2">
+                    <div class="btn">
+                        <input class="form-check-input" hidden type="radio" value="All" name="relationshipType" id="allRadio">
+                        <label class="form-check-label" for="allRadio">
+                            All
+                        </label>
+                    </div>
+                    <div class="btn d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Patient" name="relationshipType" id="patientRadio">
+                        <div class="rounded-circle me-1"
+                             style="height: 12px; width: 12px; background-color: rgb(15, 189, 64);"></div>
+                        <label class="form-check-label" for="patientRadio">
+                            Patient
+                        </label>
+                    </div>
+                    <div class="btn d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Family/Friend" name="relationshipType" id="familyRadio">
+                        <div class="rounded-circle me-1"
+                             style="height: 12px; width: 12px; background-color: rgb(212, 107, 21);"></div>
+                        <label class="form-check-label" for="familyRadio">
+                            Family/Friend
+                        </label>
+                    </div>
+                    <div class="btn d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Business" name="relationshipType" id="businessRadio">
+                        <div class="rounded-circle me-1"
+                             style="height: 12px; width: 12px; background-color: rgb(203, 22, 134);"></div>
+                        <label class="form-check-label" for="businessRadio">
+                            Business
+                        </label>
+                    </div>
+                    <div class="btn d-sm-flex align-items-center">
+                        <input class="form-check-input" hidden type="radio" value="Concierge" name="relationshipType" id="conciergeRadio">
+                        <div class="rounded-circle me-1"
+                             style="height: 12px; width: 12px; background-color: rgb(65, 65, 232);"></div>
+                        <label class="form-check-label" for="conciergeRadio">
+                            Concierge
+                        </label>
+                    </div>
+                    <div class="btn d-sm-flex align-items-center">
+                        <div class="rounded-circle me-1"
+                             style="height: 12px; width: 12px; background-color: rgb(129, 12, 129);"></div>
+                        <label class="form-check-label" for="vipRadio">
+                            VIP
+                        </label>
+                    </div>
+                </div>
+
+
+
+
+                <div class="d-lg-none d-flex align-items-center justify-content-around gap-1 ">
+                    <div class="btn">
+                        <input class="form-check-input" hidden type="radio" value="All" name="relationshipType" id="allRadio">
+                        <label class="form-check-label" for="allRadio">
+                            All
+                        </label>
+                    </div>
+                    <div class="d-sm-flex align-items-center gap-2">
+                        <input class="form-check-input" hidden type="radio" value="Patient" name="relationshipType" id="patientRadio">
+                        <div class="rounded-circle mx-auto"
+                             style="height: 12px; width: 12px; background-color:rgb(15, 189, 64);"></div>
+                        <label class="form-check-label" for="patientRadio">
+                            Patient
+                        </label>
+                    </div>
+                    <div class="d-sm-flex align-items-center gap-2">
+                        <input class="form-check-input" hidden type="radio" value="Family/Friend" name="relationshipType" id="familyRadio">
+                        <div class="rounded-circle mx-auto"
+                             style="height: 12px; width: 12px; background-color: rgb(212, 107, 21);"></div>
+                        <label class="form-check-label" for="familyRadio">
+                            Family
+                        </label>
+                    </div>
+                    <div class="d-sm-flex align-items-center gap-2">
+                        <input class="form-check-input" hidden type="radio" value="Business" name="relationshipType" id="businessRadio">
+                        <div class="rounded-circle mx-auto"
+                             style="height: 12px; width: 12px; background-color: rgb(203, 22, 134);"></div>
+                        <label class="form-check-label" for="businessRadio">
+                            Business
+                        </label>
+                    </div>
+                    <div class="d-sm-flex align-items-center gap-2">
+                        <input class="form-check-input" hidden type="radio" value="Concierge" name="relationshipType" id="conciergeRadio">
+                        <div class="rounded-circle mx-auto"
+                             style="height: 12px; width: 12px; background-color: rgb(65, 65, 232);"></div>
+                        <label class="form-check-label" for="conciergeRadio">
+                            Concierge
+                        </label>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+
+
+
+
+    <div id="provider-table-wrapper">
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script>
+    const phoneInputField1 = document.querySelector("#phone");
+    const phoneInput1 = window.intlTelInput(phoneInputField1, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>
+
+
+
+<script src="/js/ProviderDashboardRenderPartialVIew.js"></script>
+<script src="/js/ProviderDashboardFilterScript.js"></script>
+
+
+
+
+
+@* 
+<script>
+    $(".states-btn").click(function () {
+        switch (this.id) {
+            case "newbtn":
+                <h4 class="" > Patients < span class="text-primary fs-6" > (New) < /span></h4 >
+                                            break;
+            case "pendingbtn":
+                <h4 class="" > Patients < span class="text-primary fs-6" > (Pending) < /span></h4 >
+                                            break;
+            case "activebtn":
+
+                break;
+
+            case "concludebtn":
+
+                break;
+
+            case "toclosebtn":
+
+                break;
+
+            case "unpaidbtn":
+
+                break;
+        }
+    })
+
+</script> *@

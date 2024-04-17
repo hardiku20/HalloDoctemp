@@ -66,6 +66,10 @@ namespace learning1.Services.IServices
         ProviderMenuViewModel GetRegionsforProvider();
         ProviderMenuViewModel GetProvidersdetails();
         CreateProviderAccountViewModel GetRegionsforPhysician();
+        void CreateAdmin(CreateAdminAccountViewModel model);
+        SchedulingViewModel GetRegionsforShift();
+        void CreateNewShift(SchedulingViewModel model);
+
 
 
 

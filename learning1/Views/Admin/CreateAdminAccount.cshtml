@@ -25,24 +25,24 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form class="form-floating">
+            <form class="form-floating" method="post" asp-action="CreateAdminAccount" asp-controller="Admin">
                 <div class="row">
                     <h5 class="my-3">Account Information</h5>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="Username" placeholder="User Name" disabled>
+                            <input type="text" class="form-control bg-secondary-subtle" id="Username" placeholder="User Name" asp-for="UserName" readonly>
                             <label for="floatingInput">User Name (LastnameF)</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Password">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Password" asp-for="Password">
                             <label for="floatingInput">Password</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Role">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Role" asp-for="Role">
                             <label for="floatingInput">Role</label>
                         </div>
                     </div>
@@ -52,46 +52,56 @@
                     <h5 class="my-3">Administration Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="FirstName" placeholder="First Name">
+                            <input type="text" class="form-control" id="FirstName" placeholder="First Name" asp-for="FirstName">
                             <label for="floatingInput">First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="LastName" placeholder="Last Name">
+                            <input type="text" class="form-control" id="LastName" placeholder="Last Name" asp-for="LastName">
                             <label for="floatingInput">Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Email">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email">
                             <label for="floatingInput">Email</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Confirm Email">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Confirm Email" asp-for="ConfirmEmail">
                             <label for="floatingInput">Confirm Email</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone1">
+                                   id="phone1" asp-for="Phone">
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3 form-check-group">
+                    <div class="col-md-12 mb-3 form-check-group">
                         <div class="d-flex gap-1 align-items-center flex-wrap">
-                            @for (int i = 0; i < Model.Region.Count; i++)
+                            @*     @for (int i = 0; i < Model.Region.Count; i++)
                             {
-                                <div class="form-check">
-                                    <input class="form-check-input Change1"
-                                           type="checkbox"
-                                           value="@Model.Region[i].RegionId"
-                                           id="checkbox@(i)"
-                                           name="checkbox_group"
-                                           onchange="AddSelectedRegion()">
-                                    <label class="form-check-label text-secondary" for="checkbox@(i)">@Model.Region[i].Name</label>
+                            <div class="form-check">
+                            <input class="form-check-input Change1"
+                            type="checkbox"
+                            value="@Model.Region[i].RegionId"
+                            id="checkbox@(i)"
+                            name="checkbox_group"
+                            onchange="AddSelectedRegion()">
+                            <label class="form-check-label text-secondary" for="checkbox@(i)">@Model.Region[i].Name</label>
+                            </div>
+                            }
+
+                            *@
+
+                            @foreach (var region in Model.Region)
+                            {
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input text-info" type="checkbox" name="AdminRegions" id="inlineCheckbox1" value="@region.RegionId">
+                                    <label class="form-check-label text-secondary" for="inlineCheckbox1">@region.Name</label>
                                 </div>
                             }
                         </div>
@@ -103,38 +113,38 @@
                     <h5 class="my-3">Mailing & Billing Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Address">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address1">
                             <label for="floatingInput">Address 1</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Address">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address2">
                             <label for="floatingInput">Address 2</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="City">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City">
                             <label for="floatingInput">City</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="State">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State">
                             <label for="floatingInput">State</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Zip">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Zip" asp-for="Zip">
                             <label for="floatingInput">Zip</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone2">
+                                   id="phone2" asp-for="MailingPhone">
                         </div>
                     </div>
                 </div>
@@ -171,7 +181,7 @@
             $('#Username').val("");
         }
         else {
-            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+            $('#Username').val($("#LastName").val() + "_" + $("#FirstName").val());
         }
     });
 
@@ -182,7 +192,7 @@
             $('#Username').val("");
         }
         else {
-            $('#Username').val($("#FirstName").val() + "_" + $("#LastName").val());
+            $('#Username').val($("#LastName").val() + "_" + $("#FirstName").val());
         }
     });
 </script>
