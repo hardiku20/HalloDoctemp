@@ -448,5 +448,20 @@ namespace learning1.Services.Services
         {
             _adminRepo.CreateNewStateData(model);
         }
+
+        public void UpdateBusinessProfileBilling(AdminProfileViewModel model)
+        {
+            _adminRepo.UpdateBillingRepo(model);
+        }
+
+        public void UpdateAdminInformation(AdminProfileViewModel model)
+        {
+            _adminRepo.UpdateAdminInfoRepo(model);
+        }
+
+        public ProviderLocationViewModel GetProviderList()
+        {
+            return _adminRepo.GetPhysicianLocationList();
+        }
     }
 }

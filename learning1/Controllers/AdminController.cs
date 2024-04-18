@@ -282,7 +282,20 @@ namespace learning1.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult MyProfileBillingUpdate(AdminProfileViewModel model)
+        {
+            _adminServices.UpdateBusinessProfileBilling(model);
+            return RedirectToAction("AdminProfile");
+        }
 
+
+        [HttpPost]
+        public IActionResult MyProfileAdminInfoUpdate(AdminProfileViewModel model)
+        {
+            _adminServices.UpdateAdminInformation(model);
+            return RedirectToAction("AdminProfile");
+        }
 
         public FileStreamResult ExportListUsingEPPlus()
         {
@@ -332,7 +345,14 @@ namespace learning1.Controllers
         }
 
 
+        public IActionResult ProviderLocation()
+        {
+            ProviderLocationViewModel modal = _adminServices.GetProviderList();
+            
+            
+            return View(modal);
 
+        }
 
 
 
@@ -417,6 +437,7 @@ namespace learning1.Controllers
         public IActionResult CreateAdminAccount()
         {
             var modal = _adminServices.GetRegionforAdmin();
+            
             return View(modal);
         }
 
@@ -424,6 +445,7 @@ namespace learning1.Controllers
         public IActionResult CreateAdminAccount(CreateAdminAccountViewModel model)
         {
             _adminServices.CreateAdmin(model);
+            _notyf.Success("Admin Created Successfully!!");
             return RedirectToAction("admindashboard");
         }
    

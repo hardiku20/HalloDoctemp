@@ -10,6 +10,7 @@ namespace learning1.DBEntities.ViewModel
 {
     public class AdminProfileViewModel
     {
+        public string? AdminAspID {  get; set; }
         public int AdminId { get; set; }
         public string? userName {  get; set; }
         public string? password { get; set; }
@@ -31,5 +32,7 @@ namespace learning1.DBEntities.ViewModel
         public string? State {  get; set; }
         public string? Zip { get; set;}
         public string? MailingPhone { get; set;}
+
+        public int? regionId {  get; set; }
     }
 }

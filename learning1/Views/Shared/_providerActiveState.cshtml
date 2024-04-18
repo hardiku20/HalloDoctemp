@@ -11,14 +11,9 @@
         <tr class="border border-bottom border-white bg-secondary-subtle">
             <td scope="col" class="py-3 ps-4">Name</td>
             <td scope="col" class="py-3 "></td>
-            <td scope="col" class="py-3 ">Date of Birth</td>
-            <td scope="col" class="py-3">Requestor</td>
-            <td scope="col" class="py-3">Physician Name</td>
-            <td scope="col" class="py-3">Date of Service</td>
             <td scope="col" class="py-3">Phone</td>
             <td scope="col" class="py-3">Address</td>
-            <td scope="col" class="py-3">Notes</td>
-            <td scope="col" class="py-3">Chat With</td>
+            <td scope="col" class="py-3">Status</td>
             <td scope="col" class="py-3">Actions</td>
         </tr>
 
@@ -48,10 +43,6 @@
 
                 <td class="text-white py-5 ps-4">@items.Name</td>
                 <td class="text-white p-3"><i class="bi bi-chat-left-text"></i></td>
-                <td class="text-white py-3">-</td>
-                <td class="text-white py-3 ">@items.RequestType @items.Requester</td>
-                <td class="text-white py-3">physician name</td>
-                <td class="text-white py-3">12/12/2012</td>
                 <td class="text-white py-3">
                     @if (items.PhoneNumber != null)
                     {
@@ -65,21 +56,7 @@
                     }
                 </td>
                 <td class="text-white py-3">@items.Address</td>
-                <td class="text-white py-3">@items.RequestNotes</td>
-                <td class=" ">
-                    <div class="d-flex align-items-center">
-                        <button type="button" class="btn btn-sm border border-white text-white me-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person me-1" viewBox="0 0 16 16">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                            </svg>Patient
-                        </button>
-                        <button type="button" class="btn btn-sm border border-white text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person me-1" viewBox="0 0 16 16">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                            </svg>Provider
-                        </button>
-                    </div>
-                </td>
+                <td class="text-white py-3">@items.Address</td>
                 <td>
                     <div class="btn-group">
                         <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -289,4 +266,4 @@
 
 </div>
 
-<script src="/js/Pagination.js"></script>
+<script src="/js/ProviderDashboardPagination.js"></script>

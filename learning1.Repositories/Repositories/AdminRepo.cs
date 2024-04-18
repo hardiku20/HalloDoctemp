@@ -16,6 +16,7 @@ using System.Data;
 using static learning1.DBEntities.ViewModel.VendorViewModel;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using System.Collections;
+using System.Collections.Immutable;
 
 namespace learning1.Repositories.Repositories
 {
@@ -987,6 +988,7 @@ namespace learning1.Repositories.Repositories
             var region = GetRegionTable();
             var model = _context.Admins.Include(x => x.AdminRegions).Include(x=> x.AspNetUser).Where(x => x.AdminId == adminId).Select(x => new AdminProfileViewModel()
             {
+                AdminAspID= x.AspNetUser.Id,
                 AdminId = adminId,
                 userName = x.AspNetUser.UserName,
                 password = x.AspNetUser.PasswordHash,
@@ -999,6 +1001,7 @@ namespace learning1.Repositories.Repositories
                 Address2 = x.Address2,
                 City = x.City,
                 Zip = x.Zip,
+                regionId = x.RegionId,
                 MailingPhone = x.AltPhone,
                 Region = region,
                 AdminRegions = _context.AdminRegions.Where(x => x.AdminId == adminId).Select(b => b.RegionId).ToList(),
@@ -1006,6 +1009,21 @@ namespace learning1.Repositories.Repositories
 
             return model;
         }
+
+
+        public void UpdateBillingRepo(AdminProfileViewModel model)
+        {
+            var data = _context.Admins.Include(x => x.AspNetUser).FirstOrDefault(x => x.AspNetUserId == model.AdminAspID);
+            data.Address1 = model.Address1;
+            data.Address2 = model.Address2;
+            data.City = model.City;
+            data.RegionId = model.regionId;
+            data.AltPhone = model.MailingPhone;
+            data.Zip = model.Zip;
+            _context.SaveChanges();
+        }
+
+
 
         public List<Menu> GetMenuRepo(int accountType)
         {
@@ -1587,6 +1605,53 @@ namespace learning1.Repositories.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public void UpdateAdminInfoRepo(AdminProfileViewModel model)
+        {
+            var temp = _context.Admins.Include(x => x.AdminRegions).FirstOrDefault(x => x.AspNetUserId == model.AdminAspID);
+            temp.FirstName = model.firstName;
+            temp.LastName = model.lastName;
+            temp.Mobile = model.Phone;
+            _context.SaveChanges();
+
+            Admin admin = _context.Admins.FirstOrDefault(x=>x.AspNetUserId==model.AdminAspID);
+            List<AdminRegion> adminregionlist = _context.AdminRegions.Where(x=>x.AdminId==admin.AdminId).ToList();
+            List<int> oldList = adminregionlist.Select(b => b.RegionId).ToList();
+            foreach (var region in adminregionlist)
+            {
+                if (!model.AdminRegions.Contains(region.RegionId))
+                {
+                    _context.AdminRegions.Remove(region);
+
+                }
+            }
+
+           
+            foreach (var regionId in model.AdminRegions)
+            {
+                if (!oldList.Contains(regionId))
+                {
+                    AdminRegion adminRegionData = new AdminRegion
+                    {
+                        AdminId = admin.AdminId,
+                        RegionId = regionId
+                    };
+                    _context.AdminRegions.Add(adminRegionData);
+
+                }
+            }
+            _context.SaveChanges();
+        }
+
+        public ProviderLocationViewModel GetPhysicianLocationList()
+        {
+            ProviderLocationViewModel modal = new()
+            {
+                Physicianlocation = _context.PhysicianLocations.AsEnumerable(),
+            };
+            return modal;
+        }
+
 
 
 

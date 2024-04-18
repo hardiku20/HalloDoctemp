@@ -22,7 +22,7 @@
 
                 <div class="modal-body">
                     <div class="form-floating select-info mb-3">
-                        <select class="form-select form-control shadow-none" aria-label="Floating label select example" id="regionSelector">
+                        <select class="form-select form-control shadow-none" aria-label="Floating label select example" id="regionSelector" asp-for="SelectedRegion">
                             @foreach (var items in Model.RegionList)
                             {
                                 <option>@items.Name</option>
@@ -31,24 +31,24 @@
                         <label for="floatingSelect">Region</label>
                     </div>
                     <div class="form-floating select-info mb-3">
-                        <select class="form-select form-control shadow-none" aria-label="Floating label select example" id="physicianSelector">
+                        <select class="form-select form-control shadow-none" aria-label="Floating label select example" id="physicianSelector" asp-for="PhysicianName">
                         </select>
                         <label for="floatingSelect">Physician</label>
                     </div>
                     <div class="form-floating input-info mb-3">
-                        <input type="date" class="form-control" id="floatingInput" placeholder="ShiftDate">
+                        <input type="date" class="form-control" id="floatingInput" placeholder="ShiftDate" asp-for="ShiftDate">
                         <label for="floatingInput">ShiftDate</label>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
                             <div class="form-floating input-info">
-                                <input type="time" class="form-control" id="floatingInput" placeholder="Start">
+                                <input type="time" class="form-control" id="floatingInput" placeholder="Start" asp-for="StartTime">
                                 <label for="floatingInput">Start</label>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-floating input-info">
-                                <input type="time" class="form-control" id="floatingInput" placeholder="End">
+                                <input type="time" class="form-control" id="floatingInput" placeholder="End" asp-for="EndTime">
                                 <label for="floatingInput">End</label>
                             </div>
                         </div>

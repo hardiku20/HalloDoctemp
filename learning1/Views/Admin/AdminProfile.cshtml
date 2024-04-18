@@ -15,7 +15,7 @@
         <h4 class="">My Profile</h4>
         <div class="d-flex justify-content-end">
             <a asp-controller="Admin" asp-action="admindashboard"
-                class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
                 <img src="/assets/images/chevron-left.svg" alt=""> Back
             </a>
         </div>
@@ -29,26 +29,30 @@
                     <h5 class="my-3">Account Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" asp-for="userName" disabled>
-                            <label for="floatingInput" >User Name</label>
+                            <input type="text" class="form-control bg-secondary-subtle" id="floatingInput" placeholder="User Name" asp-for="userName" readonly>
+                            <label for="floatingInput">User Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Password" asp-for="password" disabled>
-                            <label for="floatingInput" >Password</label>
+                            <label for="floatingInput">Password</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" disabled>
-                            <label for="floatingInput" >Status</label>
+                            <select class="form-select dropdown-toggle" id="floatingSelect" disabled>
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending</option>
+                                <option value="NotActive">Not Active</option>
+                            </select>
+                            <label for="floatingInput">Status</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Role" disabled>
-                            <label for="floatingInput" >Role</label>
+                            <label for="floatingInput">Role</label>
                         </div>
                     </div>
                 </div>
@@ -56,32 +60,35 @@
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-info text-white">Reset Password</button>
                 </div>
+                <input asp-for="AdminAspID" hidden />
+            </form>
 
 
-                <div class="row">
+            <form asp-action="MyProfileAdminInfoUpdate" asp-controller="Admin" method="post" class="form-floating">
+                <div class="row Admin_Update1">
                     <h5 class="my-3">Administration Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="firstName" disabled>
-                            <label for="floatingInput" >First Name</label>
+                            <label for="floatingInput">First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="lastName" disabled>
-                            <label for="floatingInput" >Last Name</label>
+                            <label for="floatingInput">Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email" disabled>
-                            <label for="floatingInput" >Email</label>
+                            <label for="floatingInput">Email</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="confirmEmail" disabled>
-                            <label for="floatingInput" >Confirm Email</label>
+                            <label for="floatingInput">Confirm Email</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
@@ -103,38 +110,44 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-info text-white px-4">Edit</button>
+                <div class="d-flex justify-content-end gap-2 mt-2">
+                    <button type="button" class="btn btn-info text-white px-4 edit-button1">Edit</button>
+                    <button type="submit" class="btn btn-info text-white px-4 save-button1 d-none">Save</button>
+                    <button type="button" class="btn btn-outline-info text-info bg-white px-4 cancel-button1 d-none">Cancel</button>
                 </div>
+                <input asp-for="AdminAspID" hidden />
+            </form>
 
 
-                <div class="row">
+
+            <form asp-action="MyProfileBillingUpdate" asp-controller="Admin" method="post" class="form-floating">
+                <div class="row Admin_Update2">
                     <h5 class="my-3">Mailing & Billing Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address1" disabled>
-                            <label for="floatingInput" >Address1</label>
+                            <label for="floatingInput">Address1</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address2" disabled>
-                            <label for="floatingInput" >Address2</label>
+                            <label for="floatingInput">Address2</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City" disabled>
-                            <label for="floatingInput" >City</label>
+                            <label for="floatingInput">City</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating select-info">
-                            <select class="form-select form-control shadow-none" id="floatingSelect" aria-label="Floating label select example" asp-for="State" disabled>
+                            <select class="form-select form-control shadow-none" id="floatingSelect" aria-label="Floating label select example" asp-for="regionId" disabled>
                                 <option>Select State</option>
                                 @foreach (var items in Model.Region)
                                 {
-                                    <option value=@items>@items.Name</option>
+                                    <option value=@items.RegionId>@items.Name</option>
                                 }
                             </select>
                             <label for="floatingSelect">State</label>
@@ -143,7 +156,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Zip" asp-for="Zip" disabled>
-                            <label for="floatingInput" >Zip</label>
+                            <label for="floatingInput">Zip</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
@@ -153,14 +166,14 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-info text-white px-4">Edit</button>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-info text-white px-4 edit-button2">Edit</button>
+                    <button type="submit" class="btn btn-info text-white px-4 save-button2 d-none">Save</button>
+                    <button type="button" class="btn btn-outline-info text-info bg-white px-4 cancel-button2 d-none">Cancel</button>
                 </div>
-
-              
-
+                <input asp-for="AdminAspID" hidden/>
             </form>
+
         </div>
     </div>
 </div>
@@ -174,21 +187,20 @@
     const phoneInput1 = window.intlTelInput(phoneInputField1, {
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        nationalMode: false,
+        showSelectedDialCode: true,
+        autoInsertDialCode: true,
+        formatOnDisplay: false,
     });
 
     const phoneInputField2 = document.querySelector("#phone2");
     const phoneInput2 = window.intlTelInput(phoneInputField2, {
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        nationalMode: false,
+        showSelectedDialCode: true,
+        autoInsertDialCode: true,
+        formatOnDisplay: false,
     });
 </script>
-
-<script>
-    function AddSelectedRegion() {
-        var selectedRegions = []; // Clear any previous selections
-        document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-            selectedRegions.push(parseInt(checkbox.value));
-        });
-        $('#selectedRegionsList').val(selectedRegions.join(','));
-    }
-</script>
+<script src="~/js/Adminprofile.js"></script>

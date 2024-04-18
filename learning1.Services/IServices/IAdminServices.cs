@@ -69,6 +69,9 @@ namespace learning1.Services.IServices
         void CreateAdmin(CreateAdminAccountViewModel model);
         SchedulingViewModel GetRegionsforShift();
         void CreateNewShift(SchedulingViewModel model);
+        void UpdateBusinessProfileBilling(AdminProfileViewModel model);
+        void UpdateAdminInformation(AdminProfileViewModel model);
+        ProviderLocationViewModel GetProviderList();
 
 
 

@@ -72,6 +72,9 @@ namespace learning1.Repositories.IRepositories
         ProviderMenuViewModel GetProviderRepo();
         void CreateAdminRepo(CreateAdminAccountViewModel model);
         void CreateNewStateData(SchedulingViewModel model);
+        void UpdateBillingRepo(AdminProfileViewModel model);
+        void UpdateAdminInfoRepo(AdminProfileViewModel model);
+        ProviderLocationViewModel GetPhysicianLocationList();
 
 
         //AccountAccessViewModel EditRoleRepo(int roleId);
