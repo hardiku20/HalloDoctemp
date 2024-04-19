@@ -13,74 +13,81 @@
 
 
 <div class="d-md-block d-none overflow-x-auto">
-    <table class="table-responsive w-100">
+   
 
 
-        <tr class="border border-bottom border-white bg-secondary-subtle">
-            <td scope="col" class="py-3 ps-4">Name</td>
-            <td scope="col" class="py-3 "></td>
-            <td scope="col" class="py-3">Phone</td>
-            <td scope="col" class="py-3">Address</td>
-            <td scope="col" class="py-3">Actions</td>
-        </tr>
+    @if(Model.TotalRecord != 0)
+    {
+        <table class="table-responsive w-100">
 
 
-
-        @foreach (var items in Model.TableViewModel)
-        {
-
-            var bgcolor = "";
-            if (@items.RequestType.ToString() == "Family")
-            {
-                bgcolor = " rgb(212, 107, 21)";
-            }
-            else if (@items.RequestType.ToString() == "Business")
-            {
-                bgcolor = "rgb(203, 22, 134)";
-            }
-            else if (@items.RequestType.ToString() == "Concierge")
-            {
-                bgcolor = "rgb(65, 65, 232)";
-            }
-            else
-            {
-                bgcolor = "rgb(15, 189, 64)";
-            }
-
-            <tr class="border border-bottom border-white" style="background-color:@bgcolor">
-                <td class="text-white py-5 ps-4">@items.Name</td>
-                <td class="text-white p-3"><i class="bi bi-chat-left-text"></i></td>
-                <td class="text-white py-3">
-                    @if (items.PhoneNumber != null)
-                    {
-                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.PhoneNumber</button>
-                        <div class="text-white">(Patient)</div>
-                    }
-                    @if (items.Phone != null && items.RequestType.ToString() != "Patient")
-                    {
-                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
-                        <div class="text-white">(@items.RequestType)</div>
-                    }
-                </td>
-                <td class="text-white py-3">@items.Address</td>
-                <td>
-                    <div class="btn-group">
-                        <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Actions
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-check me-2"></i>Accept</a></li>
-                            <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
-                            <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
-                        </ul>
-                    </div>
-                </td>
+            <tr class="border border-bottom border-white bg-secondary-subtle">
+                <td scope="col" class="py-3 ps-4">Name</td>
+                <td scope="col" class="py-3 "></td>
+                <td scope="col" class="py-3">Phone</td>
+                <td scope="col" class="py-3">Address</td>
+                <td scope="col" class="py-3">Actions</td>
             </tr>
-        }
-    </table>
 
 
 
+            @foreach (var items in Model.TableViewModel)
+            {
+
+                var bgcolor = "";
+                if (@items.RequestType.ToString() == "Family")
+                {
+                    bgcolor = " rgb(212, 107, 21)";
+                }
+                else if (@items.RequestType.ToString() == "Business")
+                {
+                    bgcolor = "rgb(203, 22, 134)";
+                }
+                else if (@items.RequestType.ToString() == "Concierge")
+                {
+                    bgcolor = "rgb(65, 65, 232)";
+                }
+                else
+                {
+                    bgcolor = "rgb(15, 189, 64)";
+                }
+
+                <tr class="border border-bottom border-white" style="background-color:@bgcolor">
+                    <td class="text-white py-5 ps-4">@items.Name</td>
+                    <td class="text-white p-3"><i class="bi bi-chat-left-text"></i></td>
+                    <td class="text-white py-3">
+                        @if (items.PhoneNumber != null)
+                        {
+                            <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.PhoneNumber</button>
+                            <div class="text-white">(Patient)</div>
+                        }
+                        @if (items.Phone != null && items.RequestType.ToString() != "Patient")
+                        {
+                            <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
+                            <div class="text-white">(@items.RequestType)</div>
+                        }
+                    </td>
+                    <td class="text-white py-3">@items.Address</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-check me-2"></i>Accept</a></li>
+                                <li><a class="dropdown-item d-flex" asp-action="ViewCase" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
+                                <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <partial name="_NoData"/>
+    }
 
 </div>
 
@@ -242,14 +249,14 @@
 
 
 @{
-    double d = (double)Model.RequestCount?.NewStateCount / 4;
+    double d = (double)Model.TotalRecord / 4;
     double pages = Math.Ceiling(d);
 }
 <div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
 
 
     <span class="d-flex justify-content-start fs-5">
-        Showing 4 of @Model.RequestCount?.NewStateCount Entries
+        Showing @Model.ShowRecords of @Model.TotalRecord Entries
     </span>
     <nav aria-label="Page navigation example d-flex justify-content-between">
         <ul class="pagination">

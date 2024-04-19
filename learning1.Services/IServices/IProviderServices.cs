@@ -9,10 +9,11 @@ namespace learning1.Services.IServices
 {
     public interface IProviderServices
     {
-        ProviderDashboardViewModel DisplayProviderDashboard();
-        ProviderDashboardViewModel RenderActiveStateData(int status1, int status2, int page, int pageSize, string patientName, string regionName, RequestType requestType);
-        ProviderDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName, string regionName, RequestType requestType);
-        ProviderDashboardViewModel RenderNewStateData(int status, int page, int pageSize, string patientName, string regionName, RequestType requestType);
-        ProviderDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName, string regionName, RequestType requestType);
+        ProviderDashboardViewModel DisplayProviderDashboard(int physicianId);
+        ViewCaseViewModel DisplayViewCase(int requestId);
+        ProviderDashboardViewModel RenderActiveStateData(int status1, int status2, int physicianId, int page, int pageSize, string patientName, string regionName, RequestType requestType);
+        ProviderDashboardViewModel RenderConcludeStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, RequestType requestType);
+        ProviderDashboardViewModel RenderNewStateData(int status,int physicianId, int page, int pageSize, string patientName, string regionName, RequestType requestType);
+        ProviderDashboardViewModel RenderPendingStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, RequestType requestType);
     }
 }

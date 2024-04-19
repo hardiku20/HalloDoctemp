@@ -705,5 +705,43 @@ namespace learning1.Repositories.Repositories
             return userInfo;
         }
 
+        public void updateprofileRepo(PatientProfileViewModel model, int id)
+        {
+      
+            User user = _context.Users.FirstOrDefault(x => x.UserId == id);
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email.ToString();
+            user.Mobile = model.PhoneNo;
+            user.Street = model.Street;
+            user.City = model.City;
+            user.State = model.State;
+            user.ZipCode = model.ZipCode;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+
+            int requestId = _context.Requests.FirstOrDefault(x => x.UserId == id).RequestId;
+
+            Request request = _context.Requests.FirstOrDefault(x=>x.RequestId == requestId);
+            request.FirstName = model.FirstName;
+            request.LastName = model.LastName;
+            request.Email = model.Email;
+            request.PhoneNumber = model.PhoneNo;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
+
+
+            RequestClient requestClient = _context.RequestClients.FirstOrDefault(x => x.RequestId == requestId);
+
+            requestClient.FirstName = model.FirstName;
+            requestClient.LastName = model.LastName;
+            requestClient.Email = model.Email.ToString();
+            requestClient.PhoneNumber = model.PhoneNo;
+            _context.RequestClients.Update(requestClient);
+            _context.SaveChanges();
+
+
+
+        }
     }
 }

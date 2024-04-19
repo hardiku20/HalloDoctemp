@@ -129,5 +129,10 @@ namespace learning1.Services.Services
             var model = _patientRepo.GetRoleByAspNetId(email, password);
             return model;
         }
+
+        public void UpdatePatientProfile(PatientProfileViewModel model, int id)
+        {
+            _patientRepo.updateprofileRepo(model,id);
+        }
     }
 }

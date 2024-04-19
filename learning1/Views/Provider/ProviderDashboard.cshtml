@@ -54,6 +54,42 @@
 
 
 
+<!-- Modal for Send Agreement -->
+<div class="modal fade" id="SendAgreementModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header bg-info">
+                    <input class="" asp-for="RequestId" id="Agreement-RequestId" hidden />
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Send Agreement</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label text-secondary">Patient</label>
+                        <label for="message-text" class="col-form-label text-secondary">To Send Agreement please make sure you are updating the correct contact information below for the responsible party. </label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="PatientEmail" placeholder="name@example.com" asp-for="PatientEmail">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="PatientPhone" placeholder="PhoneNumber" asp-for="PatientPhone">
+                        <label for="floatingPhoneNumber">Phone Number</label>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" class="SendAgreement btn btn-info text-white">Send</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
@@ -304,11 +340,18 @@
     });
 </script>
 
+<script>
+    function onSendAgreement(Name, RequestId, email, phone) {
+        document.getElementById("Agreement-RequestId").value = RequestId
+        document.getElementById("PatientEmail").value = email
+        document.getElementById("PatientPhone").value = phone
+    }
+</script>
+
 
 
 <script src="/js/ProviderDashboardRenderPartialVIew.js"></script>
 <script src="/js/ProviderDashboardFilterScript.js"></script>
-
 
 
 

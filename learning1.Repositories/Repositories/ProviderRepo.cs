@@ -26,9 +26,9 @@ namespace learning1.Repositories.Repositories
             return Casetags;
         }
 
-        public List<Request> DisplayProviderDashboardRepo()
+        public List<Request> DisplayProviderDashboardRepo(int PhysicianId)
         {
-            var model = _context.Requests.Include(x => x.RequestClients).ToList();
+            var model = _context.Requests.Include(x => x.RequestClients).Where(x => x.PhysicianId == PhysicianId).ToList();
             return model;
         }
 
@@ -38,32 +38,32 @@ namespace learning1.Repositories.Repositories
             return Regions;
         }
 
-        public ProviderDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public ProviderDashboardViewModel RenderConcludeState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
-            var Count = SetCount();
+            var Count = SetCount(physicianId);
 
             if (!string.IsNullOrEmpty(patientName) && !string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(patientName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else
             {
-                predicate = x => (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
 
@@ -80,42 +80,46 @@ namespace learning1.Repositories.Repositories
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }).AsQueryable();
 
+
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             ProviderDashboardViewModel model = new ProviderDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
 
-        public ProviderDashboardViewModel RenderNewState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public ProviderDashboardViewModel RenderNewState(int status,int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
-            var Count = SetCount();
+            var Count = SetCount(physicianId);
 
             if (!string.IsNullOrEmpty(patientName) && !string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(patientName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else
             {
-                predicate = x => (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
 
@@ -132,42 +136,46 @@ namespace learning1.Repositories.Repositories
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }).AsQueryable();
 
+
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             ProviderDashboardViewModel model = new ProviderDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
 
-        public ProviderDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public ProviderDashboardViewModel RenderPendingState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
-           var Count = SetCount();
+           var Count = SetCount(physicianId);
 
             if (!string.IsNullOrEmpty(patientName) && !string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(patientName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) &&  (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else
             {
-                predicate = x => (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.Status == status) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
             var tempmodel = _context.Requests.Include(x => x.RequestClients).Include(x => x.RequestStatusLogs).Where(predicate).
             Select(x => new ProviderTableViewModel()
@@ -182,42 +190,46 @@ namespace learning1.Repositories.Repositories
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestStatusLogs.Select(x => x.Notes).FirstOrDefault(),
-            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }).AsQueryable();
 
+
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             ProviderDashboardViewModel model = new ProviderDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
 
-        public ProviderDashboardViewModel RenderToActiveState(int status1, int status2, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public ProviderDashboardViewModel RenderToActiveState(int status1, int status2, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
-           var Count = SetCount();
+           var Count = SetCount(physicianId);
 
             if (!string.IsNullOrEmpty(patientName) && !string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(patientName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(regionName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.State.ToLower().Contains(regionName.Trim().ToLower()))) && (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else
             {
-                predicate = x => (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.Status == status1 || x.Status == status2) && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
             var tempmodel = _context.Requests.Include(x => x.RequestClients).Where(predicate).
              Select(x => new ProviderTableViewModel()
@@ -232,39 +244,62 @@ namespace learning1.Repositories.Repositories
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                  RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-             }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+             }).AsQueryable();
 
+
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             ProviderDashboardViewModel model = new ProviderDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
 
-        public int GetCurrentStateCount(params int[] status)
+        public int GetCurrentStateCount(int physicianId, params int[] status)
         {
             int sum = 0;
+            var requests = _context.Requests.Where(x => x.PhysicianId == physicianId);
             foreach (var item in status)
             {
-                sum += _context.Requests.Where(e => e.Status == item).Count();
+                sum += requests.Where(e => e.Status == item).Count();
             }
             return sum;
         }
 
 
-        public RequestCount SetCount()
+        public RequestCount SetCount(int physicianId)
         {
             RequestCount requestCount = new()
             {
-                NewStateCount = GetCurrentStateCount(1),
-                PendingStateCount = GetCurrentStateCount(2),
-                ActiveStateCount = GetCurrentStateCount(4, 5),
-                ConcludeStateCount = GetCurrentStateCount(6),
-                ToCloseStateCount = GetCurrentStateCount(3, 7, 8),
-                UnpaidStateCount = GetCurrentStateCount(9)
+                NewStateCount = GetCurrentStateCount(physicianId,1),
+                PendingStateCount = GetCurrentStateCount(physicianId,2),
+                ActiveStateCount = GetCurrentStateCount(physicianId, 4, 5),
+                ConcludeStateCount = GetCurrentStateCount(physicianId, 6),
+                ToCloseStateCount = GetCurrentStateCount(physicianId, 3, 7, 8),
+                UnpaidStateCount = GetCurrentStateCount(physicianId, 9)
             };
             return requestCount;
         }
+
+        public ViewCaseViewModel DisplayViewCaseRepo(int requestId)
+        {
+            var modal = _context.RequestClients.Include(x => x.Request).Where(x => x.RequestId == requestId)
+                .Select(x => new ViewCaseViewModel()
+                {
+                    firstName = x.FirstName,
+                    lastName = x.LastName,
+                    email = x.Email,
+                    phone = x.PhoneNumber,
+                    Address = x.Address,
+                    Region = x.State,
+                }).FirstOrDefault();
+
+
+            return modal;
+        }
+
     }
 }

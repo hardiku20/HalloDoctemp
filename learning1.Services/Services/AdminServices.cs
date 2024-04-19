@@ -463,5 +463,10 @@ namespace learning1.Services.Services
         {
             return _adminRepo.GetPhysicianLocationList();
         }
+
+        public void CreateProvider(CreateProviderAccountViewModel model)
+        {
+            _adminRepo.CreateProviderRepo(model);
+        }
     }
 }

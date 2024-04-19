@@ -347,6 +347,7 @@ namespace learning1.Controllers
 
         public IActionResult ProviderLocation()
         {
+
             ProviderLocationViewModel modal = _adminServices.GetProviderList();
             
             
@@ -433,6 +434,14 @@ namespace learning1.Controllers
             return View(modal);
         }
 
+
+        [HttpPost]
+        public IActionResult CreateProviderAccount(CreateProviderAccountViewModel model)
+        {
+            _adminServices.CreateProvider(model);
+            _notyf.Success("New Provider Created");
+            return RedirectToAction("ProviderMenu");
+        }
 
         public IActionResult CreateAdminAccount()
         {

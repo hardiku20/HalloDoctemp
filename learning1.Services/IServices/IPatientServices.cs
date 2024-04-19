@@ -28,5 +28,6 @@ namespace learning1.Services.IServices
 
         //Model InsertviewDocuments(ViewDocumentViewModel viewDocumentViewModel,int req);
         int LoginMethod(string username, string password);
+        void UpdatePatientProfile(PatientProfileViewModel model, int id);
     }
 }

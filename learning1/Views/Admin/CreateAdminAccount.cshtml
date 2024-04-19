@@ -25,7 +25,7 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form class="form-floating" method="post" asp-action="CreateAdminAccount" asp-controller="Admin">
+            <form class="form-floating" method="post" asp-action="CreateAdminAccount" asp-controller="Admin" novalidate>
                 <div class="row">
                     <h5 class="my-3">Account Information</h5>
                     <div class="col-md-4 mb-3">
@@ -36,8 +36,9 @@
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Password" asp-for="Password">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Password" asp-for="Password" required>
                             <label for="floatingInput">Password</label>
+                            <div class="invalid-feedback">Please enter a password.</div>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -52,32 +53,37 @@
                     <h5 class="my-3">Administration Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="FirstName" placeholder="First Name" asp-for="FirstName">
+                            <input type="text" class="form-control" id="FirstName" placeholder="First Name" asp-for="FirstName" required>
                             <label for="floatingInput">First Name</label>
+                            <div class="invalid-feedback">Please enter a first name.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="LastName" placeholder="Last Name" asp-for="LastName">
+                            <input type="text" class="form-control" id="LastName" placeholder="Last Name" asp-for="LastName" required>
                             <label for="floatingInput">Last Name</label>
+                            <div class="invalid-feedback">Please enter a last name.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email" required>
                             <label for="floatingInput">Email</label>
+                            <div class="invalid-feedback">Please enter a email.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Confirm Email" asp-for="ConfirmEmail">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Confirm Email" asp-for="ConfirmEmail" required>
                             <label for="floatingInput">Confirm Email</label>
+                            <div class="invalid-feedback">Please re-enter a email.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone1" asp-for="Phone">
+                                   id="phone1" asp-for="Phone" required>
+                            <div class="invalid-feedback">Please enter a phone.</div>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3 form-check-group">
@@ -113,38 +119,44 @@
                     <h5 class="my-3">Mailing & Billing Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address1">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address1" required>
                             <label for="floatingInput">Address 1</label>
+                            <div class="invalid-feedback">Please enter an Address.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address2">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address2" required>
                             <label for="floatingInput">Address 2</label>
+                            <div class="invalid-feedback">Please enter an Address.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City" required>
                             <label for="floatingInput">City</label>
+                            <div class="invalid-feedback">Please enter a city.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State" required>
                             <label for="floatingInput">State</label>
+                            <div class="invalid-feedback">Please enter a state.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Zip" asp-for="Zip">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Zip" asp-for="Zip" required>
                             <label for="floatingInput">Zip</label>
+                            <div class="invalid-feedback">Please enter a zip.</div>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone2" asp-for="MailingPhone">
+                                   id="phone2" asp-for="MailingPhone" required>
+                            <div class="invalid-feedback">Please enter a mobile number.</div>
                         </div>
                     </div>
                 </div>
@@ -196,3 +208,41 @@
         }
     });
 </script>
+
+
+
+<script>
+    // Prevent form submission if validation fails
+    $('form').submit(function (event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        $(this).addClass('was-validated');
+    });
+
+
+    $('form').submit(function (event) {
+        if (!this.checkValidity()) {
+            let ProfessionId = $('#Profession').val();
+            if (ProfessionId == 0) {
+                $('#Profession').addClass('is-invalid');
+                return;
+            }
+        }
+        else {
+            $('this').addClass('was-validated');
+        }
+    });
+</script>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

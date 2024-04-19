@@ -265,14 +265,14 @@
 
 
 @{
-    double d = (double)Model.RequestCount?.PendingStateCount / 4;
+    double d = (double)Model.TotalRecord / 4;
     double pages = Math.Ceiling(d);
 }
 <div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
 
 
     <span class="d-flex justify-content-start fs-5">
-        Showing 4 of @Model.RequestCount?.PendingStateCount Entries
+        Showing @Model.ShowRecords of @Model.TotalRecord Entries
     </span>
     <nav aria-label="Page navigation example d-flex justify-content-between">
         <ul class="pagination">

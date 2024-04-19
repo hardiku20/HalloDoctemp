@@ -27,10 +27,15 @@ namespace learning1.DBEntities.ViewModel
         public string? Zip { get; set; }
 
         public string? MailingPhone { get; set; }
+        public string? AdminNotes {  get; set; }
 
         public List<Region>? Region { get; set; }
 
-
-
+        public List<int> AdminRegions { get; set; }
+        public int? RegionId { get; set; }
+        public string BussinessName { get; set; }
+        public string BussinessWebsite { get; set; }
+        public string NPINumber { get; set; }
+       
     }
 }

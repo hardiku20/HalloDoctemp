@@ -1,4 +1,5 @@
-﻿using learning1.DBEntities.ViewModel;
+﻿using learning1.DBEntities.Models;
+using learning1.DBEntities.ViewModel;
 using learning1.Repositories.IRepositories;
 using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
@@ -18,12 +19,12 @@ namespace learning1.Services.Services
              _providerRepo = providerRepo;
         }
 
-        public ProviderDashboardViewModel DisplayProviderDashboard()
+        public ProviderDashboardViewModel DisplayProviderDashboard(int PhysicianId)
         {
             var Casetags = _providerRepo.DisplayCasetags();
             var Regions = _providerRepo.DisplayRegions();
-            var Count = _providerRepo.SetCount();
-            var temp = _providerRepo.DisplayProviderDashboardRepo().
+            var Count = _providerRepo.SetCount(PhysicianId);
+            var temp = _providerRepo.DisplayProviderDashboardRepo(PhysicianId).
                 Select(x => new ProviderTableViewModel
                 {
                     RequestId = x.RequestId,
@@ -46,28 +47,57 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public ProviderDashboardViewModel RenderActiveStateData(int status1, int status2, int page, int pageSize, string patientName, string regionName, RequestType requestType)
+        public ProviderDashboardViewModel RenderActiveStateData(int status1, int status2, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _providerRepo.RenderToActiveState(status1, status2, page, pageSize, patientName, regionName, requestType);
+            var model = _providerRepo.RenderToActiveState(status1, status2, physicianId,page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
-        public ProviderDashboardViewModel RenderConcludeStateData(int status, int page, int pageSize, string patientName, string regionName, RequestType requestType)
+        public ProviderDashboardViewModel RenderConcludeStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _providerRepo.RenderConcludeState(status, page, pageSize, patientName, regionName, requestType);
+            var model = _providerRepo.RenderConcludeState(status,physicianId ,page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
-        public ProviderDashboardViewModel RenderNewStateData(int status, int page, int pageSize, string patientName, string regionName, RequestType requestType)
+        public ProviderDashboardViewModel RenderNewStateData(int status, int physicianId , int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _providerRepo.RenderNewState(status, page, pageSize, patientName, regionName, requestType);
+            var model = _providerRepo.RenderNewState(status, physicianId, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
-        public ProviderDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName, string regionName, RequestType requestType)
+        public ProviderDashboardViewModel RenderPendingStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _providerRepo.RenderPendingState(status, page, pageSize, patientName, regionName, requestType);
+            var model = _providerRepo.RenderPendingState(status,physicianId ,page, pageSize, patientName, regionName, requestType);
             return model;
         }
+
+
+
+
+
+
+
+        public ViewCaseViewModel DisplayViewCase(int requestId)
+        {
+            var model = _providerRepo.DisplayViewCaseRepo(requestId);
+            return model;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

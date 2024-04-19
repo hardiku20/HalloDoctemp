@@ -11,12 +11,13 @@ namespace learning1.Repositories.IRepositories
     public interface IProviderRepo
     {
         List<string> DisplayCasetags();
-        List<Request> DisplayProviderDashboardRepo();
+        List<Request> DisplayProviderDashboardRepo(int physicianId);
         List<string> DisplayRegions();
-        ProviderDashboardViewModel RenderConcludeState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
-        ProviderDashboardViewModel RenderNewState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
-        ProviderDashboardViewModel RenderPendingState(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
-        ProviderDashboardViewModel RenderToActiveState(int status1, int status2, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
-        public RequestCount SetCount();
+        ViewCaseViewModel DisplayViewCaseRepo(int requestId);
+        ProviderDashboardViewModel RenderConcludeState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        ProviderDashboardViewModel RenderNewState(int status,int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        ProviderDashboardViewModel RenderPendingState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        ProviderDashboardViewModel RenderToActiveState(int status1, int status2, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
+        public RequestCount SetCount(int physicianId);
     }
 }

@@ -72,6 +72,7 @@ namespace learning1.Services.IServices
         void UpdateBusinessProfileBilling(AdminProfileViewModel model);
         void UpdateAdminInformation(AdminProfileViewModel model);
         ProviderLocationViewModel GetProviderList();
+        void CreateProvider(CreateProviderAccountViewModel model);
 
 
 

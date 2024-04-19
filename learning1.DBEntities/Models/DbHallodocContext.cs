@@ -374,6 +374,9 @@ public partial class DbHallodocContext : DbContext
 
             entity.ToTable("Physician");
 
+            entity.Property(e => e.PhysicianId)
+                .UseIdentityAlwaysColumn()
+                .HasIdentityOptions(20L, null, null, null, null, null);
             entity.Property(e => e.Address1).HasMaxLength(500);
             entity.Property(e => e.Address2).HasMaxLength(500);
             entity.Property(e => e.AdminNotes).HasMaxLength(500);

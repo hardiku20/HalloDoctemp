@@ -29,47 +29,45 @@ namespace learning1.Controllers
         }
 
 
-        public IActionResult test()
+        public IActionResult ProviderDashboard(int PhysicianId = 16)
         {
-            return View();
-        }
-
-
-        public IActionResult ProviderDashboard()
-        {
-
-            var model = _providerServices.DisplayProviderDashboard();
+            var model = _providerServices.DisplayProviderDashboard(PhysicianId);
             return View(model);
         }
 
-        public IActionResult RenderNewPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
+        public IActionResult RenderNewPartialView(int Status,int physicianId = 16, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
 
-            var model = _providerServices.RenderNewStateData(Status, Page, PageSize, patientName, regionName, requestType);
+            var model = _providerServices.RenderNewStateData(Status, physicianId, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_providerNewState", model);
         }
 
 
 
-        public IActionResult RenderPendingPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
+        public IActionResult RenderPendingPartialView(int Status, int physicianId = 16, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _providerServices.RenderPendingStateData(Status, Page, PageSize, patientName, regionName, requestType);
+            var model = _providerServices.RenderPendingStateData(Status, physicianId, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_providerPendingState", model);
         }
 
-        public IActionResult RenderActivePartialView(int status1, int status2, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
+        public IActionResult RenderActivePartialView(int status1,  int status2, int physicianId = 16, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _providerServices.RenderActiveStateData(status1, status2, Page, PageSize, patientName, regionName, requestType);
+            var model = _providerServices.RenderActiveStateData(status1, status2, physicianId, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_providerActiveState", model);
         }
-        public IActionResult RenderConcludePartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
+        public IActionResult RenderConcludePartialView(int Status, int physicianId = 16, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
-            var model = _providerServices.RenderConcludeStateData(Status, Page, PageSize, patientName, regionName, requestType);
+            var model = _providerServices.RenderConcludeStateData(Status, physicianId, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_providerConcludeState", model);
         }
 
 
 
+        public IActionResult ViewCase(int RequestId)
+        {
+            var model = _providerServices.DisplayViewCase(RequestId);
+            return View(model);
+        }
 
 
 

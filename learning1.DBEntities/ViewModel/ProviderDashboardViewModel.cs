@@ -35,6 +35,8 @@ namespace learning1.DBEntities.ViewModel
 
         public string? AssignCaseDescription { get; set; }
         public RequestCount RequestCount { get; set; }
+        public int TotalRecord { get; set; }
+        public int ShowRecords { get; set; }
         public List<ExportDataViewModel> ExportViewModel { get; set; }
     }
     public class ProviderTableViewModel

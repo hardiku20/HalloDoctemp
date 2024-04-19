@@ -209,6 +209,7 @@ namespace learning1.Repositories.Repositories
 
         public ViewUploadViewModel FetchViewUploads(int requestId)
         {
+            var userName = _context.RequestClients.Where(x => x.RequestId == requestId).FirstOrDefault();
             var documents = _context.RequestWiseFiles.Where(x => x.RequestId == requestId)
                 .Select(x => new AdminDocumentViewModel
                 {
@@ -217,6 +218,7 @@ namespace learning1.Repositories.Repositories
                 }).ToList();
             ViewUploadViewModel model = new ViewUploadViewModel()
             {
+                UserName = userName.FirstName + " " + userName.LastName ?? "Test User",
                 RequestId = requestId,
                 DocumentsViewModel = documents
             };
@@ -389,12 +391,15 @@ namespace learning1.Repositories.Repositories
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }).AsQueryable();
 
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
@@ -444,12 +449,16 @@ namespace learning1.Repositories.Repositories
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }).AsQueryable();
 
+
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords=tempdata
             };
             return model;
         }
@@ -496,12 +505,15 @@ namespace learning1.Repositories.Repositories
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestStatusLogs.Select(x => x.Notes).FirstOrDefault(),
-            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }).AsQueryable();
 
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
@@ -546,12 +558,15 @@ namespace learning1.Repositories.Repositories
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                  RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-             }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+             }).AsQueryable();
 
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
@@ -596,12 +611,15 @@ namespace learning1.Repositories.Repositories
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                  RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-             }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+             }).AsQueryable();
 
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
@@ -646,12 +664,15 @@ namespace learning1.Repositories.Repositories
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-            }).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }).AsQueryable();
 
+            var tempdata = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             AdminDashboardViewModel model = new AdminDashboardViewModel()
             {
-                TableViewModel = tempmodel,
+                TableViewModel = tempmodel.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 RequestCount = Count,
+                TotalRecord = tempmodel.Count(),
+                ShowRecords = tempdata
             };
             return model;
         }
@@ -1434,59 +1455,7 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
-        public void CreateAdminRepo(CreateAdminAccountViewModel model)
-        {
-            AspNetUser aspNetUser = new AspNetUser()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Email = model.Email,
-                PasswordHash = model.Password,
-                UserName = model.UserName,
-                CreatedDate = DateTime.Now,
-                PhoneNumber = model.Phone,
-            };
-
-            _context.AspNetUsers.Add(aspNetUser);
-
-            AspNetUserRole userRole = new AspNetUserRole()
-            {
-                UserId = aspNetUser.Id,
-                RoleId = 1.ToString(),
-            };
-
-            _context.AspNetUserRoles.Add(userRole);
-
-            Admin admin = new Admin()
-            {
-                AspNetUserId = aspNetUser.Id,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                Mobile = model.Phone,
-                Address1 = model.Address1,
-                Address2 = model.Address2,
-                City = model.City,
-                RegionId = model.regionId,
-                Zip = model.Zip,
-                AltPhone = model.MailingPhone,
-                CreatedBy = "admin",
-                CreatedDate = DateTime.Now,
-                Status = 2,
-                IsDeleted = new BitArray(new bool[] { false }),
-                RoleId = 1,    /////////PLEASE CHANGE
-            };
-            _context.Admins.Add(admin);
-            _context.SaveChanges();
-
-            List<AdminRegion> adminRegions = new List<AdminRegion>();
-            foreach (var items in model.AdminRegions)
-            {
-                adminRegions.Add(new AdminRegion() { AdminId = admin.AdminId, RegionId = items });
-            };
-            _context.AdminRegions.AddRange(adminRegions);
-            _context.SaveChanges();
-
-        }
+        
 
         public void CreateNewStateData(SchedulingViewModel model)
         {
@@ -1650,6 +1619,146 @@ namespace learning1.Repositories.Repositories
                 Physicianlocation = _context.PhysicianLocations.AsEnumerable(),
             };
             return modal;
+        }
+
+
+        public void CreateAdminRepo(CreateAdminAccountViewModel model)
+        {
+            AspNetUser aspNetUser = new AspNetUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = model.Email,
+                PasswordHash = model.Password,
+                UserName = model.UserName,
+                CreatedDate = DateTime.Now,
+                PhoneNumber = model.Phone,
+            };
+
+            _context.AspNetUsers.Add(aspNetUser);
+
+            AspNetUserRole userRole = new AspNetUserRole()
+            {
+                UserId = aspNetUser.Id,
+                RoleId = 1.ToString(),
+            };
+
+            _context.AspNetUserRoles.Add(userRole);
+
+            Admin admin = new Admin()
+            {
+                AspNetUserId = aspNetUser.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Mobile = model.Phone,
+                Address1 = model.Address1,
+                Address2 = model.Address2,
+                City = model.City,
+                RegionId = model.regionId,
+                Zip = model.Zip,
+                AltPhone = model.MailingPhone,
+                CreatedBy = "admin",
+                CreatedDate = DateTime.Now,
+                Status = 2,
+                IsDeleted = new BitArray(new bool[] { false }),
+                RoleId = 1,    /////////PLEASE CHANGE
+            };
+            _context.Admins.Add(admin);
+            _context.SaveChanges();
+
+            List<AdminRegion> adminRegions = new List<AdminRegion>();
+            foreach (var items in model.AdminRegions)
+            {
+                adminRegions.Add(new AdminRegion() { AdminId = admin.AdminId, RegionId = items });
+            };
+            _context.AdminRegions.AddRange(adminRegions);
+            _context.SaveChanges();
+        }
+
+
+
+
+
+
+
+
+        public void CreateProviderRepo(CreateProviderAccountViewModel model)
+        {
+            AspNetUser aspNetUser = new AspNetUser()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = model.Email,
+                PasswordHash = model.Password,
+                UserName = model.FirstName + " " + model.LastName,
+                CreatedDate = DateTime.Now,
+                PhoneNumber = model.Phone,
+            };
+
+            _context.AspNetUsers.Add(aspNetUser);
+            //_context.SaveChanges();
+
+            AspNetUserRole userRole = new AspNetUserRole();
+            userRole.UserId = aspNetUser.Id;
+            userRole.RoleId = 2.ToString();
+            _context.AspNetUserRoles.Add(userRole);
+            //_context.SaveChanges();
+
+            Physician physician = new Physician()
+            {
+                AspNetUserId = aspNetUser.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                Mobile = model.Phone,
+                AdminNotes = model.AdminNotes,
+                Address1 = model.Address1,
+                Address2 = model.Address2,
+                City = model.City,
+                RegionId = model.RegionId,
+                Zip = model.Zip,
+                AltPhone = model.MailingPhone,
+                CreatedBy= "004738d0-6f4d-48e0-b229-fcf209b2780f",
+                CreatedDate = DateTime.Now,
+                Status = 1,
+                BusinessName = model.BussinessName,
+                BusinessWebsite = model.BussinessWebsite,
+                IsDeleted = false,
+                RoleId= 2,
+                Npinumber = model.NPINumber,
+                //IsAgreementDoc = model.AgreementDoc != null,
+                //IsBackgroundDoc = model.BackgroundDoc != null,
+                //IsTrainingDoc = model.TrainingDoc != null,
+                //IsNonDisclosureDoc = model.NonSiclosureDoc != null,
+            };
+
+            _context.Physicians.Add(physician);
+            _context.SaveChanges();
+
+            PhysicianLocation physicianLocation = new PhysicianLocation()
+            {
+                PhysicianId = physician.PhysicianId,
+                CreatedDate = DateTime.Now,
+                PhysicianName = physician.FirstName + " " + physician.LastName,
+                Address = physician.City +" "+ physician.Zip,
+            };
+            _context.PhysicianLocations.Add(physicianLocation);
+
+
+            PhysicianNotification physicianNotification = new PhysicianNotification()
+            {
+                PhysicianId = physician.PhysicianId,
+                IsNotificationStopped = false,
+            };
+            _context.PhysicianNotifications.Add(physicianNotification);
+
+
+            List<PhysicianRegion> regions = new List<PhysicianRegion>();
+            foreach (var items in model.AdminRegions)
+            {
+                regions.Add(new PhysicianRegion() { PhysicianId = physician.PhysicianId, RegionId = items });
+            }
+            _context.PhysicianRegions.AddRange(regions);
+            _context.SaveChanges();
         }
 
 
