@@ -212,4 +212,62 @@ $(document).ready(function () {
         }
     })
 
+
+
+
+    $("#professionSelector").change(function () {
+        console.log(this);
+        //
+        var Profession = this.value;
+        $.ajax({
+
+            method: 'GET',
+            url: '/Provider/GetBusinessByProfessionName',
+            data: {
+                ProfessionName: Profession,
+            },
+            success: function (result) {
+                console.log(result)
+                let str = ""
+                for (let index = 0; index < result.length; index++) {
+                    const value = result[index];
+                    str += `<option value="${value}">${value}</option>`;
+                }
+                $("#businessSelector").html(str);
+            },
+
+
+            error: function (xhr, status, error) {
+                console.log(error);
+
+            }
+        })
+    })
+
+    $("#businessSelector").change(function () {
+        console.log(this);
+
+        var Business = this.value;
+        $.ajax({
+            method: 'GET',
+            url: '/Provider/GetOrderdetailByBusiness',
+            data: {
+                BusinessName: Business,
+            },
+
+            success: function (result) {
+                $("#ExistingFaxNumber").val(result.faxNumber);
+                $("#ExistingEmail").val(result.email);
+                $("#ExistingBusinessContact").val(result.businessContact);
+                $("#ExistingVendorId").val(result.vendorId);
+            },
+
+            error: function (xhr, status, error) {
+                console.log(error);
+
+            }
+        })
+    })
+
+
 })

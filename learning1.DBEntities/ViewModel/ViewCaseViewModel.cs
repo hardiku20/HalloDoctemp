@@ -8,6 +8,9 @@ namespace learning1.DBEntities.ViewModel
 {
     public class ViewCaseViewModel
     {
+
+        public string? Patientnotes {  get; set; }
+        public int? RequestId { get; set; }
         public string? userName { get; set; }
 
         public string? firstName { get; set; }

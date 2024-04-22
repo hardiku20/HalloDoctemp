@@ -10,14 +10,23 @@ namespace learning1.Repositories.IRepositories
 {
     public interface IProviderRepo
     {
+        void acceptcase(int requestId);
         List<string> DisplayCasetags();
+        List<string> DisplayProfession();
         List<Request> DisplayProviderDashboardRepo(int physicianId);
         List<string> DisplayRegions();
         ViewCaseViewModel DisplayViewCaseRepo(int requestId);
+        ViewUploadViewModel FetchViewUploads(int requestId);
+        List<string> GetBusinessByProfessionName(string professionName);
+        SendOrderViewModel GetOrder(string businessName);
+        ProviderProfileViewModel GetProviderProfileRepo(int physicianId);
+        void OrderDetailRepo(SendOrderViewModel model);
         ProviderDashboardViewModel RenderConcludeState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         ProviderDashboardViewModel RenderNewState(int status,int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         ProviderDashboardViewModel RenderPendingState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         ProviderDashboardViewModel RenderToActiveState(int status1, int status2, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         public RequestCount SetCount(int physicianId);
+        void TransferCaseRepo(ProviderDashboardViewModel model, int requestId);
+        ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
     }
 }

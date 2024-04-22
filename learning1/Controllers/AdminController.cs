@@ -77,17 +77,11 @@ namespace learning1.Controllers
 
         public IActionResult ViewNotes(int RequestId)
         {
-            var model = _adminServices.GetViewNotesData(RequestId);
-            return View(model);
+            return View();
         }
 
 
-        [HttpPost]
-        public IActionResult ViewNotes(ViewNotesViewModel model, int RequestId)
-        {
-            _adminServices.SetViewNotesData(model, RequestId);
-            return RedirectToAction("ViewNotes",model);
-        }
+    
 
         public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType=(learning1.DBEntities.ViewModel.RequestType)5)
         {

@@ -123,11 +123,7 @@ namespace learning1.Services.Services
             _adminRepo.TransferCaseRepo(model, requestId);
         }
 
-        public ViewNotesViewModel GetViewNotesData(int requestId)
-        {
-            var model = _adminRepo.GetViewNotesRepo(requestId);
-            return model;
-        }
+      
 
         public ViewUploadViewModel GetviewUploads(int requestId)
         {
@@ -158,23 +154,7 @@ namespace learning1.Services.Services
 
 
 
-        //public void GetCancelCaseData(AdminDashboardViewModel model)
-        //{
-        //    var request = _adminRepo.GetRequestById(model.RequestId);
-        //    request.Status = 3;
-        //    _adminRepo.updateRequest(request);
-
-        //    RequestStatusLog requestStatusLog = new RequestStatusLog()
-        //    {
-        //        RequestId = model.RequestId,
-        //        Status = request.Status,
-        //        CreatedDate = request.CreatedDate,
-        //        Notes = model.CancelNotes,
-        //    };
-        //    _adminRepo.AddRequestStatusLog(requestStatusLog);
-
-        //}
-
+    
         public AdminDashboardViewModel RenderActiveStateData(int status1, int status2 , int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             var model = _adminRepo.RenderToActiveState(status1, status2, page, pageSize, patientName, regionName, requestType);
@@ -211,25 +191,7 @@ namespace learning1.Services.Services
             return model;
         }
 
-        //public void SendAgreementData(string email, int requestId)
-        //{
-        //    _adminRepo.Mails(email, requestId);
-        //}
-
-        //public void SendAgreementData(AdminDashboardViewModel model, int requestId)
-        //{
-        //    _adminRepo.SendAgreementRepo(model, requestId);
-        //}
-
-        //public void SendLinkData(AdminDashboardViewModel model)
-        //{
-        //    _adminRepo.SendLinkRepo(model);
-        //}
-
-        public void SetViewNotesData(ViewNotesViewModel model, int requestId)
-        {
-            _adminRepo.SetViewNotes(model, requestId);
-        }
+   
 
         public EncounterFormViewModel GetEncounterformData(int requestId)
         {

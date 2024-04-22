@@ -22,7 +22,6 @@ namespace learning1.Services.IServices
         SendOrderViewModel GetOrderdetails();
         List<string> GetPhysicianByRegion(string regionName);
         void GetTransferCaseData(AdminDashboardViewModel model, int requestId);
-        ViewNotesViewModel GetViewNotesData(int requestId);
         ViewUploadViewModel GetviewUploads(int requestId);
         void InsertOrderDetails(SendOrderViewModel model);
         void InsertviewUploads(ViewUploadViewModel model, int requestId);
@@ -33,7 +32,6 @@ namespace learning1.Services.IServices
         AdminDashboardViewModel RenderPendingStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         AdminDashboardViewModel RenderToCloseStateData(int status1,int status2,int status3, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
-        void SetViewNotesData(ViewNotesViewModel model, int requestId);
         AdminDashboardViewModel ListToExportAllData();
         void SendAgreement(int requestId);
        EncounterFormViewModel GetEncounterformData(int requestId);
@@ -73,13 +71,5 @@ namespace learning1.Services.IServices
         void UpdateAdminInformation(AdminProfileViewModel model);
         ProviderLocationViewModel GetProviderList();
         void CreateProvider(CreateProviderAccountViewModel model);
-
-
-
-
-
-
-        //AccountAccessViewModel EditRoleById(int roleId);
-        //List<string> GetMenuList(int accountType);
     }
 }

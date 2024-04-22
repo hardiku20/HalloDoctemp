@@ -5,7 +5,7 @@
 }
 @model learning1.DBEntities.ViewModel.ProviderDashboardViewModel;
 <div class="d-md-block d-none overflow-x-auto">
-    <table class="table-responsive w-100">
+    <table class="table-responsive w-100 mb-2">
 
 
         <tr class="border border-bottom border-white bg-secondary-subtle">
@@ -56,7 +56,7 @@
                     }
                 </td>
                 <td class="text-white py-3">@items.Address</td>
-                <td class="text-white py-3">@items.Address</td>
+                <td class="text-white py-3"><button type="button" class="btn btn-info text-white">House Call</button></td>
                 <td>
                     <div class="btn-group">
                         <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -64,11 +64,13 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item d-flex" asp-action="ViewCase" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
-                            <li><a class="dropdown-item d-flex" asp-action="ViewUpload" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-journal-text me-2"></i>View Uploads</a></li>
+                            <li><a class="dropdown-item d-flex" asp-action="ViewUpload" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-journal-text me-2"></i>View Uploads</a></li>
                             <li><a class="dropdown-item d-flex" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
-                            <li><a class="dropdown-item d-flex" asp-action="SendOrders" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-list-task me-2"></i>Orders</a></li>
-                            <li><a class="dropdown-item d-flex" href="#"><i class="bi bi-file-text me-2"></i>Doctors Note</a></li>
-                            <li><a class="dropdown-item d-flex" asp-action="EncounterForm" asp-controller="Admin" asp-route-requestId="@items.RequestId"><i class="bi bi-files me-2"></i>Encounter</a></li>
+                            <li><a class="dropdown-item d-flex" asp-action="SendOrders" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-list-task me-2"></i>Orders</a></li>
+                            <li>
+                                <a class="dropdown-item d-flex" data-bs-toggle="modal"
+                                   data-bs-target="#encounterModal"><i class="bi bi-files me-2"></i>Encounter</a>
+                            </li>
                         </ul>
                     </div>
                 </td>
@@ -78,6 +80,11 @@
 
     </table>
 
+
+    @if (Model.TotalRecord == 0)
+    {
+        <partial name="_NoData" />
+    }
 </div>
 
 
@@ -226,7 +233,10 @@
     double d = (double)Model.TotalRecord / 4;
     double pages = Math.Ceiling(d);
 }
-<div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
+
+
+
+<div class="pagination-nav bg-mode1 d-flex justify-content-between flex-row p-4">
 
 
     <span class="d-flex justify-content-start fs-5">

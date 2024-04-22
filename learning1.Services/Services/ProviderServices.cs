@@ -83,21 +83,57 @@ namespace learning1.Services.Services
             return model;
         }
 
+        public void acceptCase(int requestId)
+        {
+            _providerRepo.acceptcase(requestId);
+        }
 
+        public ViewUploadViewModel GetviewUploads(int requestId)
+        {
+            var model = _providerRepo.FetchViewUploads(requestId);
+            return model;
+        }
 
+        public void InsertviewUploads(ViewUploadViewModel model, int requestId)
+        {
+            _providerRepo.Uploaddocuments(model, requestId);
+        }
 
+        public void GetTransferCaseData(ProviderDashboardViewModel model, int requestId)
+        {
+            _providerRepo.TransferCaseRepo(model, requestId);
+        }
+        public SendOrderViewModel GetOrderdetails()
+        {
+            var Profession = _providerRepo.DisplayProfession();
+            SendOrderViewModel model = new SendOrderViewModel()
+            {
+                Profession = Profession,
+            };
+            return model;
+        }
 
+        public List<string> GetBusinessByProfession(string professionName)
+        {
+            var BusinessName = _providerRepo.GetBusinessByProfessionName(professionName);
+            return BusinessName;
+        }
 
+        public SendOrderViewModel GetDetailsByBusiness(string businessName)
+        {
+            var Orderdetails = _providerRepo.GetOrder(businessName);
+            return Orderdetails;
+        }
 
+        public void InsertOrderDetails(SendOrderViewModel model)
+        {
+            _providerRepo.OrderDetailRepo(model);
+        }
 
-
-
-
-
-
-
-
-
-
+        public ProviderProfileViewModel GetProviderProfileData(int physicianId)
+        {
+            var model = _providerRepo.GetProviderProfileRepo(physicianId);
+            return model;
+        }
     }
 }

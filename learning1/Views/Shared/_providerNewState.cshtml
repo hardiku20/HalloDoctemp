@@ -13,80 +13,79 @@
 
 
 <div class="d-md-block d-none overflow-x-auto">
-   
-
-
-    @if(Model.TotalRecord != 0)
-    {
-        <table class="table-responsive w-100">
-
-
-            <tr class="border border-bottom border-white bg-secondary-subtle">
-                <td scope="col" class="py-3 ps-4">Name</td>
-                <td scope="col" class="py-3 "></td>
-                <td scope="col" class="py-3">Phone</td>
-                <td scope="col" class="py-3">Address</td>
-                <td scope="col" class="py-3">Actions</td>
-            </tr>
 
 
 
-            @foreach (var items in Model.TableViewModel)
+
+    <table class="table-responsive w-100 mb-2">
+
+
+        <tr class="border border-bottom border-white bg-secondary-subtle">
+            <td scope="col" class="py-3 ps-4">Name</td>
+            <td scope="col" class="py-3 "></td>
+            <td scope="col" class="py-3">Phone</td>
+            <td scope="col" class="py-3">Address</td>
+            <td scope="col" class="py-3">Actions</td>
+        </tr>
+
+
+
+        @foreach (var items in Model.TableViewModel)
+        {
+
+            var bgcolor = "";
+            if (@items.RequestType.ToString() == "Family")
             {
-
-                var bgcolor = "";
-                if (@items.RequestType.ToString() == "Family")
-                {
-                    bgcolor = " rgb(212, 107, 21)";
-                }
-                else if (@items.RequestType.ToString() == "Business")
-                {
-                    bgcolor = "rgb(203, 22, 134)";
-                }
-                else if (@items.RequestType.ToString() == "Concierge")
-                {
-                    bgcolor = "rgb(65, 65, 232)";
-                }
-                else
-                {
-                    bgcolor = "rgb(15, 189, 64)";
-                }
-
-                <tr class="border border-bottom border-white" style="background-color:@bgcolor">
-                    <td class="text-white py-5 ps-4">@items.Name</td>
-                    <td class="text-white p-3"><i class="bi bi-chat-left-text"></i></td>
-                    <td class="text-white py-3">
-                        @if (items.PhoneNumber != null)
-                        {
-                            <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.PhoneNumber</button>
-                            <div class="text-white">(Patient)</div>
-                        }
-                        @if (items.Phone != null && items.RequestType.ToString() != "Patient")
-                        {
-                            <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
-                            <div class="text-white">(@items.RequestType)</div>
-                        }
-                    </td>
-                    <td class="text-white py-3">@items.Address</td>
-                    <td>
-                        <div class="btn-group">
-                            <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Actions
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-check me-2"></i>Accept</a></li>
-                                <li><a class="dropdown-item d-flex" asp-action="ViewCase" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
-                                <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                bgcolor = " rgb(212, 107, 21)";
             }
-        </table>
-    }
-    else
+            else if (@items.RequestType.ToString() == "Business")
+            {
+                bgcolor = "rgb(203, 22, 134)";
+            }
+            else if (@items.RequestType.ToString() == "Concierge")
+            {
+                bgcolor = "rgb(65, 65, 232)";
+            }
+            else
+            {
+                bgcolor = "rgb(15, 189, 64)";
+            }
+
+            <tr class="border border-bottom border-white" style="background-color:@bgcolor">
+                <td class="text-white py-5 ps-4">@items.Name</td>
+                <td class="text-white p-3"><i class="bi bi-chat-left-text"></i></td>
+                <td class="text-white py-3">
+                    @if (items.PhoneNumber != null)
+                    {
+                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.PhoneNumber</button>
+                        <div class="text-white">(Patient)</div>
+                    }
+                    @if (items.Phone != null && items.RequestType.ToString() != "Patient")
+                    {
+                        <button class=" btn btn-outline-white border border-white w-100 text-white text-start"><i class="bi bi-telephone pe-2"></i>@items.Phone</button>
+                        <div class="text-white">(@items.RequestType)</div>
+                    }
+                </td>
+                <td class="text-white py-3">@items.Address</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item d-flex" onclick="ConfirmAccept(@items.RequestId)"><i class="bi bi-file-earmark-check me-2"></i>Accept</a></li>
+                            <li><a class="dropdown-item d-flex" asp-action="ViewCase" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
+                            <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+    @if (Model.TotalRecord == 0)
     {
-        <partial name="_NoData"/>
+        <partial name="_NoData" />
     }
 
 </div>
@@ -168,13 +167,6 @@
                     <div class="accordion-body container-fluid mt-2">
                         <div class="d-flex">
                             <div class="me-1">
-                                <i class="bi bi-calendar-event"></i>
-                            </div>
-                            <label for="" class="me-2 text-secondary">Date of birth:</label>
-                            <p>Jun 28, 1991(33)</p>
-                        </div>
-                        <div class="d-flex">
-                            <div class="me-1">
                                 <i class="bi bi-envelope"></i>
                             </div>
                             <label for="" class="me-2 text-secondary">Email:</label>
@@ -198,47 +190,18 @@
                             <div class="row mb-2 ">
                                 <div class="col-6">
                                     <a class="btn text-white rounded-pill w-100"
-                                       style="background-color: purple; font-size: small;" data-bs-toggle="modal"
-                                       data-bs-target="#AssignCaseModal" data-bs-whatever="" onclick="onAssign('@items.Name','@items.RequestId')">
-                                        Assign Case
+                                       style="background-color: purple; font-size: small;" onclick="ConfirmAccept(@items.RequestId)">
+                                        Accept
                                     </a>
                                 </div>
-                                <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" data-bs-toggle="modal"
-                                       data-bs-target="#CancelCaseModal" data-bs-whatever="" onclick="onCancel('@items.Name','@items.RequestId')">
-                                        Cancel Case
-                                    </a>
-                                </div>
-
-
-                            </div>
-                            <div class="row mb-2">
                                 <div class="col-6">
                                     <a class="btn bg-success text-white rounded-pill w-100"
                                        style="font-size: small;" asp-action="ViewNotes" asp-controller="Admin" asp-route-requestId="@items.RequestId">
                                         View Notes
                                     </a>
                                 </div>
-                                <div class="col-6">
-                                    <a class="btn bg-danger border-0 text-white rounded-pill w-100"
-                                       style="font-size: small;" data-bs-toggle="modal"
-                                       data-bs-target="#BlockCaseModal" data-bs-whatever="" onclick="onBlock('@items.Name','@items.RequestId')">
-                                        Block Patients
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-6">
-                                    <button class="btn bg-success text-white rounded-pill w-100"
-                                            style="font-size: small;">
-                                        Email
-                                    </button>
-                                </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             }
@@ -252,7 +215,8 @@
     double d = (double)Model.TotalRecord / 4;
     double pages = Math.Ceiling(d);
 }
-<div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
+
+<div class="pagination-nav bg-mode1 d-flex justify-content-between flex-row p-4">
 
 
     <span class="d-flex justify-content-start fs-5">
@@ -292,5 +256,56 @@
 
 </div>
 
+
+
+<script>
+    function ConfirmAccept(requestId) {
+        Swal.fire({
+            title: "Are you sure you want to accept the request?",
+            showDenyButton: true,
+            confirmButtonText: "Accept",
+            confirmButtonColor: "#198754",
+            denyButtonText: `Cancel`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    method: "GET",
+                    url: "/Provider/AcceptCase",
+                    data: { requestId: requestId },
+                    success: function (res) {
+
+                        // Success notification with Notyf
+                        const notification = new Notyf({
+                            duration: 4000, // Display for 4 seconds
+                            position: {
+                                x: 'right',
+                                y: 'top'
+                            }
+                        });
+                        notification.success('Request accepted successfully!');
+                        window.location.reload();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error("Error accepting request:", textStatus, errorThrown);
+                    }
+                });
+            } else if (result.isDenied) {
+                // Error notification with Notyf
+                const notification = new Notyf({
+                    duration: 4000, // Display for 4 seconds
+                    position: {
+                        x: 'right',
+                        y: 'top'
+                    }
+                });
+                notification.error('Failed to accept request!');
+            }
+        });
+    }
+
+</script>
+
 <script src="/js/ProviderDashboardPagination.js"></script>
 @* <script src="/js/Filteration.js"></script> *@
+
+

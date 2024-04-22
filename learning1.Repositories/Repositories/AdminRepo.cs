@@ -61,7 +61,6 @@ namespace learning1.Repositories.Repositories
 
 
             Request request = _context.Requests.Where(x => x.RequestId == requestId).First();
-            request.Status = 2;
             request.PhysicianId = physicianId;
             request.ModifiedDate = DateTime.Now;
             request.CompletedByPhysician = false;
@@ -80,7 +79,6 @@ namespace learning1.Repositories.Repositories
             RequestStatusLog StatusData = new RequestStatusLog()
             {
                 RequestId = requestId,
-                Status = 2,
                 Notes = notetotransfer,
                 TransToPhysicianId = physicianId,
                 CreatedDate = DateTime.Now,
@@ -199,10 +197,13 @@ namespace learning1.Repositories.Repositories
             var Requests = _context.RequestClients.Include(y => y.Request).Where(x => x.RequestId == requestId)
                 .Select(x => new ViewCaseViewModel()
                 {
-                    firstName = x.Request.FirstName,
-                    lastName = x.Request.LastName,
-                    email = x.Request.Email,
+                    firstName = x.FirstName,
+                    lastName = x.LastName,
+                    email = x.Email,
                     phone = x.PhoneNumber,
+                    Address = x.Address,
+                    Region = x.State,
+                    Patientnotes = x.Notes ?? "No Notes Available",
                 }).FirstOrDefault();
             return Requests;
         }
@@ -218,7 +219,7 @@ namespace learning1.Repositories.Repositories
                 }).ToList();
             ViewUploadViewModel model = new ViewUploadViewModel()
             {
-                UserName = userName.FirstName + " " + userName.LastName ?? "Test User",
+                UserName = userName.FirstName + " " + userName.LastName,
                 RequestId = requestId,
                 DocumentsViewModel = documents
             };
@@ -270,55 +271,7 @@ namespace learning1.Repositories.Repositories
             return PhysicianName;
         }
 
-        public ViewNotesViewModel GetViewNotesRepo(int requestId)
-        {
-            
-            var requestNotes = _context.RequestNotes.Where(r => r.RequestId == requestId).OrderBy(x => x.RequestId).LastOrDefault();
-            var requestStatus = _context.RequestStatusLogs.Where(r => r.RequestId == requestId).OrderBy(x => x.RequestId).LastOrDefault();
-           
-
-            ViewNotesViewModel model = new ViewNotesViewModel()
-            {
-                RequestId = requestId,
-                TransferNotes= requestStatus.Notes == null ? "No available Notes" : requestStatus.Notes,
-                CreatedDate = requestStatus.CreatedDate ,
-               
-                AdminNotes = requestNotes.AdminNotes == null ? "No available Notes" : requestNotes.AdminNotes,
-                PhysicianNotes = requestNotes.PhysicianNotes == null ? "No available Notes" : requestNotes.PhysicianNotes,
-            };
-
-            return model;
-
-
-
-            //if (requestStatus?.PhysicianId != null)
-            //{
-            //    var physicianName = _context.Physicians.Find(requestStatus.PhysicianId);
-
-            //    var model = new ViewNotesViewModel
-            //    {
-            //        RequestId = requestId,
-            //        TransferNotes = requestStatus.Notes,
-            //        PhysicianName = physicianName.FirstName + " " + physicianName.LastName,
-            //        CreatedDate = requestStatus.CreatedDate,
-            //        PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
-            //        AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
-            //    };
-            //    return model;
-            //}
-            //else
-            //{
-            //    var model = new ViewNotesViewModel
-            //    {
-            //        RequestId = requestId,
-            //        //TransferNotes = requestStatus.Notes,
-            //        //CreatedDate = requestStatus.CreatedDate,
-            //        PhysicianNotes = requestNotes.FirstOrDefault()?.PhysicianNotes,
-            //        AdminNotes = requestNotes.FirstOrDefault()?.AdminNotes,
-            //    };
-            //    return model;
-            //}
-        }
+       
 
         public void OrderDetailRepo(SendOrderViewModel model)
         {
@@ -387,7 +340,7 @@ namespace learning1.Repositories.Repositories
                 Phone = x.PhoneNumber,
                 Email = x.Email,
                 Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault() ?? "No address available",
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
@@ -445,7 +398,7 @@ namespace learning1.Repositories.Repositories
                 Phone = x.PhoneNumber,
                 Email = x.Email,
                 Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault() ?? "No address available",
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
@@ -501,7 +454,7 @@ namespace learning1.Repositories.Repositories
                 Phone = x.PhoneNumber,
                 Email = x.Email,
                 Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault() ?? "No address available",
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestStatusLogs.Select(x => x.Notes).FirstOrDefault(),
@@ -554,7 +507,7 @@ namespace learning1.Repositories.Repositories
                  Phone = x.PhoneNumber,
                  Email = x.Email,
                  Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault() ?? "No address available",
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                  RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
@@ -607,7 +560,7 @@ namespace learning1.Repositories.Repositories
                  Phone = x.PhoneNumber,
                  Email = x.Email,
                  Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                 Address = x.RequestClients.Select(x => x.Address).FirstOrDefault() ?? "No address available",
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                  RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
@@ -660,7 +613,7 @@ namespace learning1.Repositories.Repositories
                 Phone = x.PhoneNumber,
                 Email = x.Email,
                 Name = x.RequestClients.Select(x => x.FirstName + " " + x.LastName).FirstOrDefault(),
-                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault(),
+                Address = x.RequestClients.Select(x => x.Address).FirstOrDefault() ?? "No address available",
                 Requester = x.FirstName + " " + x.LastName,
                 RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                 RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
@@ -677,37 +630,7 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
-        public void SetViewNotes(ViewNotesViewModel model, int requestId)
-        {
-            //var temp = from rn in _context.RequestNotes
-            //           join rs in _context.RequestStatusLogs on rn.RequestId equals rs.RequestId into rgroup
-            //           from r in rgroup
-            //           select new ;
-            var AdminId = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).Select(x => x.AdminId)?.FirstOrDefault();
-            var ExistingRequestId = _context.RequestNotes.Where(x => x.RequestId == requestId).Select(x => x.RequestId).FirstOrDefault();
-            if (ExistingRequestId != 0)
-            {
-                RequestNote requestNote = _context.RequestNotes.Where(X => X.RequestId == requestId)?.FirstOrDefault();
-                requestNote.AdminNotes = model.NewAdminNotes;
-                requestNote.CreatedBy = "Hardikkk";
-                requestNote.CreatedDate = DateTime.Now;
-                _context.Update(requestNote);
-                _context.SaveChanges();
-            }
-
-            else
-            {
-                RequestNote requestNote = new RequestNote()
-                {
-                    RequestId = requestId,
-                    AdminNotes = model.NewAdminNotes,
-                    CreatedBy = "Hardikkk",
-                    CreatedDate = DateTime.Now,
-                };
-                _context.Add(requestNote);
-                _context.SaveChanges();
-            }
-        }
+       
 
         public void TransferCaseRepo(AdminDashboardViewModel model, int requestId)
         {
@@ -1392,9 +1315,9 @@ namespace learning1.Repositories.Repositories
         {
             var blockRecords = _context.Requests.Include(x => x.RequestClients).Include(x => x.BlockRequests)
                 .Where(x => (x.Status == 11) && (name == null || x.RequestClients.FirstOrDefault().FirstName.ToLower().Contains(name.Trim().ToLower())
-                || x.RequestClients.FirstOrDefault().LastName.ToLower().Contains(name.Trim().ToLower())
+                || x.RequestClients.FirstOrDefault().LastName.ToLower().Contains(name.Trim().ToLower()))
                 && (email == null || x.BlockRequests.FirstOrDefault().Email.ToLower().Contains(email.Trim().ToLower()))
-                && (phoneNumber == null || x.BlockRequests.FirstOrDefault().PhoneNumber.ToLower().Contains(phoneNumber.Trim().ToLower()))))
+                && (phoneNumber == null || x.BlockRequests.FirstOrDefault().PhoneNumber.ToLower().Contains(phoneNumber.Trim().ToLower())))
                 .Select(x => new RecordsViewModel.BlockRecords()
                 {
                     PatientName = x.RequestClients.FirstOrDefault().FirstName + " " + x.RequestClients.FirstOrDefault().LastName,

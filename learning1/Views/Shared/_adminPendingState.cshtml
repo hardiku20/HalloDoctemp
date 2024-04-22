@@ -12,7 +12,7 @@
 
 
 <div class="d-md-block d-none overflow-x-auto">
-    <table class="table-responsive w-100">
+    <table class="table-responsive w-100 mb-2">
 
 
         <tr class="border border-bottom border-white bg-secondary-subtle">
@@ -116,6 +116,11 @@
             </tr>
         }
     </table>
+
+    @if (Model.TotalRecord == 0)
+    {
+        <partial name="_NoData" />
+    }
       
 </div>
 
@@ -268,7 +273,9 @@
     double d = (double)Model.TotalRecord / 4;
     double pages = Math.Ceiling(d);
 }
-<div class="pagination-nav bg-white d-flex justify-content-between flex-row p-4">
+
+
+<div class="pagination-nav bg-mode1 d-flex justify-content-between flex-row p-4">
 
 
     <span class="d-flex justify-content-start fs-5">

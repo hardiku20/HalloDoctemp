@@ -7,7 +7,8 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
-
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.6/dist/sweetalert2.all.min.js"></script>
 
 @model learning1.DBEntities.ViewModel.ProviderDashboardViewModel;
 
@@ -91,12 +92,68 @@
 
 
 
+<!-- Modal for Transfer Case -->
+<div class="modal fade" id="TransferCaseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" asp-action="TransferCase" asp-controller="Provider">
+                <div class="modal-header bg-info">
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Transfer Request</h1>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input class="hidden" asp-for="RequestId" id="Transfer-RequestId" hidden />
+                        <label for="message-text" class="col-form-label text-secondary">This request will be transfer to admin.</label>
+                        <div class="form-floating">
+                            <textarea class="form-control"
+                                      placeholder="Please provide a brief explanation for your cancelation"
+                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">
+                                Description
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="submit" class="btn btn-info text-white">Submit</button>
+                    <button type="button" class="btn btn-outline-info bg-white text-info" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
-
-
-
-
+<!-- Modal for Active case encounter -->
+<div class="modal fade" id="encounterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+     style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Select Type Of Care</h1>
+                <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <button type="button" id="Housecall_btn" class="btn btn-outline-info me-2">Housecall</button>
+                    <button type="button" id="Consult_btn" class="btn btn-outline-info ">Consult</button>
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-info bg-info text-white me-2"
+                        id="continueBtn" disabled>
+                    Continue
+                </button>
+                <button type="button" class="btn btn-outline-info bg-white text-info"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -176,7 +233,7 @@
 
             </div>
             <div class="">
-                <a class="btn btn-info text-white d-flex align-items-center p-2 dark-mode1">
+                <a class="btn btn-info text-white d-flex align-items-center p-2 dark-mode1" asp-action="CreateRequest" asp-controller="provider">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
                         <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
                         <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
@@ -192,7 +249,7 @@
 <div class="container-fluid px-3">
 
     <form action="" role="" class=" ">
-        <div class="row m-0 p-2 bg-white">
+        <div class="row m-0 p-2 bg-white bg-mode1">
             <div class="col-lg-2 col-md-4 d-md-flex d-block">
 
                 <div class="input-group border me-2 rounded-0 mb-2 form-control">
@@ -346,7 +403,45 @@
         document.getElementById("PatientEmail").value = email
         document.getElementById("PatientPhone").value = phone
     }
+
+
+    function onTransfer(Name, RequestId) {
+        document.getElementById("Transfer-RequestId").value = RequestId;
+    }
 </script>
+
+
+<script>
+    $(document).ready(function () {
+        // Disable "Continue" button initially
+        $("#continueBtn").prop("disabled", true);
+
+        // Handle "Me" and "Someone Else" button clicks
+        $("#Housecall_btn, #Consult_btn").click(function () {
+            $("#continueBtn").prop("disabled", false); // Enable "Continue" button
+            $(".btn-outline-info").removeClass("active"); // Remove active state from all buttons
+            $(this).addClass("active"); // Add active state to the clicked button
+        });
+
+        // Handle "Continue" button click
+        $("#continueBtn").click(function () {
+            var selectedButton = $(".btn-outline-info.active").text(); // Get the text of the selected button
+            // Use the selectedButton value to determine and perform the appropriate redirect:
+            if (selectedButton === "Housecall") {
+                console.log(selectedButton);
+                window.location.href = "submitinformationme"
+            } else if (selectedButton === "Consult") {
+
+                window.location.href = "submitinformationelse"; // Replace with your specific URL
+            } else {
+                // Handle any unexpected state
+                console.error("Unexpected button selection:", selectedButton);
+            }
+        });
+    });
+</script>
+
+
 
 
 
@@ -354,34 +449,3 @@
 <script src="/js/ProviderDashboardFilterScript.js"></script>
 
 
-
-
-@* 
-<script>
-    $(".states-btn").click(function () {
-        switch (this.id) {
-            case "newbtn":
-                <h4 class="" > Patients < span class="text-primary fs-6" > (New) < /span></h4 >
-                                            break;
-            case "pendingbtn":
-                <h4 class="" > Patients < span class="text-primary fs-6" > (Pending) < /span></h4 >
-                                            break;
-            case "activebtn":
-
-                break;
-
-            case "concludebtn":
-
-                break;
-
-            case "toclosebtn":
-
-                break;
-
-            case "unpaidbtn":
-
-                break;
-        }
-    })
-
-</script> *@

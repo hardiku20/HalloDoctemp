@@ -11,7 +11,7 @@
     <div class=" d-flex justify-content-between align-items-center">
         <h4>Notes</h4>
         <div class="d-flex justify-content-end m-4">
-            <a asp-action="admindashboard" asp-controller="Admin"
+            <a href="javascript: history.go(-1)"
                class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
                 <img src="/assets/images/chevron-left.svg" alt=""> Back
             </a>
@@ -26,7 +26,7 @@
                 </div>
                 <div>
                     <h6 class="h6 text-start">Transfer Notes</h6>
-                    <p class="text-start text-wrap" asp-for="TransferNotes">@Model.TransferNotes</p>
+                    <p class="text-start text-wrap" asp-for="TransferNotes"></p>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <h6 class="h6 text-start">Physician Notes</h6>
-                    <p class="text-start text-wrap" asp-for="PhysicianNotes">@Model.PhysicianNotes</p>
+                    <p class="text-start text-wrap" asp-for="PhysicianNotes"></p>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div>
                     <h6 class="h6 text-start">Admin Notes</h6>
-                    <p class="text-start text-wrap" asp-for="AdminNotes">@Model.AdminNotes</p>
+                    <p class="text-start text-wrap" asp-for="AdminNotes"></p>
                 </div>
             </div>
         </div>
@@ -61,8 +61,8 @@
                 <div class="bg-white p-4 rounded shadow ">
                     <div class="form-floating input-info">
                         <textarea class="form-control" placeholder="" id="floatingTextarea2"
-                                  style="height: 150px" asp-for="@Model.NewAdminNotes">@Model.NewAdminNotes</textarea>
-                        <label for="floatingTextarea2" class="mx-2 text-secondary">
+                                  style="height: 150px" asp-for="@Model.NewAdminNotes"></textarea>
+                        <label for="floatingTextarea2" class="text-secondary">
                             Admin Notes
                         </label>
                     </div>
