@@ -32,15 +32,17 @@
 
                     <div class="">
                         <p class="mb-0 text-secondary" style="font-size:small">Confirmation Number</p>
-                        <h4 class="text-info">MDO095435487343498</h4>
+                        <h4 class="text-info">MDO0954354878</h4>
                     </div>
-                    <div class="form-floating input-info mt-2">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" value="dshfsiudh"
-                                  style="height: 100px" asp-for="Patientnotes" disabled></textarea>
-                        <label for="floatingTextarea2">
-                            Patient Notes
-                        </label>
-                    </div>
+                   <div class="col-md-12">
+                        <div class="form-floating input-info mt-2">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" value="dshfsiudh"
+                                      style="height: 100px" asp-for="Patientnotes" disabled></textarea>
+                            <label for="floatingTextarea2">
+                                Patient Notes
+                            </label>
+                        </div>
+                   </div>
 
                 </div>
 
@@ -125,7 +127,7 @@
                   @*   <a class="btn btn-info text-white text-decoration-none py-2 " asp-action="ViewNotes" asp-controller="Admin">
                         Assign
                     </a> *@
-                    <a class="btn btn-info text-white text-decoration-none py-2 " asp-action="ViewNotes" asp-controller="Admin">
+                    <a class="btn btn-info text-white text-decoration-none py-2 " asp-action="ViewNotes" asp-controller="Provider" asp-route-requestId="@Model.RequestId">
                         View Notes
                     </a>
                     <a class="btn btn-danger text-white text-decoration-none py-2" href="javascript: history.go(-1)">

@@ -9,7 +9,6 @@
     z-index: 999;
 }
 
-
 .select-focus select:focus {
     border-color: rgb(36, 152, 152);
     box-shadow: none;

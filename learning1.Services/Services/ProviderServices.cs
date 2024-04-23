@@ -135,5 +135,194 @@ namespace learning1.Services.Services
             var model = _providerRepo.GetProviderProfileRepo(physicianId);
             return model;
         }
+
+        public ViewNotesViewModel GetNotesById(int requestId)
+        {
+            return _providerRepo.GetNoteDataById(requestId);
+        }
+
+        public void SetNotesById(ViewNotesViewModel model)
+        {
+            RequestNote requestNote = _providerRepo.GetRquestNoteById(model.RequestId);
+            if (requestNote != null)
+            {
+                requestNote.AdminNotes = model.AdminNotes;
+                requestNote.PhysicianNotes = model.AdditionalNotes;
+                requestNote.ModifiedBy = "Physician";
+                requestNote.ModifiedDate = DateTime.Now;
+
+                _providerRepo.UpdateNotes(requestNote);
+            }
+            else
+            {
+                RequestNote requestnote = new RequestNote()
+                {
+                    RequestId = model.RequestId,
+                    PhysicianNotes = model.AdditionalNotes,
+                    CreatedBy = "Admin",
+                    CreatedDate = DateTime.Now
+
+                };
+
+                _providerRepo.AddRequestNote(requestnote);
+
+            }
+
+
+        }
+
+        public int LoginMethod(string email, string password)
+        {
+            int providerId = _providerRepo.LoginMethodRepo(email, password);
+            return providerId;
+        }
+
+        public Dictionary<int, string> GetPhysicianRegionList(int physicianId)
+        {
+            return _providerRepo.GetPhysicianRegionList(physicianId);
+        }
+
+        public List<ShiftDetail> GetProviderScheduleData(int physicianId, int regionId)
+        {
+            return _providerRepo.GetShiftDetailData(physicianId, regionId);
+        }
+
+        public bool SetCreateNewShiftData(ProviderSchedulingViewModel model)
+        {
+            try
+            {
+                //DateTime combinedDate = new DateTime(year, month, date); // Combine year, month, and date
+                var date = model.ShiftDate;
+                DateTime shiftDate = date.ToDateTime(TimeOnly.MinValue); // Convert to DateOnly
+
+
+                var regionId = model.regionId;
+
+
+                Shift shift = new()
+                {
+                    PhysicianId = model.PhysicianId,
+                    StartDate = (DateOnly)model.ShiftDate, //same ???????
+                    IsRepeat = model.IsRepeat,
+                    //WeekDays -- character -- no. of week days???? 
+                    RepeatUpto = model.RepeatEnd,
+                    //CreatedBy = vmodel.AdminId.ToString(),
+                    CreatedBy = "f1ae5ca9-bc3c-4b9b-bd2a-22ff31271182",
+
+                    CreatedDate = DateTime.Now
+                };
+
+                _providerRepo.AddShift(shift);
+
+
+                if (model.IsRepeat)
+                {
+
+                    List<DateOnly> days = new();
+                    days.Add(model.ShiftDate);
+
+                    var dayListString = model.SelectedDays;
+                    var daylist = dayListString.Split(',').Select(int.Parse).ToList();
+
+                    for (var i = 0; i < model.RepeatEnd; i++)
+                    {
+                        for (int j = 0; j < daylist.Count; j++)
+                        {
+
+                            int temp;
+                            switch (daylist[j])
+                            {
+                                case 1:
+                                    temp = (int)DayOfWeek.Sunday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                    break;
+                                case 2:
+                                    temp = (int)DayOfWeek.Monday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                    break;
+                                case 3:
+                                    temp = (int)DayOfWeek.Tuesday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                    break;
+                                case 4:
+                                    temp = (int)DayOfWeek.Wednesday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                    break;
+                                case 5:
+                                    temp = (int)DayOfWeek.Thursday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                    break;
+                                case 6:
+                                    temp = (int)DayOfWeek.Friday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                    break;
+                                default:
+                                    temp = (int)DayOfWeek.Saturday - (int)DateTime.Parse(days.Last().ToString()).DayOfWeek;
+                                    break;
+                            }
+                            if (temp <= 0)
+                            {
+                                temp += 7;
+                            }
+                            days.Add(days.Last().AddDays(temp));
+                        }
+
+                    }
+
+                    foreach (var day in days)
+                    {
+                        DateTime dayy = day.ToDateTime(TimeOnly.FromTimeSpan(DateTime.Now.TimeOfDay));
+
+                        ShiftDetail shiftDetail1 = new()
+                        {
+                            ShiftId = shift.ShiftId,
+                            ShiftDate = dayy,
+                            StartTime = model.StartTime,
+                            EndTime = model.EndTime,
+                            IsDeleted = false,
+                            RegionId = regionId,
+                            Status = 1
+                            //Status
+
+                        };
+
+                        //ShiftDetail.Add(shiftDetail1);
+                        _providerRepo.AddShiftDetail(shiftDetail1);
+
+                    }
+
+                    _providerRepo.SaveRecentChanges();
+                }
+                else
+                {
+                    ShiftDetail shiftDetail = new()
+                    {
+                        ShiftId = shift.ShiftId,
+                        ShiftDate = shiftDate,
+                        StartTime = model.StartTime,
+                        EndTime = model.EndTime,
+                        IsDeleted = false,
+                        RegionId = regionId,
+                        Status = 1
+                        //Status
+
+                    };
+
+                    _providerRepo.AddShiftDetail(shiftDetail);
+                    _providerRepo.SaveRecentChanges();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public UserInfoViewModel CheckValidUserWithRole(string email, string password)
+        {
+            var model = _providerRepo.GetRoleByAspNetId(email, password);
+            return model;
+        }
+
+        public Physician GetPhysicianByEmail(string email, string password)
+        {
+            return _providerRepo.GetProviderByMailRepo(email, password);
+        }
     }
 }

@@ -1,0 +1,128 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_ProviderLayout";
+}
+
+@model learning1.DBEntities.ViewModel.ViewNotesViewModel;
+
+<div class="container">
+    <div class=" d-flex justify-content-between align-items-center">
+        <h4>Notes</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a href="javascript: history.go(-1)"
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+
+  <form method="post" asp-action="ViewNotes" asp-controller="Provider" novalidate>
+      <input type="number" asp-for="RequestId" hidden />
+    @*   <input type="datetime" asp-for="CreatedDate"  hidden/>
+      <input type="text" asp-for="CreatedBy" hidden/> *@
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="btn d-flex bg-white p-2 shadow w-100">
+                    <div class="mx-2">
+                        <img src="~/assets/images/arrow-left-right.svg" alt="" class="" />
+                    </div>
+                    <div>
+                        <h6 class="h6 text-start">Transfer Notes</h6>
+                        @if (Model.TransferNotes.Count() > 0)
+                        {
+                            @foreach (var item in Model.TransferNotes)
+                            {
+                                <p class="text-start text-wrap"> @item.Notes</p>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-start text-wrap">No Transfer Notes Available</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="btn d-flex bg-white p-2 shadow w-100">
+                    <div class="mx-2">
+                        <img src="~/assets/images/person-add.svg" alt="" />
+                    </div>
+                    <div>
+                        <h6 class="h6 text-start">Physician Notes</h6>
+                        <p class="text-start text-wrap">@Model.PhysicianNotes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="btn d-flex bg-white p-2 shadow w-100">
+                    <div class="mx-2">
+                        <img src="~/assets/images/person.svg" alt="" />
+                    </div>
+                    <div>
+                        <h6 class="h6 text-start">Admin Notes</h6>
+                        <p class="text-start text-wrap">@Model.AdminNotes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col">
+
+                <div class="bg-white p-4 rounded shadow ">
+                    <div class="form-floating input-info">
+                        <textarea class="form-control" placeholder="" id="floatingTextarea2" asp-for="AdditionalNotes"
+                                  style="height: 150px" required></textarea>
+                        <label for="floatingTextarea2" class="text-secondary">
+                            Physician Notes
+                        </label>
+                        <div class="invalid-feedback">Please add a note to save changes.</div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit"
+                                class="btn btn-info text-white text-decoration-none py-2 ms-2">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+  </form>
+
+</div>
+
+
+
+
+<script>
+    // Prevent form submission if validation fails
+    $('form').submit(function (event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        $(this).addClass('was-validated');
+    });
+
+
+    $('form').submit(function (event) {
+        if (!this.checkValidity()) {
+            let ProfessionId = $('#Profession').val();
+            if (ProfessionId == 0) {
+                $('#Profession').addClass('is-invalid');
+                return;
+            }
+        }
+        else {
+            $('this').addClass('was-validated');
+        }
+    });
+</script>
+

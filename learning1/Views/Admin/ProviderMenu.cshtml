@@ -92,8 +92,8 @@
                             </button>
                         </div>
 
-                        <select class="form-select border-0 shadow-none" aria-label="Floating label select example">
-                            <option>All Regions</option>
+                        <select class="form-select border-0 shadow-none" aria-label="Floating label select example" id="Region">
+                            <option value="0">All Regions</option>
 
                             @foreach (var items in Model.RegionList)
                             {
@@ -124,12 +124,29 @@
 
 
 <script>
+    var idlist = new Array();
+    function Showbtn(id) {
+
+
+        if (idlist.indexOf(id) != -1) {
+            idlist.pop(+id);
+        } else {
+            idlist.push(+id);
+        }
+
+        if (idlist.length != 0) {
+            document.getElementById('savebtn').classList.remove('d-none')
+        } else {
+            document.getElementById('savebtn').classList.add('d-none')
+        }
+    };
+
     $(document).ready(function () {
         $.ajax({
             type: "GET",
             url: "/admin/GetProviderTable",
             data: {
-
+                regionId: 0
             },
 
             success: function (result) {
@@ -141,4 +158,25 @@
             }
         })
     })
+
+    $("#Region").on("change",function () {
+
+        var RegionId =this.value;
+        $.ajax({
+            type: "GET",
+            url: "/admin/GetProviderTable",
+            data: {
+                regionId:RegionId
+            },
+
+            success: function (result) {
+                console.log(result);
+                $("#Provider_table").html(result);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        })
+    })
+
 </script>

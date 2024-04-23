@@ -1,8 +1,10 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using learning1.Authentication;
 using learning1.DBEntities.Models;
 using learning1.DBEntities.ViewModel;
 using learning1.Services.IServices;
 using learning1.Services.Services;
+using learning1.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OfficeOpenXml;
@@ -11,46 +13,79 @@ using LicenseContext = OfficeOpenXml.LicenseContext;
 
 namespace learning1.Controllers
 {
+
+  
     public class AdminController : Controller
     {
 
         private readonly IHttpContextAccessor _httpcontextAccessor;
         private readonly IAdminServices _adminServices;
         private readonly INotyfService _notyf;
-
-        public AdminController(IAdminServices adminServices,IHttpContextAccessor httpContextAccessor, INotyfService notyf)
+        private readonly IJWTService _JWTService;
+        public AdminController(IAdminServices adminServices,IHttpContextAccessor httpContextAccessor, INotyfService notyf, IJWTService jWTService)
         {
             _adminServices = adminServices;
             _httpcontextAccessor = httpContextAccessor;
             _notyf = notyf;
+            _JWTService = jWTService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+      
 
         public IActionResult PlatformLogin()
         {
             return View();
         }
 
+        //[HttpPost]
+        //public IActionResult PlatformLogin(LoginViewModel model)
+        //{
+        //    int AdminId = _adminServices.LoginMethod(model.Email, model.Password);
+        //    Admin admin = _adminServices.GetAdminByEmail(model.Email,model.Password);
+        //    if(AdminId!= -1)
+        //    {
+        //        _httpcontextAccessor.HttpContext.Session.SetInt32("Id", AdminId);
+        //        _httpcontextAccessor.HttpContext.Session.SetString("userName", admin.FirstName+" "+admin.LastName);
+        //        _notyf.Success("Login Successful");
+        //        return RedirectToAction("Admindashboard", "Admin");  
+        //    }
+        //    else
+        //    {
+        //        _notyf.Error("Login Failed");
+        //        return View();
+        //    }
+        //}
+
+
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult PlatformLogin(LoginViewModel model)
         {
-            int AdminId = _adminServices.LoginMethod(model.Email, model.Password);
-            if(AdminId!= -1)
+
+            if (ModelState.IsValid)
             {
-                _httpcontextAccessor.HttpContext.Session.SetInt32("Id", AdminId);
-                _notyf.Success("Login Successful");
-                return RedirectToAction("Admindashboard", "Admin");  
+             
+                UserInfoViewModel validUser = _adminServices.CheckValidUserWithRole(model.Email, model.Password);
+                var JWTToken = _JWTService.GenerateJWTToken(validUser);
+                Response.Cookies.Append("jwt", JWTToken);
+                SessionUtils.SetLoggedInUser(HttpContext.Session, validUser);
+                int AdminId = _adminServices.LoginMethod(model.Email, model.Password);
+                Admin admin = _adminServices.GetAdminByEmail(model.Email, model.Password);
+                if (AdminId != -1 && admin!=null)
+                {
+                    _httpcontextAccessor.HttpContext.Session.SetString("userName", admin.FirstName + " " + admin.LastName);
+                    _httpcontextAccessor.HttpContext.Session.SetInt32("Id", AdminId);
+                    _notyf.Success("Login Successfully");
+                    return RedirectToAction("AdminDashboard", "Admin");
+                }
+                else
+                {
+                    //_notyf.Error("Invalid credentials ");
+                    return View();
+                }
             }
-            else
-            {
-                _notyf.Error("Login Failed");
-                return View();
-            }
+            return View();
         }
 
         public IActionResult ForgotPassword()
@@ -59,12 +94,16 @@ namespace learning1.Controllers
         }
 
 
+
+        [CustomAuthorize("Admin")]
         public IActionResult admindashboard()
         {
             var model = _adminServices.DisplayAdminDashboard();
             return View(model);
         }
 
+
+        [CustomAuthorize("Admin")]
         public IActionResult ViewCase(int RequestId)
         {
             var model = _adminServices.DisplayViewCase(RequestId);
@@ -72,17 +111,16 @@ namespace learning1.Controllers
         }
 
 
-   
 
 
+        [CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int RequestId)
         {
             return View();
         }
 
 
-    
-
+     
         public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType=(learning1.DBEntities.ViewModel.RequestType)5)
         {
             
@@ -91,13 +129,15 @@ namespace learning1.Controllers
         }
 
 
-
+ 
         public IActionResult RenderPendingPartialView(int Status, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
             var model = _adminServices.RenderPendingStateData(Status, Page, PageSize, patientName, regionName, requestType);
             return PartialView("_adminPendingState", model);
         }
 
+
+     
         public IActionResult RenderActivePartialView(int status1, int status2, int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType = (learning1.DBEntities.ViewModel.RequestType)5)
         {
             var model = _adminServices.RenderActiveStateData(status1,status2, Page, PageSize, patientName, regionName, requestType);
@@ -366,9 +406,9 @@ namespace learning1.Controllers
             return View(modal);
         }
 
-        public IActionResult GetProviderTable()
+        public IActionResult GetProviderTable(int regionId)
         {
-            var modal = _adminServices.GetProvidersdetails();
+            var modal = _adminServices.GetProvidersdetails(regionId);
             return PartialView("_ProviderMenuPartialView",modal);
         }
 
@@ -455,13 +495,15 @@ namespace learning1.Controllers
 
        public IActionResult UserAccess()
         {
-            return View();
+            int RoleId = 0;
+            UserAccessViewModel model = _adminServices.GetUserAccessdetail(RoleId);
+            return View(model);
         }
 
 
-        public IActionResult GetUserAccessDetails()
+        public IActionResult GetUserAccessDetails(int RoleId)
         {
-            var model = _adminServices.GetUserAccessdetail();
+            var model = _adminServices.GetUserAccessdetail(RoleId);
             return PartialView("_UserAccessPartialView", model);
         }
 
@@ -631,6 +673,24 @@ namespace learning1.Controllers
         {
             return View();
         }
+
+
+
+
+
+        public IActionResult Logout()
+        {
+            _httpcontextAccessor.HttpContext.Session.Clear();
+            Response.Cookies.Delete("jwt");
+            //_notyf.Success("Logged Out");
+            return RedirectToAction("PlatformLogin", "Admin");
+        }
+
+        //public IActionResult Unblock()
+        //{
+        //    _adminServices.GetBlockCaseData(model);
+        //    return RedirectToAction("admindashboard");
+        //}
 
     }
 }

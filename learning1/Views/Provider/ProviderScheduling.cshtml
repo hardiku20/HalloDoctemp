@@ -1,0 +1,282 @@
+﻿@{
+
+
+    Layout = "_ProviderLayout";
+}
+
+
+
+@model learning1.DBEntities.ViewModel.ProviderSchedulingViewModel;
+
+
+<div class="modal fade" id="CreateShiftModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-4">
+            <div class="modal-header bg-info">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Create Shift</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <select asp-for="regionId" id="regionSelector" class="form-select form-select-lg "
+                                aria-label="Large select example">
+                            <option selected class="text-secondary fs-6" value="">Select Region</option>
+
+                            @foreach (var item in Model.RegionList)
+                            {
+
+                                <option value="@item.Key">@item.Value</option>
+                            }
+
+                        </select>
+                        @* <span id="regionSelectorSpan" class="text-danger fw-bold ms-2 d-none">Please Select a Region For Search</span> *@
+                        <span asp-validation-for="regionId" class="text-start text-danger fw-bold validation"></span>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="ShiftDatePicker" placeholder="Shift Date" asp-for="ShiftDate">
+                            <label for="ShiftDatePicker">Shift Date</label>
+                            <span asp-validation-for="ShiftDate" class="text-start text-danger fw-bold validation"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-floating mb-3">
+
+                                <input type="time" class="form-control" id="ShiftStartTime" placeholder="Start" value="" asp-for="StartTime" onchange="disablePastTimes()">
+                                <label for="ShiftStartTime">Start</label>
+                                <span asp-validation-for="StartTime" class="text-start text-danger fw-bold validation"></span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="ShiftEndTime" placeholder="End" value="" asp-for="EndTime" onchange="disablecurrentTimes()">
+                                <label for="ShiftEndTime">End</label>
+                                <span asp-validation-for="EndTime" class="text-start text-danger fw-bold validation"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex ms-3">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Repeat</label>
+                        <div class="form-check form-switch ms-2">
+
+                            <input asp-for="IsRepeat" class="form-check-input"
+                                   type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                        </div>
+                    </div>
+
+
+                    <p>Repeat Days</p>
+                    <div class="d-flex flex-wrap mb-3 checkbox-wrapper">
+                        <div class="form-check me-3">
+                            @*border-0 border-dark*@
+                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault1">
+                            <label class="form-check-label" for="flexCheckDefault1">
+                                Every Sunday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="2" id="flexCheckDefault2">
+                            <label class="form-check-label" for="flexCheckDefault2">
+                                Every Monday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="3" id="flexCheckDefault3">
+                            <label class="form-check-label" for="flexCheckDefault3">
+                                Every Tuesday
+                            </label>
+                        </div>
+
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="4" id="flexCheckDefault4">
+                            <label class="form-check-label" for="flexCheckDefault4">
+                                Every Wednesday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="5" id="flexCheckDefault5">
+                            <label class="form-check-label" for="flexCheckDefault5">
+                                Every Thursday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="6" id="flexCheckDefault6">
+                            <label class="form-check-label" for="flexCheckDefault6">
+                                Every Friday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="7" id="flexCheckDefault7">
+                            <label class="form-check-label" for="flexCheckDefault7">
+                                Every Saturday
+                            </label>
+                        </div>
+                    </div>
+                    <input type="" id="HiddenDays" asp-for="SelectedDays" />
+                    <div class="form-floating mb-3">
+                        <select asp-for="RepeatEnd" class="form-select" id="RepeatSelect" aria-label="Floating label select example">
+                            @*<option selected>Repeat End</option>*@
+                            <option value="1">1-time</option>
+                            <option value="2">2-times</option>
+                            <option value="3">3-times</option>
+                        </select>
+                        <label for="floatingSelect">Repeat End</label>
+                    </div>
+
+                    <div class="modal-footer border-top-0">
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" id="Submit" class="btn btn-info text-white me-2" asp-controller="Provider" asp-action="SetCreateNewShiftData">Submit</button>
+                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+
+                @section scripts {
+                    <partial name="_ValidationScriptsPartial.cshtml" />
+                }
+            </div>
+            @*<div class="modal-footer">
+            <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal">Submit</button>
+            <button type="button" class="btn btn-outline-info">Cancel</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="container-sm container-fluid">
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <h3 class="fw-semibold">Scheduling</h3>
+        <a class="btn btn-outline-info" onclick="window.history.back();"><i class="bi bi-chevron-left btn-outline-info "></i> Back</a>
+    </div>
+    <input type="hidden" id="HiddenProviderId" asp-for="@Model.PhysicianId" />
+    <div class="shadow-sm mt-1 p-3">
+
+        <div class="d-sm-flex justify-content-end align-items-center">
+
+
+
+            <a class="btn btn-info text-white me-2" data-bs-toggle="modal" data-bs-target="#CreateShiftModal"> Add New Shifts</a>
+
+
+        </div>
+        <div>
+            <div class="d-flex justify-content-between flex-wrap mt-3 mb-3">
+                <div>
+                    <h5 id="calendarTitle"></h5>
+                </div>
+                <div class="flex-grow-1 text-end">
+                    <div class="d-flex justify-content-end">
+                        <div class="align-items-center d-flex me-3">
+                            <span class="border rounded-2 border-danger d-inline-block me-2" style="width:50px; height:30px; background-color:#edacd2 !important"></span>
+                            <span>Pending Shift</span>
+                        </div>
+                        <div class="align-items-center d-flex">
+                            <span class="border rounded-2 border-success d-inline-block me-2" style="width:50px; height:30px; background-color:#a5cfa6 !important"></span>
+                            <span>Approved Shift</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="d-flex justify-content-between flex-wrap mt-3 mb-3">
+                <div class="d-flex">
+                    <button class="btn bg-info text-white rounded-pill me-2" onclick="calendarPrev()"><i class="bi bi-chevron-left"></i></button>
+                    <i class="bi bi-calendar3 mt-2" onclick="calendarToday()" id="datePicker"></i>
+                    <button class="btn bg-info text-white rounded-pill ms-2"><i class="bi bi-chevron-right" onclick="calendarNext()"></i></button>
+                </div>
+            </div>
+        </div>
+        <div id="calendar"></div>
+    </div>
+
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        const toggleButton = document.getElementById("flexSwitchCheckChecked");
+
+
+        // Set the initial checked state (unchecked)
+        toggleButton.checked = false;
+        let isRepeatChecked = false;
+        $(".checkbox-wrapper input").attr("disabled", true)
+        $("#RepeatSelect").attr("disabled", true)
+
+
+        // Add a click event listener to the toggle button
+        toggleButton.addEventListener("click", function () {
+            isRepeatChecked = !isRepeatChecked; // Toggle the checked state [if checked => unchecked else unchecked => checked]
+            //repeatDiv.style.display = isRepeatChecked ? "block" : "none";
+            if (toggleButton.checked) {
+                $(".checkbox-wrapper input").attr("disabled", false);
+                $("#RepeatSelect").attr("disabled", false)
+            }
+            else {
+                $(".checkbox-wrapper input").attr("disabled", true);
+                $("#RepeatSelect").attr("disabled", true);
+            }
+
+        });
+
+        $(".checkbox-wrapper input").on('change', function () {
+            var selectedDays = []; // Clear any previous selections
+            document.querySelectorAll('input[type="checkbox"]:checked:not(#flexSwitchCheckChecked)')
+                .forEach(checkbox => {
+                    selectedDays.push(parseInt(checkbox.value));
+                });
+
+            $('#HiddenDays').val(selectedDays.join(','));
+        });
+    })
+    //---------------------------------Date picker
+    const today = new Date();
+    const input = document.getElementById('ShiftDatePicker');
+
+    // Disable past dates
+    input.min = today.toISOString().split('T')[0]; // Set minimum date to today
+
+
+
+
+    //----------------------------------shiftt  time
+
+    function disablePastTimes() {
+
+        if ($('#ShiftDatePicker').val() == new Date().toISOString().split('T')[0]) {
+
+            var timeInput = document.getElementById('ShiftStartTime');
+
+            var now = new Date().toTimeString().slice(0, 5);
+            if (timeInput.value < now) {
+                timeInput.value = now;
+            }
+
+        }
+    }
+    function disablecurrentTimes() {
+
+        if ($("#ShiftDatePicker").val() == new Date().toISOString().split('T')[0]) {
+
+            var timeInput = document.getElementById('ShiftEndTime');
+
+            var now = new Date().toTimeString().slice(0, 5);
+            if (timeInput.value < now) {
+                timeInput.value = now
+
+            }
+            console.log(timeinput.value);
+
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.11/index.global.min.js"></script>
+<script src="~/js/ProviderScheduling.js"></script>

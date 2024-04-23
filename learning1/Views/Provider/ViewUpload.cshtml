@@ -20,7 +20,7 @@
                 </a>
             </div>
         </div>
-        <div class="bg-white border-0 shadow-sm px-3">
+        <div class="bg-white border-0 shadow-sm p-3">
             <p class="mb-0 pt-4">Patient Name</p>
             <h4 class=" text-info">
                 @Model.UserName
@@ -68,41 +68,38 @@
             </div>
         </div>
 
-        <table class="table pt-2">
-            <thead class="thead-light">
-                <tr>
-                    <th colspan="2"><input type="checkbox" id="selectAllCheckbox"></th>
-                    <th scope="col">Documents</th>
-                    <th scope="col">Upload Date <i class="bi bi-arrow-up"></i></th>
-                    <th scope="col">Actions</th>
+
+        <table class="table-responsive  table-hover w-100">
+            <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+                <td colspan="2" class="py-3 ps-3"><input type="checkbox" id="selectAllCheckbox"></td>
+                <td scope="col" class="py-3">Documents</td>
+                <td scope="col" class="py-3">Upload Date <i class="bi bi-arrow-up"></i></td>
+                <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+            </tr>
+
+
+            @foreach (var item in Model.DocumentsViewModel)
+            {
+                <tr class="border-bottom border-secondary-subtle">
+                    <td colspan="2" class="ps-3 py-1">
+                        <input type="checkbox" class="rowCheckbox">
+                    </td>
+
+                    <td class="py-1">
+                        @Html.DisplayFor(modelItem => item.FileName)
+                    </td>
+
+                    <td class="py-1">
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+
+                    <td class="py-1">
+                        <a class="btn btn-outline-info text-info bg-white download-link" asp-action="download_file" asp-controller="Provider" asp-route-filename="@item.FileName">Download</a>
+                        <a class="btn btn-outline-info text-info bg-white">Delete</a>
+                    </td>
+
                 </tr>
-            </thead>
-            <tbody>
-
-                @foreach (var item in Model.DocumentsViewModel)
-                {
-                    <tr>
-                        <td colspan="2">
-                            <input type="checkbox" class="rowCheckbox">
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FileName)
-                        </td>
-
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedDate)
-                        </td>
-
-                        <td>
-                            <a class="btn btn-outline-info text-info bg-white download-link" asp-action="download_file" asp-controller="Provider" asp-route-filename="@item.FileName">Download</a>
-                            <a class="btn btn-outline-info text-info bg-white">Delete</a>
-                        </td>
-
-                    </tr>
-                }
-
-            </tbody>
+            }
         </table>
     </div>
 </div>

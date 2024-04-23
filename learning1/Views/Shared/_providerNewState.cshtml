@@ -17,7 +17,7 @@
 
 
 
-    <table class="table-responsive w-100 mb-2">
+    <table class="table-responsive w-100">
 
 
         <tr class="border border-bottom border-white bg-secondary-subtle">
@@ -75,7 +75,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item d-flex" onclick="ConfirmAccept(@items.RequestId)"><i class="bi bi-file-earmark-check me-2"></i>Accept</a></li>
                             <li><a class="dropdown-item d-flex" asp-action="ViewCase" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-font me-2"></i>View Case</a></li>
-                            <li><a class="dropdown-item d-flex"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
+                            <li><a class="dropdown-item d-flex" asp-action="ViewNotes" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
                         </ul>
                     </div>
                 </td>
@@ -158,7 +158,7 @@
                     <hr class="m-0">
                     <div class="d-flex justify-content-end" style="margin-top: -12px; ">
                         <a class="btn text-primary btn-outline-primary rounded-pill bg-white py-0 px-2 me-4 z-3"
-                           style="font-size:small; position: absolute;" asp-action="ViewCase" asp-controller="Admin" asp-route-requestId="@items.RequestId">
+                           style="font-size:small; position: absolute;" asp-action="ViewCase" asp-controller="Provider" asp-route-requestId="@items.RequestId">
                             View Case
                         </a>
                     </div>
@@ -216,7 +216,7 @@
     double pages = Math.Ceiling(d);
 }
 
-<div class="pagination-nav bg-mode1 d-flex justify-content-between flex-row p-4">
+<div class="pagination-nav bg-white dark-mode1 d-flex justify-content-between flex-row p-4">
 
 
     <span class="d-flex justify-content-start fs-5">

@@ -35,7 +35,7 @@ namespace learning1.Authentication
             var jwtService = context.HttpContext.RequestServices.GetService<IJWTService>();
             if (jwtService == null)
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientlogin", }));
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientsite", }));
                 return;
             }
 
@@ -44,19 +44,19 @@ namespace learning1.Authentication
 
             if (token == null || !jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientlogin", }));
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientsite", }));
                 return;
             }
 
             var roleClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role);
             if (roleClaim == null)
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientsubmitrequest", }));
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientsite", }));
                 return;
             }
             if (string.IsNullOrWhiteSpace(_role) || roleClaim.Value != _role)
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientsubmitrequest", }));
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "patientsite", }));
                 return;
             }
             //var user = SessionUtils.GetLoggedInUser(context.HttpContext.Session);

@@ -109,7 +109,7 @@
                         <div class="form-floating">
                             <textarea class="form-control"
                                       placeholder="Please provide a brief explanation for your cancelation"
-                                      id="floatingTextarea2" style="height: 100px"></textarea>
+                                      id="floatingTextarea2" style="height: 100px" asp-for="TransferNotes"></textarea>
                             <label for="floatingTextarea2">
                                 Description
                             </label>
@@ -249,12 +249,12 @@
 <div class="container-fluid px-3">
 
     <form action="" role="" class=" ">
-        <div class="row m-0 p-2 bg-white bg-mode1">
+        <div class="row m-0 p-2 bg-white dark-mode1">
             <div class="col-lg-2 col-md-4 d-md-flex d-block">
 
                 <div class="input-group border me-2 rounded-0 mb-2 form-control">
                     <div class="input-group-append">
-                        <button class="btn text-secondary border border-0 bg-white" type="submit">
+                        <button class="btn text-secondary border border-0" type="submit">
                             <i class="bi bi-search"></i>
                         </button>
                     </div>

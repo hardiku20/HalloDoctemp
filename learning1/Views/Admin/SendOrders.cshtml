@@ -18,54 +18,61 @@
     </div>
     <div class="card border-0 shadow-sm">
         <div class="card-body ">
-            <form action="" class="form-floating" method="post">
+            <form class="form-floating" method="post" novalidate>
                 <div class="row p-2">
                     <input class="hidden" asp-for="VendorId" id="ExistingVendorId" />
                     <div class="form-floating input-info col-md-6 mb-4">
-                        <select class="form-select" id="professionSelector" aria-label="Floating label select example">
-                            <option selected class="">Select Profession</option>
+                        <select class="form-select" id="professionSelector" aria-label="Floating label select example" required>
+                            <option value="">Select Profession</option>
                             @foreach (string items in Model.Profession)
                             {
                                 <option value=@items>@items</option>
                             }
                         </select>
                         <label for="floatingSelect" class="mx-2 text-secondary">Select Profession</label>
+                          <div class="invalid-feedback">Please select a profession.</div>
                     </div>
                     <div class="mb-4 col-md-6">
                         <div class="form-floating input-info">
-                            <select class="form-select" id="businessSelector" aria-label="Floating label select example">
-                                <option selected class="">Business</option>
+                            <select class="form-select" id="businessSelector" aria-label="Floating label select example" required>
+                                <option selected value="">Business</option>
                             </select>
                             <label for="floatingSelect">Businesss</label>
+                              <div class="invalid-feedback">Please enter a business.</div>
                         </div>
                     </div>
                     <div class="form-floating col-md-6 mb-4 input-info">
-                        <input type="text" class="form-control" id="ExistingBusinessContact" aria-describedby="basic-addon1" placeholder="Business Contact" asp-for="BusinessContact">
+                        <input type="text" class="form-control" id="ExistingBusinessContact" aria-describedby="basic-addon1" placeholder="Business Contact" asp-for="BusinessContact" required>
                         <label for="floatingInputValue" class="mx-2  text-secondary">Business Contact</label>
+                          <div class="invalid-feedback">Please enter a business contact.</div>
                     </div>
                     <div class="form-floating col-md-6 mb-4 input-info">
-                        <input type="text" class="form-control" id="ExistingEmail" aria-describedby="basic-addon1" placeholder="Email" asp-for="Email">
+                        <input type="text" class="form-control" id="ExistingEmail" aria-describedby="basic-addon1" placeholder="Email" asp-for="Email" required>
                         <label for="floatingInputValue" class="mx-2  text-secondary">Email</label>
+                          <div class="invalid-feedback">Please enter an Email.</div>
                     </div>
                     <div class="form-floating col-md-6 mb-4 input-info">
-                        <input type="text" class="form-control" id="ExistingFaxNumber" aria-describedby="basic-addon1" placeholder="Fax Number" asp-for="FaxNumber">
+                        <input type="text" class="form-control" id="ExistingFaxNumber" aria-describedby="basic-addon1" placeholder="Fax Number" asp-for="FaxNumber" required>
                         <label for="floatingInputValue" class="mx-2  text-secondary">Fax Number</label>
+                          <div class="invalid-feedback">Please enter a fax number.</div>
                     </div>
                     <div class="form-floating input-info mb-4">
                         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                  style="height: 120px" asp-for="OrderNotes"></textarea>
+                                  style="height: 120px" asp-for="OrderNotes" required></textarea>
                         <label for="floatingTextarea2" class="mx-2 text-secondary">
                             Prescription or Order Details
                         </label>
+                          <div class="invalid-feedback">Please enter a comment.</div>
                     </div>
                     <div class="form-floating input-info col-md-6 mb-4">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-for="No_of_Refills">
-                            <option selected>Not required</option>
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-for="No_of_Refills" required>
+                            <option selected value="">Not required</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </select>
                         <label for="floatingSelect" class="mx-2  text-secondary">Number of Refill</label>
+                          <div class="invalid-feedback">Please select a quantity.</div>
                     </div>
                 </div>
                 <div>
@@ -78,4 +85,33 @@
         </div>
     </div>
 </div>
+
+
+
+
+<script>
+    // Prevent form submission if validation fails
+    $('form').submit(function (event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        $(this).addClass('was-validated');
+    });
+
+
+    $('form').submit(function (event) {
+        if (!this.checkValidity()) {
+            let ProfessionId = $('#Profession').val();
+            if (ProfessionId == 0) {
+                $('#Profession').addClass('is-invalid');
+                return;
+            }
+        }
+        else {
+            $('this').addClass('was-validated');
+        }
+    });
+</script>
+
 <script src="/js/DashboardRenderPartialView.js"></script>

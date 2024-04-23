@@ -319,7 +319,7 @@ namespace learning1.Repositories.Repositories
             {
                 RequestId = requestId,
                 Status = req_data.Status,
-                PhysicianId = 16,
+                PhysicianId = 21,
                 CreatedDate = DateTime.Now,
                 Notes = "Request Accepted By physicion ",
             };
@@ -389,10 +389,11 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges();
 
             string dateString = DateTime.Now.ToString("dd/mm/yyyy 'at' hh:mm:ss tt");
-            string notetotransfer = "Physician Transfer request to Admin" + dateString;
+            string notetotransfer = "Physician Transfer request to Admin" + model.TransferNotes +dateString;
             RequestStatusLog StatusData = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).First();
             StatusData.TransToPhysicianId = null;
             StatusData.Status = 1;
+            StatusData.Notes = notetotransfer;
             StatusData.TransToAdmin = true;
 
             _context.RequestStatusLogs.Update(StatusData);
@@ -489,5 +490,138 @@ namespace learning1.Repositories.Repositories
 
             return model;
         }
+
+        public ViewNotesViewModel GetNoteDataById(int requestId)
+        {
+            var Notesdata = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).ToList();
+            var data = _context.RequestNotes.Where(e => e.RequestId == requestId).Select(b => new ViewNotesViewModel
+            {
+                RequestId = b.RequestId,
+                PhysicianNotes = b.PhysicianNotes ?? "No Notes Available",
+                AdminNotes = b.AdminNotes ?? "No Notes Available",
+                CreatedDate = b.CreatedDate,
+                CreatedBy = b.CreatedBy,
+                TransferNotes = Notesdata
+
+            }).FirstOrDefault();
+            if (data == null)
+            {
+                ViewNotesViewModel NVM = new ViewNotesViewModel()
+                {
+                    RequestId = requestId,
+                    TransferNotes = Notesdata
+                };
+                return NVM;
+            }
+            return data;
+        }
+
+        public void AddRequestNote(RequestNote requestnote)
+        {
+            _context.RequestNotes.Add(requestnote);
+            _context.SaveChanges();
+        }
+
+        public RequestNote GetRquestNoteById(int requestId)
+        {
+            return _context.RequestNotes.Where(e => e.RequestId == requestId).FirstOrDefault();
+        }
+
+        public void UpdateNotes(RequestNote requestNote)
+        {
+            _context.RequestNotes.Update(requestNote);
+            _context.SaveChanges();
+        }
+
+        public int LoginMethodRepo(string email, string password)
+        {
+            var temp = _context.AspNetUsers.Where(u => u.Email == email && u.PasswordHash == password).FirstOrDefault();
+            if (temp != null)
+            {
+                int providerId = _context.Physicians.Where(a => a.AspNetUserId == temp.Id).Select(x => x.PhysicianId).FirstOrDefault();
+                return providerId;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public Dictionary<int, string> GetPhysicianRegionList(int physicianId)
+        {
+            Dictionary<int, string> FinalList = new Dictionary<int, string>();
+
+            var regionsList = _context.Regions.ToList();
+            var physiciandata = _context.PhysicianRegions.Where(x => x.PhysicianId == physicianId).Select(x => x.RegionId);
+            foreach (var item in physiciandata)
+            {
+                FinalList.Add(item, regionsList.FirstOrDefault(x => x.RegionId == item).Name);
+            }
+            return FinalList;
+        }
+
+        public List<ShiftDetail> GetShiftDetailData(int physicianId, int regionId)
+        {
+            return _context.ShiftDetails.Include(m => m.Shift).Where(x => x.IsDeleted == false && (regionId == 0 || x.RegionId == regionId) && x.Shift.PhysicianId == physicianId).ToList();
+        }
+
+        public void AddShift(Shift shift)
+        {
+            _context.Shifts.Add(shift);
+            _context.SaveChanges();
+        }
+
+        public void AddShiftDetail(ShiftDetail shiftDetail1)
+        {
+            _context.ShiftDetails.Add(shiftDetail1);
+        }
+
+        public void SaveRecentChanges()
+        {
+            _context.SaveChanges();
+        }
+
+        public Physician GetProviderByMailRepo(string email, string password)
+        {
+            var temp = _context.AspNetUsers.Where(u => u.Email == email && u.PasswordHash == password).FirstOrDefault();
+            if (temp != null)
+            {
+                Physician physician = _context.Physicians.Where(a => a.AspNetUserId == temp.Id).FirstOrDefault();
+                return physician;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public UserInfoViewModel GetRoleByAspNetId(string email, string password)
+        {
+            UserInfoViewModel userInfo = new UserInfoViewModel();
+            var Aspuser = _context.AspNetUsers.FirstOrDefault(u => u.Email == email && u.PasswordHash == password);
+
+            var AspNetId = _context.AspNetUsers.Where(x => x.Email == email && x.PasswordHash == password).Select(x => x.Id).FirstOrDefault();
+            string RoleName = "";
+            if (_context.Admins?.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Admin";
+            }
+            else if (_context.Physicians.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Physician";
+            }
+            else if (_context.Users.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Patient";
+            }
+            return userInfo;
+        }
     }
 }
+    

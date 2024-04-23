@@ -14,14 +14,15 @@
     <div class="d-flex justify-content-between align-items-center mt-4">
         <h4 class="">Submit Information</h4>
         <div class="d-flex justify-content-end m-4">
-            <a asp-action="admindashboard" asp-controller="Admin" class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+            <a href="javascript: history.go(-1)"
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
                 <img src="/assets/images/chevron-left.svg" alt=""> Back
             </a>
         </div>
     </div>
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form class="form-floating" method="post" asp-action="CreateRequest" asp-controller="Admin">
+            <form class="form-floating" method="post" asp-action="CreateRequest" asp-controller="Provider">
                 <div class="row mb-4">
                     <h5 class="mb-2">Patient</h5>
                     <div class="col-md-6 mb-3">

@@ -1292,13 +1292,32 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
-        public UserAccessViewModel GetUserAccessRepo()
+        public UserAccessViewModel GetUserAccessRepo(int RoleId)
         {
-            var data = _context.AspNetUsers.Where(x => x.UserName != null)
-                .Include(x => x.AspNetUserRoles).Include(x => x.AdminAspNetUsers).Include(x => x.PhysicianAspNetUsers);
+            var data = _context.AspNetUserRoles.Include(a => a.User).Where(a => a.RoleId != "3").Select(b => new UserAccessDetails()
+            {
+                AccountTypeId = int.Parse(b.RoleId),
+                AspId = b.UserId,
+                Name = b.User.UserName,
+                PhoneNumber = b.User.PhoneNumber,
+                Status = b.RoleId == 1.ToString() ? b.User.AdminAspNetUsers.First().Status : b.User.PhysicianAspNetUsers.First().Status,
+                OpenRequest = b.RoleId == 1.ToString() ? _context.Requests.Where(a => a.Status == 1).Count() : _context.Requests.Where(a => a.PhysicianId == b.User.PhysicianAspNetUsers.First().PhysicianId).Count(),
+                RoleId = b.RoleId == 1.ToString() ? b.User.AdminAspNetUsers.First().RoleId : b.User.PhysicianAspNetUsers.First().RoleId,
+                //RoleName = int.Parse(b.RoleId) == 1 ? b.User.AdminAspNetUsers.First().Role.Name : b.User.PhysicianAspNetUsers.First().Role.Name,
 
+            });
 
-            return new();
+            if (RoleId != 0)
+            {
+                data = data.Where(a => a.RoleId == RoleId);
+            }
+            UserAccessViewModel access = new()
+            {
+                UserAccessList = data.ToList(),
+                Roles = _context.Roles.ToList(),
+            };
+
+            return access;
         }
 
 
@@ -1344,9 +1363,9 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
-        public ProviderMenuViewModel GetProviderRepo()
+        public ProviderMenuViewModel GetProviderRepo(int regionId)
         {
-            var provider = _context.Physicians.Include(x => x.PhysicianNotifications).Where(x => x.IsDeleted != true)
+            var provider = _context.Physicians.Include(x => x.PhysicianNotifications).Where(x => x.IsDeleted != true && (regionId==0||x.RegionId==regionId))
                 .Select(x => new ProviderMenuDetailsViewModel()
                 {
                     PhysicianId = x.PhysicianId,
@@ -1682,6 +1701,49 @@ namespace learning1.Repositories.Repositories
             }
             _context.PhysicianRegions.AddRange(regions);
             _context.SaveChanges();
+        }
+
+        public Admin GetAdminByMailRepo(string email, string password)
+        {
+
+            var temp = _context.AspNetUsers.Where(u => u.Email == email && u.PasswordHash == password).FirstOrDefault();
+            if (temp != null)
+            {
+             Admin admin = _context.Admins.Where(a => a.AspNetUserId == temp.Id).FirstOrDefault();
+                return admin;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public UserInfoViewModel GetRoleByAspNetId(string username, string password)
+        {
+            UserInfoViewModel userInfo = new UserInfoViewModel();
+            var Aspuser = _context.AspNetUsers.FirstOrDefault(u => u.Email == username && u.PasswordHash == password);
+
+            var AspNetId = _context.AspNetUsers.Where(x => x.Email == username && x.PasswordHash == password).Select(x => x.Id).FirstOrDefault();
+            string RoleName = "";
+            if (_context.Admins?.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Admin";
+            }
+            else if (_context.Physicians.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Physician";
+            }
+            else if (_context.Users.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
+            {
+                userInfo.UserId = AspNetId;
+                userInfo.Email = Aspuser.Email;
+                userInfo.Role = "Patient";
+            }
+            return userInfo;
         }
 
 

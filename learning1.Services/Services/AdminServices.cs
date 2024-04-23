@@ -335,9 +335,9 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public UserAccessViewModel GetUserAccessdetail()
+        public UserAccessViewModel GetUserAccessdetail(int RoleId)
         {
-            var model = _adminRepo.GetUserAccessRepo();  
+            var model = _adminRepo.GetUserAccessRepo(RoleId);  
             return model;
 
         }
@@ -373,9 +373,9 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public ProviderMenuViewModel GetProvidersdetails()
+        public ProviderMenuViewModel GetProvidersdetails(int regionId)
         {
-            var modal = _adminRepo.GetProviderRepo();
+            var modal = _adminRepo.GetProviderRepo(regionId);
             return modal;
 
         }
@@ -429,6 +429,17 @@ namespace learning1.Services.Services
         public void CreateProvider(CreateProviderAccountViewModel model)
         {
             _adminRepo.CreateProviderRepo(model);
+        }
+
+        public Admin GetAdminByEmail(string email, string password)
+        {
+            return _adminRepo.GetAdminByMailRepo(email, password);
+        }
+
+        public UserInfoViewModel CheckValidUserWithRole(string email, string password)
+        {
+            var model = _adminRepo.GetRoleByAspNetId(email, password);
+            return model;
         }
     }
 }

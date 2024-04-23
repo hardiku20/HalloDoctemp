@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -16,19 +18,19 @@
     
 
 </head>
-@* <body onload="checkMode()" class="bg-light dark-mode1"> *@
-<body class="bg-light dark-mode1">
+<body onload="checkMode()" class="bg-light dark-mode1">
+@* <body class="bg-light dark-mode1"> *@
     <!-- Navbar of the Page -->
-    <header>
-        <div class="d-md-block d-none shadow-sm bg-mode1">
-            <nav class="Navbar d-flex justify-content-between align-items-center  bg-mode1 px-3">
+    <header class="sticky-top">
+        <div class="d-md-block d-none shadow-sm bg-white dark-mode1">
+            <nav class="Navbar d-flex justify-content-between align-items-center  bg-white dark-mode1 px-3">
                 <div>
-                    <a href=""><img src="/assets/images/logo.png" alt="" class="img-thumbnail border-0 w-50 h-50"></a>
+                    <a href=""><img src="/assets/images/logo.png" alt="" class="img-thumbnail border-0 w-50 h-50 dark-mode1"></a>
                 </div>
-                <div class="d-flex align-items-center gap-2 bg-mode1">
-                    <span>Welcome <strong>Tests Testing</strong></span>
+                <div class="d-flex align-items-center gap-2 bg-white dark-mode1">
+                    <span>Welcome <strong class="ms-1">@HttpContextAccessor.HttpContext.Session.GetString("userName")</strong></span>
                     <div>
-                        <a href="patientsite.html"
+                        <a asp-action="Logout" asp-controller="Admin"
                            class="btn btn-outline-info font-info text-decoration-none text-info fs-5 bg-white dark-mode1">Logout</a>
                     </div>
                     <div>

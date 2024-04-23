@@ -59,16 +59,18 @@ namespace learning1.Repositories.IRepositories
         RecordsViewModel PatientHistoryRepo(string firstname,string lastname,string email,string phonenumber);
         RecordsViewModel PatientExploreRepo(int userId);
         RecordsViewModel SearchDataRepo(string patientName, string providerName, string email, string phoneNumber);
-        UserAccessViewModel GetUserAccessRepo();
+        UserAccessViewModel GetUserAccessRepo(int roleId);
         RecordsViewModel BlockDataRepo(string name, string date, string email, string phoneNumber);
         CreateRoleViewModel GetRoleDetailsRepo();
-        ProviderMenuViewModel GetProviderRepo();
+        ProviderMenuViewModel GetProviderRepo(int regionId);
         void CreateAdminRepo(CreateAdminAccountViewModel model);
         void CreateNewStateData(SchedulingViewModel model);
         void UpdateBillingRepo(AdminProfileViewModel model);
         void UpdateAdminInfoRepo(AdminProfileViewModel model);
         ProviderLocationViewModel GetPhysicianLocationList();
         void CreateProviderRepo(CreateProviderAccountViewModel model);
+        Admin GetAdminByMailRepo(string email, string password);
+        UserInfoViewModel GetRoleByAspNetId(string email, string password);
 
 
         //AccountAccessViewModel EditRoleRepo(int roleId);

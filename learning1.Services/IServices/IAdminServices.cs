@@ -57,12 +57,12 @@ namespace learning1.Services.IServices
         RecordsViewModel GetPatientHistory(string firstname, string lastname, string email, string phonenumber);
         RecordsViewModel GetPatientExplore(int userId);
         RecordsViewModel GetSearchData(string patientName, string providerName, string email, string phoneNumber);
-        UserAccessViewModel GetUserAccessdetail();
+        UserAccessViewModel GetUserAccessdetail(int roleId);
         RecordsViewModel GetBlockRecords(string name, string date, string email, string phoneNumber);
         CreateRoleViewModel GetDetailsByRoleId();
         CreateProviderAccountViewModel GetRegionforProvider();
         ProviderMenuViewModel GetRegionsforProvider();
-        ProviderMenuViewModel GetProvidersdetails();
+        ProviderMenuViewModel GetProvidersdetails(int regionId);
         CreateProviderAccountViewModel GetRegionsforPhysician();
         void CreateAdmin(CreateAdminAccountViewModel model);
         SchedulingViewModel GetRegionsforShift();
@@ -71,5 +71,7 @@ namespace learning1.Services.IServices
         void UpdateAdminInformation(AdminProfileViewModel model);
         ProviderLocationViewModel GetProviderList();
         void CreateProvider(CreateProviderAccountViewModel model);
+        Admin GetAdminByEmail(string email, string password);
+        UserInfoViewModel CheckValidUserWithRole(string email, string password);
     }
 }
