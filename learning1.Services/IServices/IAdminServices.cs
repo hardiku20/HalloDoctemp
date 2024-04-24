@@ -73,5 +73,7 @@ namespace learning1.Services.IServices
         void CreateProvider(CreateProviderAccountViewModel model);
         Admin GetAdminByEmail(string email, string password);
         UserInfoViewModel CheckValidUserWithRole(string email, string password);
+        ViewNotesViewModel GetNotesById(int requestId);
+        void SetNotesById(ViewNotesViewModel model);
     }
 }

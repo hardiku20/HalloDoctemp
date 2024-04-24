@@ -1746,6 +1746,48 @@ namespace learning1.Repositories.Repositories
             return userInfo;
         }
 
+        public ViewNotesViewModel GetNoteDataById(int requestId)
+        {
+            var Notesdata = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).ToList();
+            var data = _context.RequestNotes.Where(e => e.RequestId == requestId).Select(b => new ViewNotesViewModel
+            {
+                RequestId = b.RequestId,
+                PhysicianNotes = b.PhysicianNotes ?? "No Notes Available",
+                AdminNotes = b.AdminNotes ?? "No Notes Available",
+                CreatedDate = b.CreatedDate,
+                CreatedBy = b.CreatedBy,
+                TransferNotes = Notesdata
+
+            }).FirstOrDefault();
+            if (data == null)
+            {
+                ViewNotesViewModel NVM = new ViewNotesViewModel()
+                {
+                    RequestId = requestId,
+                    TransferNotes = Notesdata
+                };
+                return NVM;
+            }
+            return data;
+        }
+
+        public RequestNote GetRquestNoteById(int requestId)
+        {
+            return _context.RequestNotes.Where(e => e.RequestId == requestId).FirstOrDefault();
+        }
+
+        public void UpdateNotes(RequestNote requestNote)
+        {
+            _context.RequestNotes.Update(requestNote);
+            _context.SaveChanges();
+        }
+
+        public void AddRequestNote(RequestNote requestnote)
+        {
+            _context.RequestNotes.Add(requestnote);
+            _context.SaveChanges();
+        }
+
 
 
 

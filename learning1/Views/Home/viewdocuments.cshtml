@@ -23,7 +23,7 @@
 <body class=" bg-light">
 
    
-    <header class="shadow bg-white">
+    <header class="shadow bg-white dark-mode1">
         <nav class="Navbar d-flex justify-content-between align-items-center ">
             <div class="ms-3">
                 <a><img src="/assets/images/logo.png" alt="" class="img-thumbnail border-0 w-50 h-50"></a>
@@ -32,10 +32,10 @@
                 <span class="me-3">Welcome <strong>@Model.UserName</strong></span>
                 <div class="me-3">
                     <a asp-action="patientlogin" asp-controller="home"
-                       class="btn btn-outline-info font-info text-decoration-none text-info fs-5 p-1 bg-white">Logout</a>
+                       class="btn btn-outline-info font-info text-decoration-none text-info fs-5 p-1 bg-white dark-mode1">Logout</a>
                 </div>
                 <div class="me-3">
-                    <button type="submit" class="rounded border-info bg-white border ">
+                    <button type="submit" class="rounded border-info bg-white dark-mode1 border ">
                         <img src="/assets/images/moon.svg" style="transform: rotate(90deg);" alt="" class="p-1">
                     </button>
                 </div>
@@ -65,20 +65,20 @@
 
                 @* <div class=" d-flex justify-content-end ">
                     <a href="patientsite.html"
-                       class="btn btn-outline-info font-info text-decoration-none text-info mx-4 fs-5 p-1 bg-white">
+                       class="btn btn-outline-info font-info text-decoration-none text-info mx-4 fs-5 p-1 bg-white dark-mode1">
                         Back
                     </a>
                 </div> *@
 
                 <div class="d-flex justify-content-end m-4">
                     <a href="javascript: history.go(-1)"
-                       class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+                       class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
                         <img src="/assets/images/chevron-left.svg" alt=""> Back
                     </a>
                 </div>
 
             </div>
-            <div class="bg-white border-0 shadow-sm rounded p-3">
+            <div class="bg-white dark-mode1 border-0 shadow-sm rounded p-3">
                 <p class="mb-0">Patient Name</p>
                 <h4 class=" text-info">
                     @Model.UserName
@@ -151,7 +151,7 @@
                             </td>
 
                             <td>
-                                <a class="btn btn-outline-info text-info bg-white download-link" asp-action="download_file" asp-route-filename="@item.FileName">Download</a>
+                                <a class="btn btn-outline-info text-info bg-white dark-mode1 download-link" asp-action="download_file" asp-route-filename="@item.FileName">Download</a>
                             </td>
 
                         </tr>

@@ -113,14 +113,21 @@ namespace learning1.Controllers
 
 
 
-        [CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int RequestId)
         {
-            return View();
+            ViewNotesViewModel model = _adminServices.GetNotesById(RequestId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ViewNotes(ViewNotesViewModel model)
+        {
+            _adminServices.SetNotesById(model);
+            return RedirectToAction("ViewNotes", "Provider", new { model.RequestId });
         }
 
 
-     
+
         public IActionResult RenderNewPartialView(int Status ,int Page = 1, int PageSize = 4, string patientName = null, string regionName = null, learning1.DBEntities.ViewModel.RequestType requestType=(learning1.DBEntities.ViewModel.RequestType)5)
         {
             

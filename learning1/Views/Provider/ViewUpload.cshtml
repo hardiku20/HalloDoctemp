@@ -15,12 +15,12 @@
             <h4 class="d-block">Documents</h4>
             <div class="d-flex justify-content-end">
                 <a href="javascript: history.go(-1)"
-                   class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+                   class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
                     <img src="/assets/images/chevron-left.svg" alt=""> Back
                 </a>
             </div>
         </div>
-        <div class="bg-white border-0 shadow-sm p-3">
+        <div class="bg-white dark-mode1 border-0 shadow-sm p-3">
             <p class="mb-0 pt-4">Patient Name</p>
             <h4 class=" text-info">
                 @Model.UserName
@@ -94,8 +94,8 @@
                     </td>
 
                     <td class="py-1">
-                        <a class="btn btn-outline-info text-info bg-white download-link" asp-action="download_file" asp-controller="Provider" asp-route-filename="@item.FileName">Download</a>
-                        <a class="btn btn-outline-info text-info bg-white">Delete</a>
+                        <a class="btn btn-outline-info text-info bg-white dark-mode1 download-link" asp-action="download_file" asp-controller="Provider" asp-route-filename="@item.FileName">Download</a>
+                        <a class="btn btn-outline-info text-info bg-white dark-mode1">Delete</a>
                     </td>
 
                 </tr>

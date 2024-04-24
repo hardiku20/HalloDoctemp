@@ -107,7 +107,6 @@ namespace learning1.Controllers
                     //return patient_dashboard((short)id);
                     //TempData["id"] = (int)id;
                     _httpContextAccessor.HttpContext.Session.SetInt32("Id", userId);
-                    _notyf.Success("Login Successfully");
                     return RedirectToAction("patientdashboard", "Home");
                 }
                 else
@@ -123,17 +122,13 @@ namespace learning1.Controllers
             return View();
         }
 
-        //public IActionResult patientlogin()
-        //{
-        //    return View();
-        //}
-
 
 
         public IActionResult patientsite()
         {
             return View();
         }
+
 
         public IActionResult patientrequest()
         {

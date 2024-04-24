@@ -441,5 +441,38 @@ namespace learning1.Services.Services
             var model = _adminRepo.GetRoleByAspNetId(email, password);
             return model;
         }
+
+        public ViewNotesViewModel GetNotesById(int requestId)
+        {
+            return _adminRepo.GetNoteDataById(requestId);
+        }
+
+        public void SetNotesById(ViewNotesViewModel model)
+        {
+            RequestNote requestNote = _adminRepo.GetRquestNoteById(model.RequestId);
+            if (requestNote != null)
+            {
+                requestNote.AdminNotes = model.AdditionalNotes;
+                requestNote.PhysicianNotes = model.PhysicianNotes ?? "No Notes Available";
+                requestNote.ModifiedBy = "Admin";
+                requestNote.ModifiedDate = DateTime.Now;
+
+                _adminRepo.UpdateNotes(requestNote);
+            }
+            else
+            {
+                RequestNote requestnote = new RequestNote()
+                {
+                    RequestId = model.RequestId,
+                    AdminNotes = model.AdditionalNotes,
+                    CreatedBy = "Admin",
+                    CreatedDate = DateTime.Now
+
+                };
+
+                _adminRepo.AddRequestNote(requestnote);
+
+            }
+        }
     }
 }

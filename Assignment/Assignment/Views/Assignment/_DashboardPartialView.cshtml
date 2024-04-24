@@ -1,0 +1,74 @@
+﻿@model DataAccess.CustomModels.DashboardViewModel;
+
+
+
+
+
+<table class="table my-2">
+    <thead>
+        <tr>
+            <th scope="col" class="py-3">User Id</th>
+            <th scope="col" class="py-3">First Name</th>
+            <th scope="col" class="py-3">Last Name</th>
+            <th scope="col" class="py-3">Email</th>
+            <th scope="col" class="py-3">Age</th>
+            <th scope="col" class="py-3">Gender</th>
+            <th scope="col" class="py-3">City</th>
+            <th scope="col" class="py-3">Country</th>
+            <th scope="col" class="py-3">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+       
+        @foreach (var items in Model.dashboardtables)
+        {
+          
+            <tr>
+                <td class="py-1">@items.Id</td>
+                <td class="py-1">@items.FirstName</td>
+                <td class="py-1">@items.LastName</td>
+                <td class="py-1">@items.Email</td>
+                <td class="py-1">@items.Age</td>
+                <td class="py-1">@items.Gender</td>
+                <td class="py-1">@items.City</td>
+                <td class="py-1">@items.Country</td>
+                <td class="py-1">
+                    <a class="btn text-white" style="background-color:rgb(128,0,128);" data-bs-toggle="modal"
+                       data-bs-target="#EditUser" onclick="onEdit('@items.Id','@items.FirstName','@items.LastName','@items.Email','@items.PhoneNumber','@items.City','@items.Country')">Edit</a>
+                    <button class="btn text-white bg-black " onclick="Delete(@items.Id)">Delete</button>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+
+
+    function Delete(id) {
+        var response = confirm("Are you sure to delete the record?");
+        if (response) {
+
+            $.ajax({
+                method: "post",
+                url: '/Assignment/Delete',
+                data: {
+                    UserId: id,
+                },
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
+
+
+
+   
+</script>

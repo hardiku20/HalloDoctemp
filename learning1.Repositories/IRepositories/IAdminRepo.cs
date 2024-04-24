@@ -71,6 +71,10 @@ namespace learning1.Repositories.IRepositories
         void CreateProviderRepo(CreateProviderAccountViewModel model);
         Admin GetAdminByMailRepo(string email, string password);
         UserInfoViewModel GetRoleByAspNetId(string email, string password);
+        ViewNotesViewModel GetNoteDataById(int requestId);
+        RequestNote GetRquestNoteById(int requestId);
+        void UpdateNotes(RequestNote requestNote);
+        void AddRequestNote(RequestNote requestnote);
 
 
         //AccountAccessViewModel EditRoleRepo(int roleId);

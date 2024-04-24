@@ -1,0 +1,59 @@
+﻿
+.select-focus select:focus {
+    border-color: rgb(36, 152, 152);
+    box-shadow: none;
+}
+
+.form-floating {
+    box-shadow: none;
+}
+    .form-floating input ~ label {
+        color: rgb(108, 117, 125);
+    }
+    .form-floating input:focus {
+        border-color: rgb(128,0,128);
+        box-shadow: none;
+    }
+
+        .form-floating input:focus ~ label {
+            color: white;
+        }
+
+    .form-floating.input-info input:focus ~ label {
+        color: rgb(128,0,128);
+    }
+
+    .form-floating select ~ label {
+        color: rgb(108, 117, 125);
+    }
+
+
+
+    .form-floating select:focus {
+        border-color: rgb(128,0,128);
+        box-shadow: none;
+    }
+
+        .form-floating select:focus ~ label {
+            color: white;
+        }
+
+    .form-floating.select-info select:focus ~ label {
+        color: rgb(128,0,128);
+    }
+
+    .form-floating textarea ~ label {
+        color: rgb(108, 117, 125);
+    }
+    .form-floating textarea:focus {
+        border-color: rgb(128,0,128);
+        box-shadow: none;
+    }
+
+        .form-floating textarea:focus ~ label {
+            color: white;
+        }
+
+    .form-floating.input-info textarea:focus ~ label {
+        color: rgb(128,0,128);
+    }

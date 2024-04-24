@@ -12,22 +12,22 @@
         <h4>Notes</h4>
         <div class="d-flex justify-content-end m-4">
             <a href="javascript: history.go(-1)"
-               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white d-flex align-items-center gap-1">
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
                 <img src="/assets/images/chevron-left.svg" alt=""> Back
             </a>
         </div>
     </div>
 
-  <form method="post" asp-action="ViewNotes" asp-controller="Provider" novalidate>
-      <input type="number" asp-for="RequestId" hidden />
-    @*   <input type="datetime" asp-for="CreatedDate"  hidden/>
-      <input type="text" asp-for="CreatedBy" hidden/> *@
+    <form method="post" asp-action="ViewNotes" asp-controller="Provider" novalidate>
+        <input type="number" asp-for="RequestId" hidden />
+        @*   <input type="datetime" asp-for="CreatedDate"  hidden/>
+        <input type="text" asp-for="CreatedBy" hidden/> *@
 
-        <div class="row">
+        <div class="row dark-mode1">
             <div class="col-md-6 mb-4">
-                <div class="btn d-flex bg-white p-2 shadow w-100">
+                <div class="btn d-flex bg-white dark-mode1 p-2 shadow w-100">
                     <div class="mx-2">
-                        <img src="~/assets/images/arrow-left-right.svg" alt="" class="" />
+                        <img src="~/assets/images/arrow-left-right.svg" alt="" class="dark-mode1" />
                     </div>
                     <div>
                         <h6 class="h6 text-start">Transfer Notes</h6>
@@ -46,9 +46,9 @@
                 </div>
             </div>
             <div class="col-md-6 mb-4">
-                <div class="btn d-flex bg-white p-2 shadow w-100">
+                <div class="btn d-flex bg-white dark-mode1 p-2 shadow w-100">
                     <div class="mx-2">
-                        <img src="~/assets/images/person-add.svg" alt="" />
+                        <img src="~/assets/images/person-add.svg" alt="" class="dark-mode1" />
                     </div>
                     <div>
                         <h6 class="h6 text-start">Physician Notes</h6>
@@ -59,9 +59,9 @@
         </div>
         <div class="row">
             <div class="col-md-6 mb-4">
-                <div class="btn d-flex bg-white p-2 shadow w-100">
+                <div class="btn d-flex bg-white dark-mode1 p-2 shadow w-100">
                     <div class="mx-2">
-                        <img src="~/assets/images/person.svg" alt="" />
+                        <img src="~/assets/images/person.svg" alt="" class="dark-mode1" />
                     </div>
                     <div>
                         <h6 class="h6 text-start">Admin Notes</h6>
@@ -73,12 +73,12 @@
         <div class="row ">
             <div class="col">
 
-                <div class="bg-white p-4 rounded shadow ">
+                <div class="bg-white dark-mode1 p-4 rounded shadow ">
                     <div class="form-floating input-info">
                         <textarea class="form-control" placeholder="" id="floatingTextarea2" asp-for="AdditionalNotes"
                                   style="height: 150px" required></textarea>
                         <label for="floatingTextarea2" class="text-secondary">
-                            Physician Notes
+                            Provider Notes
                         </label>
                         <div class="invalid-feedback">Please add a note to save changes.</div>
                     </div>
@@ -94,7 +94,7 @@
 
         </div>
 
-  </form>
+    </form>
 
 </div>
 
