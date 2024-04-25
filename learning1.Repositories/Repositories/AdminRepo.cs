@@ -1372,7 +1372,7 @@ namespace learning1.Repositories.Repositories
                     Name = x.FirstName + " " + x.LastName,
                     Status = (PhysicianStatus)x.Status,
                     OnCallStatus = "Unavailable",
-
+                    Notification = x.PhysicianNotifications.FirstOrDefault().IsNotificationStopped,
                 }).ToList();
 
             //from phy in _context.Physicians
@@ -1788,37 +1788,146 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges();
         }
 
+        public ShiftViewDetailDTO GetViewShift(int shiftDetailId)
+        {
+            ShiftDetail shiftDetail = _context.ShiftDetails.Include(m => m.Shift).ThenInclude(m => m.Physician).FirstOrDefault(m => m.ShiftDetailId == shiftDetailId);
+            if (shiftDetail != null)
+            {
+                ShiftViewDetailDTO model = new ShiftViewDetailDTO()
+                {
+                    ShiftDetailId = shiftDetailId,
+                    PhysicianRegionId = (int)shiftDetail.RegionId,
+                    PhysicianRegionName = _context.Regions.FirstOrDefault(m => m.RegionId == shiftDetail.RegionId).Name,
+                    PhysicianId = shiftDetail.Shift.PhysicianId,
+                    PhysicianName = shiftDetail.Shift.Physician.FirstName + " " + shiftDetail.Shift.Physician.LastName,
+                    ShiftDate = shiftDetail.ShiftDate.ToString("yyyy-MM-dd"),
+                    StartTime = shiftDetail.StartTime,
+                    EndTime = shiftDetail.EndTime,
+                };
+                return model;
+            }
+            return new ShiftViewDetailDTO();
+        }
+
+        public void ReturnViewShift(int shiftDetailId, int adminId)
+        {
+            var AdminAspNetId = _context.Admins.Where(x => x.AdminId == adminId).Select(X => X.AspNetUserId).First();
+            ShiftDetail shiftDetail = _context.ShiftDetails.FirstOrDefault(m => m.ShiftDetailId == shiftDetailId);
+            if (shiftDetail != null)
+            {
+                if (shiftDetail.Status == 1)
+                {
+                    shiftDetail.Status = 2;
+                    shiftDetail.ModifiedBy = AdminAspNetId;
+                    shiftDetail.ModifiedDate = DateTime.Now;
+                }
+                else
+                {
+                    shiftDetail.Status = 1;
+                    shiftDetail.ModifiedBy = AdminAspNetId;
+                    shiftDetail.ModifiedDate = DateTime.Now;
+                }
+                _context.ShiftDetails.Update(shiftDetail);
+                _context.SaveChanges();
+            }
+        }
+
+        public void DeleteViewShift(int shiftDetailId, int adminId)
+        {
+            var AdminAspNetId = _context.Admins.Where(x => x.AdminId == adminId).Select(X => X.AspNetUserId).First();
+            ShiftDetail shiftDetail = _context.ShiftDetails.FirstOrDefault(m => m.ShiftDetailId == shiftDetailId);
+            if (shiftDetail != null)
+            {
+                shiftDetail.IsDeleted = true;
+                shiftDetail.ModifiedBy = AdminAspNetId;
+                shiftDetail.ModifiedDate = DateTime.Now;
+
+            }
+            _context.ShiftDetails.Update(shiftDetail);
+            _context.SaveChanges();
+        }
+
+        public void EditViewShift(ShiftViewDetailDTO shiftDetail, int adminId)
+        {
+            var AdminAspNetId = _context.Admins.Where(x => x.AdminId == adminId).Select(X => X.AspNetUserId).First();
+            ShiftDetail shiftDetails = _context.ShiftDetails.FirstOrDefault(m => m.ShiftDetailId == shiftDetail.ShiftDetailId);
+            if (shiftDetails != null)
+            {
+                shiftDetails.ShiftDate = DateTime.Parse(shiftDetail.ShiftDate);
+                shiftDetails.StartTime = shiftDetail.StartTime;
+                shiftDetails.EndTime = shiftDetail.EndTime;
+                shiftDetails.ModifiedBy = AdminAspNetId;
+                shiftDetails.ModifiedDate = DateTime.Now;
+            }
+            _context.ShiftDetails.Update(shiftDetails);
+            _context.SaveChanges();
+        }
+
+        public List<Physician> GetPhysicianByRegion(int regionId)
+        {
+           return _context.Physicians.Where(x=>x.RegionId == regionId).ToList();
+        }
+
+        public void SaveNotificationRepo(List<int> idlist)
+        {
+
+                    List<PhysicianNotification> data = _context.PhysicianNotifications.ToList();
+                    foreach (var item in idlist)
+                    {
 
 
+                        PhysicianNotification Nstatus = data.Where(x => x.PhysicianId == item).FirstOrDefault();
+                    
+                        Nstatus.IsNotificationStopped = Nstatus.IsNotificationStopped ? false : true;
+                        _context.PhysicianNotifications.Update(Nstatus);
+                    }
+            _context.SaveChanges();
+        }
+
+        public CloseCaseViewModel GetCloseCaseRepo(int id)
+        {
+            RequestClient client = _context.RequestClients.Where(x => x.RequestId == id).FirstOrDefault();
+            List<RequestWiseFile> RequestFiles = _context.RequestWiseFiles.Where(x => x.RequestId == id).ToList();
+            CloseCaseViewModel modal = new()
+            {
+                ReqId = id,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Email = client.Email,
+                Phone = client.PhoneNumber,
+                DateOfBirth = (client.IntDate + "/" + client.StrMonth + "/" + client.IntYear) ?? "12/12/2024",
+                ConfirmationNumber = client.Request == null ? "" : client.Request.ConfirmationNumber,
+                Files = RequestFiles
+            };
 
 
+            return modal;
+        }
 
+        public void SetCloseCaseRepo(CloseCaseViewModel modal)
+        {
+            RequestClient client = _context.RequestClients.Where(x => x.RequestId == modal.ReqId).FirstOrDefault();           
+            client.PhoneNumber = modal.Phone;
+            client.Email = modal.Email;
+            _context.RequestClients.Update(client);
+            _context.SaveChanges();
+        }
 
+        public Request GetRequestById(int id)
+        {
+            return _context.Requests.Where(x => x.RequestId == id).FirstOrDefault();
+        }
 
+        public void UpdateRequests(Request req)
+        {
+            _context.Requests.Update(req);
+            _context.SaveChanges();
+        }
 
-
-
-
-
-
-
-        //public AccountAccessViewModel EditRoleRepo(int roleId)
-        //{
-        //   var model = _context.Roles.Where(x=>x.RoleId == roleId)
-        //        .Select(x=> new AccountAccessViewModel()
-        //   {
-        //        Name = x.Name,
-        //        RoleId = roleId,
-        //        AccountType = x.AccountType.ToString(),
-        //   }).FirstOrDefault();
-
-        //    return model;
-        //}
-
-        //public List<string> GetMenuListRepo(int accountType)
-        //{
-        //    var Menulist = _context.Menus.Where(x => x.AccountType == accountType).Select(x=>x.Name).ToList();
-        //    return Menulist;
-        //}
+        public void AddRequestStatusLog(RequestStatusLog requestStatusLog)
+        {
+            _context.RequestStatusLogs.Add(requestStatusLog);
+            _context.SaveChanges();
+        }
     }
 }

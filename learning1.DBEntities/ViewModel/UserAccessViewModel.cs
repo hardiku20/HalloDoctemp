@@ -13,7 +13,7 @@ namespace learning1.DBEntities.ViewModel
 
         public List<Role> Roles { get; set; } = new List<Role>();
 
-
+      
     }
 
     public class UserAccessDetails

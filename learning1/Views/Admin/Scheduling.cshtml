@@ -10,7 +10,7 @@
 
 
 @* Modal for Add New Shift *@
-<div class="modal fade" id="CreateShiftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+@* <div class="modal fade" id="CreateShiftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
      style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -108,73 +108,163 @@
             </form>
         </div>
     </div>
-</div>
+</div> *@
 
 
-@* Modal for View Shift *@
-<div class="modal fade" id="ViewShiftModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-     style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form method="">
-                <div class="modal-header bg-info">
-                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">View Shift</h1>
-                    <button type="button" class="btn-close btn-close-white  shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
 
-                <div class="modal-body">
-                    <div class="form-floating select-info mb-3">
-                        <select class="form-select form-control shadow-none" aria-label="Floating label select example">
-                            <option value="0">All</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Physician</option>
-                            <option value="3">Patient</option>
+
+
+ @*Modal For Create New Shift*@
+<div class="modal fade" id="CreateShiftModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-4">
+            <div class="modal-header bg-info">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Create Shift</h1>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="flex-column border-0" method="post">
+                   
+                    <div class="mb-3">
+                        <select asp-for="regionSelector" id="regionSelector" class="form-select form-select-lg " 
+                        aria-label="Large select example">
+                            <option selected class="text-secondary fs-6" value="0">Region</option>
+
+                            @foreach (var item in Model.RegionList)
+                            {
+                                @*value = "@item.RegionId"*@
+                                <option value="@item.RegionId">@item.Name</option>
+                            }
+
                         </select>
-                        <label for="floatingSelect">Region</label>
+                     
+                        <span asp-validation-for="regionSelector" class="text-start text-danger fw-bold validation"></span>
                     </div>
-                    <div class="form-floating select-info mb-3">
-                        <select class="form-select form-control shadow-none" aria-label="Floating label select example">
-                            <option value="0">All</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Physician</option>
-                            <option value="3">Patient</option>
+
+                    <div class="mb-3">
+                        <select asp-for="PhysicianName" id="physicianSelector" class="form-select form-select-lg" aria-label="Large select example">
+                            <option selected class="text-secondary fs-6" value="0">Select Physician</option>
+
                         </select>
-                        <label for="floatingSelect">Physician</label>
+                            <span asp-validation-for="PhysicianName" class="text-start text-danger fw-bold validation"></span>
+
                     </div>
-                    <div class="form-floating input-info mb-3">
-                        <input type="date" class="form-control" id="floatingInput" placeholder="ShiftDate">
-                        <label for="floatingInput">ShiftDate</label>
+                    <div class="mb-3">
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="floatingInput3" 
+                            placeholder="Shift Date" asp-for="ShiftDate">
+                            <label for="floatingInput3"
+                                   min="@DateTime.Now.AddHours(2).ToString("yyyy-MM-dd")"
+                                   min="@DateTime.Now.AddMonths(1).ToString("yyyy-MM-dd")">Shift Date</label>
+                            <span asp-validation-for="ShiftDate" 
+                            class="text-start text-danger fw-bold validation"></span>
+                        </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-6">
-                            <div class="form-floating input-info">
-                                <input type="time" class="form-control" id="floatingInput" placeholder="Start">
-                                <label for="floatingInput">Start</label>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-floating mb-3">
+
+                                <input type="time" class="form-control" id="floatingInput3" placeholder="Start" asp-for="StartTime">
+                                <label for="floatingInput3">Start</label>
+                                <span asp-validation-for="StartTime" class="text-start text-danger fw-bold validation"></span>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-floating input-info">
-                                <input type="time" class="form-control" id="floatingInput" placeholder="End">
-                                <label for="floatingInput">End</label>
+                        <div class="col-sm-6">
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="floatingInput3" placeholder="End" asp-for="EndTime">
+                                <label for="floatingInput3">End</label>
+                                <span asp-validation-for="EndTime" class="text-start text-danger fw-bold validation"></span>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="d-flex ms-3">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Repeat</label>
+                        <div class="form-check form-switch ms-2">
 
-                <div class="modal-footer border-0">
-                    <button type="submit" class="btn btn-info bg-info text-white">Return</button>
-                    <button type="submit" class="btn btn-info bg-info text-white">Edit</button>
-                    <button type="button" class="btn btn-danger bg-danger text-white">Delete</button>
-                </div>
+                            <input asp-for="IsRepeat" class="form-check-input" 
+                            type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                        </div>
+                    </div>
 
-            </form>
+
+                    <p>Repeat Days</p>
+                    <div class="d-flex flex-wrap mb-3 checkbox-wrapper">
+                        <div class="form-check me-3">
+                            @*border-0 border-dark*@
+                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault1">
+                            <label class="form-check-label" for="flexCheckDefault1">
+                                Every Sunday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="2" id="flexCheckDefault2">
+                            <label class="form-check-label" for="flexCheckDefault2">
+                                Every Monday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="3" id="flexCheckDefault3">
+                            <label class="form-check-label" for="flexCheckDefault3">
+                                Every Tuesday
+                            </label>
+                        </div>
+
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="4" id="flexCheckDefault4">
+                            <label class="form-check-label" for="flexCheckDefault4">
+                                Every Wednesday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="5" id="flexCheckDefault5">
+                            <label class="form-check-label" for="flexCheckDefault5">
+                                Every Thursday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="6" id="flexCheckDefault6">
+                            <label class="form-check-label" for="flexCheckDefault6">
+                                Every Friday
+                            </label>
+                        </div>
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="checkbox" value="7" id="flexCheckDefault7">
+                            <label class="form-check-label" for="flexCheckDefault7">
+                                Every Saturday
+                            </label>
+                        </div>
+                    </div>
+                    <input type="text" id="HiddenDays" asp-for="SelectedDays" hidden></input>
+                    <div class="form-floating mb-3">
+                        <select asp-for="RepeatEnd" class="form-select" id="RepeatSelect" aria-label="Floating label select example">
+                            @*<option selected>Repeat End</option>*@
+                            <option value="1">1-time</option>
+                            <option value="2">2-times</option>
+                            <option value="3">3-times</option>
+                        </select>
+                        <label for="floatingSelect">Repeat End</label>
+                    </div>
+
+                    <div class="modal-footer border-top-0">
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" id="Submit" class="btn btn-info text-white me-2" asp-controller="admin" asp-action="CreateNewShift">Submit</button>
+                            <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+
+                @section scripts{
+                    <partial name="_ValidationScriptsPartial.cshtml" />
+                }
+            </div>
+            @*<div class="modal-footer">
+            <button type="button" class="btn btn-info text-white" data-bs-dismiss="modal">Submit</button>
+            <button type="button" class="btn btn-outline-info">Cancel</button>
+            </div>*@
         </div>
     </div>
 </div>
-
-
-
-
 
 
 
@@ -270,6 +360,7 @@
         </div>
     </div>
     <div id="calendar"></div>
+    <div id="ViewShift"></div>
 
     @* <div class="card border-0 shadow-sm">
     <div class="card-body p-0">
@@ -300,3 +391,9 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.11/index.global.min.js"></script>
 
 <script src="~/js/Calendar.js"></script>
+
+
+<script src="~/js/Scheduling.js"></script>
+
+
+

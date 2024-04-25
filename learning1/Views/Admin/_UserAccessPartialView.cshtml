@@ -23,7 +23,7 @@
     @foreach (var i in Model.UserAccessList)
     {
         <tr class="border-bottom border-secondary-subtle">
-            <td class="ps-4 py-1">
+            <td class="ps-4 py-3">
                 @{
                     if (i.RoleId == 1)
                     {
@@ -36,17 +36,16 @@
                 }
 
             </td>
-            <td class="py-1">@i.Name</td>
-            <td class="py-1">@i.PhoneNumber</td>
-            <td class="py-1"> @i.Status </td>
-            <td class="py-1"> @i.OpenRequest</td>
-            <td class="d-flex justify-content-center py-1">
+            <td class="py-3">@i.Name</td>
+            <td class="py-3">@i.PhoneNumber</td>
+            <td class="py-3"> @i.Status </td>
+            <td class="py-3"> @i.OpenRequest</td>
+            <td class="d-flex justify-content-center py-3">
                 @if (i.RoleId == 2)
                 {
 
                     <a class="btn btn-outline-info" asp-action="UserAccessEdit" asp-controller="Admin" asp-route-NetUserId="@i.AspId">Edit</a>
                 }
-
             </td>
         </tr>
     }

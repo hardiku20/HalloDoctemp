@@ -42,7 +42,7 @@ namespace learning1.Services.Services
             {
                 //TableViewModel = temp,
                 CancellationReason = Casetags,
-                Region = Regions, 
+                Region = Regions,
                 RequestCount = Count,
             };
             return model;
@@ -56,7 +56,7 @@ namespace learning1.Services.Services
 
         public void SendAgreement(int requestId)
         {
-            _adminRepo.Mails(requestId);    
+            _adminRepo.Mails(requestId);
         }
 
         public void GetAssignCaseData(AdminDashboardViewModel model, int requestId)
@@ -94,7 +94,7 @@ namespace learning1.Services.Services
 
         public SendOrderViewModel GetOrderdetails()
         {
-            var Profession =_adminRepo.DisplayProfession();
+            var Profession = _adminRepo.DisplayProfession();
             SendOrderViewModel model = new SendOrderViewModel()
             {
                 Profession = Profession,
@@ -123,12 +123,12 @@ namespace learning1.Services.Services
             _adminRepo.TransferCaseRepo(model, requestId);
         }
 
-      
+
 
         public ViewUploadViewModel GetviewUploads(int requestId)
         {
-           var model= _adminRepo.FetchViewUploads(requestId);
-           return model;
+            var model = _adminRepo.FetchViewUploads(requestId);
+            return model;
         }
 
         public void InsertOrderDetails(SendOrderViewModel model)
@@ -154,8 +154,8 @@ namespace learning1.Services.Services
 
 
 
-    
-        public AdminDashboardViewModel RenderActiveStateData(int status1, int status2 , int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+
+        public AdminDashboardViewModel RenderActiveStateData(int status1, int status2, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             var model = _adminRepo.RenderToActiveState(status1, status2, page, pageSize, patientName, regionName, requestType);
             return model;
@@ -167,7 +167,7 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public AdminDashboardViewModel RenderNewStateData(int status,int page,int pageSize,string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public AdminDashboardViewModel RenderNewStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             var model = _adminRepo.RenderNewState(status, page, pageSize, patientName, regionName, requestType);
             return model;
@@ -179,9 +179,9 @@ namespace learning1.Services.Services
             return model;
         }
 
-        public AdminDashboardViewModel RenderToCloseStateData(int status1,int status2, int status3, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public AdminDashboardViewModel RenderToCloseStateData(int status1, int status2, int status3, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _adminRepo.RenderToCloseState(status1 , status2,status3, page, pageSize, patientName, regionName, requestType);
+            var model = _adminRepo.RenderToCloseState(status1, status2, status3, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
@@ -191,7 +191,7 @@ namespace learning1.Services.Services
             return model;
         }
 
-   
+
 
         public EncounterFormViewModel GetEncounterformData(int requestId)
         {
@@ -201,7 +201,7 @@ namespace learning1.Services.Services
 
         public int LoginMethod(string email, string password)
         {
-            int AdminId= _adminRepo.LoginMethodRepo(email, password);
+            int AdminId = _adminRepo.LoginMethodRepo(email, password);
             return AdminId;
         }
 
@@ -293,7 +293,7 @@ namespace learning1.Services.Services
             _adminRepo.AddBusinessRepo(modal);
         }
 
-      
+
 
         public AddBusinessViewModal GetBusinessByVendorId(int vendorId)
         {
@@ -313,13 +313,13 @@ namespace learning1.Services.Services
 
         public VendorViewModel GetVendorsDetails(int professionId, string vendorName)
         {
-            var model = _adminRepo.GetVendorRepo(professionId,vendorName);
+            var model = _adminRepo.GetVendorRepo(professionId, vendorName);
             return model;
         }
 
-        public RecordsViewModel GetPatientHistory(string firstname,string lastname, string email, string phonenumber)
+        public RecordsViewModel GetPatientHistory(string firstname, string lastname, string email, string phonenumber)
         {
-            var model = _adminRepo.PatientHistoryRepo(firstname,lastname,email,phonenumber);
+            var model = _adminRepo.PatientHistoryRepo(firstname, lastname, email, phonenumber);
             return model;
         }
 
@@ -331,20 +331,20 @@ namespace learning1.Services.Services
 
         public RecordsViewModel GetSearchData(string patientName, string providerName, string email, string phoneNumber)
         {
-            var model = _adminRepo.SearchDataRepo(patientName, providerName , email ,phoneNumber);
+            var model = _adminRepo.SearchDataRepo(patientName, providerName, email, phoneNumber);
             return model;
         }
 
         public UserAccessViewModel GetUserAccessdetail(int RoleId)
         {
-            var model = _adminRepo.GetUserAccessRepo(RoleId);  
+            var model = _adminRepo.GetUserAccessRepo(RoleId);
             return model;
 
         }
 
         public RecordsViewModel GetBlockRecords(string name, string date, string email, string phoneNumber)
         {
-            var model = _adminRepo.BlockDataRepo(name,date,email,phoneNumber);
+            var model = _adminRepo.BlockDataRepo(name, date, email, phoneNumber);
             return model;
         }
 
@@ -473,6 +473,71 @@ namespace learning1.Services.Services
                 _adminRepo.AddRequestNote(requestnote);
 
             }
+        }
+
+        public ShiftViewDetailDTO GetShiftDetails(int shiftDetailId)
+        {
+            var model = _adminRepo.GetViewShift(shiftDetailId);
+            return model;
+        }
+
+        public void ReturnViewShiftDetail(int shiftDetailId, int adminId)
+        {
+            _adminRepo.ReturnViewShift(shiftDetailId, adminId);
+        }
+
+        public void DeleteViewShiftDetail(int shiftDetailId, int adminId)
+        {
+            _adminRepo.DeleteViewShift(shiftDetailId, adminId);
+        }
+
+        public void EditViewShiftDetail(ShiftViewDetailDTO shiftDetail, int adminId)
+        {
+            _adminRepo.EditViewShift(shiftDetail, adminId);
+        }
+
+        public List<Physician> GetPhysiciansByRegion(int regionId)
+        {
+
+            return _adminRepo.GetPhysicianByRegion(regionId);
+        }
+
+        public void SaveNotifications(List<int> idlist)
+        {
+            _adminRepo.SaveNotificationRepo(idlist);
+        }
+
+        public CloseCaseViewModel GetCloseCase(int id)
+        {
+            var model = _adminRepo.GetCloseCaseRepo(id);
+            return model;
+        }
+
+        public void SetCloseCase(CloseCaseViewModel modal)
+        {
+            _adminRepo.SetCloseCaseRepo(modal);
+        }
+
+        public bool UpdateRequest(int id)
+        {
+            Request req = _adminRepo.GetRequestById(id);
+            req.ModifiedDate = DateTime.Now;
+            req.Status = 9;
+            _adminRepo.UpdateRequests(req);
+            DateTime date = DateTime.Now;
+            RequestStatusLog requestStatusLog = new RequestStatusLog()
+            {
+                RequestId = req.RequestId,
+                Status = req.Status,
+                PhysicianId = req.PhysicianId,
+                CreatedDate = date,
+                Notes = "The case has been closed on " + date.ToString("f")
+            };
+
+            _adminRepo.AddRequestStatusLog(requestStatusLog);
+            return true;
+
+
         }
     }
 }

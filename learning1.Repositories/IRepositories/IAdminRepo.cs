@@ -75,6 +75,17 @@ namespace learning1.Repositories.IRepositories
         RequestNote GetRquestNoteById(int requestId);
         void UpdateNotes(RequestNote requestNote);
         void AddRequestNote(RequestNote requestnote);
+        ShiftViewDetailDTO GetViewShift(int shiftDetailId);
+        void ReturnViewShift(int shiftDetailId, int adminId);
+        void DeleteViewShift(int shiftDetailId, int adminId);
+        void EditViewShift(ShiftViewDetailDTO shiftDetail, int adminId);
+        List<Physician> GetPhysicianByRegion(int regionId);
+        void SaveNotificationRepo(List<int> idlist);
+        CloseCaseViewModel GetCloseCaseRepo(int id);
+        void SetCloseCaseRepo(CloseCaseViewModel modal);
+        Request GetRequestById(int id);
+        void UpdateRequests(Request req);
+        void AddRequestStatusLog(RequestStatusLog requestStatusLog);
 
 
         //AccountAccessViewModel EditRoleRepo(int roleId);

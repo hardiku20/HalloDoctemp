@@ -45,7 +45,6 @@ namespace learning1.DBEntities.ViewModel
         public string State { get; set; }
         [Required(ErrorMessage = "Please enter a zip code.")]
         [StringLength(10, MinimumLength = 5, ErrorMessage = "Zip code must be between 5 and 10 characters.")]
-        [RegularExpression(@"^\d{5}(-\d{4})?$", ErrorMessage = "Invalid zip code format. Valid examples: 12345, 12345-6789")]
         public string Zipcode { get; set; }
 
         public List<HealthProfessionalType> ProfessionalTypes { get; set;}

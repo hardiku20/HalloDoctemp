@@ -112,7 +112,7 @@ namespace learning1.Controllers
 
 
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int RequestId)
         {
             ViewNotesViewModel model = _adminServices.GetNotesById(RequestId);
@@ -123,7 +123,7 @@ namespace learning1.Controllers
         public IActionResult ViewNotes(ViewNotesViewModel model)
         {
             _adminServices.SetNotesById(model);
-            return RedirectToAction("ViewNotes", "Provider", new { model.RequestId });
+            return RedirectToAction("ViewNotes", "Admin", new { model.RequestId });
         }
 
 
@@ -196,6 +196,7 @@ namespace learning1.Controllers
             return RedirectToAction("admindashboard");
         }
 
+        [CustomAuthorize("Admin")]
         public IActionResult ViewUpload(int requestId)
         {
             
@@ -225,6 +226,8 @@ namespace learning1.Controllers
             return File(content, contentType, filename);
         }
 
+
+        [CustomAuthorize("Admin")]
         public IActionResult SendOrders()
         {
            var model= _adminServices.GetOrderdetails();
@@ -237,6 +240,8 @@ namespace learning1.Controllers
             return BusinessList;
 
         }
+
+
 
         public SendOrderViewModel GetOrderdetailByBusiness(string BusinessName)
         {
@@ -280,13 +285,15 @@ namespace learning1.Controllers
             return View();
         }
 
+
+        [CustomAuthorize("Admin")]
         public IActionResult EncounterForm(int RequestId)
         {
             var model = _adminServices.GetEncounterformData(RequestId);
             return View(model);
         }
 
-        
+
         //public IActionResult SendAgreementMail(string email, int reqId)
         //{
         //    _adminServices.SendAgreementData(email, reqId);
@@ -309,12 +316,8 @@ namespace learning1.Controllers
         //    return RedirectToAction("admindashboard");
         //}
 
-        
 
-        public IActionResult CloseCase()
-        {
-            return View();
-        }
+      
 
 
         public IActionResult AdminProfile(int AdminId=4)
@@ -385,7 +388,7 @@ namespace learning1.Controllers
             return RedirectToAction("admindashboard");
         }
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult ProviderLocation()
         {
 
@@ -405,7 +408,7 @@ namespace learning1.Controllers
 
 
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult ProviderMenu()
         {
 
@@ -429,7 +432,7 @@ namespace learning1.Controllers
             return View(modal);
         }
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult AccountAccess()
         {
             var model = _adminServices.GetAccountAccessTable();
@@ -515,7 +518,7 @@ namespace learning1.Controllers
         }
 
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult Scheduling()
         {
             var model = _adminServices.GetRegionsforShift();
@@ -567,8 +570,60 @@ namespace learning1.Controllers
             var regionsData = _adminServices.getRegionTableData();
             return regionsData;
         }
+        public IActionResult ViewShift(int ShiftDetailId)
+        {
+            ShiftViewDetailDTO model = _adminServices.GetShiftDetails(ShiftDetailId);
+            TempData["CheckAdmin"] = "This is Admin";
+            return PartialView("_ViewShiftModal", model);
+        }
 
 
+        public bool ReturnViewShift(int ShiftDetailId)
+        {
+
+            try
+            {
+                int AdminId = (int)_httpcontextAccessor.HttpContext.Session.GetInt32("Id");
+
+                _adminServices.ReturnViewShiftDetail(ShiftDetailId, AdminId);
+                return true;
+            }
+            catch { return false; }
+
+        }
+        public bool DeleteViewShift(int ShiftDetailId)
+        {
+            try
+            {
+                int AdminId = (int)_httpcontextAccessor.HttpContext.Session.GetInt32("Id");
+                _adminServices.DeleteViewShiftDetail(ShiftDetailId, AdminId);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditViewShift(ShiftViewDetailDTO ShiftDetail)
+        {
+
+            try
+            {
+                int AdminId = (int)_httpcontextAccessor.HttpContext.Session.GetInt32("Id");
+                _adminServices.EditViewShiftDetail(ShiftDetail, AdminId);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+
+
+        [CustomAuthorize("Admin")]
         public IActionResult Vendors(int ProfessionId, string VendorName = null)
         {
             var model = _adminServices.GetVendorsDetails(ProfessionId, VendorName);
@@ -583,7 +638,7 @@ namespace learning1.Controllers
         }
 
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult AddBusiness()
         {
             var model = _adminServices.GetProfession();
@@ -640,7 +695,7 @@ namespace learning1.Controllers
             return View(model);
         }
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult SearchRecord()
         {
             return View();
@@ -653,18 +708,20 @@ namespace learning1.Controllers
 
         }
 
+
+        [CustomAuthorize("Admin")]
         public IActionResult EmailLogs()
         {
             return View();
         }
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult SMSLogs()
         {
             return View();
         }
 
-
+        [CustomAuthorize("Admin")]
         public IActionResult BlockHistory()
         {
             return View();
@@ -676,10 +733,68 @@ namespace learning1.Controllers
             return PartialView("_BlockRecordPartialView",model);
         }
 
+        [CustomAuthorize("Admin")]
         public IActionResult CancelHistory()
         {
             return View();
         }
+
+        public List<Physician> GetPhysicianByRegionId(int regionId)
+        {
+            List<Physician> PhysicianList = _adminServices.GetPhysiciansByRegion(regionId);
+            return PhysicianList;
+        }
+
+
+        public void SaveProviderInfo(List<int> Idlist)
+        {
+            _adminServices.SaveNotifications(Idlist);
+        }
+
+
+
+      
+        public IActionResult CloseCase(int requestId)
+        {
+            CloseCaseViewModel modal = _adminServices.GetCloseCase(requestId);
+            return View(modal);
+        }
+
+        public IActionResult ClosecasePost(int requestId, CloseCaseViewModel modal)
+        {
+            modal.ReqId = requestId;
+            _adminServices.SetCloseCase(modal);
+            return RedirectToAction("CloseCase", "Admin", new { requestId = requestId });
+        }
+
+        public IActionResult CloseCaseFinal(int requestId)
+        {
+            bool response = _adminServices.UpdateRequest(requestId);
+            if (response) { _notyf.Success("Case has been closed"); }
+            else { _notyf.Error("somthing Went wrong"); }
+            return RedirectToAction("AdminDashboard", "Admin");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -693,11 +808,7 @@ namespace learning1.Controllers
             return RedirectToAction("PlatformLogin", "Admin");
         }
 
-        //public IActionResult Unblock()
-        //{
-        //    _adminServices.GetBlockCaseData(model);
-        //    return RedirectToAction("admindashboard");
-        //}
+    
 
     }
 }

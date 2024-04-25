@@ -69,7 +69,7 @@ namespace learning1.Controllers
         }
 
 
-
+        [CustomAuthorize("Physician")]
         public IActionResult ViewCase(int RequestId)
         {
             var model = _providerServices.DisplayViewCase(RequestId);
@@ -82,7 +82,7 @@ namespace learning1.Controllers
             return View();
         }
 
-
+     
         public IActionResult AcceptCase(int requestId)
         {
             //var loginUserId = GetLoginId();
@@ -94,7 +94,7 @@ namespace learning1.Controllers
 
 
 
-
+        [CustomAuthorize("Physician")]
         public IActionResult ViewUpload(int requestId)
         {
             var model = _providerServices.GetviewUploads(requestId);
@@ -125,20 +125,22 @@ namespace learning1.Controllers
 
 
 
-
+        [CustomAuthorize("Physician")]
         public IActionResult TransferCase(ProviderDashboardViewModel model, int RequestId)
         {
             _providerServices.GetTransferCaseData(model, RequestId);
             return RedirectToAction("providerdashboard");
         }
 
-
+        [CustomAuthorize("Physician")]
         public IActionResult SendOrders()
         {
             var model = _providerServices.GetOrderdetails();
             return View(model);
         }
 
+
+      
         public List<string> GetBusinessByProfessionName(string ProfessionName)
         {
             var BusinessList = _providerServices.GetBusinessByProfession(ProfessionName);
@@ -163,7 +165,7 @@ namespace learning1.Controllers
         }
 
 
-
+        [CustomAuthorize("Physician")]
         public IActionResult ProviderProfile(int PhysicianId = 21)
         {
 
@@ -173,7 +175,7 @@ namespace learning1.Controllers
 
 
 
-
+        [CustomAuthorize("Physician")]
         public IActionResult ViewNotes(int RequestId)
         {
             ViewNotesViewModel model = _providerServices.GetNotesById(RequestId);
@@ -237,7 +239,7 @@ namespace learning1.Controllers
 
 
 
-
+        [CustomAuthorize("Physician")]
         public IActionResult ProviderScheduling()
         {
             int PhysicianId = 21;

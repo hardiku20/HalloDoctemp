@@ -32,23 +32,37 @@ namespace learning1.DBEntities.ViewModel
         public string SelectedDays { get; set; }
 
         public ShiftDTO ShiftDTOViewModel { get; set; }
+
+        public ShiftViewDetailDTO shiftViewDetailDTO { get; set; }
     }
-}
-public class ShiftDTO
-{
-    public int Id { get; set; }
-    public int resourceId { get; set; }
-    public string title { get; set; }
-    public string start { get; set; }
-    public string end { get; set; }
-    public string color { get; set; }
-}
+    public class ShiftDTO
+    {
+        public int Id { get; set; }
+        public int resourceId { get; set; }
+        public string title { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public string color { get; set; }
+    }
 
-public class ProviderDTO
-{
-    public int Id { get; set; }
+    public class ProviderDTO
+    {
+        public int Id { get; set; }
 
-    public string title { get; set; }
+        public string title { get; set; }
 
-    public string imageUrl { get; set; }
+        public string imageUrl { get; set; }
+    }
+
+    public class ShiftViewDetailDTO
+    {
+        public int ShiftDetailId { get; set; }
+        public int PhysicianRegionId { get; set; }
+        public string? PhysicianRegionName { get; set; }
+        public int PhysicianId { get; set; }
+        public string? PhysicianName { get; set; }
+        public string ShiftDate { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
+    }
 }

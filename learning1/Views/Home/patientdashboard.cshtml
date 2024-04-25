@@ -67,7 +67,7 @@
             <div class="d-flex align-items-center">
                 <span class="me-3">Welcome <strong>@Model.UserName</strong></span>
                 <div class="me-3">
-                    <a asp-action="patientlogin" asp-controller="Home"
+                    <a asp-action="Logout" asp-controller="Home"
                        class="btn btn-outline-info font-info text-decoration-none text-info fs-5 p-1 bg-white dark-mode1">Logout</a>
                 </div>
                 <div class="me-3">
@@ -120,7 +120,25 @@
                                 @Html.DisplayFor(modelItem => item.CreatedDate)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Status)
+
+                                @{
+                                    Dictionary<int, string> StatusMap = new Dictionary<int, string>
+                            {
+                            { 1, "Unassigned" },
+                            { 2, "Accepted" },
+                            { 3, "Cancelled" },
+                            { 4, "MDEnRoute" },
+                            { 5, "MDONSite" },
+                            { 6, "Conclude" },
+                            { 7, "CancelledByPatient" },
+                            { 8, "Closed" },
+                            { 9, "Unpaid" },
+                            { 10, "Clear" },
+                            { 11, "Block" },
+                            // Add more mappings as needed
+                            };
+                                }
+                                @Html.DisplayFor(modelItem => @StatusMap[item.Status])
                             </td>
                             <td>
                                 @if (@item.fileCount > 0)

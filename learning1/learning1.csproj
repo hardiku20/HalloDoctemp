@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\customValidation.js" />
+    <Content Remove="wwwroot\js\ViewShiftModelScript.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\customValidation.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\ViewShiftModelScript.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +47,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\js\customValidation.js" />
+    <None Include="wwwroot\js\ViewShiftModelScript.js" />
   </ItemGroup>
 
   <ItemGroup>

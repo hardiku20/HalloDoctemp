@@ -4,6 +4,8 @@
 @{
     Layout = "_AdminLayout";
 }
+
+@model learning1.DBEntities.ViewModel.CloseCaseViewModel;
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 
 
@@ -25,7 +27,11 @@
                 <div class="">
                     <p class="mb-0 pt-4">Patient Name</p>
                     <h4 class=" text-info">
-                        ghfghk
+                       @Model.FirstName @Model.LastName
+                        @if (!string.IsNullOrEmpty(Model.ConfirmationNumber))
+                        {
+                            <span class="fs-6"> @Model.ConfirmationNumber </span>
+                        }
                     </h4>
                 </div>
                 <div class="">
@@ -52,78 +58,83 @@
                 <tbody>
 
 
-                    <tr>
-                        <td>
-                            cvgvsxhgfjgbv
-                        </td>
 
-                        <td>
-                            dgtfuggggggh
-                        </td>
 
-                        <td>
-                            <a class="btn btn-outline-info text-info bg-white dark-mode1 download-link">Download</a>
-                            <a class="btn btn-outline-info text-info bg-white dark-mode1">Delete</a>
-                        </td>
-                    </tr>
+                    @foreach (var item in Model.Files)
+                    {
+                        <tr>
+                            <td>
+                                <i class="bi bi-file-earmark-fill ms-2" style="color:red"></i>
+                                @item.FileName
+                            </td>
+                            <td>@item.CreatedDate.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                <a href="../Files/PatientDocs/@item.FileName" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
+                                    <i class="bi bi-cloud-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
 
 
 
-            <form>
-                <div class="row mb-3 p-2">
-                    <h5 class="mb-2">Patient Information</h5>
-                    <div class="mb-3 col-md-6">
-                        <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name"
-                                   disabled>
-                            <label for="floatingInput" class="">First Name</label>
-                        </div>
-                    </div>
-                    <div class="mb-3 col-md-6">
-                        <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput"
-                                   placeholder="Last Name" disabled>
-                            <label for="floatingInput" class="">Last Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3 input-info">
-                        <div class="form-floating ">
-                            <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
-                                   aria-describedby="basic-addon1" disabled>
-                            <label for="floatingInputValue" class="">Date of birth</label>
-                        </div>
-                    </div>
-                    <div class="form-floating col-md-6 mb-3 input-info">
-                        <div class="d-flex justify-content-between">
-                            <div class="form-floating input-info w-100 me-2">
-                                <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                       id="phone1" disabled>
-                            </div>
-                            <div class="">
-                                <button type="button" class="btn btn-outline-info  text-decoration-none bg-white dark-mode1 text-info p-3" id="" data-bs-toggle="modal" data-bs-target="#MapModal">
-                                    <img src="/assets/images/telephone.svg" class="" alt="...">
-                                </button>
+            <form asp-action="ClosecasePost" asp-controller="Admin" asp-route-requestId="@Model.ReqId">
+                <fieldset id="fset" disabled>
+                    <div class="row mb-3 p-2">
+                        <h5 class="mb-2">Patient Information</h5>
+                        <div class="mb-3 col-md-6">
+                            <div class="form-floating input-info">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="First Name"
+                                       asp-for="FirstName">
+                                <label for="floatingInput" class="">First Name</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="form-floating input-info">
-                            <input type="email" class="form-control" id="floatingInputValue" aria-label="Email"
-                                   aria-describedby="basic-addon1" disabled>
-                            <label for="floatingInputValue" class="">Email</label>
+                        <div class="mb-3 col-md-6">
+                            <div class="form-floating input-info">
+                                <input type="text" class="form-control" id="floatingInput"
+                                       placeholder="Last Name" asp-for="LastName">
+                                <label for="floatingInput" class="">Last Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3 input-info">
+                            <div class="form-floating ">
+                                <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                       aria-describedby="basic-addon1">
+                                <label for="floatingInputValue" class="">Date of birth</label>
+                            </div>
+                        </div>
+                        <div class="form-floating col-md-6 mb-3 input-info">
+                            <div class="d-flex justify-content-between">
+                                <div class="form-floating input-info w-100 me-2">
+                                    <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                           id="phone1" asp-for="Phone">
+                                </div>
+                                <div class="">
+                                    <button type="button" class="btn btn-outline-info  text-decoration-none bg-white dark-mode1 text-info p-3">
+                                        <img src="/assets/images/telephone.svg" class="" alt="...">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="form-floating input-info">
+                                <input type="email" class="form-control" id="floatingInputValue" aria-label="Email"
+                                       aria-describedby="basic-addon1" asp-for="Email" disabled>
+                                <label for="floatingInputValue" class="">Email</label>
+                            </div>
                         </div>
                     </div>
+                </fieldset>
 
-                    <div class="d-flex my-1 gap-2 justify-content-end">
-                        <a class="btn btn-info text-white text-decoration-none py-2">
-                            Edit
-                        </a>
-                        <a class="btn btn-outline-info text-info bg-white dark-mode1 text-decoration-none py-2">
-                            Close Case
-                        </a>
-                    </div>
+                <div class="d-flex justify-content-end mx-0" id="editsection">
+                    <button class="btn btn-info text-white mx-3 my-3" type="button" id="editBtn">Edit</button>
+                    <a class="btn btn-outline-info me-3 my-3" asp-action="CloseCaseFinal" asp-controller="Admin" asp-route-requestId=@Model.ReqId>Close Case</a>
+                </div>
+                <div class="d-flex justify-content-end mx-0 d-none" id="savesecion">
+                    <button class="btn btn-info text-white mx-3 my-3" type="submit" id="save">Save</button>
+                    <button class="btn border-info text-info  me-3 my-3" type="button" id="cancelBtn">Cancel</button>
                 </div>
             </form>
 
@@ -154,3 +165,27 @@
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
 </script>
+
+
+
+<script>
+    document.getElementById('editBtn').addEventListener('click', function () {
+        document.getElementById('fset').removeAttribute('disabled')
+        document.getElementById('savesecion').classList.remove('d-none')
+        document.getElementById('editsection').classList.add('d-none')
+    })
+    document.getElementById('cancelBtn').addEventListener('click', function () {
+        document.getElementById('fset').setAttribute('disabled', '')
+        document.getElementById('savesecion').classList.add('d-none')
+        document.getElementById('editsection').classList.remove('d-none')
+    })
+
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

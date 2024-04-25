@@ -22,7 +22,7 @@
         {
             <tr class="border-bottom border-secondary-subtle">
                 <td class="form-check d-flex justify-content-center py-1">
-                    <input class="form-check-input" type="checkbox" value="@items.PhysicianId" checked="@items.Notification" id="flexCheckDefault" onchange="Showbtn(@items.PhysicianId)">
+                    <input class="form-check-input" type="checkbox" value="@items.PhysicianId" checked="@items.Notification" name="Notifications" onchange="Showbtn(@items.PhysicianId)">
                 </td>
                 <td class="py-1">@items.Name</td>
                 <td class="py-1">Admin</td>
@@ -42,3 +42,27 @@
 <div class="d-flex justify-content-end p-2">
     <button type="button" class="btn btn-info d-none text-white" id="savebtn" onclick="saveChanges()">Save Changes</button>
 </div>
+
+
+  <script>
+    function saveChanges() {
+
+        $.ajax({
+            url: "/Admin/SaveProviderInfo",
+            type: "POST",
+            data: { Idlist: idlist },
+            success: function (data) {
+
+                document.getElementById('savebtn').classList.add('d-none')
+            },
+            error: function (jqXHR, error, errorThrown) {
+                if (jqXHR.status) {
+                    alert(jqXHR.responseText);
+                } else {
+                    alert("Something went wrong");
+                }
+            }
+        });
+
+    };
+  </script>

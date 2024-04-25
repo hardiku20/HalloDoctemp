@@ -18,10 +18,8 @@
                 <div class="form-floating select-info">
                     <select class="form-select form-control shadow-none" aria-label="Floating label select example" onchange="GetUserAccessPartialView(this.value)">
                         <option value="0">All</option>
-                        @foreach (var i in Model.Roles)
-                        {
-                            <option value="@i.RoleId">@i.Name</option>
-                        }
+                        <option value="1">Admin</option>
+                        <option value="3">Physician</option>
                     </select>
                     <label for="floatingSelect">Role Type</label>
                 </div>

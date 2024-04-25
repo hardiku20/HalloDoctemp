@@ -107,7 +107,7 @@
                                        id="phone1" asp-for="phone" disabled>
                             </div>
                             <div class="form-floating">
-                                <button type="button" class="btn btn-outline-info  text-decoration-none bg-white dark-mode1 text-info p-3" id="Map" data-bs-toggle="modal" data-bs-target="#MapModal">
+                                <button type="button" class="btn btn-outline-info  text-decoration-none bg-white dark-mode1 text-info p-3">
                                     <img src="/assets/images/telephone.svg" class="" alt="...">
                                 </button>
                             </div>
@@ -135,7 +135,7 @@
                     <div class="col-md-6 mb-3 mt-2 ">
                         <div class="d-flex justify-content-between">
                             <div class="form-floating input-info w-100 me-2">
-                                <input type="text" class="form-control" id="Address" placeholder="Business Name/Address"
+                                <input type="text" class="form-control" id="Address" value=@Model.Address placeholder="Business Name/Address"
                                       asp-for="Address">
                                 <label for="floatingInput">Business Name/Address</label>
                             </div>
@@ -188,18 +188,14 @@
     });
 </script>
 
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 
     $(document).ready(function () {
-        $("#Map").click(function () {
-
+        $("#Map").on("click",function () {
             var Address = $("#Address").val();
+            // var Address = document.getElementById("Address").value;
+            // console.log(Address);
             // Define the address to geocode
             var address = "https://maps.google.com/maps?q=" + Address + "&t=&z=13&ie=UTF8&iwloc=&output=embed";
             $("#gmap_canvas").attr("src", address);

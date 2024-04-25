@@ -260,7 +260,7 @@ namespace learning1.Controllers
 
             return View(model);
         }
-       
+        [CustomAuthorize("Patient")]
         public IActionResult patientprofile()
         {
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
@@ -442,6 +442,15 @@ namespace learning1.Controllers
         }
 
 
+
+        public IActionResult Logout()
+        {
+
+            _httpContextAccessor.HttpContext.Session.Clear();
+            Response.Cookies.Delete("jwt");
+            //_notyf.Success("Logged Out");
+            return RedirectToAction("patientlogin", "Home");
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

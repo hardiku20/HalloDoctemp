@@ -75,5 +75,14 @@ namespace learning1.Services.IServices
         UserInfoViewModel CheckValidUserWithRole(string email, string password);
         ViewNotesViewModel GetNotesById(int requestId);
         void SetNotesById(ViewNotesViewModel model);
+        ShiftViewDetailDTO GetShiftDetails(int shiftDetailId);
+        void ReturnViewShiftDetail(int shiftDetailId, int adminId);
+        void DeleteViewShiftDetail(int shiftDetailId, int adminId);
+        void EditViewShiftDetail(ShiftViewDetailDTO shiftDetail, int adminId);
+        List<Physician> GetPhysiciansByRegion(int regionId);
+        void SaveNotifications(List<int> idlist);
+        CloseCaseViewModel GetCloseCase(int id);
+        void SetCloseCase(CloseCaseViewModel modal);
+        bool UpdateRequest(int id);
     }
 }
