@@ -1,0 +1,261 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_ProviderLayout";
+}
+
+
+@model learning1.DBEntities.ViewModel.EncounterFormViewModel;
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+<div class="container pb-4">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="">Encounter Form</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a href="javascript: history.go(-1)" class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <form action="" class="form-floating">
+                <div class="row">
+                    <h1 class="text-info mb-4 text-center">Medical Report-Confidential</h1>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName">
+                            <label for="floatingInput">First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName">
+                            <label for="floatingInput">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Location" asp-for="Location">
+                            <label for="floatingInput">Location</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                   aria-describedby="basic-addon1" asp-for="DateOfBirth">
+                            <label for="floatingInputValue">Date of birth</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
+                                   aria-describedby="basic-addon1" asp-for="Date">
+                            <label for="floatingInputValue">Date</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info w-100">
+                            <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
+                                   id="phone" asp-for="Phone">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="email" class="form-control" id="email"
+                                   placeholder="name@example.com" asp-for="Email">
+                            <label for="floatingInput">Email address</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control text-start" id="floatingInput" placeholder="History Of Present illness Or injury" asp-for="Historyofpresentillness">
+                            <label for="floatingInput">History Of Present illness Or injury</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medical History" asp-for="MedicalHistory">
+                            <label for="floatingInput">Medical History</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medications" asp-for="Medications">
+                            <label for="floatingInput">Medications</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Allergies" asp-for="Allergies">
+                            <label for="floatingInput">Allergies</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Temp" asp-for="Temp">
+                            <label for="floatingInput">Temp</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="HR" asp-for="HR">
+                            <label for="floatingInput">HR</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="RR" asp-for="RR">
+                            <label for="floatingInput">RR</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 d-md-flex gap-2">
+                        <div class="form-floating input-info mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure" asp-for="BloodPressureF1">
+                            <label for="floatingInput">Blood Pressure</label>
+                        </div>
+                        <div class="form-floating input-info mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure" asp-for="BloodPressureF2">
+                            <label for="floatingInput">Blood Pressure</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="O2" asp-for="O2">
+                            <label for="floatingInput">O2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Pain" asp-for="Pain">
+                            <label for="floatingInput">Pain</label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Heent" asp-for="Heent">
+                            <label for="floatingInput">Heent</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="CV" asp-for="CV">
+                            <label for="floatingInput">CV</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Chest" asp-for="Chest">
+                            <label for="floatingInput">Chest</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="ABD" asp-for="ABD">
+                            <label for="floatingInput">ABD</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Extr" asp-for="Extr">
+                            <label for="floatingInput">Extr</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Skin" asp-for="Skin">
+                            <label for="floatingInput">Skin</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Neuro" asp-for="Neuro">
+                            <label for="floatingInput">Neuro</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Others" asp-for="Others">
+                            <label for="floatingInput">Others</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Diagonsis" asp-for="Diagonsis">
+                            <label for="floatingInput">Diagonsis</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Treatment Plan" asp-for="TreatmentPlan">
+                            <label for="floatingInput">Treatment Plan</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medication dispensed" asp-for="Medicationdispensed">
+                            <label for="floatingInput">Medication dispensed</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Procedures" asp-for="Procedures">
+                            <label for="floatingInput">Procedures</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="form-floating input-info">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Followup" asp-for="Followup">
+                            <label for="floatingInput">Followup</label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="d-flex mb-2 gap-2">
+                    <div class="ms-auto">
+                        <button type="submit" class="btn btn-info text-white">Save Changes</button>
+                    </div>
+                    @*< div class="">
+                    <button type="submit" class="btn text-white" style="background-color: rgb(153,50,204)">Finalize</button>
+                    </div> *@
+                    <div class="">
+                        <button type="button" class="btn btn-outline-info">Cancel</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>

@@ -310,7 +310,10 @@ namespace learning1.Controllers
         }
 
 
-
+        public IActionResult EncounterForm()
+        {
+            return View();
+        }
 
 
     }
