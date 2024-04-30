@@ -1,8 +1,10 @@
-﻿using learning1.DBEntities.ViewModel;
+﻿using learning1.DBEntities.Models;
+using learning1.DBEntities.ViewModel;
 using learning1.Repositories.IRepositories;
 using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,6 +135,13 @@ namespace learning1.Services.Services
         public void UpdatePatientProfile(PatientProfileViewModel model, int id)
         {
             _patientRepo.updateprofileRepo(model,id);
+        }
+
+    
+
+        public void AcceptAgreement(int requestId)
+        {
+            _patientRepo.AcceptRepo(requestId);
         }
     }
 }

@@ -9,14 +9,15 @@ using System.Linq.Expressions;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace learning1.Repositories.Repositories
 {
     public class ProviderRepo : IProviderRepo
     {
-        private readonly DbHallodocContext _context;
+        private readonly DbHalloDocContext _context;
 
-        public ProviderRepo(DbHallodocContext context)
+        public ProviderRepo(DbHalloDocContext context)
         {
             _context = context;
         }
@@ -245,6 +246,7 @@ namespace learning1.Repositories.Repositories
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                  RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
+                 Status=x.Status,
              }).AsQueryable();
 
 
@@ -621,6 +623,25 @@ namespace learning1.Repositories.Repositories
                 userInfo.Role = "Patient";
             }
             return userInfo;
+        }
+
+        public void HousecallRepo(int requestId)
+        {
+            Request request = _context.Requests.Where(x => x.RequestId == requestId).FirstOrDefault();
+            request.Status = 5;
+            _context.Requests.Update(request);
+
+            DateTime date = DateTime.Now;
+            RequestStatusLog requestStatus = new RequestStatusLog()
+            {
+                Status = request.Status,
+                RequestId = request.RequestId,
+                CreatedDate = DateTime.Now,
+                Notes = "Request  transfered to Housecall  on date" + date.ToString("dd/MMMM/yyyy") + " at " + date.ToString("HH:mm"),
+            };
+            _context.RequestStatusLogs.Add(requestStatus);
+            _context.SaveChanges();
+
         }
     }
 }

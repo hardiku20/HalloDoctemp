@@ -10,11 +10,13 @@ namespace learning1.Services.IServices
 {
     public interface IPatientServices
     {
+        void AcceptAgreement(int requestId);
         UserInfoViewModel CheckValidUserWithRole(string email, string password);
         AdminDashboardViewModel DisplayAdminDashboard();
         PatientDashboardViewModel displayDashboard(int id);
         PatientProfileViewModel DisplayPatientProfile(int id);
         ViewCaseViewModel DisplsyViewCase(int requestId);
+      
         void GetBusinesssRequestData(BusinessRequestViewModel model);
         void GetConciergeRequestData(ConciergeRequestViewModel model);
         void GetFamilyRequestData(Family_FriendRequestViewModel model);

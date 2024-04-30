@@ -29,7 +29,7 @@ namespace learning1.Controllers
         //}
 
         private readonly ILogger<HomeController> _logger;
-        private readonly DbHallodocContext _context;
+        private readonly DbHalloDocContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMemoryCache _memoryCache;
         private readonly IPatientServices _patientServices;
@@ -37,7 +37,7 @@ namespace learning1.Controllers
         private readonly IJWTService _JWTService;
 
         //public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache)
-        public HomeController(ILogger<HomeController> logger, IJWTService JWTService , IPatientServices patientServices, IHttpContextAccessor httpContextAccessor, DbHallodocContext context, IMemoryCache memoryCache, INotyfService notyf)
+        public HomeController(ILogger<HomeController> logger, IJWTService JWTService , IPatientServices patientServices, IHttpContextAccessor httpContextAccessor, DbHalloDocContext context, IMemoryCache memoryCache, INotyfService notyf)
         {
             _patientServices = patientServices;
             _logger = logger;
@@ -276,8 +276,9 @@ namespace learning1.Controllers
             return View();
         }
 
-        public IActionResult reviewagreement()
+        public IActionResult reviewagreement(string requestId)
         {
+            TempData["RequestId"] = requestId;
             return View();
         }
 
@@ -440,6 +441,21 @@ namespace learning1.Controllers
             }
             return View();
         }
+
+
+
+
+
+        public IActionResult AcceptRequest()
+        {
+            var requestId=TempData["RequestId"].ToString();
+            _patientServices.AcceptAgreement(int.Parse(requestId));
+            return RedirectToAction("Patientsite");
+        }
+
+
+
+
 
 
 

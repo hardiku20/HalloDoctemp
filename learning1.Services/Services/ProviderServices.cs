@@ -324,5 +324,10 @@ namespace learning1.Services.Services
         {
             return _providerRepo.GetProviderByMailRepo(email, password);
         }
+
+        public void clickHousecall(int requestId)
+        {
+            _providerRepo.HousecallRepo(requestId);
+        }
     }
 }

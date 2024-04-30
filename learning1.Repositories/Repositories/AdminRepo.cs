@@ -23,8 +23,8 @@ namespace learning1.Repositories.Repositories
 
     public class AdminRepo : IAdminRepo
     {
-        private readonly DbHallodocContext _context;
-        public AdminRepo(DbHallodocContext context)
+        private readonly DbHalloDocContext _context;
+        public AdminRepo(DbHalloDocContext context)
         {
             _context = context;
         }
@@ -766,7 +766,7 @@ namespace learning1.Repositories.Repositories
             message.To.Add(new System.Net.Mail.MailAddress(email));
             message.Subject = "AGREEMENT";
             message.IsBodyHtml = true;
-            var resetLink = "https://localhost:44352/home/reviewagreement?requsetId=" + requestId;
+            var resetLink = "https://localhost:44352/home/reviewagreement?requestId=" + requestId;
             message.Body = resetLink + "Agreement";
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "mail.etatvasoft.com";
@@ -817,6 +817,7 @@ namespace learning1.Repositories.Repositories
 
         public void SendlinkMail(AdminDashboardViewModel model)
         {
+
             var email = model.PatientEmail;
             var name = model.firstName + " " + model.lastName;
             var Createlink = "https://localhost:44352/home/reviewagreement";

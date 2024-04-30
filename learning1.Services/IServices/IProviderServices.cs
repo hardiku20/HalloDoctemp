@@ -11,6 +11,7 @@ namespace learning1.Services.IServices
     {
         void acceptCase(int requestId);
         UserInfoViewModel CheckValidUserWithRole(string email, string password);
+        void clickHousecall(int requestId);
         ProviderDashboardViewModel DisplayProviderDashboard(int physicianId);
         ViewCaseViewModel DisplayViewCase(int requestId);
         List<string> GetBusinessByProfession(string professionName);

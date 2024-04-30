@@ -56,7 +56,16 @@
                     }
                 </td>
                 <td class="text-white py-3">@items.Address</td>
-                <td class="text-white py-3"><button type="button" class="btn btn-info text-white">House Call</button></td>
+                <td class="text-white py-3">
+                    @if (items.Status != 5)
+                    {
+                        <p>-</p>
+                    }
+                    @if(items.Status == 5)
+                    {
+                        <button type="button" class="btn btn-info text-white">House Call</button>
+                    }
+                </td>
                 <td>
                     <div class="btn-group">
                         <button class="btn border border-white text-white btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,7 +78,7 @@
                             <li><a class="dropdown-item d-flex" asp-action="SendOrders" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-list-task me-2"></i>Orders</a></li>
                             <li>
                                 <a class="dropdown-item d-flex" data-bs-toggle="modal"
-                                   data-bs-target="#encounterModal"><i class="bi bi-files me-2"></i>Encounter</a>
+                                   data-bs-target="#encounterModal" onclick="onCare(@items.RequestId)"><i class="bi bi-files me-2"></i>Encounter</a>
                             </li>
                         </ul>
                     </div>

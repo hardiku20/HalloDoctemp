@@ -13,9 +13,9 @@ namespace learning1.Repositories.Repositories
 
     public class PatientRepo : IPatientRepo
     {
-        private readonly DbHallodocContext _context;
+        private readonly DbHalloDocContext _context;
 
-        public PatientRepo(DbHallodocContext context)
+        public PatientRepo(DbHalloDocContext context)
         {
             _context = context;
         }
@@ -741,6 +741,15 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges();
 
 
+
+        }
+
+        public void AcceptRepo(int requestId)
+        {
+            Request request = _context.Requests.Where(x=>x.RequestId == requestId).FirstOrDefault();
+            request.Status = 4;
+            _context.Requests.Update(request);
+            _context.SaveChanges();
 
         }
     }

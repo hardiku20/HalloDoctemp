@@ -301,6 +301,13 @@ namespace learning1.Controllers
         //}
 
 
+        public IActionResult SendAgreement(int RequestId)
+        {
+            _adminServices.SendAgreementMail(RequestId);
+            _notyf.Success("Mail Sent");
+            return RedirectToAction("AdminDashboard");
+        }
+
 
         //[HttpPost]
         //public IActionResult SendAgreementMail(AdminDashboardViewModel model, int RequestId)

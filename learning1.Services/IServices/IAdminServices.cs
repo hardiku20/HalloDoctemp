@@ -84,5 +84,6 @@ namespace learning1.Services.IServices
         CloseCaseViewModel GetCloseCase(int id);
         void SetCloseCase(CloseCaseViewModel modal);
         bool UpdateRequest(int id);
+        void SendAgreementMail(int requestId);
     }
 }

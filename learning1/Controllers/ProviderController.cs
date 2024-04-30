@@ -301,7 +301,12 @@ namespace learning1.Controllers
 
 
 
+        public IActionResult Housecall(int requestId)
+        {
 
+            _providerServices.clickHousecall(requestId);
+            return RedirectToAction("ProviderDashboard");
+        }
 
 
         public IActionResult ConcludeCare()

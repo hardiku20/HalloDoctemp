@@ -539,5 +539,10 @@ namespace learning1.Services.Services
 
 
         }
+
+        public void SendAgreementMail(int requestId)
+        {
+            _adminRepo.Mails(requestId);
+        }
     }
 }

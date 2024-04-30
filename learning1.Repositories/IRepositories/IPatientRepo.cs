@@ -28,5 +28,6 @@ namespace learning1.Repositories.IRepositories
         void GetBusinessrequest(BusinessRequestViewModel model);
          UserInfoViewModel GetRoleByAspNetId(string username, string password);
         void updateprofileRepo(PatientProfileViewModel model, int id);
+        void AcceptRepo(int requestId);
     }
 }
