@@ -544,5 +544,15 @@ namespace learning1.Services.Services
         {
             _adminRepo.Mails(requestId);
         }
+
+        public CreateRoleViewModel GetEditDetailsByRoleId(int accountType, int roleId)
+        {
+            return _adminRepo.EditDetailsRepo(accountType, roleId);
+        }
+
+        public void EditRole(CreateRoleViewModel model)
+        {
+            _adminRepo.EditRoleRepo(model);
+        }
     }
 }

@@ -86,9 +86,12 @@ namespace learning1.Repositories.IRepositories
         Request GetRequestById(int id);
         void UpdateRequests(Request req);
         void AddRequestStatusLog(RequestStatusLog requestStatusLog);
+        CreateRoleViewModel EditDetailsRepo(int accountType, int roleId);
+        void EditRoleRepo(CreateRoleViewModel model);
 
 
-        //AccountAccessViewModel EditRoleRepo(int roleId);
+        //AccountAccessViewModel
+        //oleRepo(int roleId);
         //List<string> GetMenuListRepo(int accountType);
     }
 }

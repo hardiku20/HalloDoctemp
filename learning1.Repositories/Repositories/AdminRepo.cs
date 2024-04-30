@@ -23,8 +23,8 @@ namespace learning1.Repositories.Repositories
 
     public class AdminRepo : IAdminRepo
     {
-        private readonly DbHalloDocContext _context;
-        public AdminRepo(DbHalloDocContext context)
+        private readonly DbHallodocContext _context;
+        public AdminRepo(DbHallodocContext context)
         {
             _context = context;
         }
@@ -767,7 +767,7 @@ namespace learning1.Repositories.Repositories
             message.Subject = "AGREEMENT";
             message.IsBodyHtml = true;
             var resetLink = "https://localhost:44352/home/reviewagreement?requestId=" + requestId;
-            message.Body = resetLink + "Agreement";
+            message.Body = "Click to view Agreement:"  + " "+ resetLink;
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "mail.etatvasoft.com";
             smtp.Port = 587;
@@ -1743,7 +1743,7 @@ namespace learning1.Repositories.Repositories
                 userInfo.UserId = AspNetId;
                 userInfo.Email = Aspuser.Email;
                 userInfo.Role = "Patient";
-            }
+            } 
             return userInfo;
         }
 
@@ -1929,6 +1929,59 @@ namespace learning1.Repositories.Repositories
         {
             _context.RequestStatusLogs.Add(requestStatusLog);
             _context.SaveChanges();
+        }
+
+        public CreateRoleViewModel EditDetailsRepo(int accountType, int roleId)
+        {
+            CreateRoleViewModel model = new()
+            {
+                RoleId = roleId,
+                RoleName = _context.Roles.Where(x=>x.RoleId==roleId).FirstOrDefault().Name,
+                AccountType = accountType.ToString(),
+                menulist = GetMenuRepo(accountType),
+                SelectedMenus = _context.RoleMenus.Where(x => x.RoleId == roleId).Select(x => x.MenuId).ToList(),
+                
+            };
+
+            return model;
+
+        }
+
+        public void EditRoleRepo(CreateRoleViewModel model)
+        {
+          Role role= _context.Roles.Where(x=>x.RoleId == model.RoleId).FirstOrDefault();
+            role.AccountType = short.Parse(model.AccountType);
+            role.Name = model.RoleName;
+            _context.Roles.Update(role);
+
+            List<RoleMenu> roleMenuslist = _context.RoleMenus.Where(x => x.RoleId == role.RoleId).ToList();
+            List<int> oldList = roleMenuslist.Select(b => b.MenuId).ToList();
+            foreach (var items in roleMenuslist)
+            {
+                if (!model.SelectedMenus.Contains(items.MenuId))
+                {
+                    _context.RoleMenus.Remove(items);
+
+                }
+            }
+
+
+            foreach (var MenuId in model.SelectedMenus)
+            {
+                if (!oldList.Contains(MenuId))
+                {
+                    RoleMenu roleMenu = new RoleMenu
+                    {
+                        RoleId = role.RoleId,
+                        MenuId = MenuId
+                    };
+                    _context.RoleMenus.Add(roleMenu);
+
+                }
+            }
+            _context.SaveChanges();
+
+
         }
     }
 }

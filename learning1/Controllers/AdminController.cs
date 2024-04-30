@@ -464,6 +464,19 @@ namespace learning1.Controllers
             return PartialView("_MenuList", model);
         }
 
+        public IActionResult EditRole(int AccountType ,  int RoleId)
+        {
+
+            CreateRoleViewModel model = _adminServices.GetEditDetailsByRoleId(AccountType,RoleId);
+            return View(model);
+        }
+
+        public IActionResult GetMenuByAccountandRole(int AccountType,int RoleId)
+        {
+            CreateRoleViewModel model = _adminServices.GetEditDetailsByRoleId(AccountType, RoleId);
+            return PartialView("_MenuList", model);
+        }
+
         [HttpPost]
         public IActionResult CreateRole(CreateRoleViewModel model)
         {
@@ -471,6 +484,15 @@ namespace learning1.Controllers
             _notyf.Success("Role Created Successfully");
             return RedirectToAction("AccountAccess");
         }
+
+        [HttpPost]
+        public IActionResult EditRole(CreateRoleViewModel model)
+        {
+            _adminServices.EditRole(model);
+            _notyf.Success("Role Updated");
+            return RedirectToAction("AccountAccess");
+        }
+
 
         public IActionResult DeleteRole(int RoleId)
         {

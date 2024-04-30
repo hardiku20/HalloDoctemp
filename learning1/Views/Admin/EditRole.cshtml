@@ -73,4 +73,45 @@
 
 }
 
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            method: "get",
+            url: "/admin/GetMenuByAccountandRole",
+            data: {
+                AccountType : @Model.AccountType,
+                RoleId:@Model.RoleId
+            },
+            success: function (result) {
+                $("#MenuList").html(result);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+
+        })
+    })
+
+    $("#AccountType").on("change", function () {
+        var accountType = this.value;
+
+        $.ajax({
+            method: "get",
+            url: "/admin/GetMenuByAccountandRole",
+            data: {
+                AccountType: accountType,
+                RoleId: @Model.RoleId
+            },
+            success: function (result) {
+                $("#MenuList").html(result);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+
+        });
+    });
+</script>
+
 

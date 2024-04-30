@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,9 +17,9 @@ namespace learning1.Repositories.Repositories
 {
     public class ProviderRepo : IProviderRepo
     {
-        private readonly DbHalloDocContext _context;
+        private readonly DbHallodocContext _context;
 
-        public ProviderRepo(DbHalloDocContext context)
+        public ProviderRepo(DbHallodocContext context)
         {
             _context = context;
         }
@@ -642,6 +644,27 @@ namespace learning1.Repositories.Repositories
             _context.RequestStatusLogs.Add(requestStatus);
             _context.SaveChanges();
 
+        }
+
+        public void AgreementMails(int requestId)
+        {
+            var email = _context.Requests.Where(x => x.RequestId == requestId).Select(x => x.Email).FirstOrDefault();
+            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+
+            message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
+            
+            message.To.Add(new System.Net.Mail.MailAddress(email));
+            message.Subject = "AGREEMENT";
+            message.IsBodyHtml = true;
+            var resetLink = "https://localhost:44352/home/reviewagreement?requestId=" + requestId;
+            message.Body = "Click to view Agreement:" + " " + resetLink;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "mail.etatvasoft.com";
+            smtp.Port = 587;
+            smtp.Credentials = new NetworkCredential("tatav.dotnet.hardikupadhyay@outlook.com", "Hardik@2003");
+            smtp.EnableSsl = true;
+            smtp.Send(message);
+            smtp.UseDefaultCredentials = false;
         }
     }
 }

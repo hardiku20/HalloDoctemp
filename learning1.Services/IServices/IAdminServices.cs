@@ -85,5 +85,7 @@ namespace learning1.Services.IServices
         void SetCloseCase(CloseCaseViewModel modal);
         bool UpdateRequest(int id);
         void SendAgreementMail(int requestId);
+        CreateRoleViewModel GetEditDetailsByRoleId(int accountType, int roleId);
+        void EditRole(CreateRoleViewModel model);
     }
 }

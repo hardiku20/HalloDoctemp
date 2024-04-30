@@ -50,7 +50,7 @@
                             }
                             <td class="py-1">@AccountTextMap[items.AccountType]</td>
                             <td class="d-flex justify-content-center gap-1 py-1">
-                                <a type="submit" class="btn btn-outline-info text-info bg-white dark-mode1" asp-action="EditRole" asp-controller="Admin" asp-route-roleId= "@items.RoleId">Edit</a>
+                                <a type="submit" class="btn btn-outline-info text-info bg-white dark-mode1" asp-action="EditRole" asp-controller="Admin" asp-route-RoleId="@items.RoleId" asp-route-AccountType="@items.AccountType">Edit</a>
                                 <button type="submit" class="btn btn-outline-info text-info bg-white dark-mode1" onclick="DeleteRole(@items.RoleId)">Delete</button>
                             </td>
                         </tr>

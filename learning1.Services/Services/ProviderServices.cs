@@ -329,5 +329,10 @@ namespace learning1.Services.Services
         {
             _providerRepo.HousecallRepo(requestId);
         }
+
+        public void SendAgreement(int requestId)
+        {
+            _providerRepo.AgreementMails(requestId);
+        }
     }
 }

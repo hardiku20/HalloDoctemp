@@ -419,6 +419,7 @@
 <script>
     $(document).ready(function () {
         // Disable "Continue" button initially
+       
         $("#continueBtn").prop("disabled", true);
 
         // Handle "Me" and "Someone Else" button clicks
@@ -430,6 +431,7 @@
 
         // Handle "Continue" button click
         $("#continueBtn").click(function () {
+            debugger
             var selectedButton = $(".btn-outline-info.active").text(); // Get the text of the selected button
             // Use the selectedButton value to determine and perform the appropriate redirect:
             if (selectedButton === "Housecall") {
@@ -441,8 +443,8 @@
                     data: {
                       requestId :  requestId, 
                     },
-                    success: function () {
-                        
+                    success: function (data) {
+                        $("#provider-table-wrapper").html(data)
                     },
                     error: function (error) {
                         console.log(error);
@@ -458,7 +460,31 @@
             }
         });
     });
+
+
+    $(".SendAgreement").click(function () {
+
+        var reqId = $("#Agreement-RequestId").val();
+        $.ajax({
+            method: 'GET',
+            url: '/Provider/SendAgreementMail',
+            data: {
+                RequestId: reqId,
+            },
+
+            success: function (result) {
+                $("#PatientEmail").val(result.patientemail);
+                $("#PatientPhone").val(result.patientphone);
+            },
+
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+
+        })
+    })
 </script>
+
 
 
 

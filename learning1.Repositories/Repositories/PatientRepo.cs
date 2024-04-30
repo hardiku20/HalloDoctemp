@@ -13,9 +13,9 @@ namespace learning1.Repositories.Repositories
 
     public class PatientRepo : IPatientRepo
     {
-        private readonly DbHalloDocContext _context;
+        private readonly DbHallodocContext _context;
 
-        public PatientRepo(DbHalloDocContext context)
+        public PatientRepo(DbHallodocContext context)
         {
             _context = context;
         }

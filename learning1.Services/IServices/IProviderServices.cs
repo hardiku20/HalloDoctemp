@@ -31,6 +31,7 @@ namespace learning1.Services.IServices
         ProviderDashboardViewModel RenderConcludeStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, RequestType requestType);
         ProviderDashboardViewModel RenderNewStateData(int status,int physicianId, int page, int pageSize, string patientName, string regionName, RequestType requestType);
         ProviderDashboardViewModel RenderPendingStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, RequestType requestType);
+        void SendAgreement(int requestId);
         bool SetCreateNewShiftData(ProviderSchedulingViewModel model);
         void SetNotesById(ViewNotesViewModel model);
     }

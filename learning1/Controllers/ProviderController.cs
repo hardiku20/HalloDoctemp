@@ -300,12 +300,15 @@ namespace learning1.Controllers
         }
 
 
-
+        [HttpPost]
         public IActionResult Housecall(int requestId)
         {
 
             _providerServices.clickHousecall(requestId);
-            return RedirectToAction("ProviderDashboard");
+            return RedirectToAction(" RenderActivePartialView", new
+            {
+                status1 = 4, status2 = 5,
+            });
         }
 
 
@@ -314,12 +317,18 @@ namespace learning1.Controllers
             return View();
         }
 
-
+         
         public IActionResult EncounterForm()
         {
             return View();
         }
 
+
+        public IActionResult SendAgreementMail(int RequestId)
+        {
+            _providerServices.SendAgreement(RequestId);
+            return RedirectToAction("ProviderDashboard");
+        }
 
     }
 }

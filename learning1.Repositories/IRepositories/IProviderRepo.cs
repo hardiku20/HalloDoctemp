@@ -41,5 +41,6 @@ namespace learning1.Repositories.IRepositories
         void UpdateNotes(RequestNote requestNote);
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
         void HousecallRepo(int requestId);
+        void AgreementMails(int requestId);
     }
 }

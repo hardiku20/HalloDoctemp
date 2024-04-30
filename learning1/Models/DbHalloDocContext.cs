@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace learning1.Models;
 
-public partial class DbHalloDocContext : DbContext
+public partial class DbHallodocContext : DbContext
 {
-    public DbHalloDocContext()
+    public DbHallodocContext()
     {
     }
 
-    public DbHalloDocContext(DbContextOptions<DbHalloDocContext> options)
+    public DbHallodocContext(DbContextOptions<DbHallodocContext> options)
         : base(options)
     {
     }

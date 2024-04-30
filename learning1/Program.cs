@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
-builder.Services.AddDbContext<DbHalloDocContext>(options =>
+builder.Services.AddDbContext<DbHallodocContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
 
 builder.Services.AddScoped<IPatientRepo, PatientRepo>();
@@ -27,7 +27,7 @@ builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDi
 
 
 
-builder.Services.AddDbContext<learning1.DBEntities.Models.DbHalloDocContext>(options =>
+builder.Services.AddDbContext<learning1.DBEntities.Models.DbHallodocContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DbHallodocContext")));
 var app = builder.Build();
 
