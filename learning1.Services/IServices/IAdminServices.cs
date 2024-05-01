@@ -87,5 +87,6 @@ namespace learning1.Services.IServices
         void SendAgreementMail(int requestId);
         CreateRoleViewModel GetEditDetailsByRoleId(int accountType, int roleId);
         void EditRole(CreateRoleViewModel model);
+        void UnblockCase(int RequestId);
     }
 }

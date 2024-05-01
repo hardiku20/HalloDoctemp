@@ -11,6 +11,7 @@ namespace learning1.Services.IServices
     public interface IJWTService
     {
         string GenerateJWTToken(UserInfoViewModel model);
+        UserInfoViewModel getDetails(string? token);
         public bool ValidateToken(string token, out JwtSecurityToken jwtSecurityToken);
     }
 }

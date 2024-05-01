@@ -27,7 +27,8 @@ namespace learning1.Services.Services
             {
                 new Claim(ClaimTypes.Email, model.Email),
                 new Claim(ClaimTypes.Role, model.Role),
-                new Claim("Id", model.UserId.ToString())
+                new Claim("Id", model.UserId.ToString()),
+
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is my custom Secret key for authentication"));
@@ -42,6 +43,38 @@ namespace learning1.Services.Services
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public UserInfoViewModel getDetails(string? token)
+        {
+            JwtSecurityToken jwtSecurityToken = null;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes("this is my custom Secret key for authentication");
+
+
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+        ,
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
+
+            // Corrected access to the validatedToken
+            jwtSecurityToken = (JwtSecurityToken)validatedToken;
+
+            UserInfoViewModel model = new UserInfoViewModel()
+            {
+                UserId = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "UserId").Value,
+                Role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value,
+                Email = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value,
+                Name = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "firstName").Value,
+                RoleId = int.Parse(jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "RoleId").Value),
+            };
+
+            return model;
         }
 
         public bool ValidateToken(string token, out JwtSecurityToken jwtSecurityToken)

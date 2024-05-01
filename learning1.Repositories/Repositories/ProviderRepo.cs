@@ -666,6 +666,64 @@ namespace learning1.Repositories.Repositories
             smtp.Send(message);
             smtp.UseDefaultCredentials = false;
         }
+
+        public void ConsultRepo(int requestId)
+        {
+            Request request = _context.Requests.Where(x => x.RequestId == requestId).FirstOrDefault();
+            request.Status = 6;
+            _context.Requests.Update(request);
+
+            DateTime date = DateTime.Now;
+            RequestStatusLog requestStatus = new RequestStatusLog()
+            {
+                Status = request.Status,
+                RequestId = request.RequestId,
+                CreatedDate = DateTime.Now,
+                Notes = "Request  transfered to Consult  on date" + date.ToString("dd/MMMM/yyyy") + " at " + date.ToString("HH:mm"),
+            };
+            _context.RequestStatusLogs.Add(requestStatus);
+            _context.SaveChanges();
+        }
+
+        public CloseCaseViewModel ConcludeCareRepo(int requestId)
+        {
+            RequestClient client = _context.RequestClients.Where(x=>x.RequestId == requestId).FirstOrDefault();
+            List<RequestWiseFile> RequestFiles = _context.RequestWiseFiles.Where(x=>x.RequestId == requestId).ToList();
+            CloseCaseViewModel modal = new()
+            {
+                ReqId = requestId,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                ConfirmationNumber = client.Request == null ? "" : client.Request.ConfirmationNumber,
+                Files = RequestFiles ?? null
+            };
+
+
+            return modal;
+        }
+
+        public void AddRequestWiseFile(RequestWiseFile requestwisefile)
+        {
+            _context.RequestWiseFiles.Add(requestwisefile);
+            _context.SaveChanges();
+        }
+
+        public Request GetRequestById(int requestId)
+        {
+            return _context.Requests.Where(x => x.RequestId == requestId).FirstOrDefault();
+        }
+
+        public void UpdateRequest(Request req)
+        {
+            _context.Requests.Update(req);
+            _context.SaveChanges();
+        }
+
+        public void AddRequestStatusLog(RequestStatusLog requestStatusLog)
+        {
+            _context.RequestStatusLogs.Add(requestStatusLog);
+            _context.SaveChanges(); 
+        }
     }
 }
     

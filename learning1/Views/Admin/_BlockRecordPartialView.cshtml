@@ -32,7 +32,7 @@
                 <td class="py-1">@items.Notes</td>
                 <td class="py-1"><input class="form-check-input" type="checkbox" id="checkboxNoLabel"></td>
                 <td class="d-flex justify-content-center py-1">
-                    <a class="btn btn-outline-info text-info bg-white dark-mode1 btn-sm">Unblock</a>
+                    <a class="btn btn-outline-info text-info bg-white dark-mode1 btn-sm" asp-action="UnBlockCase" asp-controller="Admin" asp-route-RequestId="@items.RequestId">Unblock</a>
                 </td>
             </tr>
         }

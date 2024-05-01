@@ -303,21 +303,55 @@ namespace learning1.Controllers
         [HttpPost]
         public IActionResult Housecall(int requestId)
         {
-
             _providerServices.clickHousecall(requestId);
-            return RedirectToAction(" RenderActivePartialView", new
-            {
-                status1 = 4, status2 = 5,
-            });
+            return RedirectToAction("ProviderDashboard");
         }
 
 
-        public IActionResult ConcludeCare()
+        public IActionResult Consult(int requestId)
         {
-            return View();
+
+            _providerServices.clickConsult(requestId);
+            return RedirectToAction("ProviderDashboard");
+
+
+            //    RedirectToAction("_providerConcludeState", new
+            //{
+            //    status = 6,
+            //});
         }
 
-         
+        public IActionResult ConcludeCare(int RequestId)
+        {
+            CloseCaseViewModel model = _providerServices.GetConcludeCare(RequestId);
+            return View(model);
+        }
+
+        public IActionResult ConcludeCareUpload(CloseCaseViewModel modal)
+        {
+            if (modal.FileforConcludeCare != null)
+            {
+                bool res = _providerServices.UploadConcludeDocument(modal.FileforConcludeCare, modal.ReqId);
+                if (res) { _notyf.Success("Document uploaded successfully"); }
+                else { _notyf.Error("something went wrong document is not uploaded"); }
+            }
+            else
+            {
+                _notyf.Error("Please select document to upload");
+            }
+            return RedirectToAction("ConcludeCare", "Provider", new { RequestId = modal.ReqId });
+        }
+
+
+        public IActionResult ConcludCareFinal(int id, CloseCaseViewModel modal)
+        {
+            bool response = _providerServices.ConcludeCare(id, modal);
+            if (response) { _notyf.Success("Case has been closed"); }
+            else { _notyf.Error("somthing Went wrong"); }
+            return RedirectToAction("ProviderDashboard", "Provider");
+        }
+
+
         public IActionResult EncounterForm()
         {
             return View();

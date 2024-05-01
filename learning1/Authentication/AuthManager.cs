@@ -1,5 +1,6 @@
 ﻿using learning1.DBEntities.Models;
 using learning1.DBEntities.ViewModel;
+using learning1.Repositories.IRepositories;
 using learning1.Services.IServices;
 using learning1.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -77,6 +78,46 @@ namespace learning1.Authentication
             //    }
 
             //}
+        }
+    }
+
+    public class RequiresMenu : Attribute, IAuthorizationFilter
+    {
+        public readonly string _menu;
+
+        public RequiresMenu(string menu)
+        {
+            this._menu = menu;
+        }
+
+        public void OnAuthorization(AuthorizationFilterContext context)
+        {
+            var jwtService = context.HttpContext.RequestServices.GetService<IJWTService>();
+            var adminRepo = context.HttpContext.RequestServices.GetService<IAdminRepo>();
+            if (jwtService == null)
+            {
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Home", action = "Login", }));
+                return;
+            }
+
+            var request = context.HttpContext.Request;
+            var token = request.Cookies["jwt"];
+
+            if (_menu != null)
+            {
+                var cookie = jwtService.getDetails(token);
+                List<string> roleMenu = adminRepo.getListOfRoleMenu(cookie.RoleId);
+                bool f = false;
+                if (roleMenu.Any(r => r == _menu))
+                {
+                    f = true;
+                }
+                if (!f)
+                {
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "home", action = "patientsite" }));
+                    return;
+                }
+            }
         }
     }
 }

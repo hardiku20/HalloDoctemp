@@ -24,7 +24,7 @@
 
 
     <div class="d-md-block d-none overflow-x-auto">
-        <table class="table-responsive table-hover w-100">
+        <table class="table">
             <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
                 <td scope="col" class="py-3 ps-4">Client/Member</td>
                 <td scope="col" class="py-3">Created Date</td>
@@ -33,7 +33,7 @@
                 <td scope="col" class="py-3">Concluded Date</td>
                 <td scope="col" class="py-3">Status</td>
                 <td scope="col" class="py-3">Final Report</td>
-                <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+                <td scope="col" class="py-3">Actions</td>
             </tr>
 
             @foreach (var items in Model.patientRecords)
@@ -48,7 +48,7 @@
                     <td class="py-1">
                         <button class="btn btn-outline-info text-info bg-white dark-mode1 btn-sm">View</button>
                     </td>
-                    <td class="d-flex justify-content-center py-1">
+                    <td class="py-1">
                         <div class="btn-group">
                             <button class="btn btn-outline-info text-info bg-white dark-mode1 btn-sm rounded" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Actions

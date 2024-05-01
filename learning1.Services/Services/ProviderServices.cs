@@ -3,6 +3,7 @@ using learning1.DBEntities.ViewModel;
 using learning1.Repositories.IRepositories;
 using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -333,6 +334,70 @@ namespace learning1.Services.Services
         public void SendAgreement(int requestId)
         {
             _providerRepo.AgreementMails(requestId);
+        }
+
+        public void clickConsult(int requestId)
+        {
+            _providerRepo.ConsultRepo(requestId);
+        }
+
+        public CloseCaseViewModel GetConcludeCare(int requestId)
+        {
+            return _providerRepo.ConcludeCareRepo(requestId);
+        }
+
+        public bool UploadConcludeDocument(IFormFile fileforConcludeCare, int reqId)
+        {
+
+            try
+            {
+                var fileName = reqId +"-" + Path.GetFileName(fileforConcludeCare.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", "PatientDocs", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    fileforConcludeCare.CopyTo(stream);
+                }
+                RequestWiseFile requestwisefile = new()
+                {
+                    FileName = fileName,
+                    RequestId = reqId,
+                    CreatedDate = DateTime.Now,
+                };
+
+                _providerRepo.AddRequestWiseFile(requestwisefile);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool ConcludeCare(int RequestId, CloseCaseViewModel modal)
+        {
+            try
+            {
+                Request req = _providerRepo.GetRequestById(RequestId);
+                req.Status = 8;
+                _providerRepo.UpdateRequest(req);
+                DateTime date = DateTime.Now;
+                RequestStatusLog requestStatusLog = new RequestStatusLog()
+                {
+                    RequestId = req.RequestId,
+                    Status = req.Status,
+                    PhysicianId = req.PhysicianId,
+                    CreatedDate = date,
+                    Notes = "The case has been conclude by physician on " + date.ToString("f") + " with additional notes:" + modal.ProviderNotes
+                };
+
+                _providerRepo.AddRequestStatusLog(requestStatusLog);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

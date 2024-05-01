@@ -1402,7 +1402,7 @@ namespace learning1.Repositories.Repositories
 
         public void CreateNewStateData(SchedulingViewModel model)
         {
-            int PhysicianId = _context.Physicians.Where(x => x.FirstName == model.PhysicianName).Select(x => x.PhysicianId).FirstOrDefault();
+           
 
             //DateTime combinedDate = new DateTime(year, month, date); // Combine year, month, and date
             var date = model.ShiftDate;
@@ -1414,7 +1414,7 @@ namespace learning1.Repositories.Repositories
             var adminId = "ee0d64b2-e209-4f9f-b315-99221836598a";
             Shift shift = new()
             {
-                PhysicianId = PhysicianId,
+                PhysicianId = int.Parse(model.PhysicianName),   ///physician id 
                 StartDate = (DateOnly)model.ShiftDate, //same ???????
                 IsRepeat = model.IsRepeat,
                 //WeekDays -- character -- no. of week days???? 
@@ -1981,6 +1981,45 @@ namespace learning1.Repositories.Repositories
             }
             _context.SaveChanges();
 
+
+        }
+
+        public List<string> getListOfRoleMenu(int? roleId)
+        {
+            List<RoleMenu> roleMenus = _context.RoleMenus.Where(u => u.RoleId == roleId).ToList();
+            if (roleMenus.Count > 0)
+            {
+                List<string> menus = new List<string>();
+                foreach (var item in roleMenus)
+                {
+                    menus.Add(_context.Menus.FirstOrDefault(u => u.MenuId == item.MenuId).Name);
+                }
+                return menus;
+            }
+            else
+            {
+                return new List<string>();
+            }
+        }
+
+        public void UnblockCaseRepo(int requestId)
+        {
+            RequestStatusLog blockdata = new RequestStatusLog()
+            {
+                RequestId =requestId,
+                Status = 1,
+                Notes = "Request is unblocked!!",
+                CreatedDate = DateTime.Now,
+            };
+
+            _context.RequestStatusLogs.Add(blockdata);
+            _context.SaveChanges();
+
+            Request request = _context.Requests.Where(x => x.RequestId == requestId).First();
+            request.Status = 1;
+
+            _context.Requests.Update(request);
+            _context.SaveChanges();
 
         }
     }

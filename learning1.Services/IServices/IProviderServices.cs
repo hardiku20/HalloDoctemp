@@ -1,4 +1,5 @@
 ﻿using learning1.DBEntities.ViewModel;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,13 @@ namespace learning1.Services.IServices
     {
         void acceptCase(int requestId);
         UserInfoViewModel CheckValidUserWithRole(string email, string password);
+        void clickConsult(int requestId);
         void clickHousecall(int requestId);
+        bool ConcludeCare(int id, CloseCaseViewModel modal);
         ProviderDashboardViewModel DisplayProviderDashboard(int physicianId);
         ViewCaseViewModel DisplayViewCase(int requestId);
         List<string> GetBusinessByProfession(string professionName);
+        CloseCaseViewModel GetConcludeCare(int requestId);
         SendOrderViewModel GetDetailsByBusiness(string businessName);
         ViewNotesViewModel GetNotesById(int requestId);
         SendOrderViewModel GetOrderdetails();
@@ -34,5 +38,6 @@ namespace learning1.Services.IServices
         void SendAgreement(int requestId);
         bool SetCreateNewShiftData(ProviderSchedulingViewModel model);
         void SetNotesById(ViewNotesViewModel model);
+        bool UploadConcludeDocument(IFormFile fileforConcludeCare, int reqId);
     }
 }

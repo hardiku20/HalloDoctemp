@@ -554,5 +554,10 @@ namespace learning1.Services.Services
         {
             _adminRepo.EditRoleRepo(model);
         }
+
+        public void UnblockCase(int requestId)
+        {
+            _adminRepo.UnblockCaseRepo(requestId);
+        }
     }
 }

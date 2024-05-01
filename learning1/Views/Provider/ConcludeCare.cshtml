@@ -1,99 +1,163 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     Layout = "_ProviderLayout";
 }
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+@model learning1.DBEntities.ViewModel.CloseCaseViewModel;
 
 
+<div class="container mt-3">
+    <div class="main d-flex justify-content-between mb-2">
+        <div class="patient ">
+            <span class="fs-3 fw-bold">Concude Case</span>
 
-<div class="container-fluid">
-    <div class="container">
-
-        <div class="d-flex justify-content-between my-4">
-            <h4 class="">Conclude Care</h4>
-            <div class="d-flex justify-content-end">
-                <a href="javascript: history.go(-1)"
-                   class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
-                    <img src="/assets/images/chevron-left.svg" alt=""> Back
-                </a>
-            </div>
         </div>
-        <div class="bg-white dark-mode1 border-0 shadow-sm p-3">
-                <div class="">
-                    <p class="mb-0 pt-4">Patient Name</p>
-                    <h4 class=" text-info">
-                        ghfghk
-                    </h4>
-                </div>
-            <div class="d-flex justify-content-between align-items-center">
-                <h4>Encounter Forms</h4>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-outline-info d-none d-sm-flex p-2">Download All</button>
-                    <button class="btn btn-outline-info d-sm-none d-flex  p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-arrow-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M7.646 10.854a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 9.293V5.5a.5.5 0 0 0-1 0v3.793L6.354 8.146a.5.5 0 1 0-.708.708z" />
-                            <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383m.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
-                        </svg>
-                    </button>
-                </div>
+        <div>
+            <a href="javascript: history.go(-1)" class="btn btn-outline-info ">
+                <i class="bi bi-chevron-left prcolor fw-bold fs-normal">
+                    Back
+                </i>
+            </a>
+
+
+        </div>
+
+    </div>
+    <div class="main-content mt-1 shadow border-2">
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <h6 class="ms-4 mt-3 "> Patient Name </h6>
+                <span>
+                    <span class="text-info ms-4 fw-bold fs-4"> @Model.FirstName @Model.LastName</span>
+                    MD450456945
+                </span>
             </div>
 
         </div>
 
+        <div class="d-flex justify-content-between ">
+            <span class="ms-4 fs-4 fw-bold"> Documents</span>
+            <div>
 
-        <div class="bg-white dark-mode1 shadow-sm">
-            <table class="table-responsive  table-hover w-100 p-2">
-                <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
-                    <td scope="col" class="py-3 ps-3">Documents</td>
-                    <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
-                </tr>
+                <form method="post" asp-action="ConcludeCareUpload" asp-controller="Provider" class="input-group my-5 mt-3" enctype="multipart/form-data" id="UploadDocForm">
+                    <input type="text" asp-for=@Model.ReqId hidden />
+                    <div class="form-floating me-1">
 
 
-                    <tr class="border-bottom border-secondary-subtle">
-                        <td class="py-1 ps-3">
-                        htsftghdjhgl
-                        </td>
-                    <td class="py-1 d-flex justify-content-center align-items-center gap-2">
-                        <a class="btn btn-outline-info text-info bg-white dark-mode1 download-link" asp-action="download_file" asp-controller="Provider">Download</a>
-                        <a class="btn btn-outline-info text-info bg-white dark-mode1">Delete</a>
-                        </td>
-                    </tr>
-            </table>
-
-            <form>
-                <div class="row my-2 p-3">
-                    <h6 class="text-secondary mb-2">Provider Notes</h6>
-                    <div class="mb-3 col-md-12">
-                        <div class="form-floating input-info">
-                            <textarea class="form-control" placeholder="" id="floatingTextarea2"
-                                      style="height: 150px"></textarea>
-                            <label for="floatingTextarea2" class="text-secondary">
-                                Provider Notes
-                            </label>
-                        </div>
+                        <input style="display:none" asp-for=FileforConcludeCare type="file" id="my-file4" onchange="submitForm()">
+                        <button type="button" class="btn btn-outline-info text-info me-2 " id="" onclick="document.getElementById('my-file4').click()">
+                            <i class="bi bi-cloud-arrow-up fw-bold fst-normal ">
+                                <span>Upload</span>
+                            </i>
+                        </button>
                     </div>
-      
-                    <div class="d-flex my-1 justify-content-end">
-                        <a class="btn btn-info text-white text-decoration-none py-2">
-                            Conclude Care
-                        </a>
-                    </div>
-                </div>
-            </form>
+                </form>
 
-
-
-
-
+            </div>
         </div>
 
+        <div class=" d-none d-sm-block">
+
+            @if (Model.Files.Count() != 0)
+            {
+                <table class="table border border-top-0 ">
+                    <thead class="thead-">
+                    <thead class="thead-light " style="background-color:#dee2e6">
+                        <tr>
+
+                            <th></th>
+                            <th>
+                                Upload Date<i class="bi bi-arrow-up-short"></i>
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var item in Model.Files)
+                            {
+                            <tr>
+                                <td>
+                                    <i class="bi bi-file-earmark-fill ms-2" style="color:red"></i>
+                                        @item.FileName
+                                </td>
+                                <td>@item.CreatedDate.ToString("MMM dd, yyyy")</td>
+                                <td>
+                                    <a href="~/UploadedFiles/@item.FileName" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
+                                        <i class="bi bi-cloud-download"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="ms-4 fw-bold"> Don't have any documents yet </p>
+            }
+        </div>
+
+        <div class=" d-block d-md-none mt-2">
+
+            <hr />
+            @if (Model.Files.Count() != 0)
+            {
+                @foreach (var item in Model.Files)
+                {
+                    <div class="ms-4">
+                        <span class="d-block fs-4">
+                            <i class="bi bi-file-earmark-fill" style="color:red"></i>
+                            @item.FileName
+                        </span>
+                        <span class="d-block fs-4">
+                            @item.CreatedDate.ToString("MMM dd, yyyy")
+                        </span>
+                        <span>
+                            <a href="~/UploadedFiles/@item.FileName" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
+                                <i class="bi bi-cloud-download"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <hr />
+                }
+            }
+            else
+            {
+                <p class="ms-4 fw-bold"> Don't have any documents yet </p>
+            }
+        </div>
+
+        <span class="ms-4 fs-5 fw-bold">Provider Notes</span>
+
+        <form asp-action="ConcludCareFinal" asp-controller="Provider" asp-route-id="@Model.ReqId">
+
+            <div class="row mb-4 m-0">
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-floating mt-2">
+                        <textarea asp-for="ProviderNotes" class="form-control focus-ring focus-ring-light"
+                                  placeholder="Leave a comment here" id="floatingTextarea2"
+                                  style="height: 100px"></textarea>
+                        <label for="floatingTextarea2" id="txt1">
+                            Provider Notes
+                        </label>
+                    </div>
+                </div>
+
+
+            </div>
 
 
 
+            <div class="d-flex justify-content-end mx-0" id="">
 
+                <button class="btn btn-outline-info me-3 my-3" type="button" onclick="CheckIsFormFInalizeAndRes()">Conclude Care</button>
+                <button hidden id="submitbtn"> Submit</button>
+            </div>
 
+        </form>
     </div>
 </div>
 
@@ -109,4 +173,45 @@
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
+</script>
+
+<script>
+
+
+    function CheckIsFormFInalizeAndRes() {
+
+
+        $.ajax({
+            url: "/Provider/IsFormFinalize",
+            type: "GET",
+            data: { requestId: @Model.ReqId },
+            success: function (response) {
+
+                if (response) {
+                    var res = confirm("Are you sure you want to conclude the case?")
+                    if (res) {
+                        $('#submitbtn').click();
+                    }
+                } else {
+                    alert("Please Finalize the Encounter Form to conclude this case")
+                    return;
+                }
+            },
+            error: function (jqXHR, error, errorThrown) {
+                if (jqXHR.status) {
+                    alert(jqXHR.responseText);
+                } else {
+                    alert("Something went wrong");
+                }
+            }
+        });
+
+
+
+    }
+
+    function submitForm() {
+        document.getElementById("UploadDocForm").submit();
+    }
+
 </script>

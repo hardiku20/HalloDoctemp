@@ -94,7 +94,7 @@ namespace learning1.Controllers
         }
 
 
-
+       // [RequiresMenu("Dashboard")]
         [CustomAuthorize("Admin")]
         public IActionResult admindashboard()
         {
@@ -186,6 +186,13 @@ namespace learning1.Controllers
         public IActionResult BlockCase(AdminDashboardViewModel model)
         {
             _adminServices.GetBlockCaseData(model);
+            return RedirectToAction("admindashboard");
+        }
+
+    
+        public IActionResult UnBlockCase(int RequestId)
+        {
+            _adminServices.UnblockCase(RequestId);
             return RedirectToAction("admindashboard");
         }
 

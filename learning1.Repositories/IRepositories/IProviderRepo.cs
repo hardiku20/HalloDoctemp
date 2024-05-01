@@ -42,5 +42,11 @@ namespace learning1.Repositories.IRepositories
         ViewUploadViewModel Uploaddocuments(ViewUploadViewModel model, int requestId);
         void HousecallRepo(int requestId);
         void AgreementMails(int requestId);
+        void ConsultRepo(int requestId);
+        CloseCaseViewModel ConcludeCareRepo(int requestId);
+        void AddRequestWiseFile(RequestWiseFile requestwisefile);
+        Request GetRequestById(int requestId);
+        void UpdateRequest(Request req);
+        void AddRequestStatusLog(RequestStatusLog requestStatusLog);
     }
 }

@@ -132,7 +132,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-info">
-                <input asp-for="RequestId" id="Care-Id" />
+                <input asp-for="RequestId" id="Care-Id" hidden/>
                 <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Select Type Of Care</h1>
                 <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -445,6 +445,8 @@
                     },
                     success: function (data) {
                         $("#provider-table-wrapper").html(data)
+                        $('#encounterModal').modal('hide');
+                        window.location.reload();
                     },
                     error: function (error) {
                         console.log(error);
@@ -452,7 +454,23 @@
 
                 })
             } else if (selectedButton === "Consult") {
-
+                console.log(selectedButton);
+                var requestId = $("#Care-Id").val();
+                $.ajax({
+                    method: "Post",
+                    url: "/Provider/Consult",
+                    data: {
+                        requestId: requestId,
+                    },
+                    success: function (data) {
+                        $("#provider-table-wrapper").html(data)
+                        $('#encounterModal').modal('hide');
+                        window.location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
                  
             } else {
                 // Handle any unexpected state
