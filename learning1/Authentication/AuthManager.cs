@@ -103,7 +103,8 @@ namespace learning1.Authentication
             var request = context.HttpContext.Request;
             var token = request.Cookies["jwt"];
 
-            if (_menu != null)
+            if (_menu !=
+                null)
             {
                 var cookie = jwtService.getDetails(token);
                 List<string> roleMenu = adminRepo.getListOfRoleMenu(cookie.RoleId);

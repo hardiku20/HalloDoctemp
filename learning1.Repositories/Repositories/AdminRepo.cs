@@ -817,7 +817,6 @@ namespace learning1.Repositories.Repositories
 
         public void SendlinkMail(AdminDashboardViewModel model)
         {
-
             var email = model.PatientEmail;
             var name = model.firstName + " " + model.lastName;
             var Createlink = "https://localhost:44352/home/reviewagreement";
@@ -1731,6 +1730,7 @@ namespace learning1.Repositories.Repositories
                 userInfo.UserId = AspNetId;
                 userInfo.Email = Aspuser.Email;
                 userInfo.Role = "Admin";
+                userInfo.RoleId = _context.Admins.Where(x=>x.AspNetUserId == AspNetId).FirstOrDefault().RoleId;
             }
             else if (_context.Physicians.FirstOrDefault(x => x.AspNetUserId == AspNetId) != null)
             {

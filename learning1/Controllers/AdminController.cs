@@ -94,7 +94,7 @@ namespace learning1.Controllers
         }
 
 
-       // [RequiresMenu("Dashboard")]
+        [RequiresMenu("Dashboard")]
         [CustomAuthorize("Admin")]
         public IActionResult admindashboard()
         {
@@ -112,12 +112,14 @@ namespace learning1.Controllers
 
 
 
+
         [CustomAuthorize("Admin")]
         public IActionResult ViewNotes(int RequestId)
         {
             ViewNotesViewModel model = _adminServices.GetNotesById(RequestId);
             return View(model);
         }
+
 
         [HttpPost]
         public IActionResult ViewNotes(ViewNotesViewModel model)
@@ -331,9 +333,9 @@ namespace learning1.Controllers
         //}
 
 
-      
 
 
+        [RequiresMenu("MyProfile")]
         public IActionResult AdminProfile(int AdminId=4)
         {
             var model = _adminServices.GetAdminProfileData(AdminId);

@@ -28,6 +28,7 @@ namespace learning1.Services.Services
                 new Claim(ClaimTypes.Email, model.Email),
                 new Claim(ClaimTypes.Role, model.Role),
                 new Claim("Id", model.UserId.ToString()),
+                new Claim("RoleId", model.RoleId.ToString())
 
             };
 
@@ -67,10 +68,9 @@ namespace learning1.Services.Services
 
             UserInfoViewModel model = new UserInfoViewModel()
             {
-                UserId = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "UserId").Value,
+                UserId = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "Id").Value,
                 Role = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value,
                 Email = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value,
-                Name = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "firstName").Value,
                 RoleId = int.Parse(jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "RoleId").Value),
             };
 
