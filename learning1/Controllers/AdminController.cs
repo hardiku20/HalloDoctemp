@@ -61,7 +61,7 @@ namespace learning1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult PlatformLogin(LoginViewModel model)
-        {
+         {
 
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace learning1.Controllers
         [RequiresMenu("Dashboard")]
         [CustomAuthorize("Admin")]
         public IActionResult admindashboard()
-        {
+        {  
             var model = _adminServices.DisplayAdminDashboard();
             return View(model);
         }

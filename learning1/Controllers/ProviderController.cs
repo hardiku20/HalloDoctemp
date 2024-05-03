@@ -87,7 +87,7 @@ namespace learning1.Controllers
         {
             //var loginUserId = GetLoginId();
             _providerServices.acceptCase(requestId);
-            _notyf.Success("Request Successfully Accepted !!");
+            _notyf.Success("Request Successfully Accepted!");
             return RedirectToAction("ProviderDashboard");
         }
 
@@ -313,17 +313,11 @@ namespace learning1.Controllers
 
             _providerServices.clickConsult(requestId);
             return RedirectToAction("ProviderDashboard");
-
-
-            //    RedirectToAction("_providerConcludeState", new
-            //{
-            //    status = 6,
-            //});
         }
 
         public IActionResult ConcludeCare(int RequestId)
         {
-            CloseCaseViewModel model = _providerServices.GetConcludeCare(RequestId);
+            CloseCaseViewModel model= _providerServices.GetConcludeCare(RequestId);
             return View(model);
         }
 
