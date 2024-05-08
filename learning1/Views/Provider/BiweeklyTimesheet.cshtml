@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "_ProviderLayout";
+}
+
+
+<div class="container pb-4">
+
+    <div class="d-flex justify-content-end m-4">
+        <a href="javascript: history.go(-1)"
+           class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
+            <img src="/assets/images/chevron-left.svg" alt=""> Back
+        </a>
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="mt-2">
+                <table class="table-responsive  table-hover w-100">
+                    <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+                        <td scope="col" class="py-3 ps-4">Date</td>
+                        <td scope="col" class="py-3">On-call Hours</td>
+                        <td scope="col" class="py-3">Total Hours</td>
+                        <td scope="col" class="py-3">Weekend/Holiday</td>
+                        <td scope="col" class="py-3">Number of Housecalls</td>
+                        <td scope="col" class="py-3">Number of Phone Consults</td>
+                    </tr>
+
+
+
+                    <tr class="border-bottom border-secondary-subtle">
+                        <td class="ps-4 py-1">03/01/2024</td>
+                        <td class="py-1">0</td> 
+                        <td class="py-1">
+                            <div class="form-floating input-info">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                            </div>
+                        </td>
+                        <td class="py-1"><input class="form-check-input text-info" type="checkbox" id="inlineCheckbox1"></td>
+                        <td class="py-1">
+                            <div class="form-floating input-info">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                            </div>
+                        </td>
+                        <td class="py-1">
+                            <div class="form-floating input-info">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="">
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="d-flex justify-content-end my-2 p-2">
+                    <a class="btn btn-info bg-info text-white">Submit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <a class="btn btn-info bg-info text-white my-2">Add Receipts</a>
+
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="mt-2">
+                <table class="table-responsive  table-hover w-100">
+                    <tr class="border-bottom border-secondary-subtle bg-secondary-subtle">
+                        <td scope="col" class="py-3 ps-4">Name</td>
+                        <td scope="col" class="py-3">Account Type</td>
+                        <td scope="col" class="py-3 d-flex justify-content-center">Actions</td>
+                    </tr>
+
+
+
+                    <tr class="border-bottom border-secondary-subtle">
+                        <td class="ps-4 py-1"></td>
+
+                        <td class="py-1"></td>
+                        <td class="d-flex justify-content-center gap-1 py-1">
+                            <a class="btn btn-outline-info text-info bg-white dark-mode1">Edit</a>
+                            <button type="submit" class="btn btn-outline-info text-info bg-white dark-mode1">Delete</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end my-4">
+        <a class="btn btn-info bg-info text-white">Finalize</a>
+    </div>
+</div>

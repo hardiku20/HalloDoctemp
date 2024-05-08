@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_ProviderLayout";
+}
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
+<div class="container pb-4">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="">Timesheets</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a href="javascript: history.go(-1)"
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
+            </a>
+        </div>
+    </div>
+
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <form class="form-floating" method="post">
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div class="form-floating input-info col-md-4 col-sm-6 mb-4">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option selected value=""></option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <label for="floatingSelect" class="text-secondary">Search by Timesheetperiod</label>
+                    </div>
+                    <div class="d-flex justify-content-end m-4">
+                        <a class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1">
+                            Finalize Timesheet
+                        </a>
+                    </div>
+                </div>
+
+                <span>No Record(s) Found</span>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <form class="form-floating">
+                    <h4 class="mt-4">Timesheet Reimbersement</h4>
+
+               <span>No Record(s) Found</span>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script>
+    const phoneInputField = document.querySelector("#phone");
+    const phoneInput = window.intlTelInput(phoneInputField, {
+        utilsScript:
+            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    });
+</script>

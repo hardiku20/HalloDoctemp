@@ -5,25 +5,19 @@
 @model learning1.DBEntities.ViewModel.CloseCaseViewModel;
 
 
-<div class="container mt-3">
-    <div class="main d-flex justify-content-between mb-2">
-        <div class="patient ">
-            <span class="fs-3 fw-bold">Concude Case</span>
-
-        </div>
-        <div>
-            <a href="javascript: history.go(-1)" class="btn btn-outline-info ">
-                <i class="bi bi-chevron-left prcolor fw-bold fs-normal">
-                    Back
-                </i>
+<div class="container mb-4">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h4 class="">Conclude Case</h4>
+        <div class="d-flex justify-content-end m-4">
+            <a href="javascript: history.go(-1)"
+               class="btn btn-outline-info font-info text-decoration-none text-info fs-6 bg-white dark-mode1 d-flex align-items-center gap-1">
+                <img src="/assets/images/chevron-left.svg" alt=""> Back
             </a>
-
-
         </div>
-
     </div>
-    <div class="main-content mt-1 shadow border-2">
 
+
+    <div class="main-content shadow border-0 bg-white">
         <div class="row">
             <div class="col-lg-6 col-sm-12">
                 <h6 class="ms-4 mt-3 "> Patient Name </h6>
@@ -36,7 +30,7 @@
         </div>
 
         <div class="d-flex justify-content-between ">
-            <span class="ms-4 fs-4 fw-bold"> Documents</span>
+            <h6 class="ms-4 fs-4"> Documents</h6>
             <div>
 
                 <form method="post" asp-action="ConcludeCareUpload" asp-controller="Provider" class="input-group my-5 mt-3" enctype="multipart/form-data" id="UploadDocForm">
@@ -129,8 +123,7 @@
             }
         </div>
 
-        <span class="ms-4 fs-5 fw-bold">Provider Notes</span>
-
+        <h6 class="ms-4 fs-5">Provider Notes</h6>
         <form asp-action="ConcludCareFinal" asp-controller="Provider" asp-route-id="@Model.ReqId">
 
             <div class="row mb-4 m-0">

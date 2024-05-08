@@ -813,29 +813,21 @@ namespace learning1.Controllers
             return RedirectToAction("AdminDashboard", "Admin");
         }
 
+        public IActionResult Payrate()
+        {
+            return View();
+        }
 
 
+        public IActionResult Invoicing() { 
+        return View();
+        }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public IActionResult BiweeklyTimeSheet()
+        {
+            return View();
+        }
 
 
         public IActionResult Logout()

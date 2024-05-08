@@ -37,6 +37,10 @@
         color: rgb(108, 117, 125);
     }
 
+.input-info input:focus {
+    border-color: rgb(36, 152, 152);
+    box-shadow: none;
+}
 
 
     .form-floating select:focus {
