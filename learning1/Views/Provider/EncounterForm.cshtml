@@ -23,51 +23,52 @@
     </div>
     <div class="card border-0 shadow-sm">
         <div class="card-body">
-            <form action="" class="form-floating">
+            <form class="form-floating" asp-action="EncounterForm" method="post" asp-controller="Provider">
+                <input asp-for="@Model.Form.RequestId"  hidden/>
                 <div class="row">
                     <h1 class="text-info mb-4 text-center">Medical Report-Confidential</h1>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName" disabled>
                             <label for="floatingInput">First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName" disabled>
                             <label for="floatingInput">Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Location" asp-for="Location">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Location" asp-for="Location" disabled>
                             <label for="floatingInput">Location</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
-                                   aria-describedby="basic-addon1" asp-for="DateOfBirth">
+                                   aria-describedby="basic-addon1" asp-for="DateOfBirth" disabled>
                             <label for="floatingInputValue">Date of birth</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="date" class="form-control" id="floatingInputValue" aria-label="Date"
-                                   aria-describedby="basic-addon1" asp-for="Date">
+                                   aria-describedby="basic-addon1" asp-for="Date" disabled>
                             <label for="floatingInputValue">Date</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone" asp-for="Phone">
+                                   id="phone" asp-for="Phone" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
                             <input type="email" class="form-control" id="email"
-                                   placeholder="name@example.com" asp-for="Email">
+                                   placeholder="name@example.com" asp-for="Email" disabled>
                             <label for="floatingInput">Email address</label>
                         </div>
                     </div>
@@ -78,25 +79,25 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control text-start" id="floatingInput" placeholder="History Of Present illness Or injury" asp-for="Historyofpresentillness">
+                            <input type="text" class="form-control text-start" id="floatingInput" placeholder="History Of Present illness Or injury" asp-for="@Model.Form.HistoryIllness">
                             <label for="floatingInput">History Of Present illness Or injury</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Medical History" asp-for="MedicalHistory">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medical History" asp-for="@Model.Form.MedicalHistory">
                             <label for="floatingInput">Medical History</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Medications" asp-for="Medications">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Medications" asp-for="@Model.Form.Medications">
                             <label for="floatingInput">Medications</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Allergies" asp-for="Allergies">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Allergies" asp-for="@Model.Form.Allergies">
                             <label for="floatingInput">Allergies</label>
                         </div>
                     </div>
@@ -105,42 +106,42 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Temp" asp-for="Temp">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Temp" asp-for="@Model.Form.Temp">
                             <label for="floatingInput">Temp</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="HR" asp-for="HR">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="HR" asp-for="@Model.Form.Hr">
                             <label for="floatingInput">HR</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="RR" asp-for="RR">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="RR" asp-for="@Model.Form.Rr">
                             <label for="floatingInput">RR</label>
                         </div>
                     </div>
 
                     <div class="col-md-4 d-md-flex gap-2">
                         <div class="form-floating input-info mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure" asp-for="BloodPressureF1">
-                            <label for="floatingInput">Blood Pressure</label>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure" asp-for="@Model.Form.BpS">
+                            <label for="floatingInput">Blood Pressure(Systolic)</label>
                         </div>
                         <div class="form-floating input-info mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure" asp-for="BloodPressureF2">
-                            <label for="floatingInput">Blood Pressure</label>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Blood Pressure" asp-for="@Model.Form.BpD">
+                            <label for="floatingInput">Blood Pressure(Diastolic)</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="O2" asp-for="O2">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="O2" asp-for="@Model.Form.O2">
                             <label for="floatingInput">O2</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Pain" asp-for="Pain">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Pain" asp-for="@Model.Form.Pain">
                             <label for="floatingInput">Pain</label>
                         </div>
                     </div>
@@ -152,97 +153,90 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Heent" asp-for="Heent">
-                            <label for="floatingInput">Heent</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Heent" style="height: 100px" asp-for="@Model.Form.Heent"></textarea>
+                            <label for="floatingtextarea">Heent</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="CV" asp-for="CV">
-                            <label for="floatingInput">CV</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="CV" style="height: 100px" asp-for="@Model.Form.Cv"></textarea>
+                            <label for="floatingtextarea">CV</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Chest" asp-for="Chest">
-                            <label for="floatingInput">Chest</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Chest" style="height: 100px" asp-for="@Model.Form.Chest"></textarea>
+                            <label for="floatingtextarea">Chest</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="ABD" asp-for="ABD">
-                            <label for="floatingInput">ABD</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="ABD" style="height: 100px" asp-for="@Model.Form.Abd"></textarea>
+                            <label for="floatingtextarea">ABD</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Extr" asp-for="Extr">
-                            <label for="floatingInput">Extr</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Extr" style="height: 100px" asp-for="@Model.Form.Extr"></textarea>
+                            <label for="floatingtextarea">Extr</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Skin" asp-for="Skin">
-                            <label for="floatingInput">Skin</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Skin" style="height: 100px" asp-for="@Model.Form.Skin"></textarea>
+                            <label for="floatingtextarea">Skin</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Neuro" asp-for="Neuro">
-                            <label for="floatingInput">Neuro</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Neuro" style="height: 100px" asp-for="@Model.Form.Neuro"></textarea>
+                            <label for="floatingtextarea">Neuro</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Others" asp-for="Others">
-                            <label for="floatingInput">Others</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Others" style="height: 100px" asp-for="@Model.Form.Other"></textarea>
+                            <label for="floatingtextarea">Others</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Diagonsis" asp-for="Diagonsis">
-                            <label for="floatingInput">Diagonsis</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Diagonsis" style="height: 100px" asp-for="@Model.Form.Diagnosis"></textarea>
+                            <label for="floatingtextarea">Diagonsis</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Treatment Plan" asp-for="TreatmentPlan">
-                            <label for="floatingInput">Treatment Plan</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Treatment Plan" style="height: 100px" asp-for="@Model.Form.TreatmentPlan"></textarea>
+                            <label for="floatingtextarea">Treatment Plan</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Medication dispensed" asp-for="Medicationdispensed">
-                            <label for="floatingInput">Medication dispensed</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Medication dispensed" style="height: 100px" asp-for="@Model.Form.MedicationDispensed"></textarea>
+                            <label for="floatingtextarea">Medication dispensed</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Procedures" asp-for="Procedures">
-                            <label for="floatingInput">Procedures</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Procedures" style="height: 100px" asp-for="@Model.Form.Procedures"></textarea>
+                            <label for="floatingtextarea">Procedures</label>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Followup" asp-for="Followup">
-                            <label for="floatingInput">Followup</label>
+                            <textarea type="text" class="form-control" id="floatingtextarea" placeholder="Followup" style="height: 100px" asp-for="@Model.Form.FollowUp"></textarea>
+                            <label for="floatingtextarea">Followup</label>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="d-flex mb-2 gap-2">
-                    <div class="ms-auto">
-                        <button type="submit" class="btn btn-info text-white">Save Changes</button>
-                    </div>
-                    @*< div class="">
-                    <button type="submit" class="btn text-white" style="background-color: rgb(153,50,204)">Finalize</button>
-                    </div> *@
-                    <div class="">
-                        <button type="button" class="btn btn-outline-info">Cancel</button>
-                    </div>
+                <div class="d-flex mb-2 gap-2 justify-content-end align-items-center">
+                    <button type="submit" class="btn btn-info text-white">Save Changes</button>
+                    <button type="button" class="btn text-white" style="background-color: rgb(153,50,204)">Finalize</button>
+                    <button type="button" class="btn btn-outline-info">Cancel</button>
                 </div>
-
             </form>
         </div>
     </div>

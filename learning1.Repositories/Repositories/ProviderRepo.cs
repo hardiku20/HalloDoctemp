@@ -98,7 +98,7 @@ namespace learning1.Repositories.Repositories
             return model;
         }
 
-        public ProviderDashboardViewModel RenderNewState(int status,int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public ProviderDashboardViewModel RenderNewState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
             var Count = SetCount(physicianId);
@@ -157,7 +157,7 @@ namespace learning1.Repositories.Repositories
         public ProviderDashboardViewModel RenderPendingState(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
-           var Count = SetCount(physicianId);
+            var Count = SetCount(physicianId);
 
             if (!string.IsNullOrEmpty(patientName) && !string.IsNullOrEmpty(regionName))
             {
@@ -168,7 +168,7 @@ namespace learning1.Repositories.Repositories
             else if (!string.IsNullOrEmpty(patientName))
             {
                 //predicate = x => (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && (x.Status == status);
-                predicate = x => (x.PhysicianId == physicianId) &&  (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
+                predicate = x => (x.PhysicianId == physicianId) && (x.RequestClients.Any(x => x.FirstName.ToLower().Contains(patientName.Trim().ToLower()) || x.LastName.ToLower().Contains(patientName.Trim().ToLower()))) && x.Status == status && (requestType == DBEntities.ViewModel.RequestType.All ? true : x.RequestTypeId == (int)requestType);
             }
 
             else if (!string.IsNullOrEmpty(regionName))
@@ -211,7 +211,7 @@ namespace learning1.Repositories.Repositories
         public ProviderDashboardViewModel RenderToActiveState(int status1, int status2, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             Expression<Func<Request, bool>> predicate;
-           var Count = SetCount(physicianId);
+            var Count = SetCount(physicianId);
 
             if (!string.IsNullOrEmpty(patientName) && !string.IsNullOrEmpty(regionName))
             {
@@ -248,7 +248,7 @@ namespace learning1.Repositories.Repositories
                  Requester = x.FirstName + " " + x.LastName,
                  RequestType = (DBEntities.ViewModel.RequestType)x.RequestTypeId,
                  RequestNotes = x.RequestClients.Select(x => x.Notes).FirstOrDefault(),
-                 Status=x.Status,
+                 Status = x.Status,
              }).AsQueryable();
 
 
@@ -279,8 +279,8 @@ namespace learning1.Repositories.Repositories
         {
             RequestCount requestCount = new()
             {
-                NewStateCount = GetCurrentStateCount(physicianId,1),
-                PendingStateCount = GetCurrentStateCount(physicianId,2),
+                NewStateCount = GetCurrentStateCount(physicianId, 1),
+                PendingStateCount = GetCurrentStateCount(physicianId, 2),
                 ActiveStateCount = GetCurrentStateCount(physicianId, 4, 5),
                 ConcludeStateCount = GetCurrentStateCount(physicianId, 6),
                 ToCloseStateCount = GetCurrentStateCount(physicianId, 3, 7, 8),
@@ -301,7 +301,7 @@ namespace learning1.Repositories.Repositories
                     Address = x.Address,
                     Region = x.State,
                     Patientnotes = x.Notes ?? "No Notes Available",
-                   
+
                 }).FirstOrDefault();
 
 
@@ -393,7 +393,7 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges();
 
             string dateString = DateTime.Now.ToString("dd/mm/yyyy 'at' hh:mm:ss tt");
-            string notetotransfer = "Physician Transfer request to Admin" + model.TransferNotes +dateString;
+            string notetotransfer = "Physician Transfer request to Admin" + model.TransferNotes + dateString;
             RequestStatusLog StatusData = _context.RequestStatusLogs.Where(x => x.RequestId == requestId).First();
             StatusData.TransToPhysicianId = null;
             StatusData.Status = 1;
@@ -652,7 +652,7 @@ namespace learning1.Repositories.Repositories
             System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
 
             message.From = new System.Net.Mail.MailAddress("tatav.dotnet.hardikupadhyay@outlook.com");
-            
+
             message.To.Add(new System.Net.Mail.MailAddress(email));
             message.Subject = "AGREEMENT";
             message.IsBodyHtml = true;
@@ -687,8 +687,8 @@ namespace learning1.Repositories.Repositories
 
         public CloseCaseViewModel ConcludeCareRepo(int requestId)
         {
-            RequestClient client = _context.RequestClients.Where(x=>x.RequestId == requestId).FirstOrDefault();
-            List<RequestWiseFile> RequestFiles = _context.RequestWiseFiles.Where(x=>x.RequestId == requestId).ToList();
+            RequestClient client = _context.RequestClients.Where(x => x.RequestId == requestId).FirstOrDefault();
+            List<RequestWiseFile> RequestFiles = _context.RequestWiseFiles.Where(x => x.RequestId == requestId).ToList();
             CloseCaseViewModel modal = new()
             {
                 ReqId = requestId,
@@ -722,8 +722,87 @@ namespace learning1.Repositories.Repositories
         public void AddRequestStatusLog(RequestStatusLog requestStatusLog)
         {
             _context.RequestStatusLogs.Add(requestStatusLog);
-            _context.SaveChanges(); 
+            _context.SaveChanges();
         }
+
+        public EncounterFormViewModel GetEncounterformRepo(int requestId)
+        {
+            var data = _context.RequestClients.Where(x => x.RequestId == requestId).FirstOrDefault();
+            EncounterFormViewModel model = new()
+            {
+                FirstName = data?.FirstName,
+                LastName = data?.LastName,
+                Location = data?.Address,
+                Date = DateTime.Now,
+                Email = data?.Email,
+                Phone = data.PhoneNumber,
+            };
+            EncounterForm dbform = _context.EncounterForms.FirstOrDefault(x => x.RequestId == requestId);
+            if (dbform == null)
+            {
+                EncounterForm encForm = new()
+                {
+                    RequestId = requestId,
+                    Date = DateTime.Now,
+                    
+                };
+
+                _context.EncounterForms.Add(encForm);
+                _context.SaveChanges();
+
+                model.Form = encForm;
+            }
+            else
+            {
+                model.Form = dbform;
+            }
+
+            return model;
+        }
+
+        public void EncounterFormRepo(EncounterFormViewModel model)
+        {
+
+            EncounterForm dbmodel = _context.EncounterForms.FirstOrDefault(x => x.RequestId == model.Form.RequestId);
+
+            var Eform = model.Form;
+            if (dbmodel != null)
+            {
+                dbmodel.HistoryIllness = Eform.HistoryIllness;
+                dbmodel.MedicalHistory = Eform.MedicalHistory;
+                dbmodel.Medications = Eform.Medications;
+                dbmodel.Allergies = Eform.Allergies;
+                dbmodel.Temp = Eform.Temp;
+                dbmodel.Hr = Eform.Hr;
+                dbmodel.Rr = Eform.Rr;
+                dbmodel.BpS = Eform.BpS;
+                dbmodel.BpD = Eform.BpD;
+                dbmodel.O2 = Eform.O2;
+                dbmodel.Pain = Eform.Pain;
+                dbmodel.Heent = Eform.Heent;
+                dbmodel.Cv = Eform.Cv;
+                dbmodel.Chest = Eform.Chest;
+                dbmodel.Abd = Eform.Abd;
+                dbmodel.Extr = Eform.Extr;
+                dbmodel.Skin = Eform.Skin;
+                dbmodel.Neuro = Eform.Neuro;
+                dbmodel.Other = Eform.Other;
+                dbmodel.Diagnosis = Eform.Diagnosis;
+                dbmodel.TreatmentPlan = Eform.TreatmentPlan;
+                dbmodel.MedicationDispensed = Eform.MedicationDispensed;
+                dbmodel.Procedures = Eform.Procedures;
+                dbmodel.FollowUp = Eform.FollowUp;
+                dbmodel.IsFinalized = Eform.IsFinalized;
+                dbmodel.Date = DateTime.Now;
+
+
+                _context.EncounterForms.Update(dbmodel);
+                _context.SaveChanges();
+
+            }
+        }
+
+
+
     }
 }
-    

@@ -296,18 +296,20 @@ namespace learning1.Controllers
 
 
         [CustomAuthorize("Admin")]
-        public IActionResult EncounterForm(int RequestId)
+        public IActionResult EncounterForm(int requestId)
         {
-            var model = _adminServices.GetEncounterformData(RequestId);
+            EncounterFormViewModel model = _adminServices.GetEncounterform(requestId);
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult EncounterForm(EncounterFormViewModel model)
+        {
+            _adminServices.EncounterforData(model);
+            _notyf.Success("Encounter Form Updated");
+            return RedirectToAction("AdminDashboard");
+        }
 
-        //public IActionResult SendAgreementMail(string email, int reqId)
-        //{
-        //    _adminServices.SendAgreementData(email, reqId);
-        //    return RedirectToAction("admindashboard");
-        //}
 
 
         public IActionResult SendAgreement(int RequestId)
@@ -828,6 +830,8 @@ namespace learning1.Controllers
         {
             return View();
         }
+
+
 
 
         public IActionResult Logout()

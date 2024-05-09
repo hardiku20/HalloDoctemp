@@ -77,8 +77,16 @@
                             <li><a class="dropdown-item d-flex" asp-action="ViewNotes" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-file-earmark-text me-2"></i>View Notes</a></li>
                             <li><a class="dropdown-item d-flex" asp-action="SendOrders" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-list-task me-2"></i>Orders</a></li>
                             <li>
-                                <a class="dropdown-item d-flex" data-bs-toggle="modal"
-                                   data-bs-target="#encounterModal" onclick="onCare(@items.RequestId)"><i class="bi bi-files me-2"></i>Encounter</a>
+
+                                @if(items.Status == 4)
+                                {
+                                    <a class="dropdown-item d-flex" data-bs-toggle="modal"
+                                    data-bs-target="#encounterModal" onclick="onCare(@items.RequestId)"><i class="bi bi-files me-2"></i>Encounter</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item d-flex" asp-action="EncounterForm" asp-controller="Provider" asp-route-requestId="@items.RequestId"><i class="bi bi-files me-2"></i>Encounter form</a>
+                                }
                             </li>
                         </ul>
                     </div>

@@ -399,5 +399,15 @@ namespace learning1.Services.Services
                 return false;
             }
         }
+
+        public EncounterFormViewModel GetEncounterform(int requestId)
+        {
+           return _providerRepo.GetEncounterformRepo(requestId);
+        }
+
+        public void EncounterforData(EncounterFormViewModel model)
+        {
+            _providerRepo.EncounterFormRepo(model);
+        }
     }
 }

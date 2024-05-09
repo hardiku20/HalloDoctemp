@@ -1,5 +1,7 @@
-﻿using System;
+﻿using learning1.DBEntities.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace learning1.DBEntities.ViewModel
         public string? Location { get; set; }
         public string? DateOfBirth {  get; set; }
 
-        public string? Date {  get; set; }
+        public DateTime? Date {  get; set; }
         public string? Phone {  get; set; } 
         public string? Email { get; set; }
         public string? Historyofpresentillness {  get; set; }
@@ -48,6 +50,13 @@ namespace learning1.DBEntities.ViewModel
 
         public string? Procedures {  get; set;}
         public string? Followup { get; set;}
+
+
+
+
+
+       
+        public EncounterForm Form { get; set; }
 
 
     }

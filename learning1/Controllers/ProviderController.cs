@@ -346,11 +346,19 @@ namespace learning1.Controllers
         }
 
 
-        public IActionResult EncounterForm()
+        public IActionResult EncounterForm(int requestId)
         {
-            return View();
+            EncounterFormViewModel model = _providerServices.GetEncounterform(requestId);
+            return View(model);
         }
 
+        [HttpPost]
+        public IActionResult EncounterForm(EncounterFormViewModel model)
+        {
+            _providerServices.EncounterforData(model);
+            _notyf.Success("Encounter Form Updated");
+            return RedirectToAction("ProviderDashboard");
+        }
 
         public IActionResult SendAgreementMail(int RequestId)
         {

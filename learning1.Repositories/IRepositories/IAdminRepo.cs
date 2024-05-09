@@ -90,6 +90,8 @@ namespace learning1.Repositories.IRepositories
         void EditRoleRepo(CreateRoleViewModel model);
         List<string> getListOfRoleMenu(int? roleId);
         void UnblockCaseRepo(int RequestId);
+        EncounterFormViewModel GetEncounterformRepo(int requestId);
+        void EncounterFormRepo(EncounterFormViewModel model);
 
 
         //AccountAccessViewModel

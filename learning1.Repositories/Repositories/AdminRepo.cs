@@ -2022,5 +2022,82 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges();
 
         }
+
+        public EncounterFormViewModel GetEncounterformRepo(int requestId)
+        {
+            var data = _context.RequestClients.Where(x => x.RequestId == requestId).FirstOrDefault();
+            EncounterFormViewModel model = new()
+            {
+                FirstName = data?.FirstName,
+                LastName = data?.LastName,
+                Location = data?.Address,
+                Date = DateTime.Now,
+                Email = data?.Email,
+                Phone = data.PhoneNumber,
+            };
+            EncounterForm dbform = _context.EncounterForms.FirstOrDefault(x => x.RequestId == requestId);
+            if (dbform == null)
+            {
+                EncounterForm encForm = new()
+                {
+                    RequestId = requestId
+                };
+
+                _context.EncounterForms.Add(encForm);
+                _context.SaveChanges();
+
+                model.Form = encForm;
+            }
+            else
+            {
+                model.Form = dbform;
+            }
+
+            return model;
+        }
+
+        public void EncounterFormRepo(EncounterFormViewModel model)
+        {
+            EncounterForm dbmodel = _context.EncounterForms.FirstOrDefault(x => x.RequestId == model.Form.RequestId);
+
+            var Eform = model.Form;
+            if (dbmodel != null)
+            {
+                dbmodel.HistoryIllness = Eform.HistoryIllness;
+                dbmodel.MedicalHistory = Eform.MedicalHistory;
+                dbmodel.Medications = Eform.Medications;
+                dbmodel.Allergies = Eform.Allergies;
+                dbmodel.Temp = Eform.Temp;
+                dbmodel.Hr = Eform.Hr;
+                dbmodel.Rr = Eform.Rr;
+                dbmodel.BpS = Eform.BpS;
+                dbmodel.BpD = Eform.BpD;
+                dbmodel.O2 = Eform.O2;
+                dbmodel.Pain = Eform.Pain;
+                dbmodel.Heent = Eform.Heent;
+                dbmodel.Cv = Eform.Cv;
+                dbmodel.Chest = Eform.Chest;
+                dbmodel.Abd = Eform.Abd;
+                dbmodel.Extr = Eform.Extr;
+                dbmodel.Skin = Eform.Skin;
+                dbmodel.Neuro = Eform.Neuro;
+                dbmodel.Other = Eform.Other;
+                dbmodel.Diagnosis = Eform.Diagnosis;
+                dbmodel.TreatmentPlan = Eform.TreatmentPlan;
+                dbmodel.MedicationDispensed = Eform.MedicationDispensed;
+                dbmodel.Procedures = Eform.Procedures;
+                dbmodel.FollowUp = Eform.FollowUp;
+                dbmodel.IsFinalized = Eform.IsFinalized;
+
+
+                _context.EncounterForms.Update(dbmodel);
+                _context.SaveChanges();
+
+            }
+        }
+
+
+
+
     }
 }

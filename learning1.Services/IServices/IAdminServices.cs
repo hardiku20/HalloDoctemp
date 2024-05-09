@@ -34,7 +34,7 @@ namespace learning1.Services.IServices
         AdminDashboardViewModel RenderUnpaidStateData(int status, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType);
         AdminDashboardViewModel ListToExportAllData();
         void SendAgreement(int requestId);
-       EncounterFormViewModel GetEncounterformData(int requestId);
+     
         int LoginMethod(string email, string password);
         void SendlinktoPatient(AdminDashboardViewModel model);
         void CreatePatientRequest(CreateRequestViewModel model);
@@ -88,5 +88,7 @@ namespace learning1.Services.IServices
         CreateRoleViewModel GetEditDetailsByRoleId(int accountType, int roleId);
         void EditRole(CreateRoleViewModel model);
         void UnblockCase(int RequestId);
+        EncounterFormViewModel GetEncounterform(int requestId);
+        void EncounterforData(EncounterFormViewModel model);
     }
 }

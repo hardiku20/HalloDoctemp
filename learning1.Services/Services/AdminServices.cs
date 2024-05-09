@@ -193,12 +193,7 @@ namespace learning1.Services.Services
 
 
 
-        public EncounterFormViewModel GetEncounterformData(int requestId)
-        {
-            var model = _adminRepo.GetEncounterRepo(requestId);
-            return model;
-        }
-
+       
         public int LoginMethod(string email, string password)
         {
             int AdminId = _adminRepo.LoginMethodRepo(email, password);
@@ -558,6 +553,16 @@ namespace learning1.Services.Services
         public void UnblockCase(int requestId)
         {
             _adminRepo.UnblockCaseRepo(requestId);
+        }
+
+        public EncounterFormViewModel GetEncounterform(int requestId)
+        {
+            return _adminRepo.GetEncounterformRepo(requestId);
+        }
+
+        public void EncounterforData(EncounterFormViewModel model)
+        {
+            _adminRepo.EncounterFormRepo(model);
         }
     }
 }

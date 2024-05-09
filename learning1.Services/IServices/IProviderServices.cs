@@ -17,9 +17,11 @@ namespace learning1.Services.IServices
         bool ConcludeCare(int id, CloseCaseViewModel modal);
         ProviderDashboardViewModel DisplayProviderDashboard(int physicianId);
         ViewCaseViewModel DisplayViewCase(int requestId);
+        void EncounterforData(EncounterFormViewModel model);
         List<string> GetBusinessByProfession(string professionName);
         CloseCaseViewModel GetConcludeCare(int requestId);
         SendOrderViewModel GetDetailsByBusiness(string businessName);
+        EncounterFormViewModel GetEncounterform(int requestId);
         ViewNotesViewModel GetNotesById(int requestId);
         SendOrderViewModel GetOrderdetails();
         DBEntities.Models.Physician GetPhysicianByEmail(string email, string password);

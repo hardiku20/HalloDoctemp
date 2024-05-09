@@ -48,5 +48,7 @@ namespace learning1.Repositories.IRepositories
         Request GetRequestById(int requestId);
         void UpdateRequest(Request req);
         void AddRequestStatusLog(RequestStatusLog requestStatusLog);
+        EncounterFormViewModel GetEncounterformRepo(int requestId);
+        void EncounterFormRepo(EncounterFormViewModel model);
     }
 }
