@@ -384,7 +384,7 @@ namespace learning1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult patientforgotpass(ForgotPasswordViewModel model)
         {
-            var userEmail = _context.AspNetUsers.FirstOrDefault(x => x.Email == model.Email).Email;
+             var userEmail = _context.AspNetUsers.FirstOrDefault(x => x.Email == model.Email).Email;
             if (userEmail != null)
             {
 
