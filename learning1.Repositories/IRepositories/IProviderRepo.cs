@@ -50,5 +50,20 @@ namespace learning1.Repositories.IRepositories
         void AddRequestStatusLog(RequestStatusLog requestStatusLog);
         EncounterFormViewModel GetEncounterformRepo(int requestId);
         void EncounterFormRepo(EncounterFormViewModel model);
+        void ConcludeCareStatusRepo(int requestId);
+        Timesheet? GetTimesheetByDate(DateOnly firstDate, DateOnly lastDate, int physicianId);
+        bool UpdateTimesheet(Timesheet timesheet);
+        TimesheetReimbursement? GetTimesheetReimbursementByDateAndTimeSheetId(DateOnly shiftDate, int timeSheetId);
+        bool DeleteTimesheetReimbursement(TimesheetReimbursement data);
+        TimesheetReimbursement? CreateTimesheetReimbursement(TimesheetReimbursement receipt1);
+        void UpdateTimesheetReimbursement(TimesheetReimbursement createdReceipt);
+        TimesheetDetail GetTimesheetDetailById(int timesheetDetailId);
+        bool UpdateRangeTimesheetDetail(List<TimesheetDetail> timesheetDetailsUpdate);
+        IEnumerable<TimesheetReimbursement> GetTimesheetReimbursementByTimeSheetId(int timesheetId);
+        IEnumerable<TimeSheetDetailVM> GetTimeSheetData(int timesheetId, int physicianId);
+        void CreateRangeTimesheetDetail(List<TimesheetDetail> timesheetDetailsInsert);
+        decimal? GetTotalShiftHours(DateOnly date, int physicianId);
+        Timesheet? CreateTimeSheet(Timesheet timesheet1);
+        IEnumerable<TimeSheetDetailStatic>? GetTimeSheetDetailStaticData(int timesheetId);
     }
 }

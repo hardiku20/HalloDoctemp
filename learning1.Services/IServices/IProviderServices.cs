@@ -15,13 +15,20 @@ namespace learning1.Services.IServices
         void clickConsult(int requestId);
         void clickHousecall(int requestId);
         bool ConcludeCare(int id, CloseCaseViewModel modal);
+        void ConcludeCareService(int requestId);
+        IEnumerable<TimeSheetDetailVM> CreateInvoiceSheet(DateOnly firstDate, DateOnly lastDate);
+        bool DeleteTimesheetReimbursement(int timeSheetId, DateOnly shiftDate);
         ProviderDashboardViewModel DisplayProviderDashboard(int physicianId);
         ViewCaseViewModel DisplayViewCase(int requestId);
         void EncounterforData(EncounterFormViewModel model);
+        bool FinalizeInvoice(DateOnly firstDate, DateOnly lastDate);
         List<string> GetBusinessByProfession(string professionName);
         CloseCaseViewModel GetConcludeCare(int requestId);
+        string GetContentType(string filePath);
         SendOrderViewModel GetDetailsByBusiness(string businessName);
         EncounterFormViewModel GetEncounterform(int requestId);
+        InvocingViewModel GetInvoiceData(DateOnly firstDate, DateOnly lastDate, string aspNetId);
+        InvoiceReciept GetInvoiceReceipt(DateOnly firstDate, DateOnly lastDate);
         ViewNotesViewModel GetNotesById(int requestId);
         SendOrderViewModel GetOrderdetails();
         DBEntities.Models.Physician GetPhysicianByEmail(string email, string password);
@@ -40,6 +47,8 @@ namespace learning1.Services.IServices
         void SendAgreement(int requestId);
         bool SetCreateNewShiftData(ProviderSchedulingViewModel model);
         void SetNotesById(ViewNotesViewModel model);
+        bool UpdateInvoiceSheetData(List<SheetData> sheetData);
         bool UploadConcludeDocument(IFormFile fileforConcludeCare, int reqId);
+        bool UploadReceipt(TimesheetReimbursementVM receipt);
     }
 }

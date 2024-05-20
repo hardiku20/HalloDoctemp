@@ -92,6 +92,20 @@ namespace learning1.Repositories.IRepositories
         void UnblockCaseRepo(int RequestId);
         EncounterFormViewModel GetEncounterformRepo(int requestId);
         void EncounterFormRepo(EncounterFormViewModel model);
+        Payrate GetPayratesData(int physicianId);
+        void AddPayrates(Payrate payrate);
+        void UpdatePayrates(Payrate oldpayrates);
+        Timesheet? GetTimesheetById(int timeSheetId);
+        TimesheetDetail GetTimesheetDetailById(int timesheetDetailId);
+        bool UpdateRangeTimesheetDetail(List<TimesheetDetail> timesheetDetailsUpdate);
+        IEnumerable<TimesheetReimbursement> GetTimesheetReimbursementByTimeSheetId(int timesheetId);
+        IEnumerable<TimeSheetDetailVM> GetTimeSheetData(int timesheetId, int physicianId);
+        IEnumerable<Physician> GetAllPhysician();
+        Timesheet? GetTimesheetByDate(DateOnly firstDate, DateOnly lastDate, int providerId);
+        Physician GetPhyByPhysicianId(int providerId);
+        IEnumerable<TimeSheetDetailStatic>? GetTimeSheetDetailStaticData(int timesheetId);
+        bool UpdateTimesheet(Timesheet timesheet);
+        List<int> GetSelectedPhysicianRegionByPhysicianId(int physicianId);
 
 
         //AccountAccessViewModel

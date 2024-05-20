@@ -12,6 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace learning1.Repositories.Repositories
 {
@@ -802,7 +803,183 @@ namespace learning1.Repositories.Repositories
             }
         }
 
+        public void ConcludeCareStatusRepo(int requestId)
+        {
+            Request request = _context.Requests.Where(x =>x.RequestId == requestId).FirstOrDefault();
+            request.Status = 8;
+
+            _context.Requests.Update(request);
+            _context.SaveChanges();
 
 
+        }
+
+        public Timesheet? GetTimesheetByDate(DateOnly firstDate, DateOnly lastDate, int physicianId)
+        {
+            return _context.Timesheets.FirstOrDefault(x => x.Startdate == firstDate && x.Enddate == lastDate && x.PhysicianId == physicianId);
+        
+    }
+
+        public bool UpdateTimesheet(Timesheet timesheet)
+        {
+            try
+            {
+                if (timesheet != null)
+                {
+                    _context.Timesheets.Update(timesheet);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public TimesheetReimbursement? GetTimesheetReimbursementByDateAndTimeSheetId(DateOnly shiftDate, int timeSheetId)
+        {
+            return _context.TimesheetReimbursements.FirstOrDefault(x => x.ShiftDate == shiftDate && x.TimesheetId == timeSheetId);
+        }
+    
+
+        public bool DeleteTimesheetReimbursement(TimesheetReimbursement mobj)
+        {
+            try
+            {
+                if (mobj != null)
+                {
+                    _context.TimesheetReimbursements.Remove(mobj);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public TimesheetReimbursement? CreateTimesheetReimbursement(TimesheetReimbursement mobj)
+        {
+            try
+            {
+                if (mobj != null)
+                {
+                    EntityEntry<TimesheetReimbursement> obj = _context.TimesheetReimbursements.Add(mobj);
+                    _context.SaveChanges();
+                    return obj.Entity;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void UpdateTimesheetReimbursement(TimesheetReimbursement createdReceipt)
+        {
+            _context.TimesheetReimbursements.Update(createdReceipt);
+            _context.SaveChanges();
+        }
+
+        public TimesheetDetail GetTimesheetDetailById(int timesheetDetailId)
+        {
+            return _context.TimesheetDetails.Find(timesheetDetailId);
+        }
+
+        public bool UpdateRangeTimesheetDetail(List<TimesheetDetail> timesheetDetailsUpdate)
+        {
+            try
+            {
+                _context.TimesheetDetails.UpdateRange(timesheetDetailsUpdate);
+                _context.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<TimesheetReimbursement> GetTimesheetReimbursementByTimeSheetId(int timesheetId)
+        {
+            return _context.TimesheetReimbursements.Where(x => x.TimesheetId == timesheetId).ToList();
+        }
+
+        public IEnumerable<TimeSheetDetailVM> GetTimeSheetData(int timesheetId, int physicianId)
+        {
+            return _context.TimesheetDetails.Where(x => x.TimesheetId == timesheetId).Select(b => new TimeSheetDetailVM
+            {
+                TimesheetDetailId = b.TimesheetDetailId,
+                Shiftdate = b.Shiftdate,
+                ShiftHours = b.ShiftHours,
+                Housecall = b.Housecall,
+                PhoneConsult = b.PhoneConsult,
+                IsWeekend = b.IsWeekend[0],
+                OnCallHours = _context.ShiftDetails.Where(x => DateOnly.FromDateTime(x.ShiftDate) == b.Shiftdate && x.Shift.PhysicianId == physicianId).Sum(x => (x.EndTime - x.StartTime).TotalHours)
+            }).OrderBy(x => x.Shiftdate).ToList();
+        }
+
+        public void CreateRangeTimesheetDetail(List<TimesheetDetail> timesheetDetailsInsert)
+        {
+            _context.TimesheetDetails.AddRange(timesheetDetailsInsert);
+            _context.SaveChanges();
+        }
+
+        public decimal? GetTotalShiftHours(DateOnly date, int physicianId)
+        {
+            return (decimal)_context.ShiftDetails.Where(x => DateOnly.FromDateTime(x.ShiftDate) == date && x.Shift.PhysicianId == physicianId).Sum(x => (x.EndTime - x.StartTime).TotalHours);
+        }
+    
+
+        public Timesheet? CreateTimeSheet(Timesheet mobj)
+        {
+            try
+            {
+                if (mobj != null)
+                {
+                    EntityEntry<Timesheet> obj = _context.Timesheets.Add(mobj);
+                    _context.SaveChanges();
+                    return obj.Entity;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<TimeSheetDetailStatic>? GetTimeSheetDetailStaticData(int timesheetId)
+        {
+            return _context.TimesheetDetails.Where(x => x.TimesheetId == timesheetId).Select(b => new TimeSheetDetailStatic()
+            {
+                Shiftdate = b.Shiftdate,
+                Shift = _context.ShiftDetails.Where(x => DateOnly.FromDateTime(x.ShiftDate) == b.Shiftdate && x.Shift.PhysicianId == b.Timesheet.PhysicianId).Count(),
+                Housecall = (int)b.Housecall,
+                PhoneConsult = (int)b.PhoneConsult,
+                IsWeekend = b.IsWeekend[0]
+
+            }).ToList();
+        }
     }
 }

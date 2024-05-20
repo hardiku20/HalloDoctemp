@@ -1,0 +1,57 @@
+﻿@{
+    var role = Context.Session.GetString("Role");
+}
+
+<div class="container-fluid my-5 pb-5 d-flex flex-column container-w">
+
+    <div class="row justify-content-end mb-2 mx-0">
+        <div class="col-auto pe-0">
+            <a role="button" class="btn btn-outline-info backtoinvoice">
+                <i class="bi bi-chevron-left"></i>
+                Back
+            </a>
+        </div>
+    </div>
+
+    <div id="invoiceSheetData">
+    </div>
+
+    <div class="row my-4">
+        <div class="col">
+            <button type="button" class="btn btn-info addReceipt">Add Receipt</button>
+        </div>
+    </div>
+
+    <div id="invoiceReceiptData">
+    </div>
+
+    <div class="row justify-content-end my-4">
+        @if (role == "Physician")
+        {
+            <div class="col-auto">
+                <button type="button" class="btn btn-info finalizeInvoice">Finalize</button>
+            </div>
+        }
+        else
+        {
+            <div class="col-auto">
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control bonus" placeholder="BonusAmount" value="0">
+                    <label for="BonusAmount">Bonus Amount</label>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="form-floating">
+                    <textarea class="form-control description" placeholder="Description"></textarea>
+                    <label for="Description">Admin Description</label>
+                </div>
+            </div>
+            <div class="col-auto">
+                <button type="button" class="btn btn-info approveTimeSheet">Approve</button>
+            </div>
+        }
+
+
+    </div>
+
+</div>

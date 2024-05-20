@@ -1,0 +1,111 @@
+﻿@using learning1.DBEntities.Models;
+@model learning1.DBEntities.ViewModel.InvoiceReciept;
+
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment HostingEnvironment;
+
+
+@{
+    var role = Context.Session.GetString("Role");
+
+}
+<div class="row shadow bg-white rounded gx-0 pt-1 mt-2">
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr class="table-light">
+                        <th scope="col">Date</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Bill</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+
+                @{
+                    DateOnly firstDate = Model.FirstDate;
+                    DateOnly lastDate = Model.LastDate;
+                    int TimeSheetId = Model.TimeSheetId;
+                }
+
+                <tbody>
+                    @while (firstDate <= lastDate)
+                    {
+                        if (Model.ReimbursementData.Select(x => x.ShiftDate).Contains(firstDate))
+                        {
+                            learning1.DBEntities.Models.TimesheetReimbursement timesheet1 = Model.ReimbursementData.First(x => x.ShiftDate == firstDate);
+
+                            <tr value="@TimeSheetId">
+                                <td>@firstDate</td>
+                                <td><input class="form-control disInput" type="text" name="Item" value="@timesheet1.Item"></td>
+                                <td><input class="form-control disInput" type="number" name="Amount" value="@timesheet1.Amount"></td>
+                                <td>
+                                    <input type="file" class="real-file disInput" hidden="hidden" />
+
+                                    <div class="input-group mb-3">
+                                        <input class="form-control bg-light custom-text" type="text"
+                                               aria-label="readonly input example" value="@timesheet1.Bill[(timesheet1.Bill.IndexOf('_')+1)..]" readonly>
+                                        <button class="btn btn-info uploadFileBtn disInput" type="button">
+                                            <i class="bi bi-cloud-arrow-up me-1"></i><span class="d-none d-sm-inline">Upload</span>
+                                        </button>
+
+                                    </div>
+                                </td>
+
+                                <td>
+                                    @if (role == "Physician")
+                                    {
+                                        <button type="button" class="btn btn-outline-info receiptEdit">Edit</button>
+                                        <button type="button" class="btn btn-outline-info receiptDelete">Delete</button>
+                                    }
+
+                                    <button type="button" class="btn btn-outline-info receiptView" value="@timesheet1.Bill">View</button>
+
+                                    @if (role == "Physician")
+                                    {
+                                        <button type="button" class="btn btn-outline-info receiptSave" hidden>Save</button>
+                                        <button type="button" class="btn btn-outline-info receiptCancel" hidden>Cancel</button>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr value="@TimeSheetId">
+                                <td>@firstDate</td>
+                                <td><input class="form-control" type="text" name="Item"></td>
+                                <td><input class="form-control" type="number" name="Amount"></td>
+                                <td>
+                                    @if (role == "Physician")
+                                    {
+                                        <input type="file" class="real-file" hidden="hidden" />
+
+                                        <div class="input-group mb-3">
+                                            <input class="form-control bg-light custom-text" type="text"
+                                                   aria-label="readonly input example" value="Select File" readonly>
+                                            <button class="btn btn-info uploadFileBtn" type="button">
+                                                <i class="bi bi-cloud-arrow-up me-1"></i><span class="d-none d-sm-inline">Upload</span>
+                                            </button>
+                                            <button class="btn btn-info submitFileBtn" type="button">
+                                                <i class="bi bi-cloud-download me-1"></i><span class="d-none d-sm-inline">Submit</span>
+                                            </button>
+                                        </div>
+                                    }
+
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        }
+
+
+                        firstDate = firstDate.AddDays(1);
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

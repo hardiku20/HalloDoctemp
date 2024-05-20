@@ -5,6 +5,7 @@ using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,9 @@ namespace learning1.Services.Services
     {
         private readonly IProviderRepo _providerRepo;
 
-        public ProviderServices(IProviderRepo providerRepo) { 
-             _providerRepo = providerRepo;
+        public ProviderServices(IProviderRepo providerRepo)
+        {
+            _providerRepo = providerRepo;
         }
 
         public ProviderDashboardViewModel DisplayProviderDashboard(int PhysicianId)
@@ -41,26 +43,26 @@ namespace learning1.Services.Services
             ProviderDashboardViewModel model = new ProviderDashboardViewModel()
             {
                 TableViewModel = temp,
-               CancellationReason = Casetags,
-               Region = Regions,
-               RequestCount = Count,
+                CancellationReason = Casetags,
+                Region = Regions,
+                RequestCount = Count,
             };
             return model;
         }
 
         public ProviderDashboardViewModel RenderActiveStateData(int status1, int status2, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _providerRepo.RenderToActiveState(status1, status2, physicianId,page, pageSize, patientName, regionName, requestType);
+            var model = _providerRepo.RenderToActiveState(status1, status2, physicianId, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
         public ProviderDashboardViewModel RenderConcludeStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _providerRepo.RenderConcludeState(status,physicianId ,page, pageSize, patientName, regionName, requestType);
+            var model = _providerRepo.RenderConcludeState(status, physicianId, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
-        public ProviderDashboardViewModel RenderNewStateData(int status, int physicianId , int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
+        public ProviderDashboardViewModel RenderNewStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
             var model = _providerRepo.RenderNewState(status, physicianId, page, pageSize, patientName, regionName, requestType);
             return model;
@@ -68,7 +70,7 @@ namespace learning1.Services.Services
 
         public ProviderDashboardViewModel RenderPendingStateData(int status, int physicianId, int page, int pageSize, string patientName, string regionName, DBEntities.ViewModel.RequestType requestType)
         {
-            var model = _providerRepo.RenderPendingState(status,physicianId ,page, pageSize, patientName, regionName, requestType);
+            var model = _providerRepo.RenderPendingState(status, physicianId, page, pageSize, patientName, regionName, requestType);
             return model;
         }
 
@@ -351,7 +353,7 @@ namespace learning1.Services.Services
 
             try
             {
-                var fileName = reqId +"-" + Path.GetFileName(fileforConcludeCare.FileName);
+                var fileName = reqId + "-" + Path.GetFileName(fileforConcludeCare.FileName);
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Files", "PatientDocs", fileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -402,12 +404,207 @@ namespace learning1.Services.Services
 
         public EncounterFormViewModel GetEncounterform(int requestId)
         {
-           return _providerRepo.GetEncounterformRepo(requestId);
+            return _providerRepo.GetEncounterformRepo(requestId);
         }
 
         public void EncounterforData(EncounterFormViewModel model)
         {
             _providerRepo.EncounterFormRepo(model);
+        }
+
+        public void ConcludeCareService(int requestId)
+        {
+            _providerRepo.ConcludeCareStatusRepo(requestId);
+        }
+
+        public IEnumerable<TimeSheetDetailVM> CreateInvoiceSheet(DateOnly firstDate, DateOnly lastDate)
+        {
+            int PhysicianId = 21;
+            Timesheet? timesheet = _providerRepo.GetTimesheetByDate(firstDate, lastDate,PhysicianId);
+            if (timesheet == null)
+            {
+                Timesheet timesheet1 = new()
+                {
+                    PhysicianId = PhysicianId,
+                    Startdate = firstDate,
+                    Enddate = lastDate,
+                    IsFinalized = new BitArray(1, false),
+                    Status = false
+                };
+                Timesheet? createdSheet = _providerRepo.CreateTimeSheet(timesheet1);
+
+                List<TimesheetDetail> timesheetDetailsInsert = new();
+                DateOnly date = firstDate;
+                while (date <= lastDate)
+                {
+                    timesheetDetailsInsert.Add(new TimesheetDetail()
+                    {
+                        TimesheetId = createdSheet.TimesheetId,
+                        Shiftdate = date,
+                        ShiftHours = (int?)_providerRepo.GetTotalShiftHours(date, PhysicianId),
+                        Housecall = null,
+                        PhoneConsult = null,
+                        IsWeekend = new BitArray(1, false)
+                    });
+
+                    date = date.AddDays(1);
+                }
+
+                _providerRepo.CreateRangeTimesheetDetail(timesheetDetailsInsert);
+
+                return _providerRepo.GetTimeSheetData(createdSheet.TimesheetId, PhysicianId);
+
+            }
+
+            return _providerRepo.GetTimeSheetData(timesheet.TimesheetId, PhysicianId);
+        }
+
+        public bool DeleteTimesheetReimbursement(int timeSheetId, DateOnly shiftDate)
+        {
+            TimesheetReimbursement? data = _providerRepo.GetTimesheetReimbursementByDateAndTimeSheetId(shiftDate, timeSheetId);
+            if (data == null) return false;
+            DeleteInvoiceReceipt(data.Bill);
+            return _providerRepo.DeleteTimesheetReimbursement(data);
+        }
+
+        private void DeleteInvoiceReceipt(string fileName)
+        {
+            string exitingFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Invoice", fileName);
+            if (File.Exists(exitingFile))
+            {
+                System.IO.File.Delete(exitingFile);
+
+            }
+
+        }
+
+        public void SaveInvoiceReceipt(IFormFile file, string fileName)
+        {
+            //var filepath = Path.Combine(_hostingEnvironment.ContentRootPath, @"wwwroot\Invoice", fileName);
+            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Invoice", fileName);
+            using var filestream = new FileStream(filepath, FileMode.Create);
+            file.CopyTo(filestream);
+        }
+
+        public bool FinalizeInvoice(DateOnly firstDate, DateOnly lastDate)
+        {
+            int PhysicianId = 21;
+            Timesheet? timesheet = _providerRepo.GetTimesheetByDate(firstDate, lastDate, PhysicianId);
+            if (timesheet != null)
+            {
+                timesheet.IsFinalized = new BitArray(1, true);
+                return _providerRepo.UpdateTimesheet(timesheet);
+            }
+            return false;
+        }
+
+        public string GetContentType(string filePath)
+        {
+            string contentType = "application/octet-stream"; // Default content type
+            string extension = Path.GetExtension(filePath).ToLowerInvariant();
+
+            switch (extension)
+            {
+                case ".jpg":
+                case ".jpeg":
+                    contentType = "image/jpeg";
+                    break;
+                case ".png":
+                    contentType = "image/png";
+                    break;
+                case ".gif":
+                    contentType = "image/gif";
+                    break;
+                case ".pdf":
+                    contentType = "application/pdf";
+                    break;
+
+            }
+
+            return contentType;
+        }
+
+        public InvocingViewModel GetInvoiceData(DateOnly firstDate, DateOnly lastDate, string aspNetId)
+        {
+            int PhysicianId = 21;
+            Timesheet? timesheet = _providerRepo.GetTimesheetByDate(firstDate, lastDate,PhysicianId);
+
+            learning1.DBEntities.ViewModel.InvocingViewModel invoice = new();
+            if (timesheet != null)
+            {
+                invoice.TimesheetDetails = _providerRepo.GetTimeSheetDetailStaticData(timesheet.TimesheetId);
+                invoice.TimesheetReimbursements = _providerRepo.GetTimesheetReimbursementByTimeSheetId(timesheet.TimesheetId);
+                invoice.IsSheetFinalized = IsInvoiceSheetFinalize(firstDate, lastDate, aspNetId);
+
+            }
+            return invoice;
+        }
+
+        public InvoiceReciept GetInvoiceReceipt(DateOnly firstDate, DateOnly lastDate)
+        {
+            int PhysicianId = 21;
+            Timesheet? timesheet = _providerRepo.GetTimesheetByDate(firstDate, lastDate, PhysicianId);
+            IEnumerable<TimesheetReimbursement> data = _providerRepo.GetTimesheetReimbursementByTimeSheetId(timesheet.TimesheetId);
+            learning1.DBEntities.ViewModel.InvoiceReciept invoiceReceipt = new()
+            {
+                FirstDate = (DateOnly)timesheet.Startdate,
+                LastDate = (DateOnly)timesheet.Enddate,
+                TimeSheetId = timesheet.TimesheetId,
+                ReimbursementData = data
+            };
+            return invoiceReceipt;
+        }
+
+        public bool UpdateInvoiceSheetData(List<SheetData> sheetData)
+        {
+            List<TimesheetDetail> timesheetDetailsUpdate = new();
+            foreach (SheetData sheet in sheetData)
+            {
+                TimesheetDetail timesheetDetail = _providerRepo.GetTimesheetDetailById(sheet.TimesheetDetailId);
+                timesheetDetail.ShiftHours = (int)sheet.TotalHours;
+                timesheetDetail.Housecall = sheet.Housecall;
+                timesheetDetail.IsWeekend = new BitArray(1, sheet.IsWeekend);
+                timesheetDetail.PhoneConsult = sheet.PhoneConsult;
+                timesheetDetailsUpdate.Add(timesheetDetail);
+            }
+            return _providerRepo.UpdateRangeTimesheetDetail(timesheetDetailsUpdate);
+        }
+
+
+        public bool IsInvoiceSheetFinalize(DateOnly firstDate, DateOnly lastDate, string aspNetId)
+        {
+            int PhysicianId = 21;
+            Timesheet? timesheet = _providerRepo.GetTimesheetByDate(firstDate, lastDate, PhysicianId);
+            if (timesheet == null) return false;
+            if (timesheet.IsFinalized == null) return false;
+            return timesheet.IsFinalized[0];
+        }
+
+
+
+        public bool UploadReceipt(TimesheetReimbursementVM receipt)
+        {
+            TimesheetReimbursement? data = _providerRepo.GetTimesheetReimbursementByDateAndTimeSheetId(receipt.ShiftDate, receipt.TimesheetId);
+            if (data == null && receipt.ReceiptDoc != null)
+            {
+                TimesheetReimbursement receipt1 = new()
+                {
+                    TimesheetId = receipt.TimesheetId,
+                    Item = receipt.Item,
+                    Amount = receipt.Amount,
+                    ShiftDate = receipt.ShiftDate
+                };
+
+                TimesheetReimbursement? createdReceipt = _providerRepo.CreateTimesheetReimbursement(receipt1);
+
+                string fileName = createdReceipt.TimesheetReimbursementId + "_" + receipt.ReceiptDoc.FileName;
+                SaveInvoiceReceipt(receipt.ReceiptDoc, fileName);
+
+                createdReceipt.Bill = fileName;
+                _providerRepo.UpdateTimesheetReimbursement(createdReceipt);
+                return true;
+            }
+            return false;
         }
     }
 }

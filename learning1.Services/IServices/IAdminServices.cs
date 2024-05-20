@@ -1,6 +1,7 @@
 ﻿using learning1.DBEntities.Models;
 using learning1.DBEntities.ViewModel;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace learning1.Services.IServices
         CreateProviderAccountViewModel GetRegionforProvider();
         ProviderMenuViewModel GetRegionsforProvider();
         ProviderMenuViewModel GetProvidersdetails(int regionId);
-        CreateProviderAccountViewModel GetRegionsforPhysician();
+        //CreateProviderAccountViewModel GetRegionsforPhysician();
         void CreateAdmin(CreateAdminAccountViewModel model);
         SchedulingViewModel GetRegionsforShift();
         void CreateNewShift(SchedulingViewModel model);
@@ -90,5 +91,15 @@ namespace learning1.Services.IServices
         void UnblockCase(int RequestId);
         EncounterFormViewModel GetEncounterform(int requestId);
         void EncounterforData(EncounterFormViewModel model);
+        Payrate GetPayrateByPhysicianId(int physicianId);
+        bool UpdatePayrate(object fieldId, Payrate model);
+        string GetContentType(string filePath);
+        bool ApproveInvoice(int timeSheetId);
+        bool UpdateInvoiceSheetData(List<SheetData> sheetData);
+        InvoiceReciept GetInvoiceReceiptAdmin(int timeSheetId);
+        InvocingViewModel GetInvoiceSheetDataAdmin(int timeSheetId);
+        List<SelectListItem>? GetPhysicians(string v1, string v2);
+        InvocingViewModel IsInvoiceFinalizedAndApproved(int providerId, DateOnly firstDate, DateOnly lastDate);
+        CreateProviderAccountViewModel GetPhysicianDetails(int physicianId);
     }
 }

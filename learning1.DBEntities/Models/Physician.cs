@@ -79,6 +79,8 @@ public partial class Physician
 
     public virtual AspNetUser? ModifiedByNavigation { get; set; }
 
+    public virtual ICollection<Payrate> Payrates { get; set; } = new List<Payrate>();
+
     public virtual ICollection<PhysicianLocation> PhysicianLocations { get; set; } = new List<PhysicianLocation>();
 
     public virtual ICollection<PhysicianNotification> PhysicianNotifications { get; set; } = new List<PhysicianNotification>();
@@ -94,4 +96,6 @@ public partial class Physician
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
+
+    public virtual ICollection<Timesheet> Timesheets { get; set; } = new List<Timesheet>();
 }

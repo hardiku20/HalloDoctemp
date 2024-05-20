@@ -9,6 +9,7 @@ namespace learning1.DBEntities.ViewModel
 {
     public class CreateProviderAccountViewModel
     {
+        public int PhysicianId {  get; set; }
         public string? UserName { get; set; }
         public string? Password { get; set; }
         public string? Role { get; set; }
@@ -31,7 +32,7 @@ namespace learning1.DBEntities.ViewModel
 
         public List<Region>? Region { get; set; }
 
-        public List<int> AdminRegions { get; set; }
+        public List<int> PhysicianRegions { get; set; }
         public int? RegionId { get; set; }
         public string BussinessName { get; set; }
         public string BussinessWebsite { get; set; }

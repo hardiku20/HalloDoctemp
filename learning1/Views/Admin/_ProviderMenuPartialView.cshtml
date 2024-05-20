@@ -30,7 +30,7 @@
                 <td class="py-1">@items.Status</td>
                 <td class="d-flex justify-content-center gap-1 py-1">
                     <a class="btn btn-outline-info text-info bg-white dark-mode1" data-bs-target="#ContactProviderModal" data-bs-toggle="modal">Contact</a>
-                    <a class="btn btn-outline-info text-info bg-white dark-mode1" asp-action="EditPhysicianAccount" asp-controller="Admin">Edit</a>
+                    <a class="btn btn-outline-info text-info bg-white dark-mode1" asp-action="EditPhysicianAccount" asp-controller="Admin"  asp-route-PhysicianId="@items.PhysicianId">Edit</a>
                 </td>
             </tr>
         }

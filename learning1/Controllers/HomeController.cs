@@ -273,7 +273,7 @@ namespace learning1.Controllers
         {
             int id = (int)_httpContextAccessor.HttpContext.Session.GetInt32("Id");
             _patientServices.UpdatePatientProfile(model,id);
-            return View();
+            return View(model);
         }
 
         public IActionResult reviewagreement(string requestId)
@@ -359,6 +359,7 @@ namespace learning1.Controllers
 
 
         public static void SendEmail(string email, string body, string subject)
+        
         {
 
             var client = new SmtpClient("smtp.office365.com", 587);

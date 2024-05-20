@@ -220,6 +220,7 @@ namespace learning1.Controllers
                 {
                     _contextAccessor.HttpContext.Session.SetString("userName", physician.FirstName + " " + physician.LastName);
                     _contextAccessor.HttpContext.Session.SetInt32("Id", physicianId);
+                    _contextAccessor.HttpContext.Session.SetString("Role","Physician");
                     _notyf.Success("Login Successfully");
                     return RedirectToAction("ProviderDashboard", "Provider");
                 }
@@ -366,20 +367,124 @@ namespace learning1.Controllers
             return RedirectToAction("ProviderDashboard");
         }
 
+      
+
+    public IActionResult ConcludeStateChange(int requestId)
+        {
+            _providerServices.ConcludeCareService(requestId);
+            return RedirectToAction("ProviderDashboard");
+        }
+
+
         public IActionResult Invoicing()
         {
-            return View();
+
+           InvocingViewModel invoice = new() { Username = "name" };
+            return View(invoice);
         }
 
-        public IActionResult BiweeklyTimesheet()
+        [HttpPost]
+        public IActionResult InvoicePartialView(DateOnly? firstDate, DateOnly? lastDate)
         {
-            return View();
+            InvocingViewModel invoice = new();
+            if (firstDate == null || lastDate == null)
+            {
+                invoice.IsSheetFinalized = true;
+            }
+            else
+            {
+                string? aspNetId = "f1ae5ca9-bc3c-4b9b-bd2a-22ff31271182";
+                    //_contextAccessor.HttpContext.Session.GetString("AspNetId");
+                if (aspNetId == null) return new BadRequestObjectResult("Bad request");
+                invoice = _providerServices.GetInvoiceData((DateOnly)firstDate, (DateOnly)lastDate, aspNetId);
+            }
+
+            return PartialView("_Invoice", invoice);
+        }
+
+        [HttpPost]
+        public IActionResult InvoiceSheet()
+        {
+            return PartialView("_InvoiceSheet");
+        }
+
+        [HttpPost]
+        public IActionResult InvoiceSheetData(DateOnly? firstDate, DateOnly? lastDate)
+        {
+
+
+            InvocingViewModel invoice = new() { Timesheets = _providerServices.CreateInvoiceSheet((DateOnly)firstDate, (DateOnly)lastDate) };
+            return PartialView("_InvoiceSheetData", invoice);
+        }
+
+        [HttpPost]
+        public IActionResult InvoiceReceipt(DateOnly? firstDate, DateOnly? lastDate)
+        {
+            //string? aspNetId = _contextAccessor.HttpContext.Session.GetString("AspNetId");
+            //if (aspNetId == null) return new BadRequestObjectResult("Bad request");
+            learning1.DBEntities.ViewModel.InvoiceReciept receipt = _providerServices.GetInvoiceReceipt((DateOnly)firstDate, (DateOnly)lastDate);
+            return PartialView("_InvoiceReciept", receipt);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateInvoiceSheetData([FromBody] List<learning1.DBEntities.ViewModel.SheetData> sheetData)
+        {
+            bool isUpdated = _providerServices.UpdateInvoiceSheetData(sheetData);
+            if (isUpdated) { _notyf.Success("Data updated successfully"); }
+            else { _notyf.Error("Something Went Wrong Data is not updated"); }
+            return new OkObjectResult(isUpdated);
+        }
+
+        [HttpPost]
+        public IActionResult UploadReceipt(TimesheetReimbursementVM receipt)
+        {
+            if (ModelState.IsValid)
+            {
+                bool isUpdate = _providerServices.UploadReceipt(receipt);
+                if (isUpdate) { _notyf.Success(" Receipt Uploaded successfully"); }
+                else { _notyf.Error("Something Went Wrong Reciept is not uploaded"); }
+                return new OkObjectResult(isUpdate);
+            }
+            return new OkObjectResult(false);
         }
 
 
+        [HttpPost]
+        public IActionResult DeleteReceipt(int? timeSheetId, DateOnly? shiftDate)
+        {
+            if (timeSheetId != null && shiftDate != null)
+            {
+                bool isDelete = _providerServices.DeleteTimesheetReimbursement((int)timeSheetId, (DateOnly)shiftDate);
+                if (isDelete) { _notyf.Success(" Receipt Deleted successfully"); }
+                else { _notyf.Error("Something Went Wrong Receipt is not deleted"); }
+                return new OkObjectResult(isDelete);
+            }
+            return new OkObjectResult(false);
+        }
 
 
+        public IActionResult GetInvoiceByName(string filename)
+        {
 
+            //var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "Invoice/", filename);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Invoice", filename);
+            var contentType = _providerServices.GetContentType(filePath);
+            return new FileStreamResult(new FileStream(filePath, FileMode.Open, FileAccess.Read), contentType);
+        }
+
+        [HttpPost]
+        public IActionResult FinalizeInvoice(DateOnly? firstDate, DateOnly? lastDate)
+        {
+            if (firstDate != null && lastDate != null)
+            {
+
+                bool isFinalized = _providerServices.FinalizeInvoice((DateOnly)firstDate, (DateOnly)lastDate);
+                if (isFinalized) { _notyf.Success("Finalized successfully"); }
+                else { _notyf.Error("Something Went Wrong not finalized"); }
+                return new OkObjectResult(isFinalized);
+            }
+            return new OkObjectResult(false);
+        }
 
 
 

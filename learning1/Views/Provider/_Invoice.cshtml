@@ -1,0 +1,169 @@
+﻿@model learning1.DBEntities.ViewModel.InvocingViewModel;
+@using learning1.DBEntities.Models;
+@using learning1.DBEntities.ViewModel;
+
+<div class="container-fluid my-5 pb-5 d-flex flex-column container-w">
+
+    <div class="row  mb-2 mx-0">
+        <div class="col-auto me-auto d-flex align-items-center ps-0">
+            <h3>Timesheets</h3>
+        </div>
+        <div class="col-auto pe-0 d-flex align-items-center">
+            <a role="button" class="btn  btn-outline-info" asp-controller="Provider" asp-action="ProviderDashboard">
+                <i class="bi bi-chevron-left"></i>
+                Back
+            </a>
+        </div>
+
+    </div>
+
+    @{
+        DateTime currentDate = DateTime.Now;
+        int i = 1;
+      
+    }
+
+    <div class="row row-cols-1 gy-3 shadow-sm bg-white rounded py-3 mt-3 gx-0">
+        <div class="col">
+            <div class="row">
+                <div class="col-auto ms-2 me-auto">
+                    <div class="form-floating">
+                        <select class="form-select" id="sheetDateSelect" aria-label="Floating label select example">
+                            <option value="0" selected>Select Period</option>
+
+
+                            @for (int month = 1; month <= currentDate.Month; month++)
+                            {
+                                DateTime monthStart = new DateTime(currentDate.Year, month, 1);
+                                DateTime monthEnd = monthStart.AddMonths(1).AddDays(-1);
+                                DateTime middleDate1 = monthStart.AddDays(13);
+                                DateTime middleDate2 = monthStart.AddDays(14);
+                                <option value="@i" data-firstDate="@monthStart.ToString("yyyy/MM/dd")" data-lastDate="@middleDate1.ToString("yyyy/MM/dd")">@monthStart.ToString("yyyy/MM/dd") - @middleDate1.ToString("yyyy/MM/dd")</option>
+                                i++;
+                                <option value="@i" data-firstDate="@middleDate2.ToString("yyyy/MM/dd")" data-lastDate="@monthEnd.ToString("yyyy/MM/dd")">@middleDate2.ToString("yyyy/MM/dd") - @monthEnd.ToString("yyyy/MM/dd")</option>
+                                i++;
+                            }
+                        </select>
+                        <label for="floatingSelect">Search by timesheetperiod</label>
+                    </div>
+                </div>
+                @if (!Model.IsSheetFinalized)
+                {
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-outline-info invoiceFinalize me-2">Finalize Timesheet</button>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div class="col">
+            @if (Model.TimesheetDetails == null || Model.TimesheetDetails.Count() == 0)
+            {
+                <h6 class="ms-3">No Record(s) found</h6>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table" id="invoiceSheetTable">
+                        <thead>
+                            <tr class="table-light">
+                                <th scope="col">ShiftDate</th>
+                                <th scope="col">Shift</th>
+                                <th scope="col">NightShift Weekend</th>
+                                <th scope="col">Housecall</th>
+                                <th scope="col">Housecall Nights Weekend</th>
+                                <th scope="col">Phone Consults</th>
+                                <th scope="col">Phone Consults Night Weekend</th>
+                                <th scope="col">Batch Testing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (TimeSheetDetailStatic timesheetDetail in Model.TimesheetDetails)
+                            {
+                                if (timesheetDetail.IsWeekend)
+                                {
+                                    <tr>
+                                        <td>@timesheetDetail.Shiftdate.Value.ToString("MMM dd,yyyy")</td>
+                                        <td>@timesheetDetail.Shift</td>
+                                        <td>1</td>
+                                        <td>0</td>
+                                        <td>@timesheetDetail.Housecall</td>
+                                        <td>0</td>
+                                        <td>@timesheetDetail.PhoneConsult</td>
+                                        <td>0</td>
+                                    </tr>
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@timesheetDetail.Shiftdate.Value.ToString("MMM dd,yyyy")</td>
+                                        <td>@timesheetDetail.Shift</td>
+                                        <td>0</td>
+                                        <td>@timesheetDetail.Housecall</td>
+                                        <td>0</td>
+                                        <td>@timesheetDetail.PhoneConsult</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                    </tr>
+                                }
+
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <div class="row row-cols-1 shadow-sm bg-white rounded py-3 mt-3 gx-0">
+        <div class="col">
+            <h4 class="ms-2">Timesheet Reimbursement</h4>
+        </div>
+        <div class="col">
+            @if (Model.TimesheetReimbursements == null || Model.TimesheetReimbursements.Count() == 0)
+            {
+                <h6 class="ms-3">No Record(s) found</h6>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr class="table-light">
+                                <th scope="col">Date</th>
+                                <th scope="col">Item</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Bill</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (learning1.DBEntities.Models.TimesheetReimbursement receipt in Model.TimesheetReimbursements)
+                            {
+                                <tr>
+                                    <td>@receipt.ShiftDate.ToString("MMM dd,yyyy")</td>
+                                    <td>@receipt.Item</td>
+                                    <td>@receipt.Amount</td>
+                                    <td>@receipt.Bill</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-info receiptView" value="@receipt.Bill">View</button>
+                                    </td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+    </div>
+
+
+</div>

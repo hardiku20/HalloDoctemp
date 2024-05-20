@@ -1695,7 +1695,7 @@ namespace learning1.Repositories.Repositories
 
 
             List<PhysicianRegion> regions = new List<PhysicianRegion>();
-            foreach (var items in model.AdminRegions)
+            foreach (var items in model.PhysicianRegions)
             {
                 regions.Add(new PhysicianRegion() { PhysicianId = physician.PhysicianId, RegionId = items });
             }
@@ -2096,8 +2096,119 @@ namespace learning1.Repositories.Repositories
             }
         }
 
+        public Payrate GetPayratesData(int physicianId)
+        {
+            return _context.Payrates.FirstOrDefault(x => x.PhysicianId == physicianId);
+        }
 
+        public void AddPayrates(Payrate payrate)
+        {
+            _context.Payrates.Add(payrate);
+            _context.SaveChanges();
+        }
 
+        public void UpdatePayrates(Payrate oldpayrates)
+        {
+            _context.Payrates.Update(oldpayrates);
+            _context.SaveChanges(); 
+        }
 
+        public Timesheet? GetTimesheetById(int timeSheetId)
+        {
+            return _context.Timesheets.FirstOrDefault(x => x.TimesheetId == timeSheetId);
+        }
+
+        public TimesheetDetail GetTimesheetDetailById(int timesheetDetailId)
+        {
+            return _context.TimesheetDetails.Find(timesheetDetailId);
+        }
+
+        public bool UpdateRangeTimesheetDetail(List<TimesheetDetail> timesheetDetailsUpdate)
+        {
+            try
+            {
+                _context.TimesheetDetails.UpdateRange(timesheetDetailsUpdate);
+                _context.SaveChangesAsync();
+                return true;
+
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<TimesheetReimbursement> GetTimesheetReimbursementByTimeSheetId(int timesheetId)
+        {
+            return _context.TimesheetReimbursements.Where(x => x.TimesheetId == timesheetId).ToList();
+        }
+
+        public IEnumerable<TimeSheetDetailVM> GetTimeSheetData(int timesheetId, int physicianId)
+        {
+            return _context.TimesheetDetails.Where(x => x.TimesheetId == timesheetId).Select(b => new TimeSheetDetailVM
+            {
+                TimesheetDetailId = b.TimesheetDetailId,
+                Shiftdate = b.Shiftdate,
+                ShiftHours = b.ShiftHours,
+                Housecall = b.Housecall,
+                PhoneConsult = b.PhoneConsult,
+                IsWeekend = b.IsWeekend[0],
+                OnCallHours = _context.ShiftDetails.Where(x => DateOnly.FromDateTime(x.ShiftDate) == b.Shiftdate && x.Shift.PhysicianId == physicianId).Sum(x => (x.EndTime - x.StartTime).TotalHours)
+            }).OrderBy(x => x.Shiftdate).ToList();
+        }
+
+        public IEnumerable<Physician> GetAllPhysician()
+        {
+            return _context.Physicians.Where(x => x.IsDeleted == false).ToList();
+        }
+
+        public Timesheet? GetTimesheetByDate(DateOnly firstDate, DateOnly lastDate, int providerId)
+        {
+            return _context.Timesheets.FirstOrDefault(x => x.Startdate == firstDate && x.Enddate == lastDate && x.PhysicianId == providerId);
+        }
+
+        public Physician GetPhyByPhysicianId(int providerId)
+        {
+            return _context.Physicians.Where(x => x.PhysicianId == providerId).FirstOrDefault();
+        }
+
+        public IEnumerable<TimeSheetDetailStatic>? GetTimeSheetDetailStaticData(int timesheetId)
+        {
+            return _context.TimesheetDetails.Where(x => x.TimesheetId == timesheetId).Select(b => new TimeSheetDetailStatic()
+            {
+                Shiftdate = b.Shiftdate,
+                Shift = _context.ShiftDetails.Where(x => DateOnly.FromDateTime(x.ShiftDate) == b.Shiftdate && x.Shift.PhysicianId == b.Timesheet.PhysicianId).Count(),
+                Housecall = (int)b.Housecall,
+                PhoneConsult = (int)b.PhoneConsult,
+                IsWeekend = b.IsWeekend[0]
+
+            }).ToList();
+        }
+
+        public bool UpdateTimesheet(Timesheet timesheet)
+        {
+            try
+            {
+                if (timesheet != null)
+                {
+                    _context.Timesheets.Update(timesheet);
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public List<int> GetSelectedPhysicianRegionByPhysicianId(int physicianId)
+        {
+            return _context.PhysicianRegions.Where(x=>x.PhysicianId== physicianId).Select(b=>b.RegionId).ToList();
+        }
     }
 }

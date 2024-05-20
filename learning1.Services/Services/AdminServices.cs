@@ -4,9 +4,12 @@ using learning1.Repositories.IRepositories;
 using learning1.Repositories.Repositories;
 using learning1.Services.IServices;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -375,16 +378,16 @@ namespace learning1.Services.Services
 
         }
 
-        public CreateProviderAccountViewModel GetRegionsforPhysician()
-        {
-            var regions = _adminRepo.GetRegionTable();
-            CreateProviderAccountViewModel model = new CreateProviderAccountViewModel()
-            {
-                Region = regions,
-            };
-            return model;
+        //public CreateProviderAccountViewModel GetRegionsforPhysician()
+        //{
+        //    var regions = _adminRepo.GetRegionTable();
+        //    CreateProviderAccountViewModel model = new CreateProviderAccountViewModel()
+        //    {
+        //        Region = regions,
+        //    };
+        //    return model;
 
-        }
+        //}
 
         public void CreateAdmin(CreateAdminAccountViewModel model)
         {
@@ -563,6 +566,253 @@ namespace learning1.Services.Services
         public void EncounterforData(EncounterFormViewModel model)
         {
             _adminRepo.EncounterFormRepo(model);
+        }
+
+        public Payrate GetPayrateByPhysicianId(int physicianId)
+        {
+            var model = _adminRepo.GetPayratesData(physicianId);
+            if (model == null)
+            {
+                Payrate payrate = new()
+                {
+                    PhysicianId = physicianId,
+                    NightShiftWeekend = 0,
+                    Shift = 0,
+                    HousecallNightWeekend = 0,
+                    Phoneconsult = 0,
+                    PhoneconsultNightWeekend = 0,
+                    BatchTesting = 0,
+                    Housecall = 0,
+
+                };
+
+                _adminRepo.AddPayrates(payrate);
+
+                return payrate;
+            }
+            return model;
+        }
+
+        public bool UpdatePayrate(object fieldId, Payrate model)
+        {
+            try
+            {
+                Payrate oldpayrates = _adminRepo.GetPayratesData(model.PhysicianId);
+
+                if (oldpayrates != null)
+                {
+                    switch (fieldId)
+                    {
+                        case 1: oldpayrates.NightShiftWeekend = model.NightShiftWeekend; break;
+                        case 2: oldpayrates.Shift = model.Shift; break;
+                        case 3: oldpayrates.HousecallNightWeekend = model.HousecallNightWeekend; break;
+                        case 4: oldpayrates.Phoneconsult = model.Phoneconsult; break;
+                        case 5: oldpayrates.PhoneconsultNightWeekend = model.PhoneconsultNightWeekend; break;
+                        case 6: oldpayrates.BatchTesting = model.BatchTesting; break;
+                        case 7: oldpayrates.Housecall = model.Housecall; break;
+                        default: return false;
+                    };
+
+                    _adminRepo.UpdatePayrates(oldpayrates);
+
+                    return true;
+                }
+                return false;
+
+            }
+            catch
+            {
+                throw;
+
+            }
+        }
+
+        public string GetContentType(string filePath)
+        {
+
+            string contentType = "application/octet-stream"; // Default content type
+            string extension = Path.GetExtension(filePath).ToLowerInvariant();
+
+            switch (extension)
+            {
+                case ".jpg":
+                case ".jpeg":
+                    contentType = "image/jpeg";
+                    break;
+                case ".png":
+                    contentType = "image/png";
+                    break;
+                case ".gif":
+                    contentType = "image/gif";
+                    break;
+                case ".pdf":
+                    contentType = "application/pdf";
+                    break;
+
+            }
+
+            return contentType;
+        }
+
+        public bool ApproveInvoice(int timeSheetId)
+        {
+            Timesheet? timesheet = _adminRepo.GetTimesheetById(timeSheetId);
+            if (timesheet != null)
+            {
+                timesheet.Status = true;
+                return _adminRepo.UpdateTimesheet(timesheet);
+            }
+            return false;
+        }
+
+        public bool UpdateInvoiceSheetData(List<SheetData> sheetData)
+        {
+            List<TimesheetDetail> timesheetDetailsUpdate = new();
+            foreach (SheetData sheet in sheetData)
+            {
+                TimesheetDetail timesheetDetail = _adminRepo.GetTimesheetDetailById(sheet.TimesheetDetailId);
+                timesheetDetail.ShiftHours = (int)sheet.TotalHours;
+                timesheetDetail.Housecall = sheet.Housecall;
+                timesheetDetail.IsWeekend = new BitArray(1, sheet.IsWeekend);
+                timesheetDetail.PhoneConsult = sheet.PhoneConsult;
+                timesheetDetailsUpdate.Add(timesheetDetail);
+            }
+            return _adminRepo.UpdateRangeTimesheetDetail(timesheetDetailsUpdate);
+        }
+
+        public InvoiceReciept GetInvoiceReceiptAdmin(int timeSheetId)
+        {
+            Timesheet? timesheet = _adminRepo.GetTimesheetById(timeSheetId);
+            IEnumerable<TimesheetReimbursement> data = _adminRepo.GetTimesheetReimbursementByTimeSheetId(timesheet.TimesheetId);
+            InvoiceReciept invoiceReceipt = new()
+            {
+                FirstDate = (DateOnly)timesheet.Startdate,
+                LastDate = (DateOnly)timesheet.Enddate,
+                TimeSheetId = timesheet.TimesheetId,
+                ReimbursementData = data
+            };
+            return invoiceReceipt;
+        }
+
+        public InvocingViewModel GetInvoiceSheetDataAdmin(int timeSheetId)
+        {
+            Timesheet? timesheet = _adminRepo.GetTimesheetById(timeSheetId);
+
+            InvocingViewModel invoice = new()
+            {
+                Timesheets = _adminRepo.GetTimeSheetData(timesheet.TimesheetId, timesheet.PhysicianId),
+                Payrate = GetPayrateByPhysicianId(timesheet.PhysicianId)
+            };
+
+            decimal shiftHours = 0;
+            int weekend = 0;
+            int housecall = 0;
+            int phoneconsult = 0;
+            foreach (TimeSheetDetailVM data in invoice.Timesheets)
+            {
+                shiftHours += (decimal)data.ShiftHours;
+                if ((bool)data.IsWeekend) weekend += 1;
+                housecall += (int)data.Housecall;
+                phoneconsult += (int)data.PhoneConsult;
+            }
+
+            invoice.TotalShiftHours = shiftHours * (decimal)invoice.Payrate.Shift;
+            invoice.TotalWeekend = weekend * (decimal)invoice.Payrate.NightShiftWeekend;
+            invoice.TotalHouseCall = housecall * (decimal)invoice.Payrate.Housecall;
+            invoice.TotalPhoneConsult = phoneconsult * (decimal)invoice.Payrate.Phoneconsult;
+            invoice.Total = invoice.TotalShiftHours + invoice.TotalWeekend + invoice.TotalHouseCall + invoice.TotalPhoneConsult;
+            return invoice;
+        }
+
+        public List<SelectListItem>? GetPhysicians(string v1, string v2)
+        {
+            List<SelectListItem> physicianList = new();
+            IEnumerable<Physician> physicians = _adminRepo.GetAllPhysician();
+
+            physicianList.Add(new SelectListItem
+            {
+                Text = v1,
+                Value = v2
+            });
+            foreach (Physician physician in physicians)
+            {
+                physicianList.Add(new SelectListItem
+                {
+                    Text = physician.FirstName + " " + physician.LastName,
+                    Value = physician.PhysicianId.ToString()
+                });
+            }
+            return physicianList;
+        }
+
+        public InvocingViewModel IsInvoiceFinalizedAndApproved(int providerId, DateOnly firstDate, DateOnly lastDate)
+        {
+            InvocingViewModel invoice = new();
+            Timesheet? timesheet = _adminRepo.GetTimesheetByDate(firstDate, lastDate, providerId);
+            if (timesheet == null)
+            {
+                Physician physician = _adminRepo.GetPhyByPhysicianId(providerId);
+                invoice.IsSheetFinalized = false;
+                invoice.PhysicianName = physician.FirstName + " " + physician.LastName;
+            }
+            else
+            {
+                if (timesheet.IsFinalized[0])
+                {
+                    if ((bool)timesheet.Status)
+                    {
+                        invoice.IsSheetFinalized = true;
+                        invoice.IsSheetApproved = true;
+                        invoice.TimesheetDetails = _adminRepo.GetTimeSheetDetailStaticData(timesheet.TimesheetId);
+                        invoice.TimesheetReimbursements = _adminRepo.GetTimesheetReimbursementByTimeSheetId(timesheet.TimesheetId);
+                    }
+                    else
+                    {
+                        invoice.IsSheetFinalized = true;
+                        invoice.IsSheetApproved = false;
+                        invoice.Timesheet = timesheet;
+                    }
+
+                }
+                else
+                {
+                    Physician physician = _adminRepo.GetPhyByPhysicianId(providerId);
+                    invoice.IsSheetFinalized = false;
+                    invoice.PhysicianName = physician.FirstName + " " + physician.LastName;
+
+                }
+            }
+            return invoice;
+        }
+
+        public CreateProviderAccountViewModel GetPhysicianDetails(int physicianId)
+        {
+            var regions = _adminRepo.GetRegionTable();
+            var physicianRegion = _adminRepo.GetSelectedPhysicianRegionByPhysicianId(physicianId);
+            Physician physician = _adminRepo.GetPhyByPhysicianId(physicianId);
+            CreateProviderAccountViewModel model = new CreateProviderAccountViewModel()
+            {
+                PhysicianId = physicianId,
+                UserName = physician.FirstName + "_" + physician.LastName,
+                FirstName = physician.FirstName,
+                LastName = physician.LastName,
+                Email = physician.Email,
+                Phone = physician.Mobile,
+                Address1 = physician.Address1,
+                Address2 = physician.Address2,
+                City = physician.City,
+                State = "Gujarat",
+                Zip = physician.Zip,
+                MailingPhone = physician.AltPhone,
+                AdminNotes = physician.AdminNotes,
+                BussinessName = physician.BusinessName,
+                BussinessWebsite = physician.BusinessWebsite,
+                ConfirmEmail = physician.SyncEmailAddress,
+                Role = "Physician",
+                Region = regions,
+                PhysicianRegions = physicianRegion,
+            };
+            return model;
         }
     }
 }

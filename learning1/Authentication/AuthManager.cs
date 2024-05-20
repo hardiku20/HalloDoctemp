@@ -115,7 +115,7 @@ namespace learning1.Authentication
                 }
                 if (!f)
                 {
-                    context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "home", action = "patientsite" }));
+                    context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { controller = "Admin", action = "AccessDenied" }));
                     return;
                 }
             }

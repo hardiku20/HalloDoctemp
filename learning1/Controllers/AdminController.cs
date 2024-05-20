@@ -76,6 +76,7 @@ namespace learning1.Controllers
                 {
                     _httpcontextAccessor.HttpContext.Session.SetString("userName", admin.FirstName + " " + admin.LastName);
                     _httpcontextAccessor.HttpContext.Session.SetInt32("Id", AdminId);
+                    _httpcontextAccessor.HttpContext.Session.SetString("Role", "Admin");
                     _notyf.Success("Login Successfully");
                     return RedirectToAction("AdminDashboard", "Admin");
                 }
@@ -417,19 +418,9 @@ namespace learning1.Controllers
 
         }
 
-
-
-
-
-
-
-
-
-
         [CustomAuthorize("Admin")]
         public IActionResult ProviderMenu()
         {
-
             var modal = _adminServices.GetRegionsforProvider();
             return View(modal);
         }
@@ -440,13 +431,17 @@ namespace learning1.Controllers
             return PartialView("_ProviderMenuPartialView",modal);
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
 
-
-        public IActionResult EditPhysicianAccount()
+        public IActionResult EditPhysicianAccount(int PhysicianId)
         {
 
-            var modal = _adminServices.GetRegionsforPhysician();
+            //var modal = _adminServices.GetRegionsforPhysician(PhysicianId);
+            CreateProviderAccountViewModel modal = _adminServices.GetPhysicianDetails(PhysicianId);
             return View(modal);
         }
 
@@ -815,20 +810,87 @@ namespace learning1.Controllers
             return RedirectToAction("AdminDashboard", "Admin");
         }
 
-        public IActionResult Payrate()
+
+
+
+        public IActionResult Payrate(int PhysicianId=21)
         {
-            return View();
+            Payrate model = _adminServices.GetPayrateByPhysicianId(PhysicianId);
+            return View(model);
+        }
+        public IActionResult UpdatePayrate(int FieldId, Payrate model)
+        {
+            bool res = _adminServices.UpdatePayrate(FieldId, model);
+            if (res) { _notyf.Success("Payrates Updated successfully"); }
+            else { _notyf.Error("Something Went Wrong Payrates are not updated"); }
+            return RedirectToAction("Payrate", "Admin", new { PhysicianId = model.PhysicianId });
         }
 
 
-        public IActionResult Invoicing() { 
-        return View();
+
+        public IActionResult Invoicing()
+        {
+
+            InvocingViewModel invoice = new() { Username = "name" };
+            return View(invoice);
         }
 
-
-        public IActionResult BiweeklyTimeSheet()
+        [HttpPost]
+        public IActionResult InvoicePartialView(int? providerId, DateOnly? firstDate, DateOnly? lastDate)
         {
-            return View();
+            InvocingViewModel invoice = new();
+
+            if (firstDate != null && lastDate != null && providerId != null)
+            {
+                invoice = _adminServices.IsInvoiceFinalizedAndApproved((int)providerId, (DateOnly)firstDate, (DateOnly)lastDate);
+            }
+            invoice.Physicians = _adminServices.GetPhysicians("Select Physician", "0");
+            return PartialView("_Invoice", invoice);
+        }
+
+        [HttpPost]
+        public IActionResult InvoiceSheet()
+        {
+            return PartialView("_InvoiceSheet");
+        }
+
+        [HttpPost]
+        public IActionResult InvoiceSheetDataAdmin(int? timeSheetId)
+        {
+            InvocingViewModel invoice = _adminServices.GetInvoiceSheetDataAdmin((int)timeSheetId);
+            return PartialView("_InvoiceSheetData", invoice);
+        }
+
+        [HttpPost]
+        public IActionResult InvoiceReceiptAdmin(int? timeSheetId)
+        {
+            InvoiceReciept receipt = _adminServices.GetInvoiceReceiptAdmin((int)timeSheetId);
+            return PartialView("_InvoiceReciept", receipt);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateInvoiceSheetDataAdmin([FromBody] List<SheetData> sheetData)
+        {
+            bool isUpdated = _adminServices.UpdateInvoiceSheetData(sheetData);
+            return new OkObjectResult(isUpdated);
+        }
+
+        [HttpPost]
+        public IActionResult ApproveTimesheet(int? timeSheetId, int? bonus, string? description)
+        {
+            if (timeSheetId != null)
+            {
+                bool isApproved = _adminServices.ApproveInvoice((int)timeSheetId);
+                return new OkObjectResult(isApproved);
+            }
+            return new OkObjectResult(false);
+        }
+
+        public IActionResult GetInvoiceByName(string filename)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Invoice", filename);
+            var contentType = _adminServices.GetContentType(filePath);
+            return new FileStreamResult(new FileStream(filePath, FileMode.Open, FileAccess.Read), contentType);
         }
 
 
@@ -842,7 +904,11 @@ namespace learning1.Controllers
             return RedirectToAction("PlatformLogin", "Admin");
         }
 
+
+
     
+
+
 
     }
 }

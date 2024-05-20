@@ -1,0 +1,72 @@
+﻿@model learning1.DBEntities.ViewModel.InvocingViewModel;
+@using learning1.DBEntities.ViewModel;
+@{
+    var role = Context.Session.GetString("Role"); ;
+}
+
+<div class="row shadow bg-white rounded gx-0 pt-1 mt-2">
+    <div class="col">
+        <div class="table-responsive">
+            <table class="table" id="invoiceSheetTable">
+                <caption class="text-end me-3">
+                    <button type="button" class="btn btn-info updateInvoiceSheetData">Submit</button>
+                </caption>
+                <thead>
+                    <tr class="table-light">
+                        <th scope="col">Date</th>
+                        <th scope="col">On-Call Hours</th>
+                        <th scope="col">Total Hours</th>
+                        <th scope="col">Weekend/Holiday</th>
+                        <th scope="col">Number of Housecalls</th>
+                        <th scope="col">Number of Phone Consults</th>
+                        @if (role == "Admin")
+                        {
+                            <th scope="col">Total</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (TimeSheetDetailVM timesheet in Model.Timesheets)
+                    {
+                        <tr>
+                            <td>@timesheet.Shiftdate</td>
+                            <td>@timesheet.OnCallHours</td>
+                            <td>
+                                <input class="form-control" name="TotalHours" type="number" value="@timesheet.ShiftHours">
+                                <input type="number" name="TimesheetDetailId" value="@timesheet.TimesheetDetailId" hidden>
+                            </td>
+                            <td><input class="form-check-input" name="IsWeekend" type="checkbox" checked="@timesheet.IsWeekend"></td>
+                            <td><input class="form-control" name="Housecall" type="number" value="@timesheet.Housecall"></td>
+                            <td><input class="form-control" name="PhoneConsult" type="number" value="@timesheet.PhoneConsult"></td>
+                            <td></td>
+
+                        </tr>
+                    }
+                    @if (role == "Admin")
+                    {
+                        <tr>
+                            <td>Payrate</td>
+                            <td></td>
+                            <td><input class="form-control" type="number" value="@Model.Payrate.Shift" disabled></td>
+                            <td><input class="form-control" type="number" value="@Model.Payrate.NightShiftWeekend" disabled></td>
+                            <td><input class="form-control" type="number" value="@Model.Payrate.Housecall" disabled></td>
+                            <td><input class="form-control" type="number" value="@Model.Payrate.Phoneconsult" disabled></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Invoice Total</td>
+                            <td></td>
+                            <td><input class="form-control" type="number" value="@Model.TotalShiftHours" disabled></td>
+                            <td><input class="form-control" type="number" value="@Model.TotalWeekend" disabled></td>
+                            <td><input class="form-control" type="number" value="@Model.TotalHouseCall" disabled></td>
+                            <td><input class="form-control" type="number" value="@Model.TotalPhoneConsult" disabled></td>
+                            <td><input class="form-control" type="number" value="@Model.Total" disabled></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

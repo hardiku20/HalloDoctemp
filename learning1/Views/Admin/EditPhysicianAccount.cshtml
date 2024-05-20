@@ -29,7 +29,7 @@
                     <h5 class="my-3">Account Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" value="admin" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="User Name" asp-for="UserName" disabled>
                             <label for="floatingInput" >User Name</label>
                         </div>
                     </div>
@@ -41,13 +41,13 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Status" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Status" value="Active" disabled>
                             <label for="floatingInput" >Status</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Role" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Role" asp-for="Role" disabled>
                             <label for="floatingInput" >Role</label>
                         </div>
                     </div>
@@ -66,26 +66,26 @@
                     <h5 class="my-3">Physician Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" value="admin1" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="First Name" asp-for="FirstName" disabled>
                             <label for="floatingInput" >First Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" value="admin2" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" asp-for="LastName" disabled>
                             <label for="floatingInput" >Last Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Email" disabled>
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Email" asp-for="Email" disabled>
                             <label for="floatingInput" >Email</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone1" disabled>
+                                   id="phone1" asp-for="Phone" disabled>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -102,30 +102,27 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="Synchronization Email Address" disabled>
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Synchronization Email Address" asp-for="ConfirmEmail" disabled>
                             <label for="floatingInput" >Synchronization Email Address</label>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="d-flex gap-2 align-items-center flex-wrap">
-                            @for (int i = 0; i < Model.Region.Count; i++)
-                            {
-                                <div class="form-check">
-                                    <input class="form-check-input Change1"
-                                           type="checkbox"
-                                           value="@Model.Region[i].RegionId"
-                                           id="checkbox@(i)"
-                                           name="checkbox_group"
-                                           onchange="AddSelectedRegion()">
-                                    <label class="form-check-label text-secondary" for="checkbox@(i)">@Model.Region[i].Name</label>
+                             @foreach(var regions in Model.Region){
+                                 <div class="form-check form-check-inline">
+                                    <input class="form-check-input text-info" type="checkbox" name="PhysicianRegions" id="inlineCheckbox1" value="@regions.RegionId" disabled @(Model.PhysicianRegions.Contains(regions.RegionId) ? "checked" : " ")>
+                                    <label class="form-check-label text-secondary" for="inlineCheckbox1">@regions.Name</label>
                                 </div>
                             }
                         </div>
+                       
+                        
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end gap-2">
-                    <a class="btn btn-info text-white" asp-action="Payrate" asp-controller="Admin">Enter Payrate</a>
+              
+             <a class="btn btn-info text-white" asp-action="Payrate" asp-controller="Admin" asp-route-PhysicianId="@Model.PhysicianId">Enter Payrate</a>
                     <button type="submit" class="btn btn-info text-white px-4">Edit</button>
                  
                 </div>
@@ -137,38 +134,38 @@
                     <h5 class="my-3">Mailing & Billing Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address1" disabled>
                             <label for="floatingInput" >Address 1</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Address" asp-for="Address2" disabled>
                             <label for="floatingInput" >Address 2</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="City" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City" disabled>
                             <label for="floatingInput" >City</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="State" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State" disabled>
                             <label for="floatingInput" >State</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="ZipCode" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="ZipCode" asp-for="Zip" disabled>
                             <label for="floatingInput" >Zip</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3 input-info">
                         <div class="form-floating input-info w-100">
                             <input type="tel" class="form-control pt-3 pb-3 w-100 d-inline-block iti"
-                                   id="phone2" disabled>
+                                   id="phone2" asp-for="MailingPhone" disabled>
                         </div>
                     </div>
                 </div>
@@ -184,25 +181,25 @@
                     <h5 class="my-3">Mailing & Billing Information</h5>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Business Name" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Business Name" asp-for="BussinessName" disabled>
                             <label for="floatingInput" >Business Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Business website" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Business website" asp-for="BussinessWebsite" disabled>
                             <label for="floatingInput" >Business website</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="City" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="City" asp-for="City" disabled>
                             <label for="floatingInput" >City</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
                         <div class="form-floating input-info">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="State" disabled>
+                            <input type="text" class="form-control" id="floatingInput" placeholder="State" asp-for="State" disabled>
                             <label for="floatingInput" >State</label>
                         </div>
                     </div>
