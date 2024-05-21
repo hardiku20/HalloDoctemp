@@ -659,16 +659,16 @@ namespace learning1.Controllers
 
 
         [CustomAuthorize("Admin")]
-        public IActionResult Vendors(int ProfessionId, string VendorName = null)
+        public IActionResult Vendors(int ProfessionId, string VendorName = null, int Page = 1, int PageSize = 5)
         {
-            var model = _adminServices.GetVendorsDetails(ProfessionId, VendorName);
+            var model = _adminServices.GetVendorsDetails(ProfessionId, VendorName,Page,PageSize);
             return View(model);
         }
 
 
-        public IActionResult RenderVendorTable(int ProfessionId, string VendorName = null)
+        public IActionResult RenderVendorTable(int ProfessionId, string VendorName = null, int Page = 1, int PageSize = 5)
         {
-            var model = _adminServices.GetVendorsDetails(ProfessionId,VendorName);
+            var model = _adminServices.GetVendorsDetails(ProfessionId,VendorName,Page,PageSize);
             return View("_VendorPartialView",model);
         }
 

@@ -309,9 +309,9 @@ namespace learning1.Services.Services
             _adminRepo.DeleteBusinessRepo(vendorId);
         }
 
-        public VendorViewModel GetVendorsDetails(int professionId, string vendorName)
+        public VendorViewModel GetVendorsDetails(int professionId, string vendorName, int Page, int PageSize)
         {
-            var model = _adminRepo.GetVendorRepo(professionId, vendorName);
+            var model = _adminRepo.GetVendorRepo(professionId, vendorName,Page,PageSize);
             return model;
         }
 

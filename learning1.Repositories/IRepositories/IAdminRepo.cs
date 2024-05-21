@@ -55,7 +55,7 @@ namespace learning1.Repositories.IRepositories
         AddBusinessViewModal GetBusinessRepo(int vendorId);
         void UpdateBusinessRepo(AddBusinessViewModal modal);
         void DeleteBusinessRepo(int vendorId);
-        VendorViewModel GetVendorRepo(int professionId, string vendorName);
+        VendorViewModel GetVendorRepo(int professionId, string vendorName, int page, int pageSize);
         RecordsViewModel PatientHistoryRepo(string firstname,string lastname,string email,string phonenumber);
         RecordsViewModel PatientExploreRepo(int userId);
         RecordsViewModel SearchDataRepo(string patientName, string providerName, string email, string phoneNumber);

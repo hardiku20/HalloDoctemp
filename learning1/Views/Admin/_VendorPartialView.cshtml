@@ -121,6 +121,59 @@
 </div>
 
 
+
+
+@{
+    double d = (double)Model.TotalRecord / 5;
+    double pages = Math.Ceiling(d);
+}
+
+<div class="pagination-nav bg-white dark-mode1 d-flex justify-content-between flex-row p-4">
+
+
+    <span class="d-flex justify-content-start fs-5">
+        Showing @Model.ShowRecords of @Model.TotalRecord Entries
+    </span>
+    <nav aria-label="Page navigation example d-flex justify-content-between">
+        <ul class="pagination">
+            <li class="page-item page-item-story d-flex" id="previousPage">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true"> < </span>
+                </a>
+            </li>
+
+            @for (int j = 1; j <= @pages; j++)
+            {
+                <li class="page-item page-item-story" id="@j"><a class="page-link">@j</a></li>
+            }
+            <li class="page-item page-item-story d-flex" id="nextPage" data-TotalPages=@pages>
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true"> > </span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="d-flex align-items-center">
+                    <span>Items per page: </span>
+            <select class="form-select" id="pageSize">
+                <option value=5>5</option>
+                <option value=10>10</option>
+                <option value=15>15</option>
+            </select>
+          <div>
+   
+  </div>
+        </div>
+
+    </nav>
+</div>
+
+
+
+
+
+
+<script src="~/js/VendorPagination.js"></script>
 <script>
     function DeleteBusiness(id) {
         var response = confirm("Confirm, To Delete Business");
@@ -143,3 +196,5 @@
 
 
 </script>
+
+        

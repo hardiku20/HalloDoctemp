@@ -15,6 +15,9 @@ namespace learning1.DBEntities.ViewModel
 
         public List<HealthProfessionalType> ProfessionalTypes { get; set; }
 
+        public int TotalRecord { get; set; }
+        public int ShowRecords { get; set; }
+
         public class VendorTableViewModal
         {
             public int? VendorId { get; set; }

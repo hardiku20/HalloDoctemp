@@ -54,7 +54,7 @@ namespace learning1.Services.IServices
         AddBusinessViewModal GetBusinessByVendorId(int vendorId);
         void UpdateBusiness(AddBusinessViewModal modal);
         void DeleteBusinessByVendor(int vendorId);
-        VendorViewModel GetVendorsDetails(int professionId, string vendorName);
+        VendorViewModel GetVendorsDetails(int professionId, string vendorName, int Page, int PageSize);
         RecordsViewModel GetPatientHistory(string firstname, string lastname, string email, string phonenumber);
         RecordsViewModel GetPatientExplore(int userId);
         RecordsViewModel GetSearchData(string patientName, string providerName, string email, string phoneNumber);

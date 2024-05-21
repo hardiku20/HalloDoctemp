@@ -1155,7 +1155,7 @@ namespace learning1.Repositories.Repositories
             _context.SaveChanges();
         }
 
-        public VendorViewModel GetVendorRepo(int professionId, string vendorName)
+        public VendorViewModel GetVendorRepo(int professionId, string vendorName, int page, int pageSize)
         {
 
             Expression<Func<HealthProfessional, bool>> predicate;
@@ -1188,11 +1188,15 @@ namespace learning1.Repositories.Repositories
                     FaxNumber = x.FaxNumber,
                     PhoneNumber = x.PhoneNumber,
                     BusinessContact = x.BusinessContact,
-                }).ToList();
+                }).AsQueryable();
+
+            var tempdata = healthProfessionals.Skip((page - 1) * pageSize).Take(pageSize).ToList().Count();
             VendorViewModel modal = new VendorViewModel()
             {
-                VendorTableViewModals = healthProfessionals,
+                VendorTableViewModals = healthProfessionals.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
                 ProfessionalTypes = ProfessionType,
+                TotalRecord = healthProfessionals.Count(),
+                ShowRecords = tempdata,
             };
             return modal;
 

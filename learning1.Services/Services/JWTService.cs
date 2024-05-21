@@ -47,7 +47,7 @@ namespace learning1.Services.Services
         }
 
         public UserInfoViewModel getDetails(string? token)
-        {
+         {
             JwtSecurityToken jwtSecurityToken = null;
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes("this is my custom Secret key for authentication");

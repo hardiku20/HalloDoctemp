@@ -12,6 +12,7 @@ $(document).ready(function () {
         success: function (result) {
             console.log(result);
             $("#Vendors_table").html(result);
+            $(`#1`).addClass("active");
         },
         error: function (xhr, status, error) {
             console.log(error);
